@@ -22,6 +22,10 @@
 		D1027F8A18904E8400FF44A4 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1027F6E18904E8400FF44A4 /* CoreData.framework */; };
 		D1027F9218904E8400FF44A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D1027F9018904E8400FF44A4 /* InfoPlist.strings */; };
 		D1027F9418904E8400FF44A4 /* TackleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D1027F9318904E8400FF44A4 /* TackleTests.m */; };
+		D1027FE818904F0000FF44A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1027FE718904F0000FF44A4 /* Main.storyboard */; };
+		D1027FEB18904F7200FF44A4 /* TackMainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1027FEA18904F7200FF44A4 /* TackMainTableViewController.m */; };
+		D1027FEE1890535700FF44A4 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = D1027FED1890535700FF44A4 /* Task.m */; };
+		D1027FF418905F4D00FF44A4 /* TackMainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1027FF318905F4D00FF44A4 /* TackMainTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +57,13 @@
 		D1027F8F18904E8400FF44A4 /* TackleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TackleTests-Info.plist"; sourceTree = "<group>"; };
 		D1027F9118904E8400FF44A4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D1027F9318904E8400FF44A4 /* TackleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TackleTests.m; sourceTree = "<group>"; };
+		D1027FE718904F0000FF44A4 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		D1027FE918904F7200FF44A4 /* TackMainTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TackMainTableViewController.h; sourceTree = "<group>"; };
+		D1027FEA18904F7200FF44A4 /* TackMainTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TackMainTableViewController.m; sourceTree = "<group>"; };
+		D1027FEC1890535700FF44A4 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
+		D1027FED1890535700FF44A4 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
+		D1027FF218905F4D00FF44A4 /* TackMainTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TackMainTableViewCell.h; sourceTree = "<group>"; };
+		D1027FF318905F4D00FF44A4 /* TackMainTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TackMainTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,11 +126,17 @@
 		D1027F7018904E8400FF44A4 /* Tackle */ = {
 			isa = PBXGroup;
 			children = (
+				D1027FEF1890545800FF44A4 /* Models */,
 				D1027F7918904E8400FF44A4 /* TackAppDelegate.h */,
 				D1027F7A18904E8400FF44A4 /* TackAppDelegate.m */,
 				D1027F7F18904E8400FF44A4 /* Images.xcassets */,
 				D1027F7C18904E8400FF44A4 /* Tackle.xcdatamodeld */,
 				D1027F7118904E8400FF44A4 /* Supporting Files */,
+				D1027FE718904F0000FF44A4 /* Main.storyboard */,
+				D1027FE918904F7200FF44A4 /* TackMainTableViewController.h */,
+				D1027FEA18904F7200FF44A4 /* TackMainTableViewController.m */,
+				D1027FF218905F4D00FF44A4 /* TackMainTableViewCell.h */,
+				D1027FF318905F4D00FF44A4 /* TackMainTableViewCell.m */,
 			);
 			path = Tackle;
 			sourceTree = "<group>";
@@ -151,6 +168,15 @@
 				D1027F9018904E8400FF44A4 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D1027FEF1890545800FF44A4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D1027FEC1890535700FF44A4 /* Task.h */,
+				D1027FED1890535700FF44A4 /* Task.m */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -229,6 +255,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1027FE818904F0000FF44A4 /* Main.storyboard in Resources */,
 				D1027F7518904E8400FF44A4 /* InfoPlist.strings in Resources */,
 				D1027F8018904E8400FF44A4 /* Images.xcassets in Resources */,
 			);
@@ -249,9 +276,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1027FEE1890535700FF44A4 /* Task.m in Sources */,
 				D1027F7718904E8400FF44A4 /* main.m in Sources */,
 				D1027F7E18904E8400FF44A4 /* Tackle.xcdatamodeld in Sources */,
 				D1027F7B18904E8400FF44A4 /* TackAppDelegate.m in Sources */,
+				D1027FEB18904F7200FF44A4 /* TackMainTableViewController.m in Sources */,
+				D1027FF418905F4D00FF44A4 /* TackMainTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

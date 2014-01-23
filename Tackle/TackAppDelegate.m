@@ -8,6 +8,9 @@
 
 #import "TackAppDelegate.h"
 
+#import "TackMainTableViewController.h"
+#import "Task.h"
+
 @implementation TackAppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -16,10 +19,37 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
+//    [self addSampleData];
+    TackMainTableViewController *controller = (TackMainTableViewController *)self.window.rootViewController;
+    controller.managedObjectContext = self.managedObjectContext;
+    return YES;
+}
+
+- (BOOL)addSampleData
+{
+    Task *task1 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
+    [task1 setText:@"Email American Express"];
+    [task1 setDueDate:[NSDate dateWithTimeIntervalSinceNow:3600]];
+
+    Task *task2 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
+    [task2 setText:@"Read The Design Of Everyday Things"];
+    [task2 setDueDate:[NSDate dateWithTimeIntervalSinceNow:7200]];
+
+    Task *task3 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
+    [task3 setText:@"Go to Pivotal"];
+    [task3 setDueDate:[NSDate dateWithTimeIntervalSinceNow:72000]];
+
+    Task *task4 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
+    [task4 setText:@"Watch Wolf of Wall St."];
+    [task4 setDueDate:[NSDate dateWithTimeIntervalSinceNow:172800]];
+
+    Task *task5 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
+    [task5 setText:@"Work on Tackle"];
+    [task5 setDueDate:[NSDate dateWithTimeIntervalSinceNow:171000]];
+
+    NSError *error = nil;
+
+    [self.managedObjectContext save:&error];
     return YES;
 }
 
