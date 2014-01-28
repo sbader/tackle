@@ -15,17 +15,43 @@
 @dynamic dueDate;
 @dynamic isDone;
 
-- (BOOL) scheduleNotification
+- (BOOL)scheduleNotification
 {
     UILocalNotification *notification = [[UILocalNotification alloc] init];
 
     [notification setFireDate:self.dueDate];
     [notification setAlertBody:self.text];
+    [notification setRepeatInterval:NSMinuteCalendarUnit];
     [notification setAlertAction:@"Tackle"];
+    [notification setSoundName:UILocalNotificationDefaultSoundName];
+    [notification setUserInfo:@{@"uniqueId": self.objectID.URIRepresentation.absoluteString}];
 
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
 
     return YES;
+}
+
+- (void)cancelNotification
+{
+    NSArray *localNotifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
+
+    NSUInteger index = [localNotifications indexOfObjectPassingTest:^BOOL(UILocalNotification *notification, NSUInteger idx, BOOL *stop) {
+        NSString *uniqueId = (NSString *)[notification.userInfo objectForKey:@"uniqueId"];
+        return [uniqueId isEqualToString:self.objectID.URIRepresentation.absoluteString];
+    }];
+
+    if (index == NSNotFound) {
+        return;
+    }
+
+    UILocalNotification *notification = [localNotifications objectAtIndex:index];
+    [[UIApplication sharedApplication] cancelLocalNotification:notification];
+}
+
+- (void)markAsDone
+{
+    [self setIsDone:YES];
+    [self cancelNotification];
 }
 
 @end

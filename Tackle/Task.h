@@ -17,6 +17,8 @@
 @property (nonatomic) BOOL isDone;
 
 
-- (BOOL) scheduleNotification;
+- (BOOL)scheduleNotification;
+- (void)markAsDone;
+- (void)cancelNotification;
 
 @end
