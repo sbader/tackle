@@ -24,11 +24,16 @@
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
+	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Adonis-Regular.otf</string>
+		<string>Adonis-Bold.otf</string>
+		<string>Effra-Regular.otf</string>
+		<string>Effra-Bold.otf</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>

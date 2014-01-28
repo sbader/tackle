@@ -18,10 +18,17 @@
 
 @property (assign, nonatomic) id <TackMainTableViewCellDelegate> delegate;
 
-@property (weak, nonatomic) IBOutlet UILabel *taskTextLabel;
-@property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
+//@property (weak, nonatomic) IBOutlet UILabel *taskTextLabel;
+//@property (weak, nonatomic) IBOutlet UILabel *dueDateLabel;
 
-- (void)updateTask:(Task *)task;
+@property (strong, nonatomic) UILabel *taskTextLabel;
+@property (strong, nonatomic) UILabel *dueDateLabel;
+@property (strong, nonatomic) UIButton *markAsDoneButton;
+
+- (void)setText:(NSString *)text;
+- (void)setDueDate:(NSDate *)dueDate;
+
+//- (void)updateTask:(Task *)task;
 - (IBAction)markAsDone:(id)sender;
 
 @end

@@ -9,10 +9,11 @@
 #import "TackMainTableViewController.h"
 
 #import "TackMainTableViewCell.h"
+#import "TackDateFormatter.h"
 #import "Task.h"
 
 @interface TackMainTableViewController () <UITextFieldDelegate, TackMainTableViewCellDelegate>
-- (void)configureCell:(TackMainTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+- (void)updateCell:(TackMainTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
 
 @implementation TackMainTableViewController
@@ -20,14 +21,6 @@
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
-    if (self) {
-    }
-    return self;
-}
-
-- (id)initWithCoder:(NSCoder *)coder
-{
-    self = [super initWithCoder: coder];
     if (self) {
         self.dueDate = [NSDate date];
     }
@@ -37,16 +30,30 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.taskTextField setDelegate:self];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDoesRelativeDateFormatting:YES];
 
-    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-    [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+    [self.tableView setBackgroundColor:[UIColor darkPlumColor]];
+    [self.tableView setRowHeight:67.0f];
 
-    [self.timeButton setTitle:[dateFormatter stringFromDate:self.dueDate] forState:UIControlStateNormal];
+    [self.tableView setSectionHeaderHeight:22.0f];
+    [self.tableView setSectionFooterHeight:22.0f];
 
-    [self attachObservers];
+    [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+
+    [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+    [self.tableView setSeparatorColor:[UIColor lightOpaqueGrayColor]];
+
+    [self.tableView registerClass:[TackMainTableViewCell class] forCellReuseIdentifier:@"Cell"];
+
+//    [self.taskTextField setDelegate:self];
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    [dateFormatter setDoesRelativeDateFormatting:YES];
+//
+//    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+//    [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+//
+//    [self.timeButton setTitle:[dateFormatter stringFromDate:self.dueDate] forState:UIControlStateNormal];
+//
+//    [self attachObservers];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -94,7 +101,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TackMainTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    [self configureCell:cell atIndexPath:indexPath];
+    [self updateCell:cell atIndexPath:indexPath];
 
     [cell setDelegate:self];
     return cell;
@@ -107,16 +114,17 @@
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
 
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:17.0f],
+    UIFont *font = [UIFont effraRegularWithSize:15.0f];
+
+    NSDictionary *attributes = @{NSFontAttributeName:[font fontWithSize:15.0f],
                                  NSParagraphStyleAttributeName:paragraphStyle};
 
-    CGRect rect = [task.text boundingRectWithSize:CGSizeMake(175, MAXFLOAT)
+    CGRect rect = [task.text boundingRectWithSize:CGSizeMake(234, MAXFLOAT)
                                               options:NSStringDrawingUsesLineFragmentOrigin
                                            attributes:attributes
                                               context:nil];
 
-    // 23 works here but I think it's due to the content view needing to be 1px less than the cell view
-    CGFloat height = ceil(rect.size.height) + 23;
+    CGFloat height = ceil(rect.size.height) + 46;
 
     return height;
 }
@@ -195,7 +203,7 @@
             break;
 
         case NSFetchedResultsChangeUpdate:
-            [self configureCell:(TackMainTableViewCell *)[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            [self updateCell:(TackMainTableViewCell *)[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
             break;
 
         case NSFetchedResultsChangeMove:
@@ -215,26 +223,13 @@
     return YES;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-//    Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
-//    [task setIsDone:YES];
-//    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-//
-//    NSError *error = nil;
-//    if (![context save:&error]) {
-//        // Replace this implementation with code to handle the error appropriately.
-//        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-//        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-//        abort();
-//    }
-}
-
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        [task cancelNotification];
+        [context deleteObject:task];
 
         NSError *error = nil;
         if (![context save:&error]) {
@@ -246,36 +241,12 @@
     }
 }
 
-- (void)configureCell:(TackMainTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)updateCell:(TackMainTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    [cell updateTask:task];
-}
 
-- (void)addTaskWithText:(NSString *)text timeIntervalSinceNow:(NSTimeInterval)timeInterval
-{
-    if (text.length != 0) {
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-
-        Task *task = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
-
-        [task setText:text];
-        [task setDueDate:[NSDate dateWithTimeIntervalSinceNow:timeInterval]];
-
-        NSError *error = nil;
-        if (![context save:&error]) {
-            // Replace this implementation with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
-
-//        [task scheduleNotification];
-        [self.taskTextField setText:@""];
-        [self setDueDate:[NSDate date]];
-        [self.view endEditing:YES];
-    }
+    [cell setText:task.text];
+    [cell setDueDate:task.dueDate];
 }
 
 - (void)addTaskWithText:(NSString *)text dueDate:(NSDate *)dueDate
@@ -297,7 +268,7 @@
             abort();
         }
 
-        //        [task scheduleNotification];
+        [task scheduleNotification];
         [self.taskTextField setText:@""];
         [self setDueDate:[NSDate date]];
         [self.view endEditing:YES];
@@ -336,7 +307,9 @@
 
 - (void)markAsDone:(TackMainTableViewCell *)cell
 {
-    [cell.task setIsDone:YES];
+    Task *task = [self.fetchedResultsController objectAtIndexPath:[self.tableView indexPathForCell:cell]];
+    [task markAsDone];
+
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
 
     NSError *error = nil;
@@ -358,14 +331,8 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:@"dueDate"]) {
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-
-        [dateFormatter setDoesRelativeDateFormatting:YES];
-        [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-        [dateFormatter setDateStyle:NSDateFormatterShortStyle];
-
         NSDate *date = (NSDate *)[change valueForKey:NSKeyValueChangeNewKey];
-        [self.timeButton setTitle:[dateFormatter stringFromDate:date] forState:UIControlStateNormal];
+        [self.timeButton setTitle:[[TackDateFormatter sharedInstance] stringFromDate:date] forState:UIControlStateNormal];
     }
 }
 

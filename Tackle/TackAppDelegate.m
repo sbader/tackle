@@ -8,7 +8,7 @@
 
 #import "TackAppDelegate.h"
 
-#import "TackMainTableViewController.h"
+#import "TackMainViewController.h"
 #import "Task.h"
 
 @implementation TackAppDelegate
@@ -20,32 +20,48 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 //    [self addSampleData];
-    TackMainTableViewController *controller = (TackMainTableViewController *)self.window.rootViewController;
-    controller.managedObjectContext = self.managedObjectContext;
+    [self setupWindow];
+    [self setupMainViewController];
+    [self.window makeKeyAndVisible];
     return YES;
+}
+
+- (void)setupWindow
+{
+    CGSize mainScreenSize = [[UIScreen mainScreen] bounds].size;
+    [self setWindow:[[UIWindow alloc] initWithFrame:CGRectMake(0, 0, mainScreenSize.width, mainScreenSize.height)]];
+    [self.window setBackgroundColor:[UIColor whiteColor]];
+}
+
+- (void)setupMainViewController
+{
+    TackMainViewController *controller = [[TackMainViewController alloc] initWithManagedObjectContext:self.managedObjectContext];
+    [self.window setRootViewController:controller];
+//    [controller.view setFrame:CGRectMake(0, 0, self.window.frame.size.width, self.window.frame.size.height)];
+    [controller.view setFrame:CGRectMake(0, 0, self.window.frame.size.width, 100.0f)];
 }
 
 - (BOOL)addSampleData
 {
     Task *task1 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-    [task1 setText:@"Email American Express"];
-    [task1 setDueDate:[NSDate dateWithTimeIntervalSinceNow:3600]];
+    [task1 setText:@"Prepare Expenses"];
+    [task1 setDueDate:[NSDate dateWithTimeIntervalSinceNow:7200]];
 
     Task *task2 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-    [task2 setText:@"Read The Design Of Everyday Things"];
-    [task2 setDueDate:[NSDate dateWithTimeIntervalSinceNow:7200]];
+    [task2 setText:@"Renew Apple Developer Program Membership"];
+    [task2 setDueDate:[NSDate dateWithTimeIntervalSinceNow:96000]];
 
-    Task *task3 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-    [task3 setText:@"Go to Pivotal"];
-    [task3 setDueDate:[NSDate dateWithTimeIntervalSinceNow:72000]];
-
-    Task *task4 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-    [task4 setText:@"Watch Wolf of Wall St."];
-    [task4 setDueDate:[NSDate dateWithTimeIntervalSinceNow:172800]];
-
-    Task *task5 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-    [task5 setText:@"Work on Tackle"];
-    [task5 setDueDate:[NSDate dateWithTimeIntervalSinceNow:171000]];
+//    Task *task3 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
+//    [task3 setText:@"Go to Pivotal"];
+//    [task3 setDueDate:[NSDate dateWithTimeIntervalSinceNow:72000]];
+//
+//    Task *task4 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
+//    [task4 setText:@"Watch Wolf of Wall St."];
+//    [task4 setDueDate:[NSDate dateWithTimeIntervalSinceNow:172800]];
+//
+//    Task *task5 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
+//    [task5 setText:@"Work on Tackle"];
+//    [task5 setDueDate:[NSDate dateWithTimeIntervalSinceNow:171000]];
 
     NSError *error = nil;
 
@@ -174,6 +190,19 @@
 - (NSURL *)applicationDocumentsDirectory
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+#pragma mark - Utilities
+
+- (void)displayFonts
+{
+    for (NSString* family in [UIFont familyNames]) {
+        NSLog(@"%@", family);
+
+        for (NSString* name in [UIFont fontNamesForFamilyName: family]) {
+            NSLog(@"  %@", name);
+        }
+    }
 }
 
 @end

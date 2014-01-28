@@ -8,7 +8,7 @@
         <scene sceneID="OrN-3P-tQS">
             <objects>
                 <tableViewController id="hAW-mQ-4F0" customClass="TackMainTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="IYl-sd-QGd">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="67" sectionHeaderHeight="22" sectionFooterHeight="22" id="IYl-sd-QGd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -24,8 +24,8 @@
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="What do you want to tackle?" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mjD-xM-z1j">
                                             <rect key="frame" x="9" y="8" width="225" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2nP-eW-B4H">
                                             <rect key="frame" x="3" y="39" width="67" height="32"/>
@@ -83,27 +83,54 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="Cell" id="um2-qP-yTQ" customClass="TackMainTableViewCell">
-                                <rect key="frame" x="0.0" y="111" width="320" height="44"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="Cell" rowHeight="67" id="um2-qP-yTQ" customClass="TackMainTableViewCell">
+                                <rect key="frame" x="0.0" y="111" width="320" height="67"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="um2-qP-yTQ" id="zfJ-qd-Y6W">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="66"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="text" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="210" translatesAutoresizingMaskIntoConstraints="NO" id="Z2e-Lt-2g1">
-                                            <rect key="frame" x="10" y="11" width="210" height="21"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Let's go to the mall and see a really long movie that takes up a really long time" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="234" translatesAutoresizingMaskIntoConstraints="NO" id="Z2e-Lt-2g1">
+                                            <rect key="frame" x="10" y="35" width="234" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tomorrow, 12:32 PM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zH3-Lb-yEF">
-                                            <rect key="frame" x="228" y="12" width="82" height="20"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tomorrow, 12:32 PM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zH3-Lb-yEF">
+                                            <rect key="frame" x="10" y="10" width="234" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="17" id="Oaa-zY-6sP"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ztk-ji-WBC">
+                                            <rect key="frame" x="252" y="18" width="58" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="58" id="MbT-Jc-4hA"/>
+                                            </constraints>
+                                            <state key="normal" title="Finished">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="markAsDone:" destination="um2-qP-yTQ" eventType="touchUpInside" id="EPw-is-9O0"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="zH3-Lb-yEF" firstAttribute="top" secondItem="zfJ-qd-Y6W" secondAttribute="top" constant="10" id="5F8-NS-xHv"/>
+                                        <constraint firstAttribute="bottom" secondItem="Z2e-Lt-2g1" secondAttribute="bottom" constant="10" id="Efa-R6-wv5"/>
+                                        <constraint firstItem="zH3-Lb-yEF" firstAttribute="leading" secondItem="zfJ-qd-Y6W" secondAttribute="leading" constant="10" id="Q9w-nZ-fWH"/>
+                                        <constraint firstItem="Ztk-ji-WBC" firstAttribute="leading" secondItem="Z2e-Lt-2g1" secondAttribute="trailing" constant="8" symbolic="YES" id="SYg-GU-7q6"/>
+                                        <constraint firstItem="Ztk-ji-WBC" firstAttribute="centerY" secondItem="zfJ-qd-Y6W" secondAttribute="centerY" id="WqK-Au-Sco"/>
+                                        <constraint firstItem="Ztk-ji-WBC" firstAttribute="leading" secondItem="zH3-Lb-yEF" secondAttribute="trailing" constant="8" symbolic="YES" id="clQ-cW-GA4"/>
+                                        <constraint firstAttribute="trailing" secondItem="Ztk-ji-WBC" secondAttribute="trailing" constant="10" id="d9W-XP-Xze"/>
+                                        <constraint firstItem="Z2e-Lt-2g1" firstAttribute="top" secondItem="zH3-Lb-yEF" secondAttribute="bottom" constant="8" symbolic="YES" id="qg7-0l-PMm"/>
+                                        <constraint firstItem="zH3-Lb-yEF" firstAttribute="leading" secondItem="Z2e-Lt-2g1" secondAttribute="leading" id="r2U-1Y-rTG"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <gestureRecognizers/>
                                 <connections>
