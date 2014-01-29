@@ -68,7 +68,7 @@
 
 - (void)setupBottomSeparator
 {
-    UIView *bottomSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height - 1, self.frame.size.width, 1.0f)];
+    UIView *bottomSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height - 0.5f, self.frame.size.width, 0.5f)];
     [bottomSeparator setBackgroundColor:[UIColor lightPlumGrayColor]];
 
     [self.contentView addSubview:bottomSeparator];
