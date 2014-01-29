@@ -26,6 +26,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 
 + (UIColor *)lightPlumColor;
 + (UIColor *)darkPlumColor;
++ (UIColor *)softGrayColor;
++ (UIColor *)lightPlumGrayColor;
 + (UIColor *)lightOpaqueGrayColor;
 + (UIColor *)midOpaqueGrayColor;
 + (UIColor *)lightOpaquePlumColor;
