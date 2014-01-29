@@ -34,6 +34,11 @@
 {
     UIView *topSpaceView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 20.0f)];
     [topSpaceView setBackgroundColor:[UIColor lightPlumColor]];
+
+    UIView *bottomSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, 19.5f, self.view.frame.size.width, 0.5f)];
+    [bottomSeparator setBackgroundColor:[UIColor lightPlumGrayColor]];
+    [topSpaceView addSubview:bottomSeparator];
+
     [self.view addSubview:topSpaceView];
 }
 

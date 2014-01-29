@@ -30,6 +30,11 @@
     return UIColorFromRGB(0xACA8AF);
 }
 
++ (UIColor *)midGrayColor
+{
+    return UIColorFromRGB(0xE7E6E8);
+}
+
 + (UIColor *)lightOpaqueGrayColor
 {
     return UIColorFromRGBWithAlpha(0x645F67, 50.0f);
