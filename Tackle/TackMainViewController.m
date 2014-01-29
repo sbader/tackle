@@ -8,6 +8,8 @@
 
 #import "TackMainViewController.h"
 
+#import "TackMainFlowLayout.h"
+
 @interface TackMainViewController ()
 
 @end
@@ -19,19 +21,33 @@
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         self.managedObjectContext = managedObjectContext;
-        self.mainTableViewController = [[TackMainTableViewController alloc] init];
-        [self.mainTableViewController setManagedObjectContext:self.managedObjectContext];
-        [self addChildViewController:self.mainTableViewController];
-        UIView *topSpaceView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 20.0f)];
-        [topSpaceView setBackgroundColor:[UIColor lightPlumColor]];
 
-        [self.mainTableViewController.view setFrame:CGRectMake(0, 20.0f, self.view.frame.size.width, self.view.frame.size.height - 20.0f)];
         [self.view setBackgroundColor:[UIColor blueColor]];
 
-        [self.view addSubview:topSpaceView];
-        [self.view addSubview:self.mainTableViewController.view];
+        [self setupTopSpace];
+        [self setupMainCollectionViewController];
     }
     return self;
+}
+
+- (void)setupTopSpace
+{
+    UIView *topSpaceView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 20.0f)];
+    [topSpaceView setBackgroundColor:[UIColor lightPlumColor]];
+    [self.view addSubview:topSpaceView];
+}
+
+- (void)setupMainCollectionViewController
+{
+    TackMainFlowLayout *layout  = [[TackMainFlowLayout alloc] init];
+    [layout setItemSize:CGSizeMake(self.view.frame.size.width, 67.0f)];
+
+    self.mainCollectionViewController = [[TackMainCollectionViewController alloc] initWithCollectionViewLayout:layout];
+
+    [self.mainCollectionViewController setManagedObjectContext:self.managedObjectContext];
+    [self addChildViewController:self.mainCollectionViewController];
+    [self.mainCollectionViewController.view setFrame:CGRectMake(0, 20.0f, self.view.frame.size.width, self.view.frame.size.height - 20.0f)];
+    [self.view addSubview:self.mainCollectionViewController.view];
 }
 
 - (void)viewDidLoad

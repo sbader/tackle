@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-#import "TackMainTableViewController.h"
+#import "TackMainCollectionViewController.h"
 
 @interface TackMainViewController : UIViewController
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (strong, nonatomic) TackMainTableViewController *mainTableViewController;
+@property (strong, nonatomic) TackMainCollectionViewController *mainCollectionViewController;
 
 - (id)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 

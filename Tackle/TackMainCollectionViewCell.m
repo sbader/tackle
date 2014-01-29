@@ -1,37 +1,44 @@
 //
-//  TackMainTableViewCell.m
+//  TackMainCollectionViewCell.m
 //  Tackle
 //
-//  Created by Scott Bader on 1/22/14.
+//  Created by Scott Bader on 1/27/14.
 //  Copyright (c) 2014 Melody Road. All rights reserved.
 //
 
-#import "TackMainTableViewCell.h"
-#import "TackDateFormatter.h"
+#import "TackMainCollectionViewCell.h"
 
-@implementation TackMainTableViewCell
+#import "TackDateFormatter.h"
+#import <QuartzCore/QuartzCore.h>
+
+@implementation TackMainCollectionViewCell
 
 @synthesize delegate = _delegate;
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    self = [super initWithFrame:frame];
     if (self) {
         [self setBackgroundColor:[UIColor lightPlumColor]];
 
         [self setupDueDateLabel];
         [self setupTaskTextLabel];
         [self setupMarkDoneButton];
+        [self setupBottomSeparator];
     }
     return self;
 }
 
 - (void)setupMarkDoneButton
 {
-    self.markAsDoneButton = [[UIButton alloc] initWithFrame:CGRectMake(271.0f, 10.0f, 38.0f, 38.0f)];
-    [self.markAsDoneButton setTitle:@"Done" forState:UIControlStateNormal];
-    [self.markAsDoneButton sizeToFit];
-    [self.markAsDoneButton setTitleColor:[UIColor midOpaqueGrayColor] forState:UIControlStateNormal];
+    self.markAsDoneButton = [[UIButton alloc] initWithFrame:CGRectMake(271.0f, self.frame.size.height/2 - 19.0f, 38.0f, 38.0f)];
+
+    [self.markAsDoneButton.layer setShouldRasterize:YES];
+    [self.markAsDoneButton.layer setRasterizationScale:[[UIScreen mainScreen] scale]];
+    [self.markAsDoneButton.layer setCornerRadius:19.0f];
+    [self.markAsDoneButton.layer setBorderWidth:1.0f];
+    [self.markAsDoneButton.layer setBackgroundColor:[UIColor softGrayColor].CGColor];
+    [self.markAsDoneButton.layer setBorderColor:[UIColor softGrayColor].CGColor];
 
     [self.markAsDoneButton addTarget:self action:@selector(markAsDone:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -59,6 +66,14 @@
     [self.contentView addSubview:self.taskTextLabel];
 }
 
+- (void)setupBottomSeparator
+{
+    UIView *bottomSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height - 1, self.frame.size.width, 1.0f)];
+    [bottomSeparator setBackgroundColor:[UIColor lightPlumGrayColor]];
+
+    [self.contentView addSubview:bottomSeparator];
+}
+
 - (void)setText:(NSString *)text
 {
     [self.taskTextLabel setText:text];
@@ -70,18 +85,20 @@
     [self.dueDateLabel setText:[[TackDateFormatter sharedInstance] stringFromDate:dueDate]];
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
-
 - (IBAction)markAsDone:(id)sender
 {
     if ([self.delegate respondsToSelector:@selector(markAsDone:)]) {
         [self.delegate markAsDone:self];
     }
 }
+
+/*
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect
+{
+    // Drawing code
+}
+*/
 
 @end

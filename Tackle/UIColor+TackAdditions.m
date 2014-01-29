@@ -20,6 +20,16 @@
     return UIColorFromRGB(0x1B1323);
 }
 
++ (UIColor *)softGrayColor
+{
+    return UIColorFromRGB(0xBEB8C0);
+}
+
++ (UIColor *)lightPlumGrayColor
+{
+    return UIColorFromRGB(0xACA8AF);
+}
+
 + (UIColor *)lightOpaqueGrayColor
 {
     return UIColorFromRGBWithAlpha(0x645F67, 50.0f);
