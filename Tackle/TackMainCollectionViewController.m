@@ -14,9 +14,6 @@
 
 @interface TackMainCollectionViewController ()
 
-@property (nonatomic) BOOL isOffset;
-@property (nonatomic) BOOL isInset;
-
 - (void)updateCell:(TackMainCollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
 @end
@@ -39,8 +36,6 @@
     [self.collectionView registerClass:[TackMainCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
     [self.collectionView setPagingEnabled:NO];
     [self.collectionView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
-    [self setIsOffset:NO];
-    [self setIsInset:NO];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -172,9 +167,7 @@
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
 {
-    if (!self.isOffset && scrollView.contentOffset.y <= -100) {
-        [self setIsOffset:YES];
-
+    if (scrollView.contentInset.top != 100 && scrollView.contentOffset.y <= -100) {
         targetContentOffset->y = -100;
         [scrollView setShowsVerticalScrollIndicator:NO];
         [UIView animateWithDuration:0.2 animations:^{
@@ -182,9 +175,7 @@
 
         }];
     }
-    else if (self.isOffset) {
-        [self setIsOffset:NO];
-
+    else if (scrollView.contentInset.top == 100 && scrollView.contentOffset.y > -100) {
         CGFloat offsetY;
         CGFloat animationDuration;
 
