@@ -43,6 +43,17 @@
 
 - (BOOL)addSampleData
 {
+    NSFetchRequest *allTasks = [[NSFetchRequest alloc] init];
+    [allTasks setEntity:[NSEntityDescription entityForName:@"Task" inManagedObjectContext:self.managedObjectContext]];
+    [allTasks setIncludesPropertyValues:NO]; //only fetch the managedObjectID
+
+    NSError *requestError = nil;
+    NSArray *tasks = [self.managedObjectContext executeFetchRequest:allTasks error:&requestError];
+
+    [tasks enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [self.managedObjectContext deleteObject:obj];
+    }];
+
     Task *task1 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
     [task1 setText:@"Prepare Expenses"];
     [task1 setDueDate:[NSDate dateWithTimeIntervalSinceNow:7200]];
@@ -51,17 +62,17 @@
     [task2 setText:@"Renew Apple Developer Program Membership"];
     [task2 setDueDate:[NSDate dateWithTimeIntervalSinceNow:96000]];
 
-//    Task *task3 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-//    [task3 setText:@"Go to Pivotal"];
-//    [task3 setDueDate:[NSDate dateWithTimeIntervalSinceNow:72000]];
-//
-//    Task *task4 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-//    [task4 setText:@"Watch Wolf of Wall St."];
-//    [task4 setDueDate:[NSDate dateWithTimeIntervalSinceNow:172800]];
-//
-//    Task *task5 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-//    [task5 setText:@"Work on Tackle"];
-//    [task5 setDueDate:[NSDate dateWithTimeIntervalSinceNow:171000]];
+    Task *task3 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
+    [task3 setText:@"Go to Pivotal"];
+    [task3 setDueDate:[NSDate dateWithTimeIntervalSinceNow:72000]];
+
+    Task *task4 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
+    [task4 setText:@"Watch Wolf of Wall St."];
+    [task4 setDueDate:[NSDate dateWithTimeIntervalSinceNow:172800]];
+
+    Task *task5 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
+    [task5 setText:@"Work on Tackle"];
+    [task5 setDueDate:[NSDate dateWithTimeIntervalSinceNow:171000]];
 
     NSError *error = nil;
 

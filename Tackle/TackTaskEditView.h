@@ -10,4 +10,12 @@
 
 @interface TackTaskEditView : UIView
 
+@property (strong, nonatomic) UITextField *textField;
+
+@property (strong, nonatomic) UIButton *addTenMinutesButton;
+@property (strong, nonatomic) UIButton *addOneHourButton;
+@property (strong, nonatomic) UIButton *addOneDayButton;
+@property (strong, nonatomic) UIButton *submitButton;
+@property (strong, nonatomic) UIButton *dueDateButton;
+
 @end
