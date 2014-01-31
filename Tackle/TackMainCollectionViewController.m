@@ -13,7 +13,12 @@
 #import "Task.h"
 
 @interface TackMainCollectionViewController ()
+
+@property (nonatomic) BOOL isOffset;
+@property (nonatomic) BOOL isInset;
+
 - (void)updateCell:(TackMainCollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+
 @end
 
 @implementation TackMainCollectionViewController
@@ -22,7 +27,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
@@ -33,6 +37,10 @@
     [self.collectionView setAlwaysBounceVertical:YES];
     [self.collectionView setBackgroundColor:[UIColor darkPlumColor]];
     [self.collectionView registerClass:[TackMainCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
+    [self.collectionView setPagingEnabled:NO];
+    [self.collectionView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
+    [self setIsOffset:NO];
+    [self setIsInset:NO];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -151,6 +159,47 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidScroll:)]) {
+        [self.scrollViewDelegate scrollViewDidScroll:self.collectionView];
+    }
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
+{
+    if (!self.isOffset && scrollView.contentOffset.y <= -100) {
+        [self setIsOffset:YES];
+
+        targetContentOffset->y = -100;
+        [scrollView setShowsVerticalScrollIndicator:NO];
+        [UIView animateWithDuration:0.2 animations:^{
+            [scrollView setContentInset:UIEdgeInsetsMake(100, 0, 20, 0)];
+
+        }];
+    }
+    else if (self.isOffset) {
+        [self setIsOffset:NO];
+
+        CGFloat offsetY;
+        CGFloat animationDuration;
+
+        offsetY = (scrollView.contentOffset.y > 0) ? scrollView.contentOffset.y : 0;
+        animationDuration = 0.2;
+
+        // TODO: Figure out the stuttering with a quick push
+
+        [UIView animateWithDuration:animationDuration animations:^{
+            [scrollView setContentInset:UIEdgeInsetsMake(0, 0, 20, 0)];
+        }];
+
+        [scrollView setContentOffset:CGPointMake(0, offsetY) animated:YES];
+        [scrollView setShowsVerticalScrollIndicator:YES];
+    }
 }
 
 @end

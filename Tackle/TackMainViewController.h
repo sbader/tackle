@@ -10,7 +10,7 @@
 
 #import "TackMainCollectionViewController.h"
 
-@interface TackMainViewController : UIViewController
+@interface TackMainViewController : UIViewController <TackMainCollectionViewScrollViewDelegate>
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) TackMainCollectionViewController *mainCollectionViewController;

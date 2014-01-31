@@ -8,9 +8,23 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TackMainCollectionViewController : UICollectionViewController <NSFetchedResultsControllerDelegate, UITextFieldDelegate, UICollectionViewDelegateFlowLayout>
+@protocol TackMainCollectionViewScrollViewDelegate;
+
+@interface TackMainCollectionViewController : UICollectionViewController <NSFetchedResultsControllerDelegate, UITextFieldDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
+
+@property (assign, nonatomic) id <TackMainCollectionViewScrollViewDelegate> scrollViewDelegate;
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
+@end
+
+@protocol TackMainCollectionViewScrollViewDelegate <NSObject>
+
+@optional
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView;
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate;
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset;
 
 @end
