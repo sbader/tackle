@@ -12,12 +12,12 @@
 
 + (UIColor *)lightPlumColor
 {
-    return UIColorFromRGB(0xF5F1F7);
+    return UIColorFromRGB(0xF3F3F4);
 }
 
 + (UIColor *)darkPlumColor
 {
-    return UIColorFromRGB(0x1B1323);
+    return UIColorFromRGB(0x120D17);
 }
 
 + (UIColor *)softGrayColor
