@@ -153,7 +153,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -169,20 +168,25 @@
 {
     if (scrollView.contentInset.top != 100 && scrollView.contentOffset.y <= -100) {
         targetContentOffset->y = -100;
+
         [scrollView setShowsVerticalScrollIndicator:NO];
+
         [UIView animateWithDuration:0.2 animations:^{
             [scrollView setContentInset:UIEdgeInsetsMake(100, 0, 20, 0)];
-
         }];
+
+        if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidInsetContent:)]) {
+            [self.scrollViewDelegate scrollViewDidInsetContent:self.collectionView];
+        }
     }
     else if (scrollView.contentInset.top == 100 && scrollView.contentOffset.y > -100) {
         targetContentOffset->y = (scrollView.contentOffset.y > 0) ? scrollView.contentOffset.y : 0;
 
+        [scrollView setShowsVerticalScrollIndicator:YES];
+
         [UIView animateWithDuration:0.2 animations:^{
             [scrollView setContentInset:UIEdgeInsetsMake(0, 0, 20, 0)];
         }];
-
-        [scrollView setShowsVerticalScrollIndicator:YES];
     }
 }
 
