@@ -23,26 +23,9 @@
 
         [self setupDueDateLabel];
         [self setupTaskTextLabel];
-        [self setupMarkDoneButton];
         [self setupBottomSeparator];
     }
     return self;
-}
-
-- (void)setupMarkDoneButton
-{
-    self.markAsDoneButton = [[UIButton alloc] initWithFrame:CGRectMake(271.0f, self.frame.size.height/2 - 19.0f, 38.0f, 38.0f)];
-
-    [self.markAsDoneButton.layer setShouldRasterize:YES];
-    [self.markAsDoneButton.layer setRasterizationScale:[[UIScreen mainScreen] scale]];
-    [self.markAsDoneButton.layer setCornerRadius:19.0f];
-    [self.markAsDoneButton.layer setBorderWidth:1.0f];
-    [self.markAsDoneButton.layer setBackgroundColor:[UIColor softGrayColor].CGColor];
-    [self.markAsDoneButton.layer setBorderColor:[UIColor softGrayColor].CGColor];
-
-    [self.markAsDoneButton addTarget:self action:@selector(markAsDone:) forControlEvents:UIControlEventTouchUpInside];
-
-    [self.contentView addSubview:self.markAsDoneButton];
 }
 
 - (void)setupDueDateLabel
@@ -56,7 +39,7 @@
 
 - (void)setupTaskTextLabel
 {
-    self.taskTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 35.0f, 234.0f, 21.0f)];
+    self.taskTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 35.0f, 300.0f, 21.0f)];
 
     [self.taskTextLabel setFont:[UIFont effraRegularWithSize:15.0f]];
     [self.taskTextLabel setNumberOfLines:0];

@@ -16,7 +16,6 @@
 
 @property (strong, nonatomic) UILabel *taskTextLabel;
 @property (strong, nonatomic) UILabel *dueDateLabel;
-@property (strong, nonatomic) UIButton *markAsDoneButton;
 
 - (void)setText:(NSString *)text;
 - (void)setDueDate:(NSDate *)dueDate;
