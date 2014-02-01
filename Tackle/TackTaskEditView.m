@@ -8,6 +8,8 @@
 
 #import "TackTaskEditView.h"
 
+#import "TackDateFormatter.h"
+
 @implementation TackTaskEditView
 
 - (id)initWithFrame:(CGRect)frame
@@ -45,7 +47,7 @@
 - (void)setupDueDateButton
 {
     self.dueDateButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 51.0f, self.frame.size.width, 56.0f)];
-    [self.dueDateButton setTitle:@"Tomorrow at 1:45 PM" forState:UIControlStateNormal];
+    [self.dueDateButton setTitle:[[TackDateFormatter sharedInstance] stringFromDate:[NSDate dateWithTimeIntervalSinceNow:600]] forState:UIControlStateNormal];
     [self.dueDateButton setTitleColor:UIColorFromRGB(0x7091BC) forState:UIControlStateNormal];
     [self.dueDateButton.titleLabel setFont:[UIFont adonisRegularWithSize:23.0f]];
 
@@ -87,7 +89,7 @@
 - (void)setupAddOneDayButton
 {
     self.addOneDayButton = [[UIButton alloc] initWithFrame:CGRectMake(188.0f, 108.0f, 72.0f, 59.0f)];
-    [self.addOneDayButton setTitle:@"+ 1 Hour" forState:UIControlStateNormal];
+    [self.addOneDayButton setTitle:@"+ 1 Day" forState:UIControlStateNormal];
     [self.addOneDayButton setTitleColor:UIColorFromRGB(0x7091BC) forState:UIControlStateNormal];
     [self.addOneDayButton.titleLabel setFont:[UIFont adonisRegularWithSize:15.5f]];
 
