@@ -79,13 +79,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - TackMainCollectionViewScrollViewDelegate
@@ -107,6 +105,15 @@
     else {
         [layer setTransform:CATransform3DMakeScale(1, 1, 1)];
     }
+}
+
+- (void)scrollViewDidInsetContent:(UIScrollView *)scrollView
+{
+    double delayInSeconds = 0.1;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self.editView.textField becomeFirstResponder];
+    });
 }
 
 @end
