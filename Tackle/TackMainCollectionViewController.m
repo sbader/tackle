@@ -50,7 +50,7 @@
     NSDictionary *attributes = @{NSFontAttributeName:[font fontWithSize:15.0f],
                                  NSParagraphStyleAttributeName:paragraphStyle};
 
-    CGRect rect = [task.text boundingRectWithSize:CGSizeMake(234, MAXFLOAT)
+    CGRect rect = [task.text boundingRectWithSize:CGSizeMake(300.0f, MAXFLOAT)
                                           options:NSStringDrawingUsesLineFragmentOrigin
                                        attributes:attributes
                                           context:nil];
