@@ -176,19 +176,12 @@
         }];
     }
     else if (scrollView.contentInset.top == 100 && scrollView.contentOffset.y > -100) {
-        CGFloat offsetY;
-        CGFloat animationDuration;
+        targetContentOffset->y = (scrollView.contentOffset.y > 0) ? scrollView.contentOffset.y : 0;
 
-        offsetY = (scrollView.contentOffset.y > 0) ? scrollView.contentOffset.y : 0;
-        animationDuration = 0.2;
-
-        // TODO: Figure out the stuttering with a quick push
-
-        [UIView animateWithDuration:animationDuration animations:^{
+        [UIView animateWithDuration:0.2 animations:^{
             [scrollView setContentInset:UIEdgeInsetsMake(0, 0, 20, 0)];
         }];
 
-        [scrollView setContentOffset:CGPointMake(0, offsetY) animated:YES];
         [scrollView setShowsVerticalScrollIndicator:YES];
     }
 }
