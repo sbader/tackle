@@ -22,7 +22,6 @@
 		D1027F8A18904E8400FF44A4 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1027F6E18904E8400FF44A4 /* CoreData.framework */; };
 		D1027F9218904E8400FF44A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D1027F9018904E8400FF44A4 /* InfoPlist.strings */; };
 		D1027F9418904E8400FF44A4 /* TackleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D1027F9318904E8400FF44A4 /* TackleTests.m */; };
-		D1027FE818904F0000FF44A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1027FE718904F0000FF44A4 /* Main.storyboard */; };
 		D1027FEE1890535700FF44A4 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = D1027FED1890535700FF44A4 /* Task.m */; };
 		D12E877318944E6A008119B8 /* TackTaskEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = D12E877218944E6A008119B8 /* TackTaskEditView.m */; };
 		D12E877818945525008119B8 /* Adonis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D12E877618945525008119B8 /* Adonis-Bold.otf */; };
@@ -69,7 +68,6 @@
 		D1027F8F18904E8400FF44A4 /* TackleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TackleTests-Info.plist"; sourceTree = "<group>"; };
 		D1027F9118904E8400FF44A4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D1027F9318904E8400FF44A4 /* TackleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TackleTests.m; sourceTree = "<group>"; };
-		D1027FE718904F0000FF44A4 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		D1027FEC1890535700FF44A4 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
 		D1027FED1890535700FF44A4 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
 		D12E877118944E6A008119B8 /* TackTaskEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TackTaskEditView.h; sourceTree = "<group>"; };
@@ -165,7 +163,6 @@
 				D12E878818957943008119B8 /* Views */,
 				D1027F7918904E8400FF44A4 /* TackAppDelegate.h */,
 				D1027F7A18904E8400FF44A4 /* TackAppDelegate.m */,
-				D1027FE718904F0000FF44A4 /* Main.storyboard */,
 			);
 			path = Tackle;
 			sourceTree = "<group>";
@@ -351,7 +348,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D1027FE818904F0000FF44A4 /* Main.storyboard in Resources */,
 				D1027F7518904E8400FF44A4 /* InfoPlist.strings in Resources */,
 				D12E877818945525008119B8 /* Adonis-Bold.otf in Resources */,
 				D139E57F1897329C007163AD /* Effra-Regular.otf in Resources */,
