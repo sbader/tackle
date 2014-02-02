@@ -8,7 +8,6 @@
 
 #import "TackMainCollectionViewController.h"
 
-#import "TackMainCollectionViewCell.h"
 #import "TackDateFormatter.h"
 
 @interface TackMainCollectionViewController ()
@@ -30,11 +29,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.collectionView setRestorationIdentifier:@"CollectionView"];
     [self.collectionView setAlwaysBounceVertical:YES];
     [self.collectionView setBackgroundColor:[UIColor darkPlumColor]];
     [self.collectionView registerClass:[TackMainCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
     [self.collectionView setPagingEnabled:NO];
     [self.collectionView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
+    [self.collectionView setShowsVerticalScrollIndicator:NO];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -69,6 +70,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     TackMainCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+    [cell setDelegate:self];
     [self updateCell:cell atIndexPath:indexPath];
 
     return cell;
@@ -135,7 +137,7 @@
             break;
 
         case NSFetchedResultsChangeDelete:
-            [collectionView deleteItemsAtIndexPaths:@[newIndexPath]];
+            [collectionView deleteItemsAtIndexPaths:@[indexPath]];
             break;
 
         case NSFetchedResultsChangeUpdate:
@@ -175,8 +177,6 @@
     if (scrollView.contentInset.top != 100 && scrollView.contentOffset.y <= -100) {
         targetContentOffset->y = -100;
 
-        [scrollView setShowsVerticalScrollIndicator:NO];
-
         [UIView animateWithDuration:0.2 animations:^{
             [scrollView setContentInset:UIEdgeInsetsMake(100, 0, 0, 0)];
         } completion:^(BOOL finished) {
@@ -188,8 +188,6 @@
     else if (scrollView.contentInset.top == 100 && scrollView.contentOffset.y > -100) {
         targetContentOffset->y = (scrollView.contentOffset.y > 0) ? scrollView.contentOffset.y : 0;
 
-        [scrollView setShowsVerticalScrollIndicator:YES];
-
         [UIView animateWithDuration:0.2 animations:^{
             [scrollView setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
         } completion:^(BOOL finished) {
@@ -198,6 +196,19 @@
             }
         }];
     }
+}
+
+#pragma mark - TackMainCollectionViewCellDelegate
+
+- (void)markAsDone:(TackMainCollectionViewCell *)cell
+{
+    Task *task = [self.fetchedResultsController objectAtIndexPath:[self.collectionView indexPathForCell:cell]];
+    [task setIsDone:YES];
+
+    __block NSError *error;
+    [task.managedObjectContext performBlock:^{
+        [task.managedObjectContext save:&error];
+    }];
 }
 
 @end
