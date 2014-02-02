@@ -10,7 +10,6 @@
 
 #import "TackMainCollectionViewCell.h"
 #import "TackDateFormatter.h"
-#import "Task.h"
 
 @interface TackMainCollectionViewController ()
 
@@ -47,6 +46,14 @@
     CGFloat height = ceil(textSize.height) + 46;
 
     return CGSizeMake(self.view.frame.size.width, height);
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    if ([self.selectionDelegate respondsToSelector:@selector(didSelectCellWithTask:)]) {
+        [self.selectionDelegate didSelectCellWithTask:task];
+    }
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -117,6 +124,7 @@
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath
 {
+
     UICollectionView *collectionView = self.collectionView;
 
     switch(type) {
@@ -129,12 +137,11 @@
             break;
 
         case NSFetchedResultsChangeUpdate:
-//            [self updateCell:(TackMainTableViewCell *)[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            [self updateCell:(TackMainCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath] atIndexPath:indexPath];
             break;
 
         case NSFetchedResultsChangeMove:
-            [collectionView deleteItemsAtIndexPaths:@[indexPath]];
-            [collectionView insertItemsAtIndexPaths:@[newIndexPath]];
+            [collectionView moveItemAtIndexPath:indexPath toIndexPath:newIndexPath];
             break;
     }
 }
@@ -147,7 +154,7 @@
 - (void)resetContentOffset
 {
     [UIView animateWithDuration:0.2 animations:^{
-        [self.collectionView setContentInset:UIEdgeInsetsMake(0, 0, 20, 0)];
+        [self.collectionView setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
         [self.collectionView setContentOffset:CGPointZero];
     }];
 }
@@ -169,7 +176,7 @@
         [scrollView setShowsVerticalScrollIndicator:NO];
 
         [UIView animateWithDuration:0.2 animations:^{
-            [scrollView setContentInset:UIEdgeInsetsMake(100, 0, 20, 0)];
+            [scrollView setContentInset:UIEdgeInsetsMake(100, 0, 0, 0)];
         } completion:^(BOOL finished) {
             if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidInsetContent:)]) {
                 [self.scrollViewDelegate scrollViewDidInsetContent:self.collectionView];
@@ -182,7 +189,11 @@
         [scrollView setShowsVerticalScrollIndicator:YES];
 
         [UIView animateWithDuration:0.2 animations:^{
-            [scrollView setContentInset:UIEdgeInsetsMake(0, 0, 20, 0)];
+            [scrollView setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
+        } completion:^(BOOL finished) {
+            if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidResetContent:)]) {
+                [self.scrollViewDelegate scrollViewDidResetContent:self.collectionView];
+            }
         }];
     }
 }

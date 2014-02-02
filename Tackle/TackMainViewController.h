@@ -11,7 +11,7 @@
 #import "TackMainCollectionViewController.h"
 #import "TackTaskEditView.h"
 
-@interface TackMainViewController : UIViewController <TackMainCollectionViewScrollViewDelegate, TackTaskEditViewDelegate>
+@interface TackMainViewController : UIViewController <TackMainCollectionViewScrollViewDelegate, TackMainCollectionViewSelectionDelegate, TackTaskEditViewDelegate>
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) TackMainCollectionViewController *mainCollectionViewController;

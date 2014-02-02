@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol TackMainCollectionViewScrollViewDelegate;
+#import "Task.h"
 
-@interface TackMainCollectionViewController : UICollectionViewController <NSFetchedResultsControllerDelegate, UITextFieldDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
+@protocol TackMainCollectionViewScrollViewDelegate;
+@protocol TackMainCollectionViewSelectionDelegate;
+
+@interface TackMainCollectionViewController : UICollectionViewController <UICollectionViewDelegate, NSFetchedResultsControllerDelegate, UITextFieldDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
 
 @property (assign, nonatomic) id <TackMainCollectionViewScrollViewDelegate> scrollViewDelegate;
+@property (assign, nonatomic) id <TackMainCollectionViewSelectionDelegate> selectionDelegate;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
@@ -28,5 +32,14 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate;
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset;
 - (void)scrollViewDidInsetContent:(UIScrollView *)scrollView;
+- (void)scrollViewDidResetContent:(UIScrollView *)scrollView;
+
+@end
+
+@protocol TackMainCollectionViewSelectionDelegate <NSObject>
+
+@optional
+
+- (void)didSelectCellWithTask:(Task *)task;
 
 @end
