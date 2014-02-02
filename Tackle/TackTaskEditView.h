@@ -13,16 +13,15 @@
 @interface TackTaskEditView : UIView
 
 @property (assign, nonatomic) id <TackTaskEditViewDelegate> delegate;
-
 @property (strong, nonatomic) UITextField *textField;
-
 @property (strong, nonatomic) UIButton *addTenMinutesButton;
 @property (strong, nonatomic) UIButton *addOneHourButton;
 @property (strong, nonatomic) UIButton *addOneDayButton;
 @property (strong, nonatomic) UIButton *submitButton;
 @property (strong, nonatomic) UIButton *dueDateButton;
-
 @property (strong, nonatomic) NSDate *dueDate;
+
+- (void)resetContent;
 
 @end
 

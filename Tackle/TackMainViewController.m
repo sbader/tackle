@@ -54,6 +54,7 @@
 
     self.mainCollectionViewController = [[TackMainCollectionViewController alloc] initWithCollectionViewLayout:layout];
     [self.mainCollectionViewController setScrollViewDelegate:self];
+    [self.mainCollectionViewController setSelectionDelegate:self];
 
     [self.mainCollectionViewController setManagedObjectContext:self.managedObjectContext];
     [self addChildViewController:self.mainCollectionViewController];
@@ -88,6 +89,20 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)editTask:(Task *)task
+{
+    [self setEditingTask:task];
+
+    [self.editView.textField setText:task.text];
+    [self.editView setDueDate:task.dueDate];
+
+    [UIView animateWithDuration:0.2 animations:^{
+        [self.mainCollectionViewController.collectionView setContentInset:UIEdgeInsetsMake(100, 0, 0, 0)];
+    } completion:^(BOOL finished) {
+        [self.mainCollectionViewController.collectionView setContentOffset:CGPointMake(0, -100) animated:YES];
+    }];
+}
+
 #pragma mark - TackMainCollectionViewScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView;
@@ -114,6 +129,18 @@
     [self.editView.textField becomeFirstResponder];
 }
 
+- (void)scrollViewDidResetContent:(UIScrollView *)scrollView
+{
+    [self.editView resetContent];
+}
+
+#pragma mark - TackMainCollectionViewSelectionDelegate
+
+- (void)didSelectCellWithTask:(Task *)task
+{
+    [self editTask:task];
+}
+
 #pragma mark - TackTaskEditViewDelegate
 
 - (void)taskEditViewDidReturnWithText:(NSString *)text dueDate:(NSDate *)dueDate
@@ -121,6 +148,13 @@
     if (self.editingTask) {
         [self.editingTask setText:text];
         [self.editingTask setDueDate:dueDate];
+
+        __block NSError *error;
+        [self.editingTask.managedObjectContext performBlock:^{
+            [self.editingTask.managedObjectContext save:&error];
+        }];
+
+        [self setEditingTask:nil];
     }
     else {
         Task *task = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
@@ -131,9 +165,6 @@
         [task.managedObjectContext performBlock:^{
             [task.managedObjectContext save:&error];
         }];
-
-//        NSError *error = nil;
-//        [task.managedObjectContext save:&error];
     }
 
     [self.mainCollectionViewController resetContentOffset];

@@ -138,9 +138,8 @@
 - (void)handleSubmit:(id)sender
 {
     [self.textField resignFirstResponder];
-    [self.delegate taskEditViewDidReturnWithText:self.textField.text dueDate:[NSDate dateWithTimeIntervalSinceNow:600]];
-    [self.textField setText:@""];
-    [self setDueDate:[NSDate dateWithTimeIntervalSinceNow:600]];
+    [self.delegate taskEditViewDidReturnWithText:self.textField.text dueDate:self.dueDate];
+    [self resetContent];
 }
 
 - (void)handleAddTenMinutes:(id)sender
@@ -161,6 +160,12 @@
 - (void)updateDueDate
 {
     [self.dueDateButton setTitle:[[TackDateFormatter sharedInstance] stringFromDate:self.dueDate] forState:UIControlStateNormal];
+}
+
+- (void)resetContent
+{
+    [self setDueDate:[NSDate dateWithTimeIntervalSinceNow:600]];
+    [self.textField setText:@""];
 }
 
 #pragma mark - NSKeyValueObserving
