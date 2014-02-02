@@ -42,20 +42,9 @@
 {
     Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
 
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
+    CGSize textSize = [TackMainCollectionViewCell sizeForTaskTextLabelWithText:task.text];
 
-    UIFont *font = [UIFont effraRegularWithSize:15.0f];
-
-    NSDictionary *attributes = @{NSFontAttributeName:[font fontWithSize:15.0f],
-                                 NSParagraphStyleAttributeName:paragraphStyle};
-
-    CGRect rect = [task.text boundingRectWithSize:CGSizeMake(300.0f, MAXFLOAT)
-                                          options:NSStringDrawingUsesLineFragmentOrigin
-                                       attributes:attributes
-                                          context:nil];
-
-    CGFloat height = ceil(rect.size.height) + 46;
+    CGFloat height = ceil(textSize.height) + 46;
 
     return CGSizeMake(self.view.frame.size.width, height);
 }

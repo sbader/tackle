@@ -17,6 +17,8 @@
 @property (strong, nonatomic) UILabel *taskTextLabel;
 @property (strong, nonatomic) UILabel *dueDateLabel;
 
++ (CGSize)sizeForTaskTextLabelWithText:(NSString *)text;
+
 - (void)setText:(NSString *)text;
 - (void)setDueDate:(NSDate *)dueDate;
 
