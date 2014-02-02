@@ -155,12 +155,20 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)resetContentOffset
+{
+    [UIView animateWithDuration:0.2 animations:^{
+        [self.collectionView setContentInset:UIEdgeInsetsMake(0, 0, 20, 0)];
+        [self.collectionView setContentOffset:CGPointZero];
+    }];
+}
+
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidScroll:)]) {
-        [self.scrollViewDelegate scrollViewDidScroll:self.collectionView];
+        [self.scrollViewDelegate scrollViewDidScroll:scrollView];
     }
 }
 
@@ -173,11 +181,11 @@
 
         [UIView animateWithDuration:0.2 animations:^{
             [scrollView setContentInset:UIEdgeInsetsMake(100, 0, 20, 0)];
+        } completion:^(BOOL finished) {
+            if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidInsetContent:)]) {
+                [self.scrollViewDelegate scrollViewDidInsetContent:self.collectionView];
+            }
         }];
-
-        if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidInsetContent:)]) {
-            [self.scrollViewDelegate scrollViewDidInsetContent:self.collectionView];
-        }
     }
     else if (scrollView.contentInset.top == 100 && scrollView.contentOffset.y > -100) {
         targetContentOffset->y = (scrollView.contentOffset.y > 0) ? scrollView.contentOffset.y : 0;

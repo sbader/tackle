@@ -13,9 +13,10 @@
 @interface TackMainCollectionViewController : UICollectionViewController <NSFetchedResultsControllerDelegate, UITextFieldDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
 
 @property (assign, nonatomic) id <TackMainCollectionViewScrollViewDelegate> scrollViewDelegate;
-
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
+- (void)resetContentOffset;
 
 @end
 

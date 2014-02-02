@@ -9,11 +9,12 @@
 #import "TackMainViewController.h"
 
 #import "TackMainFlowLayout.h"
-#import "TackTaskEditView.h"
+#import "Task.h"
 
 @interface TackMainViewController ()
 
 @property (nonatomic, strong) TackTaskEditView *editView;
+@property (nonatomic, strong) Task *editingTask;
 
 @end
 
@@ -64,6 +65,7 @@
 - (void)setupEditView
 {
     self.editView = [[TackTaskEditView alloc] initWithFrame:CGRectMake(0, -190.0f, self.view.frame.size.width, 165.0f)];
+    [self.editView setDelegate:self];
 //    [self.editView setHidden:YES];
 //    CALayer *layer = self.editView.layer;
 //
@@ -109,11 +111,32 @@
 
 - (void)scrollViewDidInsetContent:(UIScrollView *)scrollView
 {
-    double delayInSeconds = 0.1;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [self.editView.textField becomeFirstResponder];
-    });
+    [self.editView.textField becomeFirstResponder];
+}
+
+#pragma mark - TackTaskEditViewDelegate
+
+- (void)taskEditViewDidReturnWithText:(NSString *)text dueDate:(NSDate *)dueDate
+{
+    if (self.editingTask) {
+        [self.editingTask setText:text];
+        [self.editingTask setDueDate:dueDate];
+    }
+    else {
+        Task *task = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
+        [task setText:text];
+        [task setDueDate:dueDate];
+
+        __block NSError *error;
+        [task.managedObjectContext performBlock:^{
+            [task.managedObjectContext save:&error];
+        }];
+
+//        NSError *error = nil;
+//        [task.managedObjectContext save:&error];
+    }
+
+    [self.mainCollectionViewController resetContentOffset];
 }
 
 @end
