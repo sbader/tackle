@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 
 #import "Task.h"
+#import "TackMainCollectionViewCell.h"
 
 @protocol TackMainCollectionViewScrollViewDelegate;
 @protocol TackMainCollectionViewSelectionDelegate;
 
-@interface TackMainCollectionViewController : UICollectionViewController <UICollectionViewDelegate, NSFetchedResultsControllerDelegate, UITextFieldDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
+@interface TackMainCollectionViewController : UICollectionViewController <UICollectionViewDelegate, NSFetchedResultsControllerDelegate, UITextFieldDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, TackMainCollectionViewCellDelegate>
 
 @property (assign, nonatomic) id <TackMainCollectionViewScrollViewDelegate> scrollViewDelegate;
 @property (assign, nonatomic) id <TackMainCollectionViewSelectionDelegate> selectionDelegate;

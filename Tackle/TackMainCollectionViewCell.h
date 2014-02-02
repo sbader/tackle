@@ -10,15 +10,14 @@
 
 @protocol TackMainCollectionViewCellDelegate;
 
-@interface TackMainCollectionViewCell : UICollectionViewCell
+@interface TackMainCollectionViewCell : UICollectionViewCell <UIGestureRecognizerDelegate>
 
 @property (assign, nonatomic) id <TackMainCollectionViewCellDelegate> delegate;
 
 @property (strong, nonatomic) UILabel *taskTextLabel;
 @property (strong, nonatomic) UILabel *dueDateLabel;
 
-+ (CGSize)sizeForTaskTextLabelWithText:(NSString *)text;
-
++ (CGSize)sizeForTaskTextLabelWithText:(NSString *)text;\
 - (void)setText:(NSString *)text;
 - (void)setDueDate:(NSDate *)dueDate;
 
