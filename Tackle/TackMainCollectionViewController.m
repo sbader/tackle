@@ -50,9 +50,11 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    if ([self.selectionDelegate respondsToSelector:@selector(didSelectCellWithTask:)]) {
-        [self.selectionDelegate didSelectCellWithTask:task];
+    if (self.collectionView.contentInset.top != 100) {
+        Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        if ([self.selectionDelegate respondsToSelector:@selector(didSelectCellWithTask:)]) {
+            [self.selectionDelegate didSelectCellWithTask:task];
+        }
     }
 }
 
