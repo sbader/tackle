@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol TackTaskEditViewDelegate;
+
 @interface TackTaskEditView : UIView
+
+@property (assign, nonatomic) id <TackTaskEditViewDelegate> delegate;
 
 @property (strong, nonatomic) UITextField *textField;
 
@@ -18,4 +22,15 @@
 @property (strong, nonatomic) UIButton *submitButton;
 @property (strong, nonatomic) UIButton *dueDateButton;
 
+@property (strong, nonatomic) NSDate *dueDate;
+
 @end
+
+@protocol TackTaskEditViewDelegate <NSObject>
+
+@required
+
+- (void)taskEditViewDidReturnWithText:(NSString *)text dueDate:(NSDate *)dueDate;
+
+@end
+

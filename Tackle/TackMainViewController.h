@@ -9,12 +9,15 @@
 #import <UIKit/UIKit.h>
 
 #import "TackMainCollectionViewController.h"
+#import "TackTaskEditView.h"
 
-@interface TackMainViewController : UIViewController <TackMainCollectionViewScrollViewDelegate>
+@interface TackMainViewController : UIViewController <TackMainCollectionViewScrollViewDelegate, TackTaskEditViewDelegate>
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) TackMainCollectionViewController *mainCollectionViewController;
 
 - (id)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
+
+- (void)taskEditViewDidReturnWithText:(NSString *)text dueDate:(NSDate *)dueDate;
 
 @end
