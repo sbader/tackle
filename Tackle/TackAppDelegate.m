@@ -23,6 +23,7 @@
     [self setupWindow];
     [self setupMainViewController];
     [self.window makeKeyAndVisible];
+
     return YES;
 }
 

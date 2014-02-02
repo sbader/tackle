@@ -60,7 +60,9 @@
 - (void)setText:(NSString *)text
 {
     [self.taskTextLabel setText:text];
-    [self.taskTextLabel sizeToFit];
+
+    CGSize textSize = [TackMainCollectionViewCell sizeForTaskTextLabelWithText:text];
+    [self.taskTextLabel setFrame:CGRectMake(6, 35, textSize.width, textSize.height)];
 }
 
 - (void)setDueDate:(NSDate *)dueDate
@@ -75,13 +77,22 @@
     }
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
++ (CGSize)sizeForTaskTextLabelWithText:(NSString *)text
 {
-    // Drawing code
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
+
+    UIFont *font = [UIFont effraRegularWithSize:15.0f];
+
+    NSDictionary *attributes = @{NSFontAttributeName:[font fontWithSize:15.0f],
+                                 NSParagraphStyleAttributeName:paragraphStyle};
+
+    CGRect rect = [text boundingRectWithSize:CGSizeMake(300.0f, MAXFLOAT)
+                                     options:NSStringDrawingUsesLineFragmentOrigin
+                                  attributes:attributes
+                                     context:nil];
+
+    return CGSizeMake(rect.size.width, rect.size.height);
 }
-*/
 
 @end
