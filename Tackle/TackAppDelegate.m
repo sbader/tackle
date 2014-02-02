@@ -19,7 +19,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-//    [self addSampleData];
+    [self addSampleData];
     [self setupWindow];
     [self setupMainViewController];
     [self.window makeKeyAndVisible];
@@ -74,6 +74,26 @@
     Task *task5 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
     [task5 setText:@"Work on Tackle"];
     [task5 setDueDate:[NSDate dateWithTimeIntervalSinceNow:171000]];
+
+    Task *task6 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
+    [task6 setText:@"Go to anniversary party"];
+    [task6 setDueDate:[NSDate dateWithTimeIntervalSinceNow:220000]];
+
+    Task *task7 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
+    [task7 setText:@"Go to dinner with family"];
+    [task7 setDueDate:[NSDate dateWithTimeIntervalSinceNow:240000]];
+
+    Task *task8 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
+    [task8 setText:@"Watch hockey"];
+    [task8 setDueDate:[NSDate dateWithTimeIntervalSinceNow:280000]];
+
+    Task *task9 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
+    [task9 setText:@"Party"];
+    [task9 setDueDate:[NSDate dateWithTimeIntervalSinceNow:290000]];
+
+    Task *task10 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
+    [task10 setText:@"Go to new job"];
+    [task10 setDueDate:[NSDate dateWithTimeIntervalSinceNow:300000]];
 
     NSError *error = nil;
 
