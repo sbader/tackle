@@ -167,11 +167,11 @@
                                                attachedToAnchor:anchor];
 
         lastTime = CFAbsoluteTimeGetCurrent();
-        lastAngle = [self angleOfView:gestureRecognizer.view];
+        lastAngle = gestureRecognizer.view.angleOfView;
 
         attachment.action = ^{
             CFAbsoluteTime time = CFAbsoluteTimeGetCurrent();
-            CGFloat angle = [self angleOfView:gestureRecognizer.view];
+            CGFloat angle = gestureRecognizer.view.angleOfView;
             if (time > lastTime) {
                 angularVelocity = (angle - lastAngle) / (time - lastTime);
                 lastTime = time;
@@ -243,11 +243,6 @@
     } else {
         return YES;
     }
-}
-
-- (CGFloat)angleOfView:(UIView *)view
-{
-    return atan2(view.transform.b, view.transform.a);
 }
 
 @end
