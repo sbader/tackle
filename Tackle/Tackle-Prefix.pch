@@ -16,4 +16,5 @@
     #import <CoreData/CoreData.h>
     #import "UIFont+TackAdditions.h"
     #import "UIColor+TackAdditions.h"
+    #import "UIView+TackAdditions.h"
 #endif

@@ -37,6 +37,7 @@
 		D172CF3F189739D900297A42 /* TackMainCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D172CF3E189739D900297A42 /* TackMainCollectionViewController.m */; };
 		D172CF4218973C4900297A42 /* TackMainCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D172CF4118973C4900297A42 /* TackMainCollectionViewCell.m */; };
 		D172CF451898A13500297A42 /* TackMainFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D172CF441898A13500297A42 /* TackMainFlowLayout.m */; };
+		D17BCFB3189F3D05001996C1 /* UIView+TackAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D17BCFB2189F3D05001996C1 /* UIView+TackAdditions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,8 @@
 		D172CF4118973C4900297A42 /* TackMainCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TackMainCollectionViewCell.m; sourceTree = "<group>"; };
 		D172CF431898A13500297A42 /* TackMainFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TackMainFlowLayout.h; sourceTree = "<group>"; };
 		D172CF441898A13500297A42 /* TackMainFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TackMainFlowLayout.m; sourceTree = "<group>"; };
+		D17BCFB1189F3D05001996C1 /* UIView+TackAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TackAdditions.h"; sourceTree = "<group>"; };
+		D17BCFB2189F3D05001996C1 /* UIView+TackAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TackAdditions.m"; sourceTree = "<group>"; };
 		D1D84A0D189DC67100D0AC78 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -237,6 +240,8 @@
 				D12E87821894A07B008119B8 /* UIFont+TackAdditions.m */,
 				D12E8784189573FC008119B8 /* UIColor+TackAdditions.h */,
 				D12E8785189573FC008119B8 /* UIColor+TackAdditions.m */,
+				D17BCFB1189F3D05001996C1 /* UIView+TackAdditions.h */,
+				D17BCFB2189F3D05001996C1 /* UIView+TackAdditions.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -384,6 +389,7 @@
 				D172CF4218973C4900297A42 /* TackMainCollectionViewCell.m in Sources */,
 				D12E8786189573FC008119B8 /* UIColor+TackAdditions.m in Sources */,
 				D12E87831894A07B008119B8 /* UIFont+TackAdditions.m in Sources */,
+				D17BCFB3189F3D05001996C1 /* UIView+TackAdditions.m in Sources */,
 				D12E877318944E6A008119B8 /* TackTaskEditView.m in Sources */,
 				D1027F7B18904E8400FF44A4 /* TackAppDelegate.m in Sources */,
 				D139E5771895A117007163AD /* TackMainViewController.m in Sources */,
