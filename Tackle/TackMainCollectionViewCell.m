@@ -193,13 +193,6 @@
             return;
         }
 
-        //        if (fabs(atan2(velocity.y, velocity.x) - M_PI_2) > M_PI_4) {
-        //            UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:gestureRecognizer.view snapToPoint:startCenter];
-        //            [self.animator addBehavior:snap];
-        //
-        //            return;
-        //        }
-
         UIDynamicItemBehavior *dynamic = [[UIDynamicItemBehavior alloc] initWithItems:@[gestureRecognizer.view]];
         [dynamic addLinearVelocity:velocity forItem:gestureRecognizer.view];
         [dynamic addAngularVelocity:angularVelocity forItem:gestureRecognizer.view];
