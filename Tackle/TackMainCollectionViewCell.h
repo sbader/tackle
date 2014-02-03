@@ -25,8 +25,9 @@
 
 @protocol TackMainCollectionViewCellDelegate <NSObject>
 
-@optional
+@required
 
 - (void)markAsDone:(TackMainCollectionViewCell *)cell;
+- (BOOL)shouldHandlePanGesturesForCell:(TackMainCollectionViewCell *)cell;
 
 @end

@@ -211,4 +211,14 @@
     }];
 }
 
+- (BOOL)shouldHandlePanGesturesForCell:(TackMainCollectionViewCell *)cell
+{
+    if (self.collectionView.contentInset.top != 100) {
+        return YES;
+    }
+    else {
+        return NO;
+    }
+}
+
 @end
