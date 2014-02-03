@@ -115,9 +115,7 @@
 
 - (void)markAsDone
 {
-    if ([self.delegate respondsToSelector:@selector(markAsDone:)]) {
-        [self.delegate markAsDone:self];
-    }
+    [self.delegate markAsDone:self];
 }
 
 + (CGSize)sizeForTaskTextLabelWithText:(NSString *)text
@@ -142,6 +140,10 @@
 
 - (void)handlePanGesture:(UIPanGestureRecognizer *)gestureRecognizer
 {
+    if (![self.delegate shouldHandlePanGesturesForCell:self]) {
+        return;
+    }
+
     static UIAttachmentBehavior *attachment;
     static CGPoint startCenter;
     static CFAbsoluteTime lastTime;
@@ -194,7 +196,6 @@
         if (maxVelocity < 825) {
             UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:gestureRecognizer.view snapToPoint:startCenter];
             [self.animator addBehavior:snap];
-
 
             self.mainView.layer.borderWidth = 0;
             self.mainView.layer.shouldRasterize = NO;
