@@ -47,6 +47,9 @@
 {
     [self.mainView setTransform:CGAffineTransformIdentity];
     [self.mainView setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+
+    self.mainView.layer.borderWidth = 0;
+    self.mainView.layer.shouldRasterize = NO;
 }
 
 - (void)setupMainView
@@ -146,6 +149,10 @@
     static CGFloat angularVelocity;
 
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        self.mainView.layer.borderWidth = 3;
+        self.mainView.layer.borderColor = [UIColor clearColor].CGColor;
+        self.mainView.layer.shouldRasterize = YES;
+
         [self.animator removeAllBehaviors];
         [self.superview bringSubviewToFront:self];
 
@@ -188,6 +195,10 @@
             UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:gestureRecognizer.view snapToPoint:startCenter];
             [self.animator addBehavior:snap];
 
+
+            self.mainView.layer.borderWidth = 0;
+            self.mainView.layer.shouldRasterize = NO;
+
             return;
         }
 
@@ -218,6 +229,9 @@
         UIGravityBehavior *gravity = [[UIGravityBehavior alloc] initWithItems:@[gestureRecognizer.view]];
         gravity.magnitude = 0.7;
         [self.animator addBehavior:gravity];
+
+        self.mainView.layer.borderWidth = 0;
+        self.mainView.layer.shouldRasterize = NO;
     }
 }
 
