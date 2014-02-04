@@ -52,7 +52,7 @@
     self.textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 50.0f)];
     [self.textField setTextAlignment:NSTextAlignmentCenter];
     [self.textField setPlaceholder:@"What do you want to tackle?"];
-    [self.textField setFont:[UIFont adonisRegularWithSize:20.0f]];
+    [self.textField setFont:[UIFont effraRegularWithSize:20.0f]];
     [self.textField setBackgroundColor:UIColorFromRGB(0xEBEBEB)];
     [self.textField setTintColor:UIColorFromRGB(0xA37BB9)];
 
@@ -73,19 +73,24 @@
 {
     self.dueDateButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 51.0f, self.frame.size.width, 56.0f)];
     [self.dueDateButton setTitleColor:UIColorFromRGB(0x7091BC) forState:UIControlStateNormal];
-    [self.dueDateButton.titleLabel setFont:[UIFont adonisRegularWithSize:23.0f]];
+    [self.dueDateButton setTitleColor:UIColorFromRGB(0x82AADD) forState:UIControlStateHighlighted];
+    [self.dueDateButton setTitleColor:UIColorFromRGB(0x82AADD) forState:UIControlStateSelected];
+
+    [self.dueDateButton.titleLabel setFont:[UIFont effraRegularWithSize:23.0f]];
+
     [self.dueDateButton addTarget:self action:@selector(displayDatePicker:) forControlEvents:UIControlEventTouchUpInside];
 
-    UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(0, 107.0f, self.frame.size.width, 1.0f)];
-    [separatorView setBackgroundColor:UIColorFromRGB(0xCACACA)];
-
     [self addSubview:self.dueDateButton];
-    [self addSubview:separatorView];
 }
 
 - (void)setupBottomButtonView
 {
     self.bottomButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 108, self.frame.size.width, 59.0f)];
+
+    UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 1.0f)];
+    [separatorView setBackgroundColor:UIColorFromRGB(0xCACACA)];
+
+    [self.bottomButtonView addSubview:separatorView];
 
     [self setupAddTenMinutesButton];
     [self setupAddOneHourButton];
@@ -110,7 +115,9 @@
     self.addTenMinutesButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 109.0f, 59.0f)];
     [self.addTenMinutesButton setTitle:@"+ 10 Minutes" forState:UIControlStateNormal];
     [self.addTenMinutesButton setTitleColor:UIColorFromRGB(0x7091BC) forState:UIControlStateNormal];
-    [self.addTenMinutesButton.titleLabel setFont:[UIFont adonisRegularWithSize:15.5f]];
+    [self.addTenMinutesButton setTitleColor:UIColorFromRGB(0x82AADD) forState:UIControlStateHighlighted];
+    [self.addTenMinutesButton setTitleColor:UIColorFromRGB(0x82AADD) forState:UIControlStateSelected];
+    [self.addTenMinutesButton.titleLabel setFont:[UIFont effraRegularWithSize:15.5f]];
 
     [self.addTenMinutesButton addTarget:self action:@selector(handleAddTenMinutes:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -126,7 +133,9 @@
     self.addOneHourButton = [[UIButton alloc] initWithFrame:CGRectMake(109.0f, 0, 79.0f, 59.0f)];
     [self.addOneHourButton setTitle:@"+ 1 Hour" forState:UIControlStateNormal];
     [self.addOneHourButton setTitleColor:UIColorFromRGB(0x7091BC) forState:UIControlStateNormal];
-    [self.addOneHourButton.titleLabel setFont:[UIFont adonisRegularWithSize:15.5f]];
+    [self.addOneHourButton setTitleColor:UIColorFromRGB(0x82AADD) forState:UIControlStateHighlighted];
+    [self.addOneHourButton setTitleColor:UIColorFromRGB(0x82AADD) forState:UIControlStateSelected];
+    [self.addOneHourButton.titleLabel setFont:[UIFont effraRegularWithSize:15.5f]];
 
     [self.addOneHourButton addTarget:self action:@selector(handleAddOneHour:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -142,7 +151,9 @@
     self.addOneDayButton = [[UIButton alloc] initWithFrame:CGRectMake(188.0f, 0, 72.0f, 59.0f)];
     [self.addOneDayButton setTitle:@"+ 1 Day" forState:UIControlStateNormal];
     [self.addOneDayButton setTitleColor:UIColorFromRGB(0x7091BC) forState:UIControlStateNormal];
-    [self.addOneDayButton.titleLabel setFont:[UIFont adonisRegularWithSize:15.5f]];
+    [self.addOneDayButton setTitleColor:UIColorFromRGB(0x82AADD) forState:UIControlStateHighlighted];
+    [self.addOneDayButton setTitleColor:UIColorFromRGB(0x82AADD) forState:UIControlStateSelected];
+    [self.addOneDayButton.titleLabel setFont:[UIFont effraRegularWithSize:15.5f]];
 
     [self.addOneDayButton addTarget:self action:@selector(handleAddOneDay:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -158,7 +169,10 @@
     self.submitButton = [[UIButton alloc] initWithFrame:CGRectMake(260.0f, 0, 61.0f, 59.0f)];
     [self.submitButton setTitle:@"Go" forState:UIControlStateNormal];
     [self.submitButton setTitleColor:UIColorFromRGB(0x2E67B3) forState:UIControlStateNormal];
-    [self.submitButton.titleLabel setFont:[UIFont adonisRegularWithSize:29.5f]];
+    [self.submitButton setTitleColor:UIColorFromRGB(0x82AADD) forState:UIControlStateHighlighted];
+    [self.submitButton setTitleColor:UIColorFromRGB(0x82AADD) forState:UIControlStateSelected];
+
+    [self.submitButton.titleLabel setFont:[UIFont effraRegularWithSize:29.5f]];
     [self.submitButton addTarget:self action:@selector(handleSubmit:) forControlEvents:UIControlEventTouchUpInside];
 
     UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(0, self.bottomButtonView.frame.size.height - 2, self.bottomButtonView.frame.size.width, 1.0f)];
