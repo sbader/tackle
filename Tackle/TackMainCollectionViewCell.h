@@ -20,6 +20,8 @@
 + (CGSize)sizeForTaskTextLabelWithText:(NSString *)text;\
 - (void)setText:(NSString *)text;
 - (void)setDueDate:(NSDate *)dueDate;
+- (void)performSelection;
+- (void)performDeselection;
 
 @end
 

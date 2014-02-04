@@ -48,6 +48,12 @@
     [[UIApplication sharedApplication] cancelLocalNotification:notification];
 }
 
+- (void)rescheduleNotification
+{
+    [self cancelNotification];
+    [self scheduleNotification];
+}
+
 - (void)markAsDone
 {
     [self setIsDone:YES];

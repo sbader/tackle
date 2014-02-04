@@ -49,9 +49,23 @@
     return CGSizeMake(self.view.frame.size.width, height);
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    TackMainCollectionViewCell *cell = (TackMainCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+    [cell performDeselection];
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return (self.collectionView.contentInset.top != 100);
+}
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.collectionView.contentInset.top != 100) {
+        TackMainCollectionViewCell *cell = (TackMainCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+        [cell performSelection];
+
         Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
         if ([self.selectionDelegate respondsToSelector:@selector(didSelectCellWithTask:)]) {
             [self.selectionDelegate didSelectCellWithTask:task];
@@ -72,6 +86,13 @@
     TackMainCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     [cell setDelegate:self];
     [self updateCell:cell atIndexPath:indexPath];
+
+    if (cell.selected) {
+        [cell performSelection];
+    }
+    else {
+        [cell performDeselection];
+    }
 
     return cell;
 }
@@ -190,6 +211,12 @@
 
         [UIView animateWithDuration:0.2 animations:^{
             [scrollView setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
+
+            NSArray *indexPaths = [self.collectionView indexPathsForSelectedItems];
+            if ([indexPaths count] == 1) {
+                TackMainCollectionViewCell *cell = (TackMainCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPaths[0]];
+                [cell performDeselection];
+            }
         } completion:^(BOOL finished) {
             if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidResetContent:)]) {
                 [self.scrollViewDelegate scrollViewDidResetContent:self.collectionView];
@@ -204,6 +231,7 @@
 {
     Task *task = [self.fetchedResultsController objectAtIndexPath:[self.collectionView indexPathForCell:cell]];
     [task setIsDone:YES];
+    [task cancelNotification];
 
     __block NSError *error;
     [task.managedObjectContext performBlock:^{
@@ -219,6 +247,13 @@
     else {
         return NO;
     }
+}
+
+- (void)selectTask:(Task *)task
+{
+    NSIndexPath *indexPath = [self.fetchedResultsController indexPathForObject:task];
+    TackMainCollectionViewCell *cell = (TackMainCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+    [cell performSelection];
 }
 
 @end

@@ -17,7 +17,7 @@
 @property (strong, nonatomic) TackMainCollectionViewController *mainCollectionViewController;
 
 - (id)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
-
 - (void)taskEditViewDidReturnWithText:(NSString *)text dueDate:(NSDate *)dueDate;
+- (void)selectTask:(Task *)task;
 
 @end
