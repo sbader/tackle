@@ -87,13 +87,6 @@
     [cell setDelegate:self];
     [self updateCell:cell atIndexPath:indexPath];
 
-    if (cell.selected) {
-        [cell performSelection];
-    }
-    else {
-        [cell performDeselection];
-    }
-
     return cell;
 }
 
