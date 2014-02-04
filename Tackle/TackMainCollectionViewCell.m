@@ -43,6 +43,20 @@
     return self;
 }
 
+- (void)performSelection
+{
+    [self.mainView setBackgroundColor:UIColorFromRGB(0xD4DCE5)];
+}
+
+- (void)performDeselection
+{
+    [self.mainView setBackgroundColor:[UIColor lightPlumColor]];
+}
+
+- (void)setSelected:(BOOL)selected {
+    [super setSelected:selected];
+}
+
 - (void)prepareForReuse
 {
     [self.mainView setTransform:CGAffineTransformIdentity];
@@ -81,7 +95,8 @@
 {
     self.taskTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 35.0f, 300.0f, 21.0f)];
 
-    [self.taskTextLabel setFont:[UIFont effraRegularWithSize:15.0f]];
+//    [self.taskTextLabel setFont:[UIFont effraRegularWithSize:15.0f]];
+    [self.taskTextLabel setFont:[UIFont effraLightWithSize:15.0f]];
     [self.taskTextLabel setNumberOfLines:0];
     [self.taskTextLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [self.taskTextLabel setTextColor:[UIColor blackColor]];
@@ -120,7 +135,7 @@
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
 
-    UIFont *font = [UIFont effraRegularWithSize:15.0f];
+    UIFont *font = [UIFont effraLightWithSize:15.0f];
 
     NSDictionary *attributes = @{NSFontAttributeName:[font fontWithSize:15.0f],
                                  NSParagraphStyleAttributeName:paragraphStyle};

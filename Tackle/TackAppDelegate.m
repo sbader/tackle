@@ -19,10 +19,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
     [self addSampleData];
     [self setupWindow];
     [self setupMainViewController];
     [self.window makeKeyAndVisible];
+
+    UILocalNotification *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+    if (notification) {
+        [self handleLocalNotification:notification];
+    }
 
     return YES;
 }
@@ -36,10 +42,23 @@
 
 - (void)setupMainViewController
 {
-    TackMainViewController *controller = [[TackMainViewController alloc] initWithManagedObjectContext:self.managedObjectContext];
-    [self.window setRootViewController:controller];
+    self.mainViewController = [[TackMainViewController alloc] initWithManagedObjectContext:self.managedObjectContext];
+    [self.window setRootViewController:self.mainViewController];
 //    [controller.view setFrame:CGRectMake(0, 0, self.window.frame.size.width, self.window.frame.size.height)];
-    [controller.view setFrame:CGRectMake(0, 0, self.window.frame.size.width, 100.0f)];
+    [self.mainViewController.view setFrame:CGRectMake(0, 0, self.window.frame.size.width, 100.0f)];
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    [self handleLocalNotification:notification];
+}
+
+- (void)handleLocalNotification:(UILocalNotification *)notification
+{
+    NSString *urlString = [notification.userInfo objectForKey:@"uniqueId"];
+    NSManagedObjectID *managedObjectId = [self.persistentStoreCoordinator managedObjectIDForURIRepresentation:[NSURL URLWithString:urlString]];
+    Task *task = (Task *)[self.managedObjectContext objectWithID:managedObjectId];
+    [self.mainViewController selectTask:task];
 }
 
 - (BOOL)addSampleData
@@ -64,11 +83,11 @@
     [task2 setDueDate:[NSDate dateWithTimeIntervalSinceNow:96000]];
 
     Task *task3 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-    [task3 setText:@"Go to Pivotal"];
+    [task3 setText:@"Read more about Objective-C"];
     [task3 setDueDate:[NSDate dateWithTimeIntervalSinceNow:72000]];
 
     Task *task4 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-    [task4 setText:@"Watch Wolf of Wall St."];
+    [task4 setText:@"Schedule a physical"];
     [task4 setDueDate:[NSDate dateWithTimeIntervalSinceNow:172800]];
 
     Task *task5 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
@@ -88,11 +107,11 @@
     [task8 setDueDate:[NSDate dateWithTimeIntervalSinceNow:280000]];
 
     Task *task9 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-    [task9 setText:@"Party"];
+    [task9 setText:@"Clean apartment"];
     [task9 setDueDate:[NSDate dateWithTimeIntervalSinceNow:290000]];
 
     Task *task10 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-    [task10 setText:@"Go to new job"];
+    [task10 setText:@"Watch Archer"];
     [task10 setDueDate:[NSDate dateWithTimeIntervalSinceNow:300000]];
 
     NSError *error = nil;

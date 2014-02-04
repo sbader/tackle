@@ -20,4 +20,9 @@
     return [UIFont fontWithName:@"Effra-Regular" size:size];
 }
 
++ (UIFont *)effraLightWithSize:(CGFloat)size
+{
+    return [UIFont fontWithName:@"Effra-Light" size:size];
+}
+
 @end

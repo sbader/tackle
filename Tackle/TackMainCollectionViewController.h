@@ -22,6 +22,7 @@
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 - (void)resetContentOffset;
+- (void)selectTask:(Task *)task;
 
 @end
 

@@ -131,6 +131,7 @@
 
 - (void)scrollViewDidResetContent:(UIScrollView *)scrollView
 {
+    self.editingTask = nil;
     [self.editView resetContent];
 }
 
@@ -146,12 +147,18 @@
 - (void)taskEditViewDidReturnWithText:(NSString *)text dueDate:(NSDate *)dueDate
 {
     if (self.editingTask) {
+        BOOL shouldReschedule = !([dueDate isEqual:self.editingTask.dueDate]);
+
         [self.editingTask setText:text];
         [self.editingTask setDueDate:dueDate];
 
         __block NSError *error;
         [self.editingTask.managedObjectContext performBlock:^{
             [self.editingTask.managedObjectContext save:&error];
+
+            if (shouldReschedule) {
+                [self.editingTask rescheduleNotification];
+            }
         }];
 
         [self setEditingTask:nil];
@@ -164,10 +171,16 @@
         __block NSError *error;
         [task.managedObjectContext performBlock:^{
             [task.managedObjectContext save:&error];
+            [task scheduleNotification];
         }];
     }
 
     [self.mainCollectionViewController resetContentOffset];
+}
+
+- (void)selectTask:(Task *)task
+{
+    [self.mainCollectionViewController selectTask:task];
 }
 
 @end

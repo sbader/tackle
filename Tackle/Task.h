@@ -20,5 +20,6 @@
 - (BOOL)scheduleNotification;
 - (void)markAsDone;
 - (void)cancelNotification;
+- (void)rescheduleNotification;
 
 @end

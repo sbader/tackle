@@ -38,6 +38,7 @@
 		D172CF4218973C4900297A42 /* TackMainCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D172CF4118973C4900297A42 /* TackMainCollectionViewCell.m */; };
 		D172CF451898A13500297A42 /* TackMainFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D172CF441898A13500297A42 /* TackMainFlowLayout.m */; };
 		D17BCFB3189F3D05001996C1 /* UIView+TackAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D17BCFB2189F3D05001996C1 /* UIView+TackAdditions.m */; };
+		D188D64718A090D2009D747E /* Effra-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = D188D64618A090D2009D747E /* Effra-Light.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +96,7 @@
 		D172CF441898A13500297A42 /* TackMainFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TackMainFlowLayout.m; sourceTree = "<group>"; };
 		D17BCFB1189F3D05001996C1 /* UIView+TackAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TackAdditions.h"; sourceTree = "<group>"; };
 		D17BCFB2189F3D05001996C1 /* UIView+TackAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TackAdditions.m"; sourceTree = "<group>"; };
+		D188D64618A090D2009D747E /* Effra-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Effra-Light.otf"; sourceTree = "<group>"; };
 		D1D84A0D189DC67100D0AC78 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -223,6 +225,7 @@
 		D12E87751894550D008119B8 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				D188D64618A090D2009D747E /* Effra-Light.otf */,
 				D139E5781897329C007163AD /* Effra-Bold.otf */,
 				D139E5791897329C007163AD /* Effra-BoldItalic.otf */,
 				D139E57A1897329C007163AD /* Effra-Italic.otf */,
@@ -358,6 +361,7 @@
 				D1027F7518904E8400FF44A4 /* InfoPlist.strings in Resources */,
 				D12E877818945525008119B8 /* Adonis-Bold.otf in Resources */,
 				D139E57F1897329C007163AD /* Effra-Regular.otf in Resources */,
+				D188D64718A090D2009D747E /* Effra-Light.otf in Resources */,
 				D139E57D1897329C007163AD /* Effra-BoldItalic.otf in Resources */,
 				D139E57C1897329C007163AD /* Effra-Bold.otf in Resources */,
 				D1027F8018904E8400FF44A4 /* Images.xcassets in Resources */,

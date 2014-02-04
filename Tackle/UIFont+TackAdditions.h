@@ -12,5 +12,6 @@
 
 + (UIFont *)adonisRegularWithSize:(CGFloat)size;
 + (UIFont *)effraRegularWithSize:(CGFloat)size;
++ (UIFont *)effraLightWithSize:(CGFloat)size;
 
 @end
