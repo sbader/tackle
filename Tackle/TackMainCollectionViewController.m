@@ -181,6 +181,10 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    if (!self.collectionView.scrollEnabled && self.collectionView.contentInset.top == 100 && self.collectionView.contentOffset.y == -100) {
+        [self.collectionView setScrollEnabled:YES];
+    }
+
     if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidScroll:)]) {
         [self.scrollViewDelegate scrollViewDidScroll:scrollView];
     }
