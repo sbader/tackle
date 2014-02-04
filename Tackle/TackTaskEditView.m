@@ -56,6 +56,12 @@
     [self.textField setBackgroundColor:UIColorFromRGB(0xEBEBEB)];
     [self.textField setTintColor:UIColorFromRGB(0xA37BB9)];
 
+    self.textField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 50.0f)];
+    [self.textField setLeftViewMode:UITextFieldViewModeAlways];
+
+    self.textField.rightView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 50.0f)];
+    [self.textField setRightViewMode:UITextFieldViewModeAlways];
+
     UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(0, 50.0f, self.frame.size.width, 1.0f)];
     [separatorView setBackgroundColor:UIColorFromRGB(0xCACACA)];
 
