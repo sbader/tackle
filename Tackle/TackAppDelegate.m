@@ -99,7 +99,7 @@
     [task6 setDueDate:[NSDate dateWithTimeIntervalSinceNow:220000]];
 
     Task *task7 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-    [task7 setText:@"Go to dinner with family"];
+    [task7 setText:@"Dinner with family"];
     [task7 setDueDate:[NSDate dateWithTimeIntervalSinceNow:240000]];
 
     Task *task8 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
