@@ -184,6 +184,23 @@
 
 - (void)handleSubmit:(id)sender
 {
+    if ([self.textField.text length] == 0) {
+        CAKeyframeAnimation * anim = [CAKeyframeAnimation animationWithKeyPath:@"transform"] ;
+
+        anim.values = @[
+                        [NSValue valueWithCATransform3D:CATransform3DMakeTranslation(-5.0f, 0.0f, 0.0f)],
+                        [NSValue valueWithCATransform3D:CATransform3DMakeTranslation(5.0f, 0.0f, 0.0f)]
+                    ];
+
+        anim.autoreverses = YES ;
+        anim.repeatCount = 5.0f ;
+        anim.duration = 0.05f ;
+
+        [self.textField.layer addAnimation:anim forKey:nil] ;
+
+        return;
+    }
+
     [self.textField resignFirstResponder];
     [self.delegate taskEditViewDidReturnWithText:self.textField.text dueDate:self.dueDate];
     [self resetContent];
