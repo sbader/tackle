@@ -38,7 +38,7 @@
         [self setupAnimator];
         [self setupDueDateLabel];
         [self setupTaskTextLabel];
-        [self setupBottomSeparator];
+        [self setupSeparators];
     }
     return self;
 }
@@ -96,7 +96,7 @@
     self.taskTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 35.0f, 300.0f, 21.0f)];
 
 //    [self.taskTextLabel setFont:[UIFont effraRegularWithSize:15.0f]];
-    [self.taskTextLabel setFont:[UIFont effraLightWithSize:15.0f]];
+    [self.taskTextLabel setFont:[UIFont effraLightWithSize:16.0f]];
     [self.taskTextLabel setNumberOfLines:0];
     [self.taskTextLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [self.taskTextLabel setTextColor:[UIColor blackColor]];
@@ -104,11 +104,16 @@
     [self.mainView addSubview:self.taskTextLabel];
 }
 
-- (void)setupBottomSeparator
+- (void)setupSeparators
 {
-    UIView *bottomSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height - 0.5f, self.frame.size.width, 0.5f)];
+    UIView *topSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 0.25f)];
+    [topSeparator setBackgroundColor:[UIColor lightPlumGrayColor]];
+
+
+    UIView *bottomSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height - 0.25f, self.frame.size.width, 0.25f)];
     [bottomSeparator setBackgroundColor:[UIColor lightPlumGrayColor]];
 
+    [self.mainView addSubview:topSeparator];
     [self.mainView addSubview:bottomSeparator];
 }
 
@@ -135,9 +140,9 @@
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
 
-    UIFont *font = [UIFont effraLightWithSize:15.0f];
+    UIFont *font = [UIFont effraLightWithSize:16.0f];
 
-    NSDictionary *attributes = @{NSFontAttributeName:[font fontWithSize:15.0f],
+    NSDictionary *attributes = @{NSFontAttributeName:font,
                                  NSParagraphStyleAttributeName:paragraphStyle};
 
     CGRect rect = [text boundingRectWithSize:CGSizeMake(300.0f, MAXFLOAT)
