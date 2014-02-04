@@ -61,6 +61,7 @@
 {
     [self.mainView setTransform:CGAffineTransformIdentity];
     [self.mainView setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+    [self.mainView setBackgroundColor:[UIColor lightPlumColor]];
 }
 
 - (void)setupMainView
