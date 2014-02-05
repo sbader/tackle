@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MRDateFormatter : NSObject
+@interface MRLongDateFormatter : NSDateFormatter
 
-+ (NSDateFormatter *)sharedInstance;
++ (MRLongDateFormatter *)sharedInstance;
 
 @end

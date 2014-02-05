@@ -8,7 +8,7 @@
 
 #import "MRMainCollectionViewController.h"
 
-#import "MRDateFormatter.h"
+#import "MRLongDateFormatter.h"
 
 @interface MRMainCollectionViewController ()
 

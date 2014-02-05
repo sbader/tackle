@@ -8,7 +8,7 @@
 
 #import "MRMainCollectionViewCell.h"
 
-#import "MRDateFormatter.h"
+#import "MRLongDateFormatter.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface MRMainCollectionViewCell ()
@@ -85,7 +85,7 @@
 
 - (void)setupDueDateLabel
 {
-    self.dueDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 10.0f, 234.0f, 21.0f)];
+    self.dueDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 10.0f, 300.0f, 21.0f)];
     [self.dueDateLabel setFont:[UIFont effraRegularWithSize:18.0f]];
     [self.dueDateLabel setTextColor:[UIColor blackColor]];
 
@@ -128,7 +128,7 @@
 
 - (void)setDueDate:(NSDate *)dueDate
 {
-    [self.dueDateLabel setText:[[MRDateFormatter sharedInstance] stringFromDate:dueDate]];
+    [self.dueDateLabel setText:dueDate.tackleString];
 }
 
 - (void)markAsDone
