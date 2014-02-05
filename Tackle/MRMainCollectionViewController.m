@@ -128,6 +128,7 @@
 
     [cell setText:task.text];
     [cell setDueDate:task.dueDate];
+    [cell updateSizing];
 }
 
 #pragma mark - Fetched results controller

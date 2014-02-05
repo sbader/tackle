@@ -114,6 +114,10 @@
     [task10 setText:@"Watch Archer"];
     [task10 setDueDate:[NSDate dateWithTimeIntervalSinceNow:300000]];
 
+    Task *task11 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
+    [task11 setText:@"Watch Archer"];
+    [task11 setDueDate:[NSDate dateWithTimeIntervalSinceNow:800000]];
+
     NSError *error = nil;
 
     [self.managedObjectContext save:&error];

@@ -22,6 +22,7 @@
 - (void)setDueDate:(NSDate *)dueDate;
 - (void)performSelection;
 - (void)performDeselection;
+- (void)updateSizing;
 
 @end
 
