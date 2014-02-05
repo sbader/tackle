@@ -13,7 +13,10 @@
 
 @interface MRMainCollectionViewCell ()
 
+
 @property (strong, nonatomic) UIView *mainView;
+@property (strong, nonatomic) UIView *topSeparator;
+@property (strong, nonatomic) UIView *bottomSeparator;
 
 @property (strong, nonatomic) UIPanGestureRecognizer *panGestureRecognizer;
 @property (nonatomic, strong) UIDynamicAnimator *animator;
@@ -60,8 +63,14 @@
 - (void)prepareForReuse
 {
     [self.mainView setTransform:CGAffineTransformIdentity];
-    [self.mainView setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
     [self.mainView setBackgroundColor:[UIColor lightPlumColor]];
+}
+
+- (void)updateSizing
+{
+    [self.mainView setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+    [self.topSeparator setFrame:CGRectMake(0, 0, self.frame.size.width, 0.25f)];
+    [self.bottomSeparator setFrame:CGRectMake(0, self.frame.size.height - 0.25f, self.frame.size.width, 0.25f)];
 }
 
 - (void)setupMainView
@@ -107,15 +116,15 @@
 
 - (void)setupSeparators
 {
-    UIView *topSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 0.25f)];
-    [topSeparator setBackgroundColor:[UIColor lightPlumGrayColor]];
+    self.topSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 0.25f)];
+    [self.topSeparator setBackgroundColor:[UIColor lightPlumGrayColor]];
 
 
-    UIView *bottomSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height - 0.25f, self.frame.size.width, 0.25f)];
-    [bottomSeparator setBackgroundColor:[UIColor lightPlumGrayColor]];
+    self.bottomSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height - 0.25f, self.frame.size.width, 0.25f)];
+    [self.bottomSeparator setBackgroundColor:[UIColor lightPlumGrayColor]];
 
-    [self.mainView addSubview:topSeparator];
-    [self.mainView addSubview:bottomSeparator];
+    [self.mainView addSubview:self.topSeparator];
+    [self.mainView addSubview:self.bottomSeparator];
 }
 
 - (void)setText:(NSString *)text
