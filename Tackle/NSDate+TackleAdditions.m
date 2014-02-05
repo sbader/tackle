@@ -65,14 +65,21 @@
     NSTimeInterval timeInterval = [self timeIntervalSinceDate:[NSDate date]];
 
     if (timeInterval < 3600) {
-        NSNumber *hours = [NSNumber numberWithInt:timeInterval/3600];
-        NSNumber *minutes = [NSNumber numberWithInt:(timeInterval - [hours intValue] * 3600)/60];
-        NSNumber *seconds = [NSNumber numberWithInt:(timeInterval - 60 * [minutes intValue] - 3600 * [hours intValue])];
+        NSNumber *hours = [[NSNumber alloc] initWithInt:timeInterval/3600];
+        NSNumber *minutes = [[NSNumber alloc] initWithInt:(timeInterval - ([hours intValue] * 3600)) / 60];
+        NSNumber *seconds = [[NSNumber alloc] initWithInt:timeInterval - 60 * [minutes intValue] - 3600 * [hours intValue]];
 
         NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-        [numberFormatter setFormatWidth:2];
-        [numberFormatter setPaddingCharacter:@"0"];
-        formattedString = [NSString stringWithFormat:@"%@:%@", [numberFormatter stringFromNumber:minutes], [numberFormatter stringFromNumber:seconds]];
+
+        if ([minutes intValue] > 0 && [seconds intValue] > 0) {
+            formattedString = [NSString stringWithFormat:@"In %@ minutes %@ seconds", [numberFormatter stringFromNumber:minutes], [numberFormatter stringFromNumber:seconds]];
+        }
+        else if ([minutes intValue] > 0) {
+            formattedString = [NSString stringWithFormat:@"In %@ minutes", [numberFormatter stringFromNumber:minutes]];
+        }
+        else {
+            formattedString = [NSString stringWithFormat:@"In %@ seconds", [numberFormatter stringFromNumber:seconds]];
+        }
     }
     else if ([self isToday] || [self isTomorrow] || [self isYesterday]) {
         MRShortDateFormatter *formatter = [MRShortDateFormatter sharedInstance];

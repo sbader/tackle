@@ -21,9 +21,6 @@ NSString * const kCachedShortDateFormatterKey = @"CachedShortDateFormatterKey";
         dateFormatter = [[MRShortDateFormatter alloc] init];
         [dateFormatter setDoesRelativeDateFormatting:YES];
         [dateFormatter setDateStyle:NSDateFormatterShortStyle];
-//        [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-
-        NSLog(@"DateFormat %@", dateFormatter.dateFormat);
 
         [threadDictionary setObject:dateFormatter forKey:kCachedShortDateFormatterKey];
     }
