@@ -1,5 +1,5 @@
 //
-//  UIView+TackAdditions.h
+//  UIView+TackleAdditions.h
 //  Tackle
 //
 //  Created by Scott Bader on 2/2/14.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIView (TackAdditions)
+@interface UIView (TackleAdditions)
 
 - (CGFloat)angleOfView;
 

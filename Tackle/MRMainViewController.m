@@ -1,24 +1,24 @@
 //
-//  TackMainViewController.m
+//  MRMainViewController.m
 //  Tackle
 //
 //  Created by Scott Bader on 1/26/14.
 //  Copyright (c) 2014 Melody Road. All rights reserved.
 //
 
-#import "TackMainViewController.h"
+#import "MRMainViewController.h"
 
-#import "TackMainFlowLayout.h"
+#import "MRMainFlowLayout.h"
 #import "Task.h"
 
-@interface TackMainViewController ()
+@interface MRMainViewController ()
 
-@property (nonatomic, strong) TackTaskEditView *editView;
+@property (nonatomic, strong) MRTaskEditView *editView;
 @property (nonatomic, strong) Task *editingTask;
 
 @end
 
-@implementation TackMainViewController
+@implementation MRMainViewController
 
 - (id)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
 {
@@ -49,10 +49,10 @@
 
 - (void)setupMainCollectionViewController
 {
-    TackMainFlowLayout *layout  = [[TackMainFlowLayout alloc] init];
+    MRMainFlowLayout *layout  = [[MRMainFlowLayout alloc] init];
     [layout setItemSize:CGSizeMake(self.view.frame.size.width, 67.0f)];
 
-    self.mainCollectionViewController = [[TackMainCollectionViewController alloc] initWithCollectionViewLayout:layout];
+    self.mainCollectionViewController = [[MRMainCollectionViewController alloc] initWithCollectionViewLayout:layout];
     [self.mainCollectionViewController setScrollViewDelegate:self];
     [self.mainCollectionViewController setSelectionDelegate:self];
 
@@ -65,7 +65,7 @@
 
 - (void)setupEditView
 {
-    self.editView = [[TackTaskEditView alloc] initWithFrame:CGRectMake(0, -190.0f, self.view.frame.size.width, 165.0f)];
+    self.editView = [[MRTaskEditView alloc] initWithFrame:CGRectMake(0, -190.0f, self.view.frame.size.width, 165.0f)];
     [self.editView setDelegate:self];
 //    [self.editView setHidden:YES];
 //    CALayer *layer = self.editView.layer;

@@ -1,5 +1,5 @@
 //
-//  TackAppDelegate.h
+//  MRAppDelegate.h
 //  Tackle
 //
 //  Created by Scott Bader on 1/22/14.
@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "TackMainViewController.h"
+#import "MRMainViewController.h"
 
-@interface TackAppDelegate : UIResponder <UIApplicationDelegate>
+@interface MRAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
@@ -18,7 +18,7 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-@property (strong, nonatomic) TackMainViewController *mainViewController;
+@property (strong, nonatomic) MRMainViewController *mainViewController;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;

@@ -13,7 +13,7 @@
 		D1027F6F18904E8400FF44A4 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1027F6E18904E8400FF44A4 /* CoreData.framework */; };
 		D1027F7518904E8400FF44A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D1027F7318904E8400FF44A4 /* InfoPlist.strings */; };
 		D1027F7718904E8400FF44A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D1027F7618904E8400FF44A4 /* main.m */; };
-		D1027F7B18904E8400FF44A4 /* TackAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D1027F7A18904E8400FF44A4 /* TackAppDelegate.m */; };
+		D1027F7B18904E8400FF44A4 /* MRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D1027F7A18904E8400FF44A4 /* MRAppDelegate.m */; };
 		D1027F7E18904E8400FF44A4 /* Tackle.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D1027F7C18904E8400FF44A4 /* Tackle.xcdatamodeld */; };
 		D1027F8018904E8400FF44A4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D1027F7F18904E8400FF44A4 /* Images.xcassets */; };
 		D1027F8718904E8400FF44A4 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1027F8618904E8400FF44A4 /* XCTest.framework */; };
@@ -23,21 +23,21 @@
 		D1027F9218904E8400FF44A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D1027F9018904E8400FF44A4 /* InfoPlist.strings */; };
 		D1027F9418904E8400FF44A4 /* TackleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D1027F9318904E8400FF44A4 /* TackleTests.m */; };
 		D1027FEE1890535700FF44A4 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = D1027FED1890535700FF44A4 /* Task.m */; };
-		D12E877318944E6A008119B8 /* TackTaskEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = D12E877218944E6A008119B8 /* TackTaskEditView.m */; };
+		D12E877318944E6A008119B8 /* MRTaskEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = D12E877218944E6A008119B8 /* MRTaskEditView.m */; };
 		D12E877818945525008119B8 /* Adonis-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D12E877618945525008119B8 /* Adonis-Bold.otf */; };
 		D12E877918945525008119B8 /* Adonis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = D12E877718945525008119B8 /* Adonis-Regular.otf */; };
-		D12E87831894A07B008119B8 /* UIFont+TackAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D12E87821894A07B008119B8 /* UIFont+TackAdditions.m */; };
-		D12E8786189573FC008119B8 /* UIColor+TackAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D12E8785189573FC008119B8 /* UIColor+TackAdditions.m */; };
-		D139E57418959F41007163AD /* TackDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D139E57318959F41007163AD /* TackDateFormatter.m */; };
-		D139E5771895A117007163AD /* TackMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D139E5761895A117007163AD /* TackMainViewController.m */; };
+		D12E87831894A07B008119B8 /* UIFont+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D12E87821894A07B008119B8 /* UIFont+TackleAdditions.m */; };
+		D12E8786189573FC008119B8 /* UIColor+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D12E8785189573FC008119B8 /* UIColor+TackleAdditions.m */; };
+		D139E57418959F41007163AD /* MRDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D139E57318959F41007163AD /* MRDateFormatter.m */; };
+		D139E5771895A117007163AD /* MRMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D139E5761895A117007163AD /* MRMainViewController.m */; };
 		D139E57C1897329C007163AD /* Effra-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D139E5781897329C007163AD /* Effra-Bold.otf */; };
 		D139E57D1897329C007163AD /* Effra-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = D139E5791897329C007163AD /* Effra-BoldItalic.otf */; };
 		D139E57E1897329C007163AD /* Effra-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = D139E57A1897329C007163AD /* Effra-Italic.otf */; };
 		D139E57F1897329C007163AD /* Effra-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = D139E57B1897329C007163AD /* Effra-Regular.otf */; };
-		D172CF3F189739D900297A42 /* TackMainCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D172CF3E189739D900297A42 /* TackMainCollectionViewController.m */; };
-		D172CF4218973C4900297A42 /* TackMainCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D172CF4118973C4900297A42 /* TackMainCollectionViewCell.m */; };
-		D172CF451898A13500297A42 /* TackMainFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D172CF441898A13500297A42 /* TackMainFlowLayout.m */; };
-		D17BCFB3189F3D05001996C1 /* UIView+TackAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D17BCFB2189F3D05001996C1 /* UIView+TackAdditions.m */; };
+		D172CF3F189739D900297A42 /* MRMainCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D172CF3E189739D900297A42 /* MRMainCollectionViewController.m */; };
+		D172CF4218973C4900297A42 /* MRMainCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D172CF4118973C4900297A42 /* MRMainCollectionViewCell.m */; };
+		D172CF451898A13500297A42 /* MRMainFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D172CF441898A13500297A42 /* MRMainFlowLayout.m */; };
+		D17BCFB3189F3D05001996C1 /* UIView+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D17BCFB2189F3D05001996C1 /* UIView+TackleAdditions.m */; };
 		D188D64718A090D2009D747E /* Effra-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = D188D64618A090D2009D747E /* Effra-Light.otf */; };
 /* End PBXBuildFile section */
 
@@ -61,8 +61,8 @@
 		D1027F7418904E8400FF44A4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D1027F7618904E8400FF44A4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D1027F7818904E8400FF44A4 /* Tackle-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tackle-Prefix.pch"; sourceTree = "<group>"; };
-		D1027F7918904E8400FF44A4 /* TackAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TackAppDelegate.h; sourceTree = "<group>"; };
-		D1027F7A18904E8400FF44A4 /* TackAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TackAppDelegate.m; sourceTree = "<group>"; };
+		D1027F7918904E8400FF44A4 /* MRAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MRAppDelegate.h; sourceTree = "<group>"; };
+		D1027F7A18904E8400FF44A4 /* MRAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MRAppDelegate.m; sourceTree = "<group>"; };
 		D1027F7D18904E8400FF44A4 /* Tackle.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tackle.xcdatamodel; sourceTree = "<group>"; };
 		D1027F7F18904E8400FF44A4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D1027F8518904E8400FF44A4 /* TackleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TackleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,30 +72,30 @@
 		D1027F9318904E8400FF44A4 /* TackleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TackleTests.m; sourceTree = "<group>"; };
 		D1027FEC1890535700FF44A4 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
 		D1027FED1890535700FF44A4 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
-		D12E877118944E6A008119B8 /* TackTaskEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TackTaskEditView.h; sourceTree = "<group>"; };
-		D12E877218944E6A008119B8 /* TackTaskEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TackTaskEditView.m; sourceTree = "<group>"; };
+		D12E877118944E6A008119B8 /* MRTaskEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRTaskEditView.h; sourceTree = "<group>"; };
+		D12E877218944E6A008119B8 /* MRTaskEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRTaskEditView.m; sourceTree = "<group>"; };
 		D12E877618945525008119B8 /* Adonis-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Adonis-Bold.otf"; sourceTree = "<group>"; };
 		D12E877718945525008119B8 /* Adonis-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Adonis-Regular.otf"; sourceTree = "<group>"; };
-		D12E87811894A07B008119B8 /* UIFont+TackAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+TackAdditions.h"; sourceTree = "<group>"; };
-		D12E87821894A07B008119B8 /* UIFont+TackAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+TackAdditions.m"; sourceTree = "<group>"; };
-		D12E8784189573FC008119B8 /* UIColor+TackAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+TackAdditions.h"; sourceTree = "<group>"; };
-		D12E8785189573FC008119B8 /* UIColor+TackAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+TackAdditions.m"; sourceTree = "<group>"; };
-		D139E57218959F41007163AD /* TackDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TackDateFormatter.h; sourceTree = "<group>"; };
-		D139E57318959F41007163AD /* TackDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TackDateFormatter.m; sourceTree = "<group>"; };
-		D139E5751895A117007163AD /* TackMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TackMainViewController.h; sourceTree = "<group>"; };
-		D139E5761895A117007163AD /* TackMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TackMainViewController.m; sourceTree = "<group>"; };
+		D12E87811894A07B008119B8 /* UIFont+TackleAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+TackleAdditions.h"; sourceTree = "<group>"; };
+		D12E87821894A07B008119B8 /* UIFont+TackleAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+TackleAdditions.m"; sourceTree = "<group>"; };
+		D12E8784189573FC008119B8 /* UIColor+TackleAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+TackleAdditions.h"; sourceTree = "<group>"; };
+		D12E8785189573FC008119B8 /* UIColor+TackleAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+TackleAdditions.m"; sourceTree = "<group>"; };
+		D139E57218959F41007163AD /* MRDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRDateFormatter.h; sourceTree = "<group>"; };
+		D139E57318959F41007163AD /* MRDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRDateFormatter.m; sourceTree = "<group>"; };
+		D139E5751895A117007163AD /* MRMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRMainViewController.h; sourceTree = "<group>"; };
+		D139E5761895A117007163AD /* MRMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRMainViewController.m; sourceTree = "<group>"; };
 		D139E5781897329C007163AD /* Effra-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Effra-Bold.otf"; sourceTree = "<group>"; };
 		D139E5791897329C007163AD /* Effra-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Effra-BoldItalic.otf"; sourceTree = "<group>"; };
 		D139E57A1897329C007163AD /* Effra-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Effra-Italic.otf"; sourceTree = "<group>"; };
 		D139E57B1897329C007163AD /* Effra-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Effra-Regular.otf"; sourceTree = "<group>"; };
-		D172CF3D189739D900297A42 /* TackMainCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TackMainCollectionViewController.h; sourceTree = "<group>"; };
-		D172CF3E189739D900297A42 /* TackMainCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TackMainCollectionViewController.m; sourceTree = "<group>"; };
-		D172CF4018973C4900297A42 /* TackMainCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TackMainCollectionViewCell.h; sourceTree = "<group>"; };
-		D172CF4118973C4900297A42 /* TackMainCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TackMainCollectionViewCell.m; sourceTree = "<group>"; };
-		D172CF431898A13500297A42 /* TackMainFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TackMainFlowLayout.h; sourceTree = "<group>"; };
-		D172CF441898A13500297A42 /* TackMainFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TackMainFlowLayout.m; sourceTree = "<group>"; };
-		D17BCFB1189F3D05001996C1 /* UIView+TackAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TackAdditions.h"; sourceTree = "<group>"; };
-		D17BCFB2189F3D05001996C1 /* UIView+TackAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TackAdditions.m"; sourceTree = "<group>"; };
+		D172CF3D189739D900297A42 /* MRMainCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRMainCollectionViewController.h; sourceTree = "<group>"; };
+		D172CF3E189739D900297A42 /* MRMainCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRMainCollectionViewController.m; sourceTree = "<group>"; };
+		D172CF4018973C4900297A42 /* MRMainCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRMainCollectionViewCell.h; sourceTree = "<group>"; };
+		D172CF4118973C4900297A42 /* MRMainCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRMainCollectionViewCell.m; sourceTree = "<group>"; };
+		D172CF431898A13500297A42 /* MRMainFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRMainFlowLayout.h; sourceTree = "<group>"; };
+		D172CF441898A13500297A42 /* MRMainFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRMainFlowLayout.m; sourceTree = "<group>"; };
+		D17BCFB1189F3D05001996C1 /* UIView+TackleAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TackleAdditions.h"; sourceTree = "<group>"; };
+		D17BCFB2189F3D05001996C1 /* UIView+TackleAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TackleAdditions.m"; sourceTree = "<group>"; };
 		D188D64618A090D2009D747E /* Effra-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Effra-Light.otf"; sourceTree = "<group>"; };
 		D1D84A0D189DC67100D0AC78 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -168,8 +168,8 @@
 				D12E8774189454E1008119B8 /* Resources */,
 				D1027F7118904E8400FF44A4 /* Supporting Files */,
 				D12E878818957943008119B8 /* Views */,
-				D1027F7918904E8400FF44A4 /* TackAppDelegate.h */,
-				D1027F7A18904E8400FF44A4 /* TackAppDelegate.m */,
+				D1027F7918904E8400FF44A4 /* MRAppDelegate.h */,
+				D1027F7A18904E8400FF44A4 /* MRAppDelegate.m */,
 			);
 			path = Tackle;
 			sourceTree = "<group>";
@@ -239,12 +239,12 @@
 		D12E877A18949FFD008119B8 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				D12E87811894A07B008119B8 /* UIFont+TackAdditions.h */,
-				D12E87821894A07B008119B8 /* UIFont+TackAdditions.m */,
-				D12E8784189573FC008119B8 /* UIColor+TackAdditions.h */,
-				D12E8785189573FC008119B8 /* UIColor+TackAdditions.m */,
-				D17BCFB1189F3D05001996C1 /* UIView+TackAdditions.h */,
-				D17BCFB2189F3D05001996C1 /* UIView+TackAdditions.m */,
+				D12E87811894A07B008119B8 /* UIFont+TackleAdditions.h */,
+				D12E87821894A07B008119B8 /* UIFont+TackleAdditions.m */,
+				D12E8784189573FC008119B8 /* UIColor+TackleAdditions.h */,
+				D12E8785189573FC008119B8 /* UIColor+TackleAdditions.m */,
+				D17BCFB1189F3D05001996C1 /* UIView+TackleAdditions.h */,
+				D17BCFB2189F3D05001996C1 /* UIView+TackleAdditions.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -252,10 +252,10 @@
 		D12E878718957938008119B8 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				D139E5751895A117007163AD /* TackMainViewController.h */,
-				D139E5761895A117007163AD /* TackMainViewController.m */,
-				D172CF3D189739D900297A42 /* TackMainCollectionViewController.h */,
-				D172CF3E189739D900297A42 /* TackMainCollectionViewController.m */,
+				D139E5751895A117007163AD /* MRMainViewController.h */,
+				D139E5761895A117007163AD /* MRMainViewController.m */,
+				D172CF3D189739D900297A42 /* MRMainCollectionViewController.h */,
+				D172CF3E189739D900297A42 /* MRMainCollectionViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -263,12 +263,12 @@
 		D12E878818957943008119B8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D12E877118944E6A008119B8 /* TackTaskEditView.h */,
-				D12E877218944E6A008119B8 /* TackTaskEditView.m */,
-				D172CF4018973C4900297A42 /* TackMainCollectionViewCell.h */,
-				D172CF4118973C4900297A42 /* TackMainCollectionViewCell.m */,
-				D172CF431898A13500297A42 /* TackMainFlowLayout.h */,
-				D172CF441898A13500297A42 /* TackMainFlowLayout.m */,
+				D12E877118944E6A008119B8 /* MRTaskEditView.h */,
+				D12E877218944E6A008119B8 /* MRTaskEditView.m */,
+				D172CF4018973C4900297A42 /* MRMainCollectionViewCell.h */,
+				D172CF4118973C4900297A42 /* MRMainCollectionViewCell.m */,
+				D172CF431898A13500297A42 /* MRMainFlowLayout.h */,
+				D172CF441898A13500297A42 /* MRMainFlowLayout.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -276,8 +276,8 @@
 		D139E57118959EF6007163AD /* Lib */ = {
 			isa = PBXGroup;
 			children = (
-				D139E57218959F41007163AD /* TackDateFormatter.h */,
-				D139E57318959F41007163AD /* TackDateFormatter.m */,
+				D139E57218959F41007163AD /* MRDateFormatter.h */,
+				D139E57318959F41007163AD /* MRDateFormatter.m */,
 			);
 			name = Lib;
 			sourceTree = "<group>";
@@ -326,7 +326,7 @@
 		D1027F5D18904E8400FF44A4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = Tack;
+				CLASSPREFIX = MR;
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Melody Road";
 				TargetAttributes = {
@@ -385,19 +385,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D172CF3F189739D900297A42 /* TackMainCollectionViewController.m in Sources */,
+				D172CF3F189739D900297A42 /* MRMainCollectionViewController.m in Sources */,
 				D1027FEE1890535700FF44A4 /* Task.m in Sources */,
-				D139E57418959F41007163AD /* TackDateFormatter.m in Sources */,
+				D139E57418959F41007163AD /* MRDateFormatter.m in Sources */,
 				D1027F7718904E8400FF44A4 /* main.m in Sources */,
 				D1027F7E18904E8400FF44A4 /* Tackle.xcdatamodeld in Sources */,
-				D172CF4218973C4900297A42 /* TackMainCollectionViewCell.m in Sources */,
-				D12E8786189573FC008119B8 /* UIColor+TackAdditions.m in Sources */,
-				D12E87831894A07B008119B8 /* UIFont+TackAdditions.m in Sources */,
-				D17BCFB3189F3D05001996C1 /* UIView+TackAdditions.m in Sources */,
-				D12E877318944E6A008119B8 /* TackTaskEditView.m in Sources */,
-				D1027F7B18904E8400FF44A4 /* TackAppDelegate.m in Sources */,
-				D139E5771895A117007163AD /* TackMainViewController.m in Sources */,
-				D172CF451898A13500297A42 /* TackMainFlowLayout.m in Sources */,
+				D172CF4218973C4900297A42 /* MRMainCollectionViewCell.m in Sources */,
+				D12E8786189573FC008119B8 /* UIColor+TackleAdditions.m in Sources */,
+				D12E87831894A07B008119B8 /* UIFont+TackleAdditions.m in Sources */,
+				D17BCFB3189F3D05001996C1 /* UIView+TackleAdditions.m in Sources */,
+				D12E877318944E6A008119B8 /* MRTaskEditView.m in Sources */,
+				D1027F7B18904E8400FF44A4 /* MRAppDelegate.m in Sources */,
+				D139E5771895A117007163AD /* MRMainViewController.m in Sources */,
+				D172CF451898A13500297A42 /* MRMainFlowLayout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

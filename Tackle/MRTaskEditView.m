@@ -1,22 +1,22 @@
 //
-//  TackTaskEditView.m
+//  MRTaskEditView.m
 //  Tackle
 //
 //  Created by Scott Bader on 1/25/14.
 //  Copyright (c) 2014 Melody Road. All rights reserved.
 //
 
-#import "TackTaskEditView.h"
+#import "MRTaskEditView.h"
 
-#import "TackDateFormatter.h"
+#import "MRDateFormatter.h"
 
-@interface TackTaskEditView ()
+@interface MRTaskEditView ()
 
 @property (nonatomic) BOOL isDatePickerShown;
 
 @end
 
-@implementation TackTaskEditView
+@implementation MRTaskEditView
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -265,8 +265,8 @@
 
 - (void)updateDueDate
 {
-    [self.dueDateButton setTitle:[[TackDateFormatter sharedInstance] stringFromDate:self.dueDate] forState:UIControlStateNormal];
-    [self.datePicker setDate:self.dueDate];
+    [self.dueDateButton setTitle:[[MRDateFormatter sharedInstance] stringFromDate:self.dueDate] forState:UIControlStateNormal];
+    [self.datePicker setDate:self.dueDate animated:NO];
 }
 
 - (void)resetContent

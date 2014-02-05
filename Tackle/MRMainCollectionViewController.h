@@ -1,5 +1,5 @@
 //
-//  TackMainCollectionViewController.h
+//  MRMainCollectionViewController.h
 //  Tackle
 //
 //  Created by Scott Bader on 1/27/14.
@@ -9,15 +9,15 @@
 #import <UIKit/UIKit.h>
 
 #import "Task.h"
-#import "TackMainCollectionViewCell.h"
+#import "MRMainCollectionViewCell.h"
 
-@protocol TackMainCollectionViewScrollViewDelegate;
-@protocol TackMainCollectionViewSelectionDelegate;
+@protocol MRMainCollectionViewScrollViewDelegate;
+@protocol MRMainCollectionViewSelectionDelegate;
 
-@interface TackMainCollectionViewController : UICollectionViewController <UICollectionViewDelegate, NSFetchedResultsControllerDelegate, UITextFieldDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, TackMainCollectionViewCellDelegate>
+@interface MRMainCollectionViewController : UICollectionViewController <UICollectionViewDelegate, NSFetchedResultsControllerDelegate, UITextFieldDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, MRMainCollectionViewCellDelegate>
 
-@property (assign, nonatomic) id <TackMainCollectionViewScrollViewDelegate> scrollViewDelegate;
-@property (assign, nonatomic) id <TackMainCollectionViewSelectionDelegate> selectionDelegate;
+@property (assign, nonatomic) id <MRMainCollectionViewScrollViewDelegate> scrollViewDelegate;
+@property (assign, nonatomic) id <MRMainCollectionViewSelectionDelegate> selectionDelegate;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
@@ -26,7 +26,7 @@
 
 @end
 
-@protocol TackMainCollectionViewScrollViewDelegate <NSObject>
+@protocol MRMainCollectionViewScrollViewDelegate <NSObject>
 
 @optional
 
@@ -38,7 +38,7 @@
 
 @end
 
-@protocol TackMainCollectionViewSelectionDelegate <NSObject>
+@protocol MRMainCollectionViewSelectionDelegate <NSObject>
 
 @optional
 

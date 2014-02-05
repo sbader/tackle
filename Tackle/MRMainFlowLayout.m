@@ -1,14 +1,14 @@
 //
-//  TackMainFlowLayout.m
+//  MRMainFlowLayout.m
 //  Tackle
 //
 //  Created by Scott Bader on 1/28/14.
 //  Copyright (c) 2014 Melody Road. All rights reserved.
 //
 
-#import "TackMainFlowLayout.h"
+#import "MRMainFlowLayout.h"
 
-@implementation TackMainFlowLayout
+@implementation MRMainFlowLayout
 
 - (id)init
 {

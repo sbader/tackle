@@ -1,24 +1,24 @@
 //
-//  TackMainCollectionViewController.m
+//  MRMainCollectionViewController.m
 //  Tackle
 //
 //  Created by Scott Bader on 1/27/14.
 //  Copyright (c) 2014 Melody Road. All rights reserved.
 //
 
-#import "TackMainCollectionViewController.h"
+#import "MRMainCollectionViewController.h"
 
-#import "TackDateFormatter.h"
+#import "MRDateFormatter.h"
 
-@interface TackMainCollectionViewController ()
+@interface MRMainCollectionViewController ()
 
 @property (nonatomic) UIMotionEffectGroup *effectGroup;
 
-- (void)updateCell:(TackMainCollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+- (void)updateCell:(MRMainCollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
 @end
 
-@implementation TackMainCollectionViewController
+@implementation MRMainCollectionViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,7 +34,7 @@
     [self.collectionView setRestorationIdentifier:@"CollectionView"];
     [self.collectionView setAlwaysBounceVertical:YES];
     [self.collectionView setBackgroundColor:[UIColor darkPlumColor]];
-    [self.collectionView registerClass:[TackMainCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
+    [self.collectionView registerClass:[MRMainCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
     [self.collectionView setPagingEnabled:NO];
     [self.collectionView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
     [self.collectionView setShowsVerticalScrollIndicator:NO];
@@ -73,7 +73,7 @@
 {
     Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
 
-    CGSize textSize = [TackMainCollectionViewCell sizeForTaskTextLabelWithText:task.text];
+    CGSize textSize = [MRMainCollectionViewCell sizeForTaskTextLabelWithText:task.text];
 
     CGFloat height = ceil(textSize.height) + 46;
 
@@ -82,7 +82,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    TackMainCollectionViewCell *cell = (TackMainCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+    MRMainCollectionViewCell *cell = (MRMainCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
     [cell performDeselection];
 }
 
@@ -94,7 +94,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.collectionView.contentInset.top != 100) {
-        TackMainCollectionViewCell *cell = (TackMainCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+        MRMainCollectionViewCell *cell = (MRMainCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
         [cell performSelection];
         [self addMotionEffects];
 
@@ -115,14 +115,14 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    TackMainCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+    MRMainCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     [cell setDelegate:self];
     [self updateCell:cell atIndexPath:indexPath];
 
     return cell;
 }
 
-- (void)updateCell:(TackMainCollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)updateCell:(MRMainCollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
 
@@ -187,7 +187,7 @@
             break;
 
         case NSFetchedResultsChangeUpdate:
-            [self updateCell:(TackMainCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath] atIndexPath:indexPath];
+            [self updateCell:(MRMainCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath] atIndexPath:indexPath];
             break;
 
         case NSFetchedResultsChangeMove:
@@ -247,7 +247,7 @@
 
             NSArray *indexPaths = [self.collectionView indexPathsForSelectedItems];
             if ([indexPaths count] == 1) {
-                TackMainCollectionViewCell *cell = (TackMainCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPaths[0]];
+                MRMainCollectionViewCell *cell = (MRMainCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPaths[0]];
                 [cell performDeselection];
             }
         } completion:^(BOOL finished) {
@@ -259,9 +259,9 @@
     }
 }
 
-#pragma mark - TackMainCollectionViewCellDelegate
+#pragma mark - MRMainCollectionViewCellDelegate
 
-- (void)markAsDone:(TackMainCollectionViewCell *)cell
+- (void)markAsDone:(MRMainCollectionViewCell *)cell
 {
     Task *task = [self.fetchedResultsController objectAtIndexPath:[self.collectionView indexPathForCell:cell]];
     [task setIsDone:YES];
@@ -273,7 +273,7 @@
     }];
 }
 
-- (BOOL)shouldHandlePanGesturesForCell:(TackMainCollectionViewCell *)cell
+- (BOOL)shouldHandlePanGesturesForCell:(MRMainCollectionViewCell *)cell
 {
     if (self.collectionView.contentInset.top != 100) {
         return YES;
@@ -286,7 +286,7 @@
 - (void)selectTask:(Task *)task
 {
     NSIndexPath *indexPath = [self.fetchedResultsController indexPathForObject:task];
-    TackMainCollectionViewCell *cell = (TackMainCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+    MRMainCollectionViewCell *cell = (MRMainCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
     [cell performSelection];
 }
 
