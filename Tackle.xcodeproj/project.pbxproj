@@ -43,7 +43,6 @@
 		D19C952718A28ACF009082F3 /* NSDate+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D19C952618A28ACF009082F3 /* NSDate+TackleAdditions.m */; };
 		D19C952B18A29297009082F3 /* MRMediumDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D19C952A18A29297009082F3 /* MRMediumDateFormatter.m */; };
 		D19C952E18A29368009082F3 /* MRShortDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D19C952D18A29368009082F3 /* MRShortDateFormatter.m */; };
-		D19C953418A29648009082F3 /* MRUpcomingFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D19C953318A29648009082F3 /* MRUpcomingFormatter.m */; };
 		D1A36E5A18A2B2070020EAEB /* MRTimeDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A36E5918A2B2070020EAEB /* MRTimeDateFormatter.m */; };
 /* End PBXBuildFile section */
 
@@ -111,8 +110,6 @@
 		D19C952A18A29297009082F3 /* MRMediumDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRMediumDateFormatter.m; sourceTree = "<group>"; };
 		D19C952C18A29368009082F3 /* MRShortDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRShortDateFormatter.h; sourceTree = "<group>"; };
 		D19C952D18A29368009082F3 /* MRShortDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRShortDateFormatter.m; sourceTree = "<group>"; };
-		D19C953218A29648009082F3 /* MRUpcomingFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRUpcomingFormatter.h; sourceTree = "<group>"; };
-		D19C953318A29648009082F3 /* MRUpcomingFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRUpcomingFormatter.m; sourceTree = "<group>"; };
 		D1A36E5818A2B2070020EAEB /* MRTimeDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRTimeDateFormatter.h; sourceTree = "<group>"; };
 		D1A36E5918A2B2070020EAEB /* MRTimeDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRTimeDateFormatter.m; sourceTree = "<group>"; };
 		D1D84A0D189DC67100D0AC78 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
@@ -312,8 +309,6 @@
 				D19C952A18A29297009082F3 /* MRMediumDateFormatter.m */,
 				D19C952C18A29368009082F3 /* MRShortDateFormatter.h */,
 				D19C952D18A29368009082F3 /* MRShortDateFormatter.m */,
-				D19C953218A29648009082F3 /* MRUpcomingFormatter.h */,
-				D19C953318A29648009082F3 /* MRUpcomingFormatter.m */,
 				D1A36E5818A2B2070020EAEB /* MRTimeDateFormatter.h */,
 				D1A36E5918A2B2070020EAEB /* MRTimeDateFormatter.m */,
 			);
@@ -436,7 +431,6 @@
 				D12E87831894A07B008119B8 /* UIFont+TackleAdditions.m in Sources */,
 				D17BCFB3189F3D05001996C1 /* UIView+TackleAdditions.m in Sources */,
 				D12E877318944E6A008119B8 /* MRTaskEditView.m in Sources */,
-				D19C953418A29648009082F3 /* MRUpcomingFormatter.m in Sources */,
 				D1027F7B18904E8400FF44A4 /* MRAppDelegate.m in Sources */,
 				D139E5771895A117007163AD /* MRMainViewController.m in Sources */,
 				D172CF451898A13500297A42 /* MRMainFlowLayout.m in Sources */,

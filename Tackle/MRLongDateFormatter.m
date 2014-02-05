@@ -25,10 +25,6 @@ NSString * const kCachedLongDateFormatterKey = @"CachedLongDateFormatterKey";
         dateFormatter = [[MRLongDateFormatter alloc] init];
         [dateFormatter setDateFormat:formatString];
 
-//        [dateFormatter setDoesRelativeDateFormatting:YES];
-//        [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-//        [dateFormatter setDateStyle:NSDateFormatterShortStyle];
-
         [threadDictionary setObject:dateFormatter forKey:kCachedLongDateFormatterKey];
     }
 
