@@ -8,7 +8,7 @@
 
 #import "MRHeartbeat.h"
 
-const CGFloat kHeartbeatInterval = 0.1;
+const CGFloat kHeartbeatInterval = 0.05;
 NSString * const kHeartbeatId = @"kHeartbeatId";
 NSString * const kSlowHeartbeatId = @"kSlowHeartbeatId";
 
