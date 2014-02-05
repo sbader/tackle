@@ -16,7 +16,7 @@
 @property (nonatomic, retain) NSDate * dueDate;
 @property (nonatomic) BOOL isDone;
 
-
++ (Task *)insertItemWithText:(NSString*)text dueDate:(NSDate *)dueDate inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 - (BOOL)scheduleNotification;
 - (void)markAsDone;
 - (void)cancelNotification;
