@@ -12,6 +12,8 @@
 
 @interface TackMainCollectionViewController ()
 
+@property (nonatomic) UIMotionEffectGroup *effectGroup;
+
 - (void)updateCell:(TackMainCollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
 @end
@@ -36,6 +38,35 @@
     [self.collectionView setPagingEnabled:NO];
     [self.collectionView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
     [self.collectionView setShowsVerticalScrollIndicator:NO];
+    [self setupMotion];
+}
+
+- (void)setupMotion
+{
+    UIInterpolatingMotionEffect *verticalMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y" type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+
+    verticalMotionEffect.minimumRelativeValue = @(-10);
+    verticalMotionEffect.maximumRelativeValue = @(10);
+
+    UIInterpolatingMotionEffect *horizontalMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x" type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+
+    horizontalMotionEffect.minimumRelativeValue = @(-10);
+    horizontalMotionEffect.maximumRelativeValue = @(10);
+
+    self.effectGroup = [UIMotionEffectGroup new];
+    self.effectGroup.motionEffects = @[horizontalMotionEffect, verticalMotionEffect];
+//
+//    [self.collectionView addMotionEffect:group];
+}
+
+- (void)addMotionEffects
+{
+    [self.collectionView addMotionEffect:self.effectGroup];
+}
+
+- (void)removeMotionEffects
+{
+    [self.collectionView removeMotionEffect:self.effectGroup];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -65,6 +96,7 @@
     if (self.collectionView.contentInset.top != 100) {
         TackMainCollectionViewCell *cell = (TackMainCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
         [cell performSelection];
+        [self addMotionEffects];
 
         Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
         if ([self.selectionDelegate respondsToSelector:@selector(didSelectCellWithTask:)]) {
@@ -174,6 +206,8 @@
     [UIView animateWithDuration:0.2 animations:^{
         [self.collectionView setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
         [self.collectionView setContentOffset:CGPointZero];
+    } completion:^(BOOL finished) {
+        [self removeMotionEffects];
     }];
 }
 
@@ -201,6 +235,8 @@
             if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidInsetContent:)]) {
                 [self.scrollViewDelegate scrollViewDidInsetContent:self.collectionView];
             }
+
+            [self addMotionEffects];
         }];
     }
     else if (scrollView.contentInset.top == 100 && scrollView.contentOffset.y > -100) {
@@ -218,6 +254,7 @@
             if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidResetContent:)]) {
                 [self.scrollViewDelegate scrollViewDidResetContent:self.collectionView];
             }
+            [self removeMotionEffects];
         }];
     }
 }
