@@ -9,6 +9,7 @@
 #import "MRMainCollectionViewController.h"
 
 #import "MRLongDateFormatter.h"
+#import "MRHeartbeat.h"
 
 @interface MRMainCollectionViewController ()
 
@@ -38,7 +39,30 @@
     [self.collectionView setPagingEnabled:NO];
     [self.collectionView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
     [self.collectionView setShowsVerticalScrollIndicator:NO];
+    [self attachObservers];
     [self setupMotion];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [self detachObservers];
+}
+
+- (void)attachObservers
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(heartDidBeat) name:[MRHeartbeat slowHeartbeatId] object:nil];
+}
+
+- (void)detachObservers
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:[MRHeartbeat heartbeatId] object:nil];
+}
+
+- (void)heartDidBeat
+{
+    [self.collectionView.visibleCells enumerateObjectsUsingBlock:^(MRMainCollectionViewCell *cell, NSUInteger idx, BOOL *stop) {
+        [cell decrementDate];
+    }];
 }
 
 - (void)setupMotion

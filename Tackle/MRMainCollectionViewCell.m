@@ -24,6 +24,8 @@
 @property (nonatomic, strong) UIPushBehavior* pushBehavior;
 @property (nonatomic, strong) UIAttachmentBehavior *panAttachmentBehaviour;
 
+@property (nonatomic, strong) NSDate *initialDueDate;
+
 @end
 
 @implementation MRMainCollectionViewCell
@@ -54,6 +56,11 @@
 - (void)performDeselection
 {
     [self.mainView setBackgroundColor:[UIColor lightPlumColor]];
+}
+
+- (void)decrementDate
+{
+    [self.dueDateLabel setText:self.initialDueDate.tackleString];
 }
 
 - (void)setSelected:(BOOL)selected {
@@ -137,7 +144,8 @@
 
 - (void)setDueDate:(NSDate *)dueDate
 {
-    [self.dueDateLabel setText:dueDate.tackleString];
+    self.initialDueDate = dueDate;
+    [self.dueDateLabel setText:self.initialDueDate.tackleString];
 }
 
 - (void)markAsDone

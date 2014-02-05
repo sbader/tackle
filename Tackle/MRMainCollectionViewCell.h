@@ -23,6 +23,7 @@
 - (void)performSelection;
 - (void)performDeselection;
 - (void)updateSizing;
+- (void)decrementDate;
 
 @end
 

@@ -68,7 +68,7 @@ NSString * const kSlowHeartbeatId = @"kSlowHeartbeatId";
         [[NSNotificationCenter defaultCenter] postNotificationName:kSlowHeartbeatId object:nil];
     }
 
-    if (self.tick < 3) {
+    if (self.tick < 1/kHeartbeatInterval) {
         self.tick++;
     }
     else {
