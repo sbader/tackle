@@ -9,10 +9,14 @@
 #import "MRTaskEditView.h"
 
 #import "MRDateFormatter.h"
+#import "MRHeartbeat.h"
 
 @interface MRTaskEditView ()
 
-@property (nonatomic) BOOL isDatePickerShown;
+@property (nonatomic, getter = isDatePickerShown) BOOL datePickerShown;
+@property (nonatomic, getter = isIncrementing) BOOL incrementing;
+@property (nonatomic) NSDate *visibleDate;
+@property (nonatomic) NSTimeInterval incrementer;
 
 @end
 
@@ -25,12 +29,14 @@
         [self setBackgroundColor:UIColorFromRGB(0xDADADC)];
 
         self.dueDate = [NSDate dateWithTimeIntervalSinceNow:600];
+        self.visibleDate = self.dueDate;
+
+        self.incrementing = NO;
 
         [self setupTextField];
         [self setupDueDateButton];
         [self setupBottomButtonView];
         [self setupDatePicker];
-        [self updateDueDate];
 
         [self addObservers];
     }
@@ -39,12 +45,12 @@
 
 - (void)addObservers
 {
-    [self addObserver:self forKeyPath:@"dueDate" options:NSKeyValueObservingOptionNew context:nil];
+//    [self addObserver:self forKeyPath:@"dueDate" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)removeObservers
 {
-    [self removeObserver:self forKeyPath:@"dueDate"];
+//    [self removeObserver:self forKeyPath:@"dueDate"];
 }
 
 - (void)setupTextField
@@ -75,7 +81,7 @@
     [self.dueDateButton setTitleColor:UIColorFromRGB(0x7091BC) forState:UIControlStateNormal];
     [self.dueDateButton setTitleColor:UIColorFromRGB(0x82AADD) forState:UIControlStateHighlighted];
     [self.dueDateButton setTitleColor:UIColorFromRGB(0x82AADD) forState:UIControlStateSelected];
-
+    [self.dueDateButton setTitle:[[MRDateFormatter sharedInstance] stringFromDate:self.dueDate] forState:UIControlStateNormal];
     [self.dueDateButton.titleLabel setFont:[UIFont effraRegularWithSize:23.0f]];
 
     [self.dueDateButton addTarget:self action:@selector(displayDatePicker:) forControlEvents:UIControlEventTouchUpInside];
@@ -102,11 +108,12 @@
 
 - (void)setupDatePicker
 {
-    self.isDatePickerShown = NO;
+    self.datePickerShown = NO;
 
     self.datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 108.0f, self.frame.size.width, 120.0f)];
     [self.datePicker setHidden:YES];
     [self.datePicker addTarget:self action:@selector(datePickerChanged:) forControlEvents:UIControlEventValueChanged];
+    [self.datePicker setDate:self.dueDate];
     [self addSubview:self.datePicker];
 }
 
@@ -208,17 +215,17 @@
 
 - (void)handleAddTenMinutes:(id)sender
 {
-    [self setDueDate:[NSDate dateWithTimeInterval:600 sinceDate:self.dueDate]];
+    [self setDueDate:[NSDate dateWithTimeInterval:600 sinceDate:self.dueDate] animated:YES];
 }
 
 - (void)handleAddOneHour:(id)sender
 {
-    [self setDueDate:[NSDate dateWithTimeInterval:3600 sinceDate:self.dueDate]];
+    [self setDueDate:[NSDate dateWithTimeInterval:3600 sinceDate:self.dueDate] animated:YES];
 }
 
 - (void)handleAddOneDay:(id)sender
 {
-    [self setDueDate:[NSDate dateWithTimeInterval:86400 sinceDate:self.dueDate]];
+    [self setDueDate:[NSDate dateWithTimeInterval:86400 sinceDate:self.dueDate] animated:YES];
 }
 
 - (void)displayDatePicker:(id)sender
@@ -231,7 +238,7 @@
         bottomButtonViewFrame.origin.y = bottomButtonViewFrame.origin.y - 216;
 
         [self.datePicker setHidden:YES];
-        self.isDatePickerShown = NO;
+        self.datePickerShown = NO;
 
         [UIView animateWithDuration:0.2 animations:^{
             [self.bottomButtonView setFrame:bottomButtonViewFrame];
@@ -252,26 +259,39 @@
             [self.bottomButtonView setFrame:bottomButtonViewFrame];
         } completion:^(BOOL finished) {
             [self.datePicker setHidden:NO];
-            self.isDatePickerShown = YES;
+            self.datePickerShown = YES;
         }];
     }
 }
 
 - (void)datePickerChanged:(id)sender
 {
-    self.dueDate = self.datePicker.date;
-    [self updateDueDate];
+    [self setDueDate:self.datePicker.date animated:NO];
 }
 
-- (void)updateDueDate
+- (void)heartDidBeat
 {
-    [self.dueDateButton setTitle:[[MRDateFormatter sharedInstance] stringFromDate:self.dueDate] forState:UIControlStateNormal];
-    [self.datePicker setDate:self.dueDate animated:NO];
+    NSTimeInterval difference = [self.dueDate timeIntervalSinceDate:self.visibleDate];
+
+    if (!self.incrementer) {
+        NSUInteger interval = 4;
+        self.incrementer = ceil(difference/interval);
+    }
+
+    if (self.incrementer > 0 && difference > 0) {
+        self.visibleDate = [self.visibleDate dateByAddingTimeInterval:self.incrementer];
+        [self.dueDateButton setTitle:[[MRDateFormatter sharedInstance] stringFromDate:self.visibleDate] forState:UIControlStateNormal];
+    }
+    else {
+        self.incrementing = NO;
+        self.incrementer = 0;
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:[MRHeartbeat heartbeatId] object:nil];
+    }
 }
 
 - (void)resetContent
 {
-    [self setDueDate:[NSDate dateWithTimeIntervalSinceNow:600]];
+    [self setDueDate:[NSDate dateWithTimeIntervalSinceNow:600] animated:NO];
     [self.textField setText:@""];
     if (self.isDatePickerShown) {
         CGRect mainFrame = self.frame;
@@ -281,18 +301,27 @@
         bottomButtonViewFrame.origin.y = bottomButtonViewFrame.origin.y - 216;
 
         [self.datePicker setHidden:YES];
-        self.isDatePickerShown = NO;
+        self.datePickerShown = NO;
         [self.bottomButtonView setFrame:bottomButtonViewFrame];
         [self setFrame:mainFrame];
     }
 }
 
-#pragma mark - NSKeyValueObserving
+- (void)setDueDate:(NSDate *)dueDate animated:(BOOL)animated
+{
+    self.dueDate = dueDate;
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"dueDate"]) {
-        [self updateDueDate];
+    if (animated) {
+        self.incrementing = YES;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(heartDidBeat) name:[MRHeartbeat heartbeatId] object:nil];
+        [self.dueDateButton setTitle:[[MRDateFormatter sharedInstance] stringFromDate:self.visibleDate] forState:UIControlStateNormal];
     }
+    else {
+        self.visibleDate = self.dueDate;
+        [self.dueDateButton setTitle:[[MRDateFormatter sharedInstance] stringFromDate:self.visibleDate] forState:UIControlStateNormal];
+    }
+
+    [self.datePicker setDate:self.dueDate animated:NO];
 }
 
 @end

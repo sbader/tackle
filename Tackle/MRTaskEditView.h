@@ -24,6 +24,7 @@
 @property (strong, nonatomic) NSDate *dueDate;
 
 - (void)resetContent;
+- (void)setDueDate:(NSDate *)dueDate animated:(BOOL)animated;
 
 @end
 

@@ -39,6 +39,7 @@
 		D172CF451898A13500297A42 /* MRMainFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D172CF441898A13500297A42 /* MRMainFlowLayout.m */; };
 		D17BCFB3189F3D05001996C1 /* UIView+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D17BCFB2189F3D05001996C1 /* UIView+TackleAdditions.m */; };
 		D188D64718A090D2009D747E /* Effra-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = D188D64618A090D2009D747E /* Effra-Light.otf */; };
+		D194BEBB18A1CCC600E5E4DA /* MRHeartbeat.m in Sources */ = {isa = PBXBuildFile; fileRef = D194BEBA18A1CCC600E5E4DA /* MRHeartbeat.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +98,8 @@
 		D17BCFB1189F3D05001996C1 /* UIView+TackleAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TackleAdditions.h"; sourceTree = "<group>"; };
 		D17BCFB2189F3D05001996C1 /* UIView+TackleAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TackleAdditions.m"; sourceTree = "<group>"; };
 		D188D64618A090D2009D747E /* Effra-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Effra-Light.otf"; sourceTree = "<group>"; };
+		D194BEB918A1CCC600E5E4DA /* MRHeartbeat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRHeartbeat.h; sourceTree = "<group>"; };
+		D194BEBA18A1CCC600E5E4DA /* MRHeartbeat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRHeartbeat.m; sourceTree = "<group>"; };
 		D1D84A0D189DC67100D0AC78 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -278,6 +281,8 @@
 			children = (
 				D139E57218959F41007163AD /* MRDateFormatter.h */,
 				D139E57318959F41007163AD /* MRDateFormatter.m */,
+				D194BEB918A1CCC600E5E4DA /* MRHeartbeat.h */,
+				D194BEBA18A1CCC600E5E4DA /* MRHeartbeat.m */,
 			);
 			name = Lib;
 			sourceTree = "<group>";
@@ -398,6 +403,7 @@
 				D1027F7B18904E8400FF44A4 /* MRAppDelegate.m in Sources */,
 				D139E5771895A117007163AD /* MRMainViewController.m in Sources */,
 				D172CF451898A13500297A42 /* MRMainFlowLayout.m in Sources */,
+				D194BEBB18A1CCC600E5E4DA /* MRHeartbeat.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
