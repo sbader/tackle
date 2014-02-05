@@ -59,10 +59,10 @@
     return [calendar dateFromComponents:components];
 }
 
-- (NSString *)tackleString
+- (NSString *)tackleStringSinceDate:(NSDate *)date
 {
     NSString *formattedString;
-    NSTimeInterval timeInterval = [self timeIntervalSinceDate:[NSDate date]];
+    NSTimeInterval timeInterval = [self timeIntervalSinceDate:date];
 
     if (timeInterval < 3600) {
         NSNumber *hours = [[NSNumber alloc] initWithInt:timeInterval/3600];
@@ -81,7 +81,13 @@
             formattedString = [NSString stringWithFormat:@"In %@ seconds", [numberFormatter stringFromNumber:seconds]];
         }
     }
-    else if ([self isToday] || [self isTomorrow] || [self isYesterday]) {
+    else if ([self isToday]) {
+        MRTimeDateFormatter *timeFormatter = [MRTimeDateFormatter sharedInstance];
+        NSString *time = [timeFormatter stringFromDate:self];
+
+        formattedString = [NSString stringWithFormat:@"%@", time];
+    }
+    else if ([self isTomorrow] || [self isYesterday]) {
         MRShortDateFormatter *formatter = [MRShortDateFormatter sharedInstance];
         NSString *relativeDay = [formatter stringFromDate:self];
 
@@ -110,6 +116,11 @@
     }
 
     return formattedString;
+}
+
+- (NSString *)tackleString
+{
+    return [self tackleStringSinceDate:[NSDate date]];
 }
 
 @end

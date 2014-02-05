@@ -11,5 +11,6 @@
 @interface NSDate (TackleAdditions)
 
 - (NSString *)tackleString;
+- (NSString *)tackleStringSinceDate:(NSDate *)date;
 
 @end
