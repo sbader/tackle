@@ -74,49 +74,17 @@
         [self.managedObjectContext deleteObject:obj];
     }];
 
-    Task *task1 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-    [task1 setText:@"Prepare Expenses"];
-    [task1 setDueDate:[NSDate dateWithTimeIntervalSinceNow:7200]];
-
-    Task *task2 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-    [task2 setText:@"Renew Apple Developer Program Membership"];
-    [task2 setDueDate:[NSDate dateWithTimeIntervalSinceNow:96000]];
-
-    Task *task3 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-    [task3 setText:@"Read more about Objective-C"];
-    [task3 setDueDate:[NSDate dateWithTimeIntervalSinceNow:72000]];
-
-    Task *task4 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-    [task4 setText:@"Schedule a physical"];
-    [task4 setDueDate:[NSDate dateWithTimeIntervalSinceNow:172800]];
-
-    Task *task5 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-    [task5 setText:@"Work on Tackle"];
-    [task5 setDueDate:[NSDate dateWithTimeIntervalSinceNow:171000]];
-
-    Task *task6 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-    [task6 setText:@"Go to anniversary party"];
-    [task6 setDueDate:[NSDate dateWithTimeIntervalSinceNow:220000]];
-
-    Task *task7 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-    [task7 setText:@"Dinner with family"];
-    [task7 setDueDate:[NSDate dateWithTimeIntervalSinceNow:240000]];
-
-    Task *task8 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-    [task8 setText:@"Watch hockey"];
-    [task8 setDueDate:[NSDate dateWithTimeIntervalSinceNow:280000]];
-
-    Task *task9 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-    [task9 setText:@"Clean apartment"];
-    [task9 setDueDate:[NSDate dateWithTimeIntervalSinceNow:290000]];
-
-    Task *task10 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-    [task10 setText:@"Watch Archer"];
-    [task10 setDueDate:[NSDate dateWithTimeIntervalSinceNow:300000]];
-
-    Task *task11 = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-    [task11 setText:@"Watch Archer"];
-    [task11 setDueDate:[NSDate dateWithTimeIntervalSinceNow:800000]];
+    [Task insertItemWithText:@"Budget" dueDate:[NSDate dateWithTimeIntervalSinceNow:59] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithText:@"Prepare Expenses" dueDate:[NSDate dateWithTimeIntervalSinceNow:7200] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithText:@"Renew Apple Developer Program Membership" dueDate:[NSDate dateWithTimeIntervalSinceNow:96000] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithText:@"Read more about Objective-C" dueDate:[NSDate dateWithTimeIntervalSinceNow:72000] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithText:@"Schedule a physical" dueDate:[NSDate dateWithTimeIntervalSinceNow:172800] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithText:@"Work on Tackle" dueDate:[NSDate dateWithTimeIntervalSinceNow:171000] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithText:@"Go to anniversary party" dueDate:[NSDate dateWithTimeIntervalSinceNow:220000] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithText:@"Dinner with family" dueDate:[NSDate dateWithTimeIntervalSinceNow:240000] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithText:@"Watch hockey" dueDate:[NSDate dateWithTimeIntervalSinceNow:280000] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithText:@"Clean apartment" dueDate:[NSDate dateWithTimeIntervalSinceNow:290000] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithText:@"Watch Archer" dueDate:[NSDate dateWithTimeIntervalSinceNow:300000] inManagedObjectContext:self.managedObjectContext];
 
     NSError *error = nil;
 

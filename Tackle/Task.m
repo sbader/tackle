@@ -15,6 +15,17 @@
 @dynamic dueDate;
 @dynamic isDone;
 
++ (Task *)insertItemWithText:(NSString*)text dueDate:(NSDate *)dueDate inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
+{
+    Task *task = [NSEntityDescription insertNewObjectForEntityForName:@"Task"
+                                               inManagedObjectContext:managedObjectContext];
+
+    task.text = text;
+    task.dueDate = dueDate;
+
+    return task;
+}
+
 - (BOOL)scheduleNotification
 {
     UILocalNotification *notification = [[UILocalNotification alloc] init];
