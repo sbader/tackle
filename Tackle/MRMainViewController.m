@@ -100,7 +100,16 @@
     [UIView animateWithDuration:0.2 animations:^{
         [self.mainCollectionViewController.collectionView setContentInset:UIEdgeInsetsMake(100, 0, 0, 0)];
     } completion:^(BOOL finished) {
-        [self.mainCollectionViewController.collectionView setContentOffset:CGPointMake(0, -100) animated:YES];
+        [UIView animateWithDuration:0.2 animations:^{
+            CGRect frame = self.editView.frame;
+            [self.editView setFrame:CGRectMake(frame.origin.x, 20, frame.size.width, frame.size.height)];
+
+            CALayer *layer = self.mainCollectionViewController.view.layer;
+            CGFloat scale = 0.9;
+            [layer setTransform:CATransform3DMakeScale(scale, scale, 1)];
+        } completion:^(BOOL finished) {
+            [self.mainCollectionViewController.collectionView setScrollEnabled:YES];
+        }];
     }];
 }
 
