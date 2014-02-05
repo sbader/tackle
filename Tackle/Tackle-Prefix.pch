@@ -17,4 +17,5 @@
     #import "UIFont+TackleAdditions.h"
     #import "UIColor+TackleAdditions.h"
     #import "UIView+TackleAdditions.h"
+    #import "NSDate+TackleAdditions.h"
 #endif

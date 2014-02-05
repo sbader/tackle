@@ -8,7 +8,7 @@
 
 #import "MRTaskEditView.h"
 
-#import "MRDateFormatter.h"
+#import "MRLongDateFormatter.h"
 #import "MRHeartbeat.h"
 
 @interface MRTaskEditView ()
@@ -81,7 +81,7 @@
     [self.dueDateButton setTitleColor:UIColorFromRGB(0x7091BC) forState:UIControlStateNormal];
     [self.dueDateButton setTitleColor:UIColorFromRGB(0x82AADD) forState:UIControlStateHighlighted];
     [self.dueDateButton setTitleColor:UIColorFromRGB(0x82AADD) forState:UIControlStateSelected];
-    [self.dueDateButton setTitle:[[MRDateFormatter sharedInstance] stringFromDate:self.dueDate] forState:UIControlStateNormal];
+    [self.dueDateButton setTitle:self.dueDate.tackleString forState:UIControlStateNormal];
     [self.dueDateButton.titleLabel setFont:[UIFont effraRegularWithSize:23.0f]];
 
     [self.dueDateButton addTarget:self action:@selector(displayDatePicker:) forControlEvents:UIControlEventTouchUpInside];
@@ -280,7 +280,7 @@
 
     if (self.incrementer > 0 && difference > 0) {
         self.visibleDate = [self.visibleDate dateByAddingTimeInterval:self.incrementer];
-        [self.dueDateButton setTitle:[[MRDateFormatter sharedInstance] stringFromDate:self.visibleDate] forState:UIControlStateNormal];
+        [self.dueDateButton setTitle:self.visibleDate.tackleString forState:UIControlStateNormal];
     }
     else {
         self.incrementing = NO;
@@ -314,11 +314,11 @@
     if (animated) {
         self.incrementing = YES;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(heartDidBeat) name:[MRHeartbeat heartbeatId] object:nil];
-        [self.dueDateButton setTitle:[[MRDateFormatter sharedInstance] stringFromDate:self.visibleDate] forState:UIControlStateNormal];
+        [self.dueDateButton setTitle:self.visibleDate.tackleString forState:UIControlStateNormal];
     }
     else {
         self.visibleDate = self.dueDate;
-        [self.dueDateButton setTitle:[[MRDateFormatter sharedInstance] stringFromDate:self.visibleDate] forState:UIControlStateNormal];
+        [self.dueDateButton setTitle:self.visibleDate.tackleString forState:UIControlStateNormal];
     }
 
     [self.datePicker setDate:self.dueDate animated:NO];

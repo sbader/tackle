@@ -28,7 +28,7 @@
 		D12E877918945525008119B8 /* Adonis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = D12E877718945525008119B8 /* Adonis-Regular.otf */; };
 		D12E87831894A07B008119B8 /* UIFont+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D12E87821894A07B008119B8 /* UIFont+TackleAdditions.m */; };
 		D12E8786189573FC008119B8 /* UIColor+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D12E8785189573FC008119B8 /* UIColor+TackleAdditions.m */; };
-		D139E57418959F41007163AD /* MRDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D139E57318959F41007163AD /* MRDateFormatter.m */; };
+		D139E57418959F41007163AD /* MRLongDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D139E57318959F41007163AD /* MRLongDateFormatter.m */; };
 		D139E5771895A117007163AD /* MRMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D139E5761895A117007163AD /* MRMainViewController.m */; };
 		D139E57C1897329C007163AD /* Effra-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D139E5781897329C007163AD /* Effra-Bold.otf */; };
 		D139E57D1897329C007163AD /* Effra-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = D139E5791897329C007163AD /* Effra-BoldItalic.otf */; };
@@ -40,6 +40,10 @@
 		D17BCFB3189F3D05001996C1 /* UIView+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D17BCFB2189F3D05001996C1 /* UIView+TackleAdditions.m */; };
 		D188D64718A090D2009D747E /* Effra-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = D188D64618A090D2009D747E /* Effra-Light.otf */; };
 		D194BEBB18A1CCC600E5E4DA /* MRHeartbeat.m in Sources */ = {isa = PBXBuildFile; fileRef = D194BEBA18A1CCC600E5E4DA /* MRHeartbeat.m */; };
+		D19C952718A28ACF009082F3 /* NSDate+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D19C952618A28ACF009082F3 /* NSDate+TackleAdditions.m */; };
+		D19C952B18A29297009082F3 /* MRMediumDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D19C952A18A29297009082F3 /* MRMediumDateFormatter.m */; };
+		D19C952E18A29368009082F3 /* MRShortDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D19C952D18A29368009082F3 /* MRShortDateFormatter.m */; };
+		D19C953418A29648009082F3 /* MRUpcomingFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D19C953318A29648009082F3 /* MRUpcomingFormatter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,8 +85,8 @@
 		D12E87821894A07B008119B8 /* UIFont+TackleAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+TackleAdditions.m"; sourceTree = "<group>"; };
 		D12E8784189573FC008119B8 /* UIColor+TackleAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+TackleAdditions.h"; sourceTree = "<group>"; };
 		D12E8785189573FC008119B8 /* UIColor+TackleAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+TackleAdditions.m"; sourceTree = "<group>"; };
-		D139E57218959F41007163AD /* MRDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRDateFormatter.h; sourceTree = "<group>"; };
-		D139E57318959F41007163AD /* MRDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRDateFormatter.m; sourceTree = "<group>"; };
+		D139E57218959F41007163AD /* MRLongDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRLongDateFormatter.h; sourceTree = "<group>"; };
+		D139E57318959F41007163AD /* MRLongDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRLongDateFormatter.m; sourceTree = "<group>"; };
 		D139E5751895A117007163AD /* MRMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRMainViewController.h; sourceTree = "<group>"; };
 		D139E5761895A117007163AD /* MRMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRMainViewController.m; sourceTree = "<group>"; };
 		D139E5781897329C007163AD /* Effra-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Effra-Bold.otf"; sourceTree = "<group>"; };
@@ -100,6 +104,14 @@
 		D188D64618A090D2009D747E /* Effra-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Effra-Light.otf"; sourceTree = "<group>"; };
 		D194BEB918A1CCC600E5E4DA /* MRHeartbeat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRHeartbeat.h; sourceTree = "<group>"; };
 		D194BEBA18A1CCC600E5E4DA /* MRHeartbeat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRHeartbeat.m; sourceTree = "<group>"; };
+		D19C952518A28ACF009082F3 /* NSDate+TackleAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+TackleAdditions.h"; sourceTree = "<group>"; };
+		D19C952618A28ACF009082F3 /* NSDate+TackleAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+TackleAdditions.m"; sourceTree = "<group>"; };
+		D19C952918A29297009082F3 /* MRMediumDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRMediumDateFormatter.h; sourceTree = "<group>"; };
+		D19C952A18A29297009082F3 /* MRMediumDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRMediumDateFormatter.m; sourceTree = "<group>"; };
+		D19C952C18A29368009082F3 /* MRShortDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRShortDateFormatter.h; sourceTree = "<group>"; };
+		D19C952D18A29368009082F3 /* MRShortDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRShortDateFormatter.m; sourceTree = "<group>"; };
+		D19C953218A29648009082F3 /* MRUpcomingFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRUpcomingFormatter.h; sourceTree = "<group>"; };
+		D19C953318A29648009082F3 /* MRUpcomingFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRUpcomingFormatter.m; sourceTree = "<group>"; };
 		D1D84A0D189DC67100D0AC78 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -166,6 +178,7 @@
 			children = (
 				D12E877A18949FFD008119B8 /* Categories */,
 				D12E878718957938008119B8 /* Controllers */,
+				D19C952818A28DBF009082F3 /* Formatters */,
 				D139E57118959EF6007163AD /* Lib */,
 				D1027FEF1890545800FF44A4 /* Models */,
 				D12E8774189454E1008119B8 /* Resources */,
@@ -248,6 +261,8 @@
 				D12E8785189573FC008119B8 /* UIColor+TackleAdditions.m */,
 				D17BCFB1189F3D05001996C1 /* UIView+TackleAdditions.h */,
 				D17BCFB2189F3D05001996C1 /* UIView+TackleAdditions.m */,
+				D19C952518A28ACF009082F3 /* NSDate+TackleAdditions.h */,
+				D19C952618A28ACF009082F3 /* NSDate+TackleAdditions.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -279,12 +294,25 @@
 		D139E57118959EF6007163AD /* Lib */ = {
 			isa = PBXGroup;
 			children = (
-				D139E57218959F41007163AD /* MRDateFormatter.h */,
-				D139E57318959F41007163AD /* MRDateFormatter.m */,
 				D194BEB918A1CCC600E5E4DA /* MRHeartbeat.h */,
 				D194BEBA18A1CCC600E5E4DA /* MRHeartbeat.m */,
 			);
 			name = Lib;
+			sourceTree = "<group>";
+		};
+		D19C952818A28DBF009082F3 /* Formatters */ = {
+			isa = PBXGroup;
+			children = (
+				D139E57218959F41007163AD /* MRLongDateFormatter.h */,
+				D139E57318959F41007163AD /* MRLongDateFormatter.m */,
+				D19C952918A29297009082F3 /* MRMediumDateFormatter.h */,
+				D19C952A18A29297009082F3 /* MRMediumDateFormatter.m */,
+				D19C952C18A29368009082F3 /* MRShortDateFormatter.h */,
+				D19C952D18A29368009082F3 /* MRShortDateFormatter.m */,
+				D19C953218A29648009082F3 /* MRUpcomingFormatter.h */,
+				D19C953318A29648009082F3 /* MRUpcomingFormatter.m */,
+			);
+			name = Formatters;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -392,14 +420,18 @@
 			files = (
 				D172CF3F189739D900297A42 /* MRMainCollectionViewController.m in Sources */,
 				D1027FEE1890535700FF44A4 /* Task.m in Sources */,
-				D139E57418959F41007163AD /* MRDateFormatter.m in Sources */,
+				D139E57418959F41007163AD /* MRLongDateFormatter.m in Sources */,
+				D19C952718A28ACF009082F3 /* NSDate+TackleAdditions.m in Sources */,
+				D19C952B18A29297009082F3 /* MRMediumDateFormatter.m in Sources */,
 				D1027F7718904E8400FF44A4 /* main.m in Sources */,
+				D19C952E18A29368009082F3 /* MRShortDateFormatter.m in Sources */,
 				D1027F7E18904E8400FF44A4 /* Tackle.xcdatamodeld in Sources */,
 				D172CF4218973C4900297A42 /* MRMainCollectionViewCell.m in Sources */,
 				D12E8786189573FC008119B8 /* UIColor+TackleAdditions.m in Sources */,
 				D12E87831894A07B008119B8 /* UIFont+TackleAdditions.m in Sources */,
 				D17BCFB3189F3D05001996C1 /* UIView+TackleAdditions.m in Sources */,
 				D12E877318944E6A008119B8 /* MRTaskEditView.m in Sources */,
+				D19C953418A29648009082F3 /* MRUpcomingFormatter.m in Sources */,
 				D1027F7B18904E8400FF44A4 /* MRAppDelegate.m in Sources */,
 				D139E5771895A117007163AD /* MRMainViewController.m in Sources */,
 				D172CF451898A13500297A42 /* MRMainFlowLayout.m in Sources */,
