@@ -94,7 +94,7 @@
     [self setEditingTask:task];
 
     [self.editView.textField setText:task.text];
-    [self.editView setDueDate:task.dueDate];
+    [self.editView setDueDate:task.dueDate animated:NO];
 
     [self.mainCollectionViewController.collectionView setScrollEnabled:NO];
     [UIView animateWithDuration:0.2 animations:^{
