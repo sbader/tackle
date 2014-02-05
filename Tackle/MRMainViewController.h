@@ -1,5 +1,5 @@
 //
-//  TackMainViewController.h
+//  MRMainViewController.h
 //  Tackle
 //
 //  Created by Scott Bader on 1/26/14.
@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-#import "TackMainCollectionViewController.h"
-#import "TackTaskEditView.h"
+#import "MRMainCollectionViewController.h"
+#import "MRTaskEditView.h"
 
-@interface TackMainViewController : UIViewController <TackMainCollectionViewScrollViewDelegate, TackMainCollectionViewSelectionDelegate, TackTaskEditViewDelegate>
+@interface MRMainViewController : UIViewController <MRMainCollectionViewScrollViewDelegate, MRMainCollectionViewSelectionDelegate, MRTaskEditViewDelegate>
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (strong, nonatomic) TackMainCollectionViewController *mainCollectionViewController;
+@property (strong, nonatomic) MRMainCollectionViewController *mainCollectionViewController;
 
 - (id)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 - (void)taskEditViewDidReturnWithText:(NSString *)text dueDate:(NSDate *)dueDate;

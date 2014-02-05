@@ -1,5 +1,5 @@
 //
-//  TackDateFormatter.h
+//  MRDateFormatter.h
 //  Tackle
 //
 //  Created by Scott Bader on 1/26/14.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TackDateFormatter : NSObject
+@interface MRDateFormatter : NSObject
 
 + (NSDateFormatter *)sharedInstance;
 

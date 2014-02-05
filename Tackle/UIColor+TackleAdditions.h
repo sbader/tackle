@@ -1,5 +1,5 @@
 //
-//  UIColor+TackAdditions.h
+//  UIColor+TackleAdditions.h
 //  Tackle
 //
 //  Created by Scott Bader on 1/26/14.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIColor (TackAdditions)
+@interface UIColor (TackleAdditions)
 
 //RGB color macro
 //Usage: UIColorFromRGB(0xAE66CC);

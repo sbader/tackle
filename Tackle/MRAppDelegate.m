@@ -1,17 +1,17 @@
 //
-//  TackAppDelegate.m
+//  MRAppDelegate.m
 //  Tackle
 //
 //  Created by Scott Bader on 1/22/14.
 //  Copyright (c) 2014 Melody Road. All rights reserved.
 //
 
-#import "TackAppDelegate.h"
+#import "MRAppDelegate.h"
 
-#import "TackMainViewController.h"
+#import "MRMainViewController.h"
 #import "Task.h"
 
-@implementation TackAppDelegate
+@implementation MRAppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
@@ -42,7 +42,7 @@
 
 - (void)setupMainViewController
 {
-    self.mainViewController = [[TackMainViewController alloc] initWithManagedObjectContext:self.managedObjectContext];
+    self.mainViewController = [[MRMainViewController alloc] initWithManagedObjectContext:self.managedObjectContext];
     [self.window setRootViewController:self.mainViewController];
 //    [controller.view setFrame:CGRectMake(0, 0, self.window.frame.size.width, self.window.frame.size.height)];
     [self.mainViewController.view setFrame:CGRectMake(0, 0, self.window.frame.size.width, 100.0f)];

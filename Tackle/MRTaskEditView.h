@@ -1,5 +1,5 @@
 //
-//  TackTaskEditView.h
+//  MRTaskEditView.h
 //  Tackle
 //
 //  Created by Scott Bader on 1/25/14.
@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol TackTaskEditViewDelegate;
+@protocol MRTaskEditViewDelegate;
 
-@interface TackTaskEditView : UIView
+@interface MRTaskEditView : UIView
 
-@property (assign, nonatomic) id <TackTaskEditViewDelegate> delegate;
+@property (assign, nonatomic) id <MRTaskEditViewDelegate> delegate;
 @property (strong, nonatomic) UITextField *textField;
 @property (strong, nonatomic) UIButton *addTenMinutesButton;
 @property (strong, nonatomic) UIButton *addOneHourButton;
@@ -27,7 +27,7 @@
 
 @end
 
-@protocol TackTaskEditViewDelegate <NSObject>
+@protocol MRTaskEditViewDelegate <NSObject>
 
 @required
 

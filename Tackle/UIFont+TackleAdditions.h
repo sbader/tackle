@@ -1,5 +1,5 @@
 //
-//  UIFont+TackAdditions.h
+//  UIFont+TackleAdditions.h
 //  Tackle
 //
 //  Created by Scott Bader on 1/25/14.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIFont (TackAdditions)
+@interface UIFont (TackleAdditions)
 
 + (UIFont *)adonisRegularWithSize:(CGFloat)size;
 + (UIFont *)effraRegularWithSize:(CGFloat)size;

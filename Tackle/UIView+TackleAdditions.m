@@ -1,14 +1,14 @@
 //
-//  UIView+TackAdditions.m
+//  UIView+TackleAdditions.m
 //  Tackle
 //
 //  Created by Scott Bader on 2/2/14.
 //  Copyright (c) 2014 Melody Road. All rights reserved.
 //
 
-#import "UIView+TackAdditions.h"
+#import "UIView+TackleAdditions.h"
 
-@implementation UIView (TackAdditions)
+@implementation UIView (TackleAdditions)
 
 - (CGFloat)angleOfView
 {

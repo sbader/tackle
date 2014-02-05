@@ -1,5 +1,5 @@
 //
-//  TackMainCollectionViewCell.h
+//  MRMainCollectionViewCell.h
 //  Tackle
 //
 //  Created by Scott Bader on 1/27/14.
@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol TackMainCollectionViewCellDelegate;
+@protocol MRMainCollectionViewCellDelegate;
 
-@interface TackMainCollectionViewCell : UICollectionViewCell <UIGestureRecognizerDelegate>
+@interface MRMainCollectionViewCell : UICollectionViewCell <UIGestureRecognizerDelegate>
 
-@property (assign, nonatomic) id <TackMainCollectionViewCellDelegate> delegate;
+@property (assign, nonatomic) id <MRMainCollectionViewCellDelegate> delegate;
 
 @property (strong, nonatomic) UILabel *taskTextLabel;
 @property (strong, nonatomic) UILabel *dueDateLabel;
@@ -25,11 +25,11 @@
 
 @end
 
-@protocol TackMainCollectionViewCellDelegate <NSObject>
+@protocol MRMainCollectionViewCellDelegate <NSObject>
 
 @required
 
-- (void)markAsDone:(TackMainCollectionViewCell *)cell;
-- (BOOL)shouldHandlePanGesturesForCell:(TackMainCollectionViewCell *)cell;
+- (void)markAsDone:(MRMainCollectionViewCell *)cell;
+- (BOOL)shouldHandlePanGesturesForCell:(MRMainCollectionViewCell *)cell;
 
 @end

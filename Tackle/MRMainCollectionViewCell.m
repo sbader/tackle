@@ -1,17 +1,17 @@
 //
-//  TackMainCollectionViewCell.m
+//  MRMainCollectionViewCell.m
 //  Tackle
 //
 //  Created by Scott Bader on 1/27/14.
 //  Copyright (c) 2014 Melody Road. All rights reserved.
 //
 
-#import "TackMainCollectionViewCell.h"
+#import "MRMainCollectionViewCell.h"
 
-#import "TackDateFormatter.h"
+#import "MRDateFormatter.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface TackMainCollectionViewCell ()
+@interface MRMainCollectionViewCell ()
 
 @property (strong, nonatomic) UIView *mainView;
 
@@ -23,7 +23,7 @@
 
 @end
 
-@implementation TackMainCollectionViewCell
+@implementation MRMainCollectionViewCell
 
 @synthesize delegate = _delegate;
 
@@ -122,13 +122,13 @@
 {
     [self.taskTextLabel setText:text];
 
-    CGSize textSize = [TackMainCollectionViewCell sizeForTaskTextLabelWithText:text];
+    CGSize textSize = [MRMainCollectionViewCell sizeForTaskTextLabelWithText:text];
     [self.taskTextLabel setFrame:CGRectMake(6, 35, textSize.width, textSize.height)];
 }
 
 - (void)setDueDate:(NSDate *)dueDate
 {
-    [self.dueDateLabel setText:[[TackDateFormatter sharedInstance] stringFromDate:dueDate]];
+    [self.dueDateLabel setText:[[MRDateFormatter sharedInstance] stringFromDate:dueDate]];
 }
 
 - (void)markAsDone

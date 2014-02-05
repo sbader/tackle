@@ -1,5 +1,5 @@
 //
-//  TackMainFlowLayout.h
+//  MRMainFlowLayout.h
 //  Tackle
 //
 //  Created by Scott Bader on 1/28/14.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TackMainFlowLayout : UICollectionViewFlowLayout
+@interface MRMainFlowLayout : UICollectionViewFlowLayout
 
 @end
