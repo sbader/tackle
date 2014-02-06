@@ -64,7 +64,25 @@
     NSString *formattedString;
     NSTimeInterval timeInterval = [self timeIntervalSinceDate:date];
 
-    if (timeInterval < 3600) {
+    if (timeInterval > -3600 && timeInterval < 0) {
+        timeInterval = ABS(timeInterval);
+        NSNumber *hours = [[NSNumber alloc] initWithInt:timeInterval/3600];
+        NSNumber *minutes = [[NSNumber alloc] initWithInt:(timeInterval - ([hours intValue] * 3600)) / 60];
+        NSNumber *seconds = [[NSNumber alloc] initWithInt:timeInterval - 60 * [minutes intValue] - 3600 * [hours intValue]];
+
+        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+
+        if ([minutes intValue] > 0 && [seconds intValue] > 0) {
+            formattedString = [NSString stringWithFormat:@"%@ minutes %@ seconds ago", [numberFormatter stringFromNumber:minutes], [numberFormatter stringFromNumber:seconds]];
+        }
+        else if ([minutes intValue] > 0) {
+            formattedString = [NSString stringWithFormat:@"%@ minutes ago", [numberFormatter stringFromNumber:minutes]];
+        }
+        else {
+            formattedString = [NSString stringWithFormat:@"%@ seconds ago", [numberFormatter stringFromNumber:seconds]];
+        }
+    }
+    else if (timeInterval < 3600) {
         NSNumber *hours = [[NSNumber alloc] initWithInt:timeInterval/3600];
         NSNumber *minutes = [[NSNumber alloc] initWithInt:(timeInterval - ([hours intValue] * 3600)) / 60];
         NSNumber *seconds = [[NSNumber alloc] initWithInt:timeInterval - 60 * [minutes intValue] - 3600 * [hours intValue]];
