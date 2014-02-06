@@ -239,15 +239,13 @@
     if (self.isDatePickerShown) {
         mainFrame.size.height = mainFrame.size.height - 216;
         bottomButtonViewFrame.origin.y = bottomButtonViewFrame.origin.y - 216;
-
-        [self.datePicker setHidden:YES];
         self.datePickerShown = NO;
 
-        [UIView animateWithDuration:0.1 animations:^{
+        [UIView animateWithDuration:0.2 animations:^{
+            [self.datePicker setHidden:YES];
             [self.bottomButtonView setFrame:bottomButtonViewFrame];
             [self setFrame:mainFrame];
         }];
-
     }
     else {
         if (self.textField.isFirstResponder) {
@@ -257,11 +255,11 @@
         mainFrame.size.height = mainFrame.size.height + 216;
         bottomButtonViewFrame.origin.y = bottomButtonViewFrame.origin.y + 216;
 
-        [UIView animateWithDuration:0.1 animations:^{
+        [UIView animateWithDuration:0.2 animations:^{
             [self setFrame:mainFrame];
             [self.bottomButtonView setFrame:bottomButtonViewFrame];
-        } completion:^(BOOL finished) {
             [self.datePicker setHidden:NO];
+        } completion:^(BOOL finished) {
             self.datePickerShown = YES;
         }];
     }
