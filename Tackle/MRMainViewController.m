@@ -108,6 +108,10 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView;
 {
+    if (scrollView.contentInset.top == 100 && !self.editView.datePicker.hidden) {
+        [self.editView hideDatePickerAnimated:YES];
+    }
+
     CGPoint offset = scrollView.contentOffset;
     CGRect frame = self.editView.frame;
     CGFloat offsetY = -190.0f - (offset.y * 2.1);

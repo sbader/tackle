@@ -87,7 +87,7 @@
     [self.dueDateButton setTitle:[self.dueDate tackleStringSinceDate:self.startDate] forState:UIControlStateNormal];
     [self.dueDateButton.titleLabel setFont:[UIFont effraRegularWithSize:23.0f]];
 
-    [self.dueDateButton addTarget:self action:@selector(displayDatePicker:) forControlEvents:UIControlEventTouchUpInside];
+    [self.dueDateButton addTarget:self action:@selector(toggleDatePicker:) forControlEvents:UIControlEventTouchUpInside];
 
     [self addSubview:self.dueDateButton];
 }
@@ -231,37 +231,73 @@
     [self setDueDate:[NSDate dateWithTimeInterval:86400 sinceDate:self.dueDate] animated:YES];
 }
 
-- (void)displayDatePicker:(id)sender
+- (void)showDatePickerAnimated:(BOOL)animated
 {
     CGRect mainFrame = self.frame;
     CGRect bottomButtonViewFrame = self.bottomButtonView.frame;
 
-    if (self.isDatePickerShown) {
-        mainFrame.size.height = mainFrame.size.height - 216;
-        bottomButtonViewFrame.origin.y = bottomButtonViewFrame.origin.y - 216;
-        self.datePickerShown = NO;
+    if (self.textField.isFirstResponder) {
+        [self.textField resignFirstResponder];
+    }
 
-        [UIView animateWithDuration:0.2 animations:^{
-            [self.datePicker setHidden:YES];
-            [self.bottomButtonView setFrame:bottomButtonViewFrame];
-            [self setFrame:mainFrame];
+    mainFrame.size.height = mainFrame.size.height + 216;
+    bottomButtonViewFrame.origin.y = bottomButtonViewFrame.origin.y + 216;
+
+    void (^setFrame)(void) = ^{
+        [self setFrame:mainFrame];
+        [self.bottomButtonView setFrame:bottomButtonViewFrame];
+    };
+
+    void (^showDatePicker)(void) = ^{
+        [self.datePicker setHidden:NO];
+    };
+
+    void (^showDatePickerCompletion)(BOOL finished) = ^(BOOL finished) {
+        self.datePickerShown = YES;
+    };
+
+    if (animated) {
+        [UIView animateWithDuration:0.2 animations:setFrame completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.2 animations:showDatePicker completion:showDatePickerCompletion];
         }];
     }
     else {
-        if (self.textField.isFirstResponder) {
-            [self.textField resignFirstResponder];
-        }
+        setFrame();
+        showDatePicker();
+        showDatePickerCompletion(YES);
+    }
+}
 
-        mainFrame.size.height = mainFrame.size.height + 216;
-        bottomButtonViewFrame.origin.y = bottomButtonViewFrame.origin.y + 216;
+- (void)hideDatePickerAnimated:(BOOL)animated
+{
+    CGRect mainFrame = self.frame;
+    CGRect bottomButtonViewFrame = self.bottomButtonView.frame;
 
-        [UIView animateWithDuration:0.2 animations:^{
-            [self setFrame:mainFrame];
-            [self.bottomButtonView setFrame:bottomButtonViewFrame];
-            [self.datePicker setHidden:NO];
-        } completion:^(BOOL finished) {
-            self.datePickerShown = YES;
-        }];
+    mainFrame.size.height = mainFrame.size.height - 216;
+    bottomButtonViewFrame.origin.y = bottomButtonViewFrame.origin.y - 216;
+    self.datePickerShown = NO;
+
+    void (^hideDatePicker)(void) = ^{
+        [self.datePicker setHidden:YES];
+        [self.bottomButtonView setFrame:bottomButtonViewFrame];
+        [self setFrame:mainFrame];
+    };
+
+    if (animated) {
+        [UIView animateWithDuration:0.2 animations:hideDatePicker];
+    }
+    else {
+        hideDatePicker();
+    }
+}
+
+- (void)toggleDatePicker:(id)sender
+{
+    if (self.isDatePickerShown) {
+        [self hideDatePickerAnimated:YES];
+    }
+    else {
+        [self showDatePickerAnimated:YES];
     }
 }
 

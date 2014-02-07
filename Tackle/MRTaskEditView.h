@@ -25,6 +25,8 @@
 
 - (void)resetContent;
 - (void)setDueDate:(NSDate *)dueDate animated:(BOOL)animated;
+- (void)showDatePickerAnimated:(BOOL)animated;
+- (void)hideDatePickerAnimated:(BOOL)animated;
 
 @end
 
