@@ -15,6 +15,7 @@
 
 @property (nonatomic, strong) MRTaskEditView *editView;
 @property (nonatomic, strong) Task *editingTask;
+@property (nonatomic) CGFloat startVerticalOffset;
 
 @end
 
@@ -106,6 +107,7 @@
             CALayer *layer = self.mainCollectionViewController.view.layer;
             [layer setTransform:CATransform3DMakeScale(0.9, 0.9, 1)];
         } completion:^(BOOL finished) {
+            self.startVerticalOffset = self.mainCollectionViewController.collectionView.contentOffset.y + 100;
             [self.mainCollectionViewController.collectionView setScrollEnabled:YES];
         }];
     }];
@@ -117,17 +119,24 @@
 {
     CGPoint offset = scrollView.contentOffset;
     CGRect frame = self.editView.frame;
-    CGFloat offsetY = -190.0f - (offset.y * 2.1);
+    CGFloat offsetY = -190 - (offset.y * 2.1);
+    CGFloat relativeOffset = offset.y - self.startVerticalOffset;
+
+    if (self.startVerticalOffset > 0) {
+        offsetY = -190 - (offset.y - self.startVerticalOffset) * 2.1;
+        relativeOffset = offset.y - self.startVerticalOffset;
+    }
 
     [self.editView setFrame:CGRectMake(frame.origin.x, offsetY, frame.size.width, frame.size.height)];
 
     CALayer *layer = self.mainCollectionViewController.view.layer;
 
-    if (offset.y <= 0) {
-        CGFloat scale = MAX(1 - (ABS(offset.y) * 0.001f), 0.9);
+    if (relativeOffset <= 0) {
+        CGFloat scale = MAX(1 - (ABS(relativeOffset) * 0.001f), 0.9);
         [layer setTransform:CATransform3DMakeScale(scale, scale, 1)];
     }
     else {
+        self.startVerticalOffset = 0;
         [layer setTransform:CATransform3DMakeScale(1, 1, 1)];
     }
 }
