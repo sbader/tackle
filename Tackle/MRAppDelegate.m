@@ -74,7 +74,6 @@
         [self.managedObjectContext deleteObject:obj];
     }];
 
-    [Task insertItemWithText:@"Budget" dueDate:[NSDate dateWithTimeIntervalSinceNow:59] inManagedObjectContext:self.managedObjectContext];
     [Task insertItemWithText:@"Prepare Expenses" dueDate:[NSDate dateWithTimeIntervalSinceNow:7200] inManagedObjectContext:self.managedObjectContext];
     [Task insertItemWithText:@"Renew Apple Developer Program Membership" dueDate:[NSDate dateWithTimeIntervalSinceNow:96000] inManagedObjectContext:self.managedObjectContext];
     [Task insertItemWithText:@"Read more about Objective-C" dueDate:[NSDate dateWithTimeIntervalSinceNow:72000] inManagedObjectContext:self.managedObjectContext];
