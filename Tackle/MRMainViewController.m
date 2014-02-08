@@ -15,6 +15,7 @@
 
 @property (nonatomic, strong) MRTaskEditView *editView;
 @property (nonatomic, strong) Task *editingTask;
+@property (nonatomic, strong) UIPanGestureRecognizer *gestureRecognizer;
 
 @end
 
@@ -31,8 +32,16 @@
         [self setupMainCollectionViewController];
         [self setupEditView];
         [self setupTopSpace];
+        [self setupGestureRecognizer];
     }
     return self;
+}
+
+- (void)setupGestureRecognizer
+{
+    self.gestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
+    [self.gestureRecognizer setDelegate:self];
+    [self.view addGestureRecognizer:self.gestureRecognizer];
 }
 
 - (void)setupTopSpace
@@ -97,10 +106,15 @@
     [self.editView setDueDate:task.dueDate animated:NO];
 
     [self.mainCollectionViewController.collectionView setScrollEnabled:NO];
+
     [UIView animateWithDuration:0.2 animations:^{
-        [self.mainCollectionViewController.collectionView setContentInset:UIEdgeInsetsMake(100, 0, 0, 0)];
+        CALayer *layer = self.mainCollectionViewController.view.layer;
+        CGFloat scale = 0.9;
+        CGRect frame = self.editView.frame;
+
+        [layer setTransform:CATransform3DMakeScale(scale, scale, 1)];
+        [self.editView setFrame:CGRectMake(frame.origin.x, 20, frame.size.width, frame.size.height)];
     } completion:^(BOOL finished) {
-        [self.mainCollectionViewController.collectionView setContentOffset:CGPointMake(0, -100) animated:YES];
     }];
 }
 
@@ -138,6 +152,11 @@
 {
     self.editingTask = nil;
     [self.editView resetContent];
+}
+
+- (void)handlePanGesture:(UIPanGestureRecognizer *)gestureRecognizer
+{
+    NSLog(@"received pan gesture");
 }
 
 #pragma mark - TackMainCollectionViewSelectionDelegate
@@ -186,6 +205,13 @@
 - (void)selectTask:(Task *)task
 {
     [self.mainCollectionViewController selectTask:task];
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    return self.editView.frame.origin.y == 20;
 }
 
 @end
