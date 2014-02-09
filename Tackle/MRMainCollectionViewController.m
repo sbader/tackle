@@ -13,7 +13,8 @@
 
 @interface MRMainCollectionViewController ()
 
-@property (nonatomic) UIMotionEffectGroup *effectGroup;
+@property (nonatomic, strong) UIMotionEffectGroup *effectGroup;
+@property (nonatomic, getter = isInset) BOOL inset;
 
 - (void)updateCell:(MRMainCollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
@@ -32,6 +33,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.inset = NO;
+
     [self.collectionView setRestorationIdentifier:@"CollectionView"];
     [self.collectionView setAlwaysBounceVertical:YES];
     [self.collectionView setBackgroundColor:[UIColor darkPlumColor]];
@@ -101,7 +104,7 @@
 
     CGFloat height = ceil(textSize.height) + 46;
 
-    return CGSizeMake(self.view.frame.size.width, height);
+    return CGSizeMake(self.collectionView.frame.size.width, height);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -112,12 +115,12 @@
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return (self.collectionView.contentInset.top != 100);
+    return !self.isInset;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.collectionView.contentInset.top != 100) {
+    if (!self.isInset) {
         MRMainCollectionViewCell *cell = (MRMainCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
         [cell performSelection];
         [self addMotionEffects];
@@ -127,6 +130,24 @@
             [self.selectionDelegate didSelectCellWithTask:task];
         }
     }
+}
+
+- (void)moveToBack
+{
+    CALayer *layer = self.view.layer;
+    CGFloat scale = 0.9;
+    [layer setTransform:CATransform3DMakeScale(scale, scale, 1)];
+
+    CGPoint center = self.view.center;
+    center.y = center.y + 90.0f; // 384
+    [self.view setCenter:center];
+
+    self.inset = YES;
+}
+
+- (void)moveToFront
+{
+    self.inset = NO;
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -240,7 +261,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (!self.collectionView.scrollEnabled && self.collectionView.contentInset.top == 100 && self.collectionView.contentOffset.y == -100) {
+    if (!self.collectionView.scrollEnabled && self.isInset && self.collectionView.contentOffset.y == -100) {
         [self.collectionView setScrollEnabled:YES];
     }
 
@@ -251,9 +272,10 @@
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
 {
-    if (scrollView.contentInset.top != 100 && scrollView.contentOffset.y <= -100) {
+    if (!self.isInset && scrollView.contentOffset.y <= -100) {
         targetContentOffset->y = -100;
 
+        self.inset = YES;
         [UIView animateWithDuration:0.2 animations:^{
             [scrollView setContentInset:UIEdgeInsetsMake(100, 0, 0, 0)];
         } completion:^(BOOL finished) {
@@ -264,9 +286,10 @@
             [self addMotionEffects];
         }];
     }
-    else if (scrollView.contentInset.top == 100 && scrollView.contentOffset.y > -100) {
+    else if (self.isInset && scrollView.contentOffset.y > -100) {
         targetContentOffset->y = (scrollView.contentOffset.y > 0) ? scrollView.contentOffset.y : 0;
 
+        self.inset = NO;
         [UIView animateWithDuration:0.2 animations:^{
             [scrollView setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
 

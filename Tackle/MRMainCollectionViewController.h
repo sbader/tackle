@@ -23,6 +23,8 @@
 
 - (void)resetContentOffset;
 - (void)selectTask:(Task *)task;
+- (void)moveToBack;
+- (void)moveToFront;
 
 @end
 
