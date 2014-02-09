@@ -72,18 +72,16 @@
 {
     UIInterpolatingMotionEffect *verticalMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y" type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
 
-    verticalMotionEffect.minimumRelativeValue = @(-10);
-    verticalMotionEffect.maximumRelativeValue = @(10);
+    verticalMotionEffect.minimumRelativeValue = @(-20);
+    verticalMotionEffect.maximumRelativeValue = @(20);
 
     UIInterpolatingMotionEffect *horizontalMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x" type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
 
-    horizontalMotionEffect.minimumRelativeValue = @(-10);
-    horizontalMotionEffect.maximumRelativeValue = @(10);
+    horizontalMotionEffect.minimumRelativeValue = @(-20);
+    horizontalMotionEffect.maximumRelativeValue = @(20);
 
     self.effectGroup = [UIMotionEffectGroup new];
     self.effectGroup.motionEffects = @[horizontalMotionEffect, verticalMotionEffect];
-//
-//    [self.collectionView addMotionEffect:group];
 }
 
 - (void)addMotionEffects
@@ -123,7 +121,6 @@
     if (!self.isInset) {
         MRMainCollectionViewCell *cell = (MRMainCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
         [cell performSelection];
-        [self addMotionEffects];
 
         Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
         if ([self.selectionDelegate respondsToSelector:@selector(didSelectCellWithTask:)]) {
@@ -142,12 +139,14 @@
     center.y = center.y + 90.0f; // 384
     [self.view setCenter:center];
 
+    [self addMotionEffects];
     self.inset = YES;
 }
 
 - (void)moveToFront
 {
     self.inset = NO;
+    [self removeMotionEffects];
 }
 
 #pragma mark - UICollectionViewDataSource
