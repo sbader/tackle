@@ -16,6 +16,7 @@
 @property (nonatomic, strong) MRTaskEditView *editView;
 @property (nonatomic, strong) Task *editingTask;
 @property (nonatomic, strong) UIPanGestureRecognizer *gestureRecognizer;
+@property (nonatomic) CGPoint startTouchPoint;
 
 @end
 
@@ -108,12 +109,9 @@
     [self.mainCollectionViewController.collectionView setScrollEnabled:NO];
 
     [UIView animateWithDuration:0.2 animations:^{
-        CALayer *layer = self.mainCollectionViewController.view.layer;
-        CGFloat scale = 0.9;
         CGRect frame = self.editView.frame;
-
-        [layer setTransform:CATransform3DMakeScale(scale, scale, 1)];
         [self.editView setFrame:CGRectMake(frame.origin.x, 20, frame.size.width, frame.size.height)];
+        [self.mainCollectionViewController moveToBack];
     } completion:^(BOOL finished) {
     }];
 }
@@ -152,11 +150,6 @@
 {
     self.editingTask = nil;
     [self.editView resetContent];
-}
-
-- (void)handlePanGesture:(UIPanGestureRecognizer *)gestureRecognizer
-{
-    NSLog(@"received pan gesture");
 }
 
 #pragma mark - TackMainCollectionViewSelectionDelegate
@@ -209,9 +202,106 @@
 
 #pragma mark - UIGestureRecognizerDelegate
 
+- (void)handlePanGesture:(UIPanGestureRecognizer *)gestureRecognizer
+{
+    CGPoint touchPoint = [gestureRecognizer locationInView:gestureRecognizer.view];
+
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        self.startTouchPoint = touchPoint;
+    }
+    else if (gestureRecognizer.state == UIGestureRecognizerStateChanged) {
+        CGFloat verticalOffset = self.startTouchPoint.y - touchPoint.y;
+        CGFloat relativeOffset = verticalOffset * 2.1f;
+        CGFloat offsetY = 20.0f - relativeOffset;
+        CGRect frame = self.editView.frame;
+        [self.editView setFrame:CGRectMake(frame.origin.x, offsetY, frame.size.width, frame.size.height)];
+
+        CGFloat scaleMultiplier = 0.1/210; /* 0.000476 */
+        CGFloat scale = 0.9;
+
+        if (offsetY <= 20) {
+            if (!self.editView.datePicker.hidden) {
+                [self.editView hideDatePickerAnimated:YES];
+            }
+
+            CGFloat calculatedScale = 0.9 + ((20 - offsetY) * scaleMultiplier);
+            scale = MIN(calculatedScale, 1);
+        }
+
+        CGFloat top = 384.0f;
+
+        if (verticalOffset > 0 && verticalOffset <= 100) {
+            CGFloat topMultiplier = 90.0f/210.0f;
+            top = 384.0f - ((20.0f - offsetY) * topMultiplier);
+        }
+        else if (verticalOffset > 100) {
+            top = 294.0f;
+        }
+
+        CGPoint center = self.mainCollectionViewController.view.center;
+        if (top != center.y) {
+            center.y = top;
+            [self.mainCollectionViewController.view setCenter:center];
+        }
+
+        CALayer *layer = self.mainCollectionViewController.view.layer;
+        CATransform3D transform = CATransform3DMakeScale(scale, scale, 1);
+
+        if (!CATransform3DEqualToTransform(layer.transform, transform)) {
+            [layer setTransform:CATransform3DMakeScale(scale, scale, 1)];
+        }
+    }
+    else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        CGPoint velocity = [gestureRecognizer velocityInView:gestureRecognizer.view];
+        CGRect frame = self.editView.frame;
+        CALayer *layer = self.mainCollectionViewController.view.layer;
+        CGFloat scale = 0.9;
+        CGFloat endPosition = 20;
+
+        BOOL done = NO;
+
+        MRMainCollectionViewCell *cell = nil;
+
+        CGFloat verticalOffset = self.startTouchPoint.y - touchPoint.y;
+
+        if (velocity.y < -30 || verticalOffset > 40) {
+            scale = 1;
+            endPosition = -190;
+            done = YES;
+        }
+
+        NSArray *indexPaths = [self.mainCollectionViewController.collectionView indexPathsForSelectedItems];
+        if ([indexPaths count] == 1) {
+            cell = (MRMainCollectionViewCell *)[self.mainCollectionViewController.collectionView cellForItemAtIndexPath:indexPaths[0]];
+        }
+
+        [UIView animateWithDuration:0.1 animations:^{
+            [layer setTransform:CATransform3DMakeScale(scale, scale, 1)];
+            [self.editView setFrame:CGRectMake(frame.origin.x, endPosition, frame.size.width, frame.size.height)];
+
+            if (done && cell) {
+                [cell performDeselection];
+            }
+
+            if (done) {
+                CGPoint center = self.mainCollectionViewController.view.center;
+                center.y = 294.0f;
+                [self.mainCollectionViewController.view setCenter:center];
+            }
+        } completion:^(BOOL finished) {
+            [self.mainCollectionViewController.collectionView setScrollEnabled:done];
+
+            if (done) {
+                [self.mainCollectionViewController moveToFront];
+                [self scrollViewDidResetContent:self.mainCollectionViewController.collectionView];
+            }
+        }];
+    }
+}
+
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
-    return self.editView.frame.origin.y == 20;
+    return self.editView.frame.origin.y != -190;
 }
 
 @end

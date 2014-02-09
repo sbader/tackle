@@ -15,8 +15,8 @@
     self = [super init];
 
     if (self) {
-        [self setMinimumInteritemSpacing:0];
-        [self setMinimumLineSpacing:0];
+        [self setMinimumInteritemSpacing:0.0];
+        [self setMinimumLineSpacing:0.0];
     }
 
     return self;
