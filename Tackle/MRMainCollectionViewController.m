@@ -136,7 +136,7 @@
     [layer setTransform:CATransform3DMakeScale(scale, scale, 1)];
 
     CGPoint center = self.view.center;
-    center.y = center.y + 90.0f; // 384
+    center.y = center.y + 10.0f; // 304
     [self.view setCenter:center];
 
     [self addMotionEffects];

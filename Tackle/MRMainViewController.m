@@ -35,6 +35,7 @@
         [self setupTopSpace];
         [self setupGestureRecognizer];
     }
+
     return self;
 }
 
@@ -228,19 +229,19 @@
             scale = MIN(calculatedScale, 1);
         }
 
-        CGFloat top = 384.0f;
+        CGFloat centerY = 304.0f;
 
         if (verticalOffset > 0 && verticalOffset <= 100) {
-            CGFloat topMultiplier = 90.0f/210.0f;
-            top = 384.0f - ((20.0f - offsetY) * topMultiplier);
+            CGFloat topMultiplier = 10.0f/210.0f;
+            centerY = 304.0f - ((20.0f - offsetY) * topMultiplier);
         }
         else if (verticalOffset > 100) {
-            top = 294.0f;
+            centerY = 294.0f;
         }
 
         CGPoint center = self.mainCollectionViewController.view.center;
-        if (top != center.y) {
-            center.y = top;
+        if (centerY != center.y) {
+            center.y = centerY;
             [self.mainCollectionViewController.view setCenter:center];
         }
 
