@@ -15,14 +15,43 @@
 
 @implementation NSDate (TackleAdditions)
 
-- (BOOL)isYesterday
+- (BOOL)isDayBeforeDate:(NSDate *)date
 {
-    NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
-    dayComponent.day = -1;
-
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDate *yesterday = [calendar dateByAddingComponents:dayComponent toDate:[[NSDate date] beginningOfDay] options:0];
-    return [yesterday compare:[self beginningOfDay]] == NSOrderedSame;
+    NSDateComponents *components = [calendar components:(NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay) fromDate:self];
+    components.day = -1;
+
+//    NSDate *dayBefore = [calendar dateByAddingComponents:components toDate:date options:0];
+
+    NSDate *dayBefore = [calendar dateFromComponents:components];
+    NSDate *beginningOfDay = [self beginningOfDay];
+
+    NSLog(@"dayBefore: %@, beginningOfDay: %@", dayBefore, beginningOfDay);
+
+    return [dayBefore compare:beginningOfDay] == NSOrderedSame;
+}
+
+- (BOOL)isDayAfterDate:(NSDate *)date
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:(NSMonthCalendarUnit|NSYearCalendarUnit|NSDayCalendarUnit) fromDate:self];
+    components.day = -1;
+
+//    NSDate *dayAfter = [calendar dateByAddingComponents:components toDate:date options:0];
+    NSDate *dayAfter = [calendar dateFromComponents:components];
+
+    return [dayAfter compare:[self beginningOfDay]] == NSOrderedSame;
+}
+
+- (BOOL)isDayBeforeOrAfterDate:(NSDate *)date
+{
+    return [self isDayBeforeDate:date] || [self isDayAfterDate:date];
+}
+
+- (BOOL)isSameDayAsDate:(NSDate *)date
+{
+    NSDate *beginningOfDate = [date beginningOfDay];
+    return [beginningOfDate compare:[self beginningOfDay]] == NSOrderedSame;
 }
 
 - (BOOL)isToday
@@ -56,7 +85,10 @@
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *components = [calendar components:(NSMonthCalendarUnit|NSYearCalendarUnit|NSDayCalendarUnit) fromDate:self];
 
-    return [calendar dateFromComponents:components];
+
+    NSDate *beginningOfDay = [calendar dateFromComponents:components];
+
+    return beginningOfDay;
 }
 
 - (NSString *)tackleStringSinceDate:(NSDate *)date
@@ -64,7 +96,7 @@
     NSString *formattedString;
     NSTimeInterval timeInterval = round([self timeIntervalSinceDate:date]);
 
-    if (timeInterval > -3600 && timeInterval < 0) {
+    if (timeInterval > -86400 && timeInterval < 0) {
         timeInterval = ABS(timeInterval);
         NSNumber *hours = [[NSNumber alloc] initWithInt:timeInterval/3600];
         NSNumber *minutes = [[NSNumber alloc] initWithInt:(timeInterval - ([hours intValue] * 3600)) / 60];
@@ -72,7 +104,10 @@
 
         NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
 
-        if ([minutes intValue] > 0 && [seconds intValue] > 0) {
+        if ([hours intValue] > 0) {
+            formattedString = [NSString stringWithFormat:@"%@ hours ago", [numberFormatter stringFromNumber:hours]];
+        }
+        else if ([minutes intValue] > 0 && [seconds intValue] > 0) {
             formattedString = [NSString stringWithFormat:@"%@ minutes %@ seconds ago", [numberFormatter stringFromNumber:minutes], [numberFormatter stringFromNumber:seconds]];
         }
         else if ([minutes intValue] > 0) {
@@ -99,13 +134,13 @@
             formattedString = [NSString stringWithFormat:@"In %@ seconds", [numberFormatter stringFromNumber:seconds]];
         }
     }
-    else if ([self isToday]) {
+    else if ([self isSameDayAsDate:date]) {
         MRTimeDateFormatter *timeFormatter = [MRTimeDateFormatter sharedInstance];
         NSString *time = [timeFormatter stringFromDate:self];
 
         formattedString = [NSString stringWithFormat:@"%@", time];
     }
-    else if ([self isTomorrow] || [self isYesterday]) {
+    else if ([self isDayBeforeOrAfterDate:date]) {
         MRShortDateFormatter *formatter = [MRShortDateFormatter sharedInstance];
         NSString *relativeDay = [formatter stringFromDate:self];
 
