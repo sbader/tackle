@@ -21,7 +21,6 @@
 		D1027F8918904E8400FF44A4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1027F6C18904E8400FF44A4 /* UIKit.framework */; };
 		D1027F8A18904E8400FF44A4 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1027F6E18904E8400FF44A4 /* CoreData.framework */; };
 		D1027F9218904E8400FF44A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D1027F9018904E8400FF44A4 /* InfoPlist.strings */; };
-		D1027F9418904E8400FF44A4 /* TackleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D1027F9318904E8400FF44A4 /* TackleTests.m */; };
 		D1027FEE1890535700FF44A4 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = D1027FED1890535700FF44A4 /* Task.m */; };
 		D1224AC618A679AE001FC205 /* NSDate+TackleAdditionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D1224AC518A679AE001FC205 /* NSDate+TackleAdditionsTest.m */; };
 		D12E877318944E6A008119B8 /* MRTaskEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = D12E877218944E6A008119B8 /* MRTaskEditView.m */; };
@@ -75,7 +74,6 @@
 		D1027F8618904E8400FF44A4 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		D1027F8F18904E8400FF44A4 /* TackleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TackleTests-Info.plist"; sourceTree = "<group>"; };
 		D1027F9118904E8400FF44A4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		D1027F9318904E8400FF44A4 /* TackleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TackleTests.m; sourceTree = "<group>"; };
 		D1027FEC1890535700FF44A4 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
 		D1027FED1890535700FF44A4 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
 		D1224AC518A679AE001FC205 /* NSDate+TackleAdditionsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+TackleAdditionsTest.m"; sourceTree = "<group>"; };
@@ -207,7 +205,6 @@
 			isa = PBXGroup;
 			children = (
 				D1224AC418A67995001FC205 /* Categories */,
-				D1027F9318904E8400FF44A4 /* TackleTests.m */,
 				D1027F8E18904E8400FF44A4 /* Supporting Files */,
 			);
 			path = TackleTests;
@@ -455,7 +452,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1224AC618A679AE001FC205 /* NSDate+TackleAdditionsTest.m in Sources */,
-				D1027F9418904E8400FF44A4 /* TackleTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
