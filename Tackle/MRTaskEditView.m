@@ -113,10 +113,15 @@
 {
     self.datePickerShown = NO;
 
+    UITapGestureRecognizer *doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
+    [doubleTapGestureRecognizer setNumberOfTapsRequired:2];
+
     self.datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 108.0f, self.frame.size.width, 120.0f)];
     [self.datePicker setHidden:YES];
     [self.datePicker addTarget:self action:@selector(datePickerChanged:) forControlEvents:UIControlEventValueChanged];
     [self.datePicker setDate:self.dueDate];
+    [self.datePicker setMinuteInterval:5];
+    [self.datePicker addGestureRecognizer:doubleTapGestureRecognizer];
     [self addSubview:self.datePicker];
 }
 
@@ -229,6 +234,16 @@
 - (void)handleAddOneDay:(id)sender
 {
     [self setDueDate:[NSDate dateWithTimeInterval:86400 sinceDate:self.dueDate] animated:YES];
+}
+
+- (void)handleDoubleTap:(id)sender
+{
+    if (self.datePicker.minuteInterval == 5) {
+        [self.datePicker setMinuteInterval:1];
+    }
+    else {
+        [self.datePicker setMinuteInterval:5];
+    }
 }
 
 - (void)showDatePickerAnimated:(BOOL)animated
@@ -344,6 +359,8 @@
         [self.bottomButtonView setFrame:bottomButtonViewFrame];
         [self setFrame:mainFrame];
     }
+
+    [self.datePicker setMinuteInterval:5];
 }
 
 - (void)setDueDate:(NSDate *)dueDate animated:(BOOL)animated
