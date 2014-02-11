@@ -43,7 +43,7 @@
 {
     self.gestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
     [self.gestureRecognizer setDelegate:self];
-    [self.view addGestureRecognizer:self.gestureRecognizer];
+    [self.mainCollectionViewController.view addGestureRecognizer:self.gestureRecognizer];
 }
 
 - (void)setupTopSpace
