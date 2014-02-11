@@ -18,15 +18,12 @@
 - (BOOL)isDayBeforeDate:(NSDate *)date
 {
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = [calendar components:(NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay) fromDate:self];
-    components.day = -1;
-
-//    NSDate *dayBefore = [calendar dateByAddingComponents:components toDate:date options:0];
+    NSDateComponents *components = [calendar components:(NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay) fromDate:date];
+    components.day =  components.day -1;
 
     NSDate *dayBefore = [calendar dateFromComponents:components];
-    NSDate *beginningOfDay = [self beginningOfDay];
 
-    NSLog(@"dayBefore: %@, beginningOfDay: %@", dayBefore, beginningOfDay);
+    NSDate *beginningOfDay = [self beginningOfDay];
 
     return [dayBefore compare:beginningOfDay] == NSOrderedSame;
 }
@@ -34,13 +31,14 @@
 - (BOOL)isDayAfterDate:(NSDate *)date
 {
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = [calendar components:(NSMonthCalendarUnit|NSYearCalendarUnit|NSDayCalendarUnit) fromDate:self];
-    components.day = -1;
+    NSDateComponents *components = [calendar components:(NSMonthCalendarUnit|NSYearCalendarUnit|NSDayCalendarUnit) fromDate:date];
+    components.day = components.day + 1;
 
-//    NSDate *dayAfter = [calendar dateByAddingComponents:components toDate:date options:0];
     NSDate *dayAfter = [calendar dateFromComponents:components];
 
-    return [dayAfter compare:[self beginningOfDay]] == NSOrderedSame;
+    NSDate *beginningOfDay = [self beginningOfDay];
+
+    return [dayAfter compare:beginningOfDay] == NSOrderedSame;
 }
 
 - (BOOL)isDayBeforeOrAfterDate:(NSDate *)date
@@ -83,9 +81,7 @@
 - (NSDate *)beginningOfDay
 {
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = [calendar components:(NSMonthCalendarUnit|NSYearCalendarUnit|NSDayCalendarUnit) fromDate:self];
-
-
+    NSDateComponents *components = [calendar components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit) fromDate:self];
     NSDate *beginningOfDay = [calendar dateFromComponents:components];
 
     return beginningOfDay;

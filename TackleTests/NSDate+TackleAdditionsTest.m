@@ -27,25 +27,11 @@
 - (void)testIsWithinADayOfDate
 {
     NSDate *startDate = [NSDate dateWithTimeIntervalSinceReferenceDate:21600];
-    NSDate *compareDate = [NSDate dateWithTimeIntervalSinceReferenceDate:-21600];
 
-
-    NSLog(@"startDate: %@, compareDate: %@", startDate, compareDate);
-    XCTAssertTrue([compareDate isDayBeforeOrAfterDate:startDate]);
-
-//    __block NSString *formattedDate;
-//
-//    NSDictionary *testDictionary = @{
-//                                     @32: @"In 32 seconds",
-//                                     @601: @"In 10 minutes 1 seconds",
-//                                     @3599: @"In 59 minutes 59 seconds"
-//                                     };
-//
-//    [testDictionary enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, NSString *matchString, BOOL *stop) {
-//        formattedDate = [[NSDate dateWithTimeInterval:[key floatValue] sinceDate:startDate] tackleStringSinceDate:startDate];
-//        XCTAssertEqualObjects(formattedDate, matchString, @"%@ does not match %@", formattedDate, matchString);
-//    }];
-
+    XCTAssertFalse([[NSDate dateWithTimeIntervalSinceReferenceDate:-95000] isDayBeforeOrAfterDate:startDate]);
+    XCTAssertTrue([[NSDate dateWithTimeIntervalSinceReferenceDate:-21600] isDayBeforeOrAfterDate:startDate]);
+    XCTAssertTrue([[NSDate dateWithTimeIntervalSinceReferenceDate:108000] isDayBeforeOrAfterDate:startDate]);
+    XCTAssertFalse([[NSDate dateWithTimeIntervalSinceReferenceDate:200000] isDayBeforeOrAfterDate:startDate]);
 }
 
 - (void)testDateWithinNextHourShouldShowMinutesAndSeconds
