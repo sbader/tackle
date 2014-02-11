@@ -11,7 +11,7 @@
 #import "MRMainCollectionViewController.h"
 #import "MRTaskEditView.h"
 
-@interface MRMainViewController : UIViewController <MRMainCollectionViewScrollViewDelegate, MRMainCollectionViewSelectionDelegate, MRTaskEditViewDelegate, UIGestureRecognizerDelegate>
+@interface MRMainViewController : UIViewController <MRMainCollectionViewScrollViewDelegate, MRMainCollectionViewSelectionDelegate, MRTaskEditViewDelegate, MRMainCollectionViewPanGestureDelegate>
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) MRMainCollectionViewController *mainCollectionViewController;

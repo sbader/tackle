@@ -13,11 +13,13 @@
 
 @protocol MRMainCollectionViewScrollViewDelegate;
 @protocol MRMainCollectionViewSelectionDelegate;
+@protocol MRMainCollectionViewPanGestureDelegate;
 
-@interface MRMainCollectionViewController : UICollectionViewController <UICollectionViewDelegate, NSFetchedResultsControllerDelegate, UITextFieldDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, MRMainCollectionViewCellDelegate>
+@interface MRMainCollectionViewController : UICollectionViewController <UICollectionViewDelegate, NSFetchedResultsControllerDelegate, UITextFieldDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, MRMainCollectionViewCellDelegate, UIGestureRecognizerDelegate>
 
 @property (assign, nonatomic) id <MRMainCollectionViewScrollViewDelegate> scrollViewDelegate;
 @property (assign, nonatomic) id <MRMainCollectionViewSelectionDelegate> selectionDelegate;
+@property (assign, nonatomic) id <MRMainCollectionViewPanGestureDelegate> panGestureDelegate;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
@@ -45,5 +47,13 @@
 @optional
 
 - (void)didSelectCellWithTask:(Task *)task;
+
+@end
+
+@protocol MRMainCollectionViewPanGestureDelegate <NSObject>
+
+- (void)panGestureDidPanWithVerticalOffset:(CGFloat)verticalOffset;
+- (void)panGestureWillReachEnd;
+- (void)panGestureDidReachEnd;
 
 @end

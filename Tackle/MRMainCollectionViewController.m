@@ -15,6 +15,8 @@
 
 @property (nonatomic, strong) UIMotionEffectGroup *effectGroup;
 @property (nonatomic, getter = isInset) BOOL inset;
+@property (nonatomic, strong) UIPanGestureRecognizer *gestureRecognizer;
+@property (nonatomic) CGPoint startTouchPoint;
 
 - (void)updateCell:(MRMainCollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
@@ -22,10 +24,21 @@
 
 @implementation MRMainCollectionViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithCollectionViewLayout:layout];
     if (self) {
+        self.inset = NO;
+
+        [self.collectionView setRestorationIdentifier:@"CollectionView"];
+        [self.collectionView setAlwaysBounceVertical:YES];
+        [self.collectionView setBackgroundColor:[UIColor darkPlumColor]];
+        [self.collectionView registerClass:[MRMainCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
+        [self.collectionView setPagingEnabled:NO];
+        [self.collectionView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
+        [self.collectionView setShowsVerticalScrollIndicator:NO];
+        [self setupMotion];
+        [self setupGestureRecognizer];
     }
     return self;
 }
@@ -33,17 +46,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.inset = NO;
-
-    [self.collectionView setRestorationIdentifier:@"CollectionView"];
-    [self.collectionView setAlwaysBounceVertical:YES];
-    [self.collectionView setBackgroundColor:[UIColor darkPlumColor]];
-    [self.collectionView registerClass:[MRMainCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
-    [self.collectionView setPagingEnabled:NO];
-    [self.collectionView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
-    [self.collectionView setShowsVerticalScrollIndicator:NO];
     [self attachObservers];
-    [self setupMotion];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -67,6 +70,14 @@
         [cell decrementDate];
     }];
 }
+
+- (void)setupGestureRecognizer
+{
+    self.gestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
+    [self.gestureRecognizer setDelegate:self];
+    [self.view addGestureRecognizer:self.gestureRecognizer];
+}
+
 
 - (void)setupMotion
 {
@@ -335,6 +346,96 @@
     NSIndexPath *indexPath = [self.fetchedResultsController indexPathForObject:task];
     MRMainCollectionViewCell *cell = (MRMainCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
     [cell performSelection];
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (void)handlePanGesture:(UIPanGestureRecognizer *)gestureRecognizer
+{
+    CGPoint touchPoint = [gestureRecognizer locationInView:gestureRecognizer.view];
+
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        self.startTouchPoint = touchPoint;
+    }
+    else if (gestureRecognizer.state == UIGestureRecognizerStateChanged) {
+        CGFloat verticalOffset = self.startTouchPoint.y - touchPoint.y;
+        CGFloat relativeOffset = verticalOffset * 2.1f;
+        CGFloat offsetY = 20.0f - relativeOffset;
+
+        [self.panGestureDelegate panGestureDidPanWithVerticalOffset:offsetY];
+
+        CGFloat scaleMultiplier = 0.1/210; /* 0.000476 */
+        CGFloat scale = 0.9;
+
+        if (offsetY <= 20) {
+            CGFloat calculatedScale = 0.9 + ((20 - offsetY) * scaleMultiplier);
+            scale = MIN(calculatedScale, 1);
+        }
+
+        CGFloat centerY = 304.0f;
+
+        if (verticalOffset > 0 && verticalOffset <= 100) {
+            CGFloat topMultiplier = 10.0f/210.0f;
+            centerY = 304.0f - ((20.0f - offsetY) * topMultiplier);
+        }
+        else if (verticalOffset > 100) {
+            centerY = 294.0f;
+        }
+
+        CGPoint center = self.view.center;
+        if (centerY != center.y) {
+            center.y = centerY;
+            [self.view setCenter:center];
+        }
+
+        CALayer *layer = self.view.layer;
+        CATransform3D transform = CATransform3DMakeScale(scale, scale, 1);
+
+        if (!CATransform3DEqualToTransform(layer.transform, transform)) {
+            [layer setTransform:CATransform3DMakeScale(scale, scale, 1)];
+        }
+    }
+    else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        CGPoint velocity = [gestureRecognizer velocityInView:gestureRecognizer.view];
+        CALayer *layer = self.view.layer;
+        CGFloat scale = 0.9;
+        CGFloat endPosition = 20;
+
+        BOOL done = NO;
+
+        CGFloat verticalOffset = self.startTouchPoint.y - touchPoint.y;
+
+        if (velocity.y < -30 || verticalOffset > 40) {
+            scale = 1;
+            endPosition = -190;
+            done = YES;
+        }
+
+        [UIView animateWithDuration:0.1 animations:^{
+            [layer setTransform:CATransform3DMakeScale(scale, scale, 1)];
+            [self.panGestureDelegate panGestureDidPanWithVerticalOffset:endPosition];
+
+            if (done) {
+                [self.panGestureDelegate panGestureWillReachEnd];
+
+                CGPoint center = self.view.center;
+                center.y = 294.0f;
+                [self.view setCenter:center];
+            }
+        } completion:^(BOOL finished) {
+            [self.collectionView setScrollEnabled:done];
+
+            if (done) {
+                [self moveToFront];
+                [self.panGestureDelegate panGestureDidReachEnd];
+            }
+        }];
+    }
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    return self.isInset;
 }
 
 @end
