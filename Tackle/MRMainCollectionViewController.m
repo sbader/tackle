@@ -333,12 +333,7 @@
 
 - (BOOL)shouldHandlePanGesturesForCell:(MRMainCollectionViewCell *)cell
 {
-    if (self.collectionView.contentInset.top != 100) {
-        return YES;
-    }
-    else {
-        return NO;
-    }
+    return !self.isInset;
 }
 
 - (void)selectTask:(Task *)task
