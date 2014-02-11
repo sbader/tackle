@@ -33,17 +33,9 @@
         [self setupMainCollectionViewController];
         [self setupEditView];
         [self setupTopSpace];
-        [self setupGestureRecognizer];
     }
 
     return self;
-}
-
-- (void)setupGestureRecognizer
-{
-    self.gestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
-    [self.gestureRecognizer setDelegate:self];
-    [self.mainCollectionViewController.view addGestureRecognizer:self.gestureRecognizer];
 }
 
 - (void)setupTopSpace
@@ -66,6 +58,7 @@
     self.mainCollectionViewController = [[MRMainCollectionViewController alloc] initWithCollectionViewLayout:layout];
     [self.mainCollectionViewController setScrollViewDelegate:self];
     [self.mainCollectionViewController setSelectionDelegate:self];
+    [self.mainCollectionViewController setPanGestureDelegate:self];
 
     [self.mainCollectionViewController setManagedObjectContext:self.managedObjectContext];
     [self addChildViewController:self.mainCollectionViewController];
@@ -201,108 +194,34 @@
     [self.mainCollectionViewController selectTask:task];
 }
 
-#pragma mark - UIGestureRecognizerDelegate
+#pragma mark - MRMainCollectionViewPanGestureDelegate
 
-- (void)handlePanGesture:(UIPanGestureRecognizer *)gestureRecognizer
+- (void)panGestureDidPanWithVerticalOffset:(CGFloat)verticalOffset
 {
-    CGPoint touchPoint = [gestureRecognizer locationInView:gestureRecognizer.view];
-
-    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        self.startTouchPoint = touchPoint;
+    if (verticalOffset < 20 && !self.editView.datePicker.hidden) {
+        [self.editView hideDatePickerAnimated:YES];
     }
-    else if (gestureRecognizer.state == UIGestureRecognizerStateChanged) {
-        CGFloat verticalOffset = self.startTouchPoint.y - touchPoint.y;
-        CGFloat relativeOffset = verticalOffset * 2.1f;
-        CGFloat offsetY = 20.0f - relativeOffset;
-        CGRect frame = self.editView.frame;
-        [self.editView setFrame:CGRectMake(frame.origin.x, offsetY, frame.size.width, frame.size.height)];
 
-        CGFloat scaleMultiplier = 0.1/210; /* 0.000476 */
-        CGFloat scale = 0.9;
-
-        if (offsetY <= 20) {
-            if (!self.editView.datePicker.hidden) {
-                [self.editView hideDatePickerAnimated:YES];
-            }
-
-            CGFloat calculatedScale = 0.9 + ((20 - offsetY) * scaleMultiplier);
-            scale = MIN(calculatedScale, 1);
-        }
-
-        CGFloat centerY = 304.0f;
-
-        if (verticalOffset > 0 && verticalOffset <= 100) {
-            CGFloat topMultiplier = 10.0f/210.0f;
-            centerY = 304.0f - ((20.0f - offsetY) * topMultiplier);
-        }
-        else if (verticalOffset > 100) {
-            centerY = 294.0f;
-        }
-
-        CGPoint center = self.mainCollectionViewController.view.center;
-        if (centerY != center.y) {
-            center.y = centerY;
-            [self.mainCollectionViewController.view setCenter:center];
-        }
-
-        CALayer *layer = self.mainCollectionViewController.view.layer;
-        CATransform3D transform = CATransform3DMakeScale(scale, scale, 1);
-
-        if (!CATransform3DEqualToTransform(layer.transform, transform)) {
-            [layer setTransform:CATransform3DMakeScale(scale, scale, 1)];
-        }
+    if (self.editView.textField.isFirstResponder) {
+        [self.editView.textField resignFirstResponder];
     }
-    else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
-        CGPoint velocity = [gestureRecognizer velocityInView:gestureRecognizer.view];
-        CGRect frame = self.editView.frame;
-        CALayer *layer = self.mainCollectionViewController.view.layer;
-        CGFloat scale = 0.9;
-        CGFloat endPosition = 20;
 
-        BOOL done = NO;
+    CGRect frame = self.editView.frame;
+    [self.editView setFrame:CGRectMake(frame.origin.x, verticalOffset, frame.size.width, frame.size.height)];
+}
 
-        MRMainCollectionViewCell *cell = nil;
-
-        CGFloat verticalOffset = self.startTouchPoint.y - touchPoint.y;
-
-        if (velocity.y < -30 || verticalOffset > 40) {
-            scale = 1;
-            endPosition = -190;
-            done = YES;
-        }
-
-        NSArray *indexPaths = [self.mainCollectionViewController.collectionView indexPathsForSelectedItems];
-        if ([indexPaths count] == 1) {
-            cell = (MRMainCollectionViewCell *)[self.mainCollectionViewController.collectionView cellForItemAtIndexPath:indexPaths[0]];
-        }
-
-        [UIView animateWithDuration:0.1 animations:^{
-            [layer setTransform:CATransform3DMakeScale(scale, scale, 1)];
-            [self.editView setFrame:CGRectMake(frame.origin.x, endPosition, frame.size.width, frame.size.height)];
-
-            if (done && cell) {
-                [cell performDeselection];
-            }
-
-            if (done) {
-                CGPoint center = self.mainCollectionViewController.view.center;
-                center.y = 294.0f;
-                [self.mainCollectionViewController.view setCenter:center];
-            }
-        } completion:^(BOOL finished) {
-            [self.mainCollectionViewController.collectionView setScrollEnabled:done];
-
-            if (done) {
-                [self.mainCollectionViewController moveToFront];
-                [self scrollViewDidResetContent:self.mainCollectionViewController.collectionView];
-            }
-        }];
+- (void)panGestureWillReachEnd
+{
+    NSArray *indexPaths = [self.mainCollectionViewController.collectionView indexPathsForSelectedItems];
+    if ([indexPaths count] == 1) {
+        MRMainCollectionViewCell *cell = (MRMainCollectionViewCell *)[self.mainCollectionViewController.collectionView cellForItemAtIndexPath:indexPaths[0]];
+        [cell performDeselection];
     }
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+- (void)panGestureDidReachEnd
 {
-    return self.editView.frame.origin.y != -190;
+    [self scrollViewDidResetContent:self.mainCollectionViewController.collectionView];
 }
 
 @end
