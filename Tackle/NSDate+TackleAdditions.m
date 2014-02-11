@@ -90,7 +90,7 @@
 - (NSString *)tackleStringSinceDate:(NSDate *)date
 {
     NSString *formattedString;
-    NSTimeInterval timeInterval = round([self timeIntervalSinceDate:date]);
+    NSTimeInterval timeInterval = ceil([self timeIntervalSinceDate:date]);
 
     if (timeInterval > -86400 && timeInterval < 0) {
         timeInterval = ABS(timeInterval);
