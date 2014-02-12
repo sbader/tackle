@@ -12,7 +12,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 const CGFloat kMRMainCollectionViewCellVerticalPadding = 12.0f;
-const CGFloat kMRMainCollectionViewCellHorizontalPadding = 6.0f;
+const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
 
 @interface MRMainCollectionViewCell ()
 
@@ -139,7 +139,7 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 6.0f;
     [self.taskTextLabel setText:text];
 
     CGSize textSize = [MRMainCollectionViewCell sizeForTaskTextLabelWithText:text];
-    [self.taskTextLabel setFrame:CGRectMake(6, 35, textSize.width, textSize.height)];
+    [self.taskTextLabel setFrame:CGRectMake(kMRMainCollectionViewCellHorizontalPadding, 35.0f, textSize.width, textSize.height)];
 }
 
 - (void)setDueDate:(NSDate *)dueDate
