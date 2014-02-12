@@ -142,13 +142,13 @@
 
 - (void)moveToBack
 {
-    CALayer *layer = self.view.layer;
+    CALayer *layer = self.collectionView.layer;
     CGFloat scale = 0.9;
     [layer setTransform:CATransform3DMakeScale(scale, scale, 1)];
 
     CGPoint center = self.view.center;
-    center.y = center.y + 10.0f; // 304
-    [self.view setCenter:center];
+    center.y = center.y + 70.0f; // 384
+    [self.collectionView setCenter:center];
 
     [self addMotionEffects];
     self.inset = YES;
@@ -359,31 +359,31 @@
 
         [self.panGestureDelegate panGestureDidPanWithVerticalOffset:offsetY];
 
-        CGFloat scaleMultiplier = 0.1/210; /* 0.000476 */
+        CGFloat scaleMultiplier = 0.1f/210.0f; /* 0.000476 */
         CGFloat scale = 0.9;
 
         if (offsetY <= 20) {
-            CGFloat calculatedScale = 0.9 + ((20 - offsetY) * scaleMultiplier);
+            CGFloat calculatedScale = 0.9f + ((20.0f - offsetY) * scaleMultiplier);
             scale = MIN(calculatedScale, 1);
         }
 
-        CGFloat centerY = 304.0f;
+        CGFloat centerY = 364.0f;
 
         if (verticalOffset > 0 && verticalOffset <= 100) {
-            CGFloat topMultiplier = 10.0f/210.0f;
-            centerY = 304.0f - ((20.0f - offsetY) * topMultiplier);
+            CGFloat topMultiplier = 90.0f/210.0f;
+            centerY = 364.0f - ((20.0f - offsetY) * topMultiplier);
         }
         else if (verticalOffset > 100) {
-            centerY = 294.0f;
+            centerY = 274.0f;
         }
 
-        CGPoint center = self.view.center;
+        CGPoint center = self.collectionView.center;
         if (centerY != center.y) {
             center.y = centerY;
-            [self.view setCenter:center];
+            [self.collectionView setCenter:center];
         }
 
-        CALayer *layer = self.view.layer;
+        CALayer *layer = self.collectionView.layer;
         CATransform3D transform = CATransform3DMakeScale(scale, scale, 1);
 
         if (!CATransform3DEqualToTransform(layer.transform, transform)) {
@@ -392,7 +392,7 @@
     }
     else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
         CGPoint velocity = [gestureRecognizer velocityInView:gestureRecognizer.view];
-        CALayer *layer = self.view.layer;
+        CALayer *layer = self.collectionView.layer;
         CGFloat scale = 0.9;
         CGFloat endPosition = 20;
 
@@ -413,9 +413,9 @@
             if (done) {
                 [self.panGestureDelegate panGestureWillReachEnd];
 
-                CGPoint center = self.view.center;
-                center.y = 294.0f;
-                [self.view setCenter:center];
+                CGPoint center = self.collectionView.center;
+                center.y = 274.0f;
+                [self.collectionView setCenter:center];
             }
         } completion:^(BOOL finished) {
             [self.collectionView setScrollEnabled:done];
