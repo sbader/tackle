@@ -11,6 +11,9 @@
 #import "MRLongDateFormatter.h"
 #import "MRHeartbeat.h"
 
+const CGFloat kMRMainCollectionViewVerticalCenterStart = 274.0f;
+const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
+
 @interface MRMainCollectionViewController ()
 
 @property (nonatomic, strong) UIMotionEffectGroup *effectGroup;
@@ -147,7 +150,7 @@
     [layer setTransform:CATransform3DMakeScale(scale, scale, 1)];
 
     CGPoint center = self.view.center;
-    center.y = center.y + 70.0f; // 384
+    center.y = kMRMainCollectionViewVerticalCenterEnd;
     [self.collectionView setCenter:center];
 
     [self addMotionEffects];
@@ -367,14 +370,14 @@
             scale = MIN(calculatedScale, 1);
         }
 
-        CGFloat centerY = 364.0f;
+        CGFloat centerY = kMRMainCollectionViewVerticalCenterEnd;
 
         if (verticalOffset > 0 && verticalOffset <= 100) {
-            CGFloat topMultiplier = 90.0f/210.0f;
-            centerY = 364.0f - ((20.0f - offsetY) * topMultiplier);
+            CGFloat topMultiplier = (kMRMainCollectionViewVerticalCenterEnd - kMRMainCollectionViewVerticalCenterStart)/210.0f;
+            centerY = kMRMainCollectionViewVerticalCenterEnd - ((20.0f - offsetY) * topMultiplier);
         }
         else if (verticalOffset > 100) {
-            centerY = 274.0f;
+            centerY = kMRMainCollectionViewVerticalCenterStart;
         }
 
         CGPoint center = self.collectionView.center;
@@ -395,6 +398,7 @@
         CALayer *layer = self.collectionView.layer;
         CGFloat scale = 0.9;
         CGFloat endPosition = 20;
+        CGFloat centerY = kMRMainCollectionViewVerticalCenterEnd;
 
         BOOL done = NO;
 
@@ -404,19 +408,20 @@
             scale = 1;
             endPosition = -190;
             done = YES;
+            centerY = kMRMainCollectionViewVerticalCenterStart;
         }
 
-        [UIView animateWithDuration:0.1 animations:^{
+        [UIView animateWithDuration:0.2 animations:^{
             [layer setTransform:CATransform3DMakeScale(scale, scale, 1)];
             [self.panGestureDelegate panGestureDidPanWithVerticalOffset:endPosition];
 
             if (done) {
                 [self.panGestureDelegate panGestureWillReachEnd];
-
-                CGPoint center = self.collectionView.center;
-                center.y = 274.0f;
-                [self.collectionView setCenter:center];
             }
+
+            CGPoint center = self.collectionView.center;
+            center.y = centerY;
+            [self.collectionView setCenter:center];
         } completion:^(BOOL finished) {
             [self.collectionView setScrollEnabled:done];
 
