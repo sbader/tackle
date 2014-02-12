@@ -124,7 +124,7 @@
 
     [self.editView setFrame:CGRectMake(frame.origin.x, offsetY, frame.size.width, frame.size.height)];
 
-    CALayer *layer = self.mainCollectionViewController.view.layer;
+    CALayer *layer = self.mainCollectionViewController.collectionView.layer;
 
     if (offset.y <= 0) {
         CGFloat scale = MAX(1 - (ABS(offset.y) * 0.001f), 0.9);
