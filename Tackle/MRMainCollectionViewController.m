@@ -111,7 +111,7 @@
 
     CGSize textSize = [MRMainCollectionViewCell sizeForTaskTextLabelWithText:task.text];
 
-    CGFloat height = ceil(textSize.height) + 46;
+    CGFloat height = ceil(textSize.height) + (2 * kMRMainCollectionViewCellVerticalPadding) + 26;
 
     return CGSizeMake(self.collectionView.frame.size.width, height);
 }

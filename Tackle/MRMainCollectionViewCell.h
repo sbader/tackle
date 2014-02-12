@@ -10,10 +10,11 @@
 
 @protocol MRMainCollectionViewCellDelegate;
 
+extern const CGFloat kMRMainCollectionViewCellVerticalPadding;
+
 @interface MRMainCollectionViewCell : UICollectionViewCell <UIGestureRecognizerDelegate>
 
 @property (assign, nonatomic) id <MRMainCollectionViewCellDelegate> delegate;
-
 @property (strong, nonatomic) UILabel *taskTextLabel;
 @property (strong, nonatomic) UILabel *dueDateLabel;
 

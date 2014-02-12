@@ -11,8 +11,10 @@
 #import "MRLongDateFormatter.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface MRMainCollectionViewCell ()
+const CGFloat kMRMainCollectionViewCellVerticalPadding = 12.0f;
+const CGFloat kMRMainCollectionViewCellHorizontalPadding = 6.0f;
 
+@interface MRMainCollectionViewCell ()
 
 @property (strong, nonatomic) UIView *mainView;
 @property (strong, nonatomic) UIView *topSeparator;
@@ -55,7 +57,7 @@
 
 - (void)performDeselection
 {
-    [self.mainView setBackgroundColor:[UIColor lightPlumColor]];
+    [self.mainView setBackgroundColor:[UIColor whiteColor]];
 }
 
 - (void)decrementDate
@@ -70,7 +72,7 @@
 - (void)prepareForReuse
 {
     [self.mainView setTransform:CGAffineTransformIdentity];
-    [self.mainView setBackgroundColor:[UIColor lightPlumColor]];
+    [self.mainView setBackgroundColor:[UIColor whiteColor]];
 }
 
 - (void)updateSizing
@@ -83,7 +85,7 @@
 - (void)setupMainView
 {
     self.mainView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-    [self.mainView setBackgroundColor:[UIColor lightPlumColor]];
+    [self.mainView setBackgroundColor:[UIColor whiteColor]];
     [self.contentView addSubview:self.mainView];
 }
 
@@ -101,7 +103,7 @@
 
 - (void)setupDueDateLabel
 {
-    self.dueDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 10.0f, 300.0f, 21.0f)];
+    self.dueDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(kMRMainCollectionViewCellHorizontalPadding, kMRMainCollectionViewCellVerticalPadding, 300.0f, 21.0f)];
     [self.dueDateLabel setFont:[UIFont effraRegularWithSize:18.0f]];
     [self.dueDateLabel setTextColor:[UIColor blackColor]];
 
@@ -110,9 +112,7 @@
 
 - (void)setupTaskTextLabel
 {
-    self.taskTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(6.0f, 35.0f, 300.0f, 21.0f)];
-
-//    [self.taskTextLabel setFont:[UIFont effraRegularWithSize:15.0f]];
+    self.taskTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(kMRMainCollectionViewCellHorizontalPadding, 35.0f, 300.0f, 21.0f)];
     [self.taskTextLabel setFont:[UIFont effraLightWithSize:16.0f]];
     [self.taskTextLabel setNumberOfLines:0];
     [self.taskTextLabel setLineBreakMode:NSLineBreakByWordWrapping];
