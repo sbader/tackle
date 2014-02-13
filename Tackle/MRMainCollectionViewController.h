@@ -23,10 +23,11 @@
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
-- (void)resetContentOffset;
+- (void)resetContentOffsetWithAnimations:(void(^)(void))animations completions:(void(^)(void))completions;
 - (void)selectTask:(Task *)task;
 - (void)moveToBack;
 - (void)moveToFront;
+- (void)deselectSelectedCells;
 
 @end
 

@@ -260,13 +260,45 @@ const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
     [super didReceiveMemoryWarning];
 }
 
-- (void)resetContentOffset
+- (void)resetContentOffsetWithAnimations:(void(^)(void))animations completions:(void(^)(void))completions
 {
     [UIView animateWithDuration:0.2 animations:^{
-        [self.collectionView setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
-        [self.collectionView setContentOffset:CGPointZero];
+        if (self.collectionView.contentInset.top != 0) {
+            [self.collectionView setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
+            [self.collectionView setContentOffset:CGPointZero];
+        }
+        else {
+            if (self.collectionView.center.y != kMRMainCollectionViewVerticalCenterStart) {
+                CGPoint center = self.collectionView.center;
+                center.y = kMRMainCollectionViewVerticalCenterStart;
+                [self.collectionView setCenter:center];
+            }
+
+            CALayer *layer = self.collectionView.layer;
+            CATransform3D transform = CATransform3DMakeScale(1, 1, 1);
+
+            if (!CATransform3DEqualToTransform(layer.transform, transform)) {
+                [layer setTransform:transform];
+            }
+
+            [self deselectSelectedCells];
+
+            animations();
+        }
     } completion:^(BOOL finished) {
+        completions();
+
+        [self.collectionView setScrollEnabled:YES];
+        self.inset = NO;
         [self removeMotionEffects];
+    }];
+}
+
+- (void)deselectSelectedCells
+{
+    [[self.collectionView indexPathsForSelectedItems] enumerateObjectsUsingBlock:^(NSIndexPath *indexPath, NSUInteger idx, BOOL *stop) {
+        MRMainCollectionViewCell *cell = (MRMainCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+        [cell performDeselection];
     }];
 }
 
@@ -306,11 +338,7 @@ const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
         [UIView animateWithDuration:0.2 animations:^{
             [scrollView setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
 
-            NSArray *indexPaths = [self.collectionView indexPathsForSelectedItems];
-            if ([indexPaths count] == 1) {
-                MRMainCollectionViewCell *cell = (MRMainCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPaths[0]];
-                [cell performDeselection];
-            }
+            [self deselectSelectedCells];
         } completion:^(BOOL finished) {
             if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidResetContent:)]) {
                 [self.scrollViewDelegate scrollViewDidResetContent:self.collectionView];
@@ -390,7 +418,7 @@ const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
         CATransform3D transform = CATransform3DMakeScale(scale, scale, 1);
 
         if (!CATransform3DEqualToTransform(layer.transform, transform)) {
-            [layer setTransform:CATransform3DMakeScale(scale, scale, 1)];
+            [layer setTransform:transform];
         }
     }
     else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {

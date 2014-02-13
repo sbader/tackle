@@ -186,7 +186,14 @@
         }];
     }
 
-    [self.mainCollectionViewController resetContentOffset];
+    [self.mainCollectionViewController resetContentOffsetWithAnimations:^{
+        CGRect frame = self.editView.frame;
+        if (frame.origin.y != -190.0f) {
+            [self.editView setFrame:CGRectMake(frame.origin.x, -190.0f, frame.size.width, frame.size.height)];
+        }
+    } completions:^{
+        [self.editView resetContent];
+    }];
 }
 
 - (void)selectTask:(Task *)task
@@ -212,11 +219,7 @@
 
 - (void)panGestureWillReachEnd
 {
-    NSArray *indexPaths = [self.mainCollectionViewController.collectionView indexPathsForSelectedItems];
-    if ([indexPaths count] == 1) {
-        MRMainCollectionViewCell *cell = (MRMainCollectionViewCell *)[self.mainCollectionViewController.collectionView cellForItemAtIndexPath:indexPaths[0]];
-        [cell performDeselection];
-    }
+    [self.mainCollectionViewController deselectSelectedCells];
 }
 
 - (void)panGestureDidReachEnd
