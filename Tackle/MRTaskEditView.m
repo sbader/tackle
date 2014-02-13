@@ -218,7 +218,6 @@
 
     [self.textField resignFirstResponder];
     [self.delegate taskEditViewDidReturnWithText:self.textField.text dueDate:self.dueDate];
-    [self resetContent];
 }
 
 - (void)handleAddTenMinutes:(id)sender
