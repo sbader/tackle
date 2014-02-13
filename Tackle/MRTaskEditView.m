@@ -200,18 +200,18 @@
 - (void)handleSubmit:(id)sender
 {
     if ([self.textField.text length] == 0) {
-        CAKeyframeAnimation * anim = [CAKeyframeAnimation animationWithKeyPath:@"transform"] ;
+        CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"] ;
 
-        anim.values = @[
+        animation.values = @[
                         [NSValue valueWithCATransform3D:CATransform3DMakeTranslation(-5.0f, 0.0f, 0.0f)],
                         [NSValue valueWithCATransform3D:CATransform3DMakeTranslation(5.0f, 0.0f, 0.0f)]
                     ];
 
-        anim.autoreverses = YES ;
-        anim.repeatCount = 5.0f ;
-        anim.duration = 0.05f ;
+        animation.autoreverses = YES ;
+        animation.repeatCount = 5.0f ;
+        animation.duration = 0.05f ;
 
-        [self.textField.layer addAnimation:anim forKey:nil] ;
+        [self.textField.layer addAnimation:animation forKey:nil] ;
 
         return;
     }
