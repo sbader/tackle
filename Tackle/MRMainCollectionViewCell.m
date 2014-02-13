@@ -71,6 +71,7 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
 
 - (void)prepareForReuse
 {
+    [self.mainView setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
     [self.mainView setTransform:CGAffineTransformIdentity];
     [self.mainView setBackgroundColor:[UIColor whiteColor]];
 }
