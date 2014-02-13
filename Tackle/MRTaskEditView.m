@@ -85,7 +85,7 @@
     [self.dueDateButton setTitleColor:UIColorFromRGB(0x82AADD) forState:UIControlStateHighlighted];
     [self.dueDateButton setTitleColor:UIColorFromRGB(0x82AADD) forState:UIControlStateSelected];
     [self.dueDateButton setTitle:[self.dueDate tackleStringSinceDate:self.startDate] forState:UIControlStateNormal];
-    [self.dueDateButton.titleLabel setFont:[UIFont effraRegularWithSize:23.0f]];
+    [self.dueDateButton.titleLabel setFont:[UIFont effraRegularWithSize:18.0f]];
 
     [self.dueDateButton addTarget:self action:@selector(toggleDatePicker:) forControlEvents:UIControlEventTouchUpInside];
 
