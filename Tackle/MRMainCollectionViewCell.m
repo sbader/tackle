@@ -65,13 +65,14 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
     [self.dueDateLabel setText:self.initialDueDate.tackleString];
 }
 
-- (void)setSelected:(BOOL)selected {
+- (void)setSelected:(BOOL)selected
+{
     [super setSelected:selected];
 }
 
 - (void)prepareForReuse
 {
-    [self.mainView setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+    [self.animator removeAllBehaviors];
     [self.mainView setTransform:CGAffineTransformIdentity];
     [self.mainView setBackgroundColor:[UIColor whiteColor]];
 }
