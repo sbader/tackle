@@ -21,12 +21,15 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
 @property (strong, nonatomic) UIView *bottomSeparator;
 
 @property (strong, nonatomic) UIPanGestureRecognizer *panGestureRecognizer;
+@property (strong, nonatomic) UILongPressGestureRecognizer *longPressGestureRecognizer;
 @property (nonatomic, strong) UIDynamicAnimator *animator;
 @property (nonatomic, strong) UIGravityBehavior *gravityBehaviour;
 @property (nonatomic, strong) UIPushBehavior* pushBehavior;
 @property (nonatomic, strong) UIAttachmentBehavior *panAttachmentBehaviour;
-
 @property (nonatomic, strong) NSDate *initialDueDate;
+@property (nonatomic, getter = isDragging) BOOL dragging;
+@property (nonatomic, getter = isLongPressed) BOOL longPressed;
+@property (nonatomic, getter = hasShadow) BOOL shadow;
 
 @end
 
@@ -42,17 +45,22 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
 
         [self setupMainView];
         [self setupPanGestureRecognizer];
+        [self setupLongPressGestureRecognizer];
         [self setupAnimator];
         [self setupDueDateLabel];
         [self setupTaskTextLabel];
         [self setupSeparators];
+
+        self.dragging = NO;
+        self.longPressed = NO;
+        self.shadow = NO;
     }
     return self;
 }
 
 - (void)performSelection
 {
-    [self.mainView setBackgroundColor:UIColorFromRGB(0xD4DCE5)];
+    [self.mainView setBackgroundColor:UIColorFromRGB(0xCECEDE)];
 }
 
 - (void)performDeselection
@@ -62,12 +70,14 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
 
 - (void)performHighlight
 {
-    [self.mainView setBackgroundColor:UIColorFromRGB(0xE0EAF5)];
+    [self.mainView setBackgroundColor:UIColorFromRGB(0xE1E1EB)];
 }
 
 - (void)performUnhighlight
 {
-    [self.mainView setBackgroundColor:[UIColor whiteColor]];
+    if (!self.isDragging && !self.isLongPressed) {
+        [self.mainView setBackgroundColor:[UIColor whiteColor]];
+    }
 }
 
 - (void)decrementDate
@@ -85,6 +95,9 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
     [self.animator removeAllBehaviors];
     [self.mainView setTransform:CGAffineTransformIdentity];
     [self.mainView setBackgroundColor:[UIColor whiteColor]];
+
+    self.dragging = NO;
+    self.longPressed = NO;
 }
 
 - (void)updateSizing
@@ -106,6 +119,13 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
     self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
     [self.panGestureRecognizer setDelegate:self];
     [self.mainView addGestureRecognizer:self.panGestureRecognizer];
+}
+
+- (void)setupLongPressGestureRecognizer
+{
+    self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
+    [self.longPressGestureRecognizer setDelegate:self];
+    [self.mainView addGestureRecognizer:self.longPressGestureRecognizer];
 }
 
 - (void)setupAnimator
@@ -183,7 +203,55 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
     return CGSizeMake(rect.size.width, rect.size.height);
 }
 
+- (void)addShadow
+{
+    if (!self.hasShadow) {
+        self.shadow = YES;
+
+        self.mainView.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.mainView.bounds].CGPath;
+        self.mainView.layer.masksToBounds = NO;
+        self.mainView.layer.shadowOffset = CGSizeMake(0, 0);
+        self.mainView.layer.shadowRadius = 3;
+
+        [UIView animateWithDuration:0.2 animations:^{
+            self.mainView.layer.shadowOpacity = 0.5;
+        }];
+    }
+}
+
+- (void)removeShadow
+{
+    if (self.hasShadow) {
+        self.shadow = NO;
+
+        [UIView animateWithDuration:0.2 animations:^{
+            self.mainView.layer.masksToBounds = YES;
+            self.mainView.layer.shadowOpacity = 0.0;
+        }];
+    }
+}
+
 #pragma mark - UIGestureRecognizerDelegate
+
+- (void)handleLongPressGesture:(UILongPressGestureRecognizer *)gestureRecognizer
+{
+    if (![self.delegate shouldHandleLongPressGesturesForCell:self]) {
+        return;
+    }
+
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        self.longPressed = YES;
+        [self addShadow];
+    }
+    else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        self.longPressed = NO;
+        [self removeShadow];
+
+        [UIView animateWithDuration:0.2 animations:^{
+            [self performUnhighlight];
+        }];
+    }
+}
 
 - (void)handlePanGesture:(UIPanGestureRecognizer *)gestureRecognizer
 {
@@ -198,6 +266,8 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
     static CGFloat angularVelocity;
 
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        [self addShadow];
+        self.dragging = YES;
         [self.animator removeAllBehaviors];
         [self.superview bringSubviewToFront:self];
 
@@ -233,6 +303,7 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
         attachment.anchorPoint = anchor;
     }
     else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        self.dragging = NO;
         [self.animator removeAllBehaviors];
 
         CGPoint velocity = [gestureRecognizer velocityInView:gestureRecognizer.view.superview];
@@ -244,6 +315,7 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
 
             [UIView animateWithDuration:0.2 animations:^{
                 [self performUnhighlight];
+                [self removeShadow];
             }];
 
             return;
@@ -276,10 +348,20 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
     if ([recognizer isEqual:self.panGestureRecognizer]) {
         UIPanGestureRecognizer *panRecognizer = (UIPanGestureRecognizer *)recognizer;
         CGPoint velocity = [panRecognizer velocityInView:self];
-        return ABS(velocity.x) > ABS(velocity.y);
-    } else {
+        return self.isLongPressed || ABS(velocity.x) > ABS(velocity.y);
+    }
+    else {
         return YES;
     }
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] && [otherGestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]]) {
+        return YES;
+    }
+
+    return NO;
 }
 
 @end
