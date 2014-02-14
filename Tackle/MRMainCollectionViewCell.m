@@ -60,6 +60,16 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
     [self.mainView setBackgroundColor:[UIColor whiteColor]];
 }
 
+- (void)performHighlight
+{
+    [self.mainView setBackgroundColor:UIColorFromRGB(0xE0EAF5)];
+}
+
+- (void)performUnhighlight
+{
+    [self.mainView setBackgroundColor:[UIColor whiteColor]];
+}
+
 - (void)decrementDate
 {
     [self.dueDateLabel setText:self.initialDueDate.tackleString];
@@ -215,8 +225,10 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
         };
 
         [self.animator addBehavior:attachment];
+        [self performHighlight];
     }
     else if (gestureRecognizer.state == UIGestureRecognizerStateChanged) {
+        [self performHighlight];
         CGPoint anchor = [gestureRecognizer locationInView:gestureRecognizer.view.superview];
         attachment.anchorPoint = anchor;
     }
@@ -229,6 +241,10 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
         if (maxVelocity < 825) {
             UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:gestureRecognizer.view snapToPoint:startCenter];
             [self.animator addBehavior:snap];
+
+            [UIView animateWithDuration:0.2 animations:^{
+                [self performUnhighlight];
+            }];
 
             return;
         }

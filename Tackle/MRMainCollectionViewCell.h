@@ -23,6 +23,8 @@ extern const CGFloat kMRMainCollectionViewCellVerticalPadding;
 - (void)setDueDate:(NSDate *)dueDate;
 - (void)performSelection;
 - (void)performDeselection;
+- (void)performHighlight;
+- (void)performUnhighlight;
 - (void)updateSizing;
 - (void)decrementDate;
 
