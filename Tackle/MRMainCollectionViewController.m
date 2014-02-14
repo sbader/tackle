@@ -386,6 +386,11 @@ const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
     return !self.isInset;
 }
 
+- (BOOL)shouldHandleLongPressGesturesForCell:(MRMainCollectionViewCell *)cell
+{
+    return !self.isInset;
+}
+
 - (void)selectTask:(Task *)task
 {
     NSIndexPath *indexPath = [self.fetchedResultsController indexPathForObject:task];

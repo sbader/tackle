@@ -35,6 +35,7 @@ extern const CGFloat kMRMainCollectionViewCellVerticalPadding;
 @required
 
 - (void)markAsDone:(MRMainCollectionViewCell *)cell;
+- (BOOL)shouldHandleLongPressGesturesForCell:(MRMainCollectionViewCell *)cell;
 - (BOOL)shouldHandlePanGesturesForCell:(MRMainCollectionViewCell *)cell;
 
 @end
