@@ -217,14 +217,10 @@ const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
     }
 
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    // Edit the entity name as appropriate.
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
-
-    // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
 
-    // Edit the sort key as appropriate.
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"dueDate" ascending:YES];
     NSArray *sortDescriptors = @[sortDescriptor];
 
@@ -238,10 +234,7 @@ const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
 
 	NSError *error = nil;
 	if (![self.fetchedResultsController performFetch:&error]) {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
 	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
 	}
 
     return _fetchedResultsController;
