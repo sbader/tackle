@@ -101,6 +101,7 @@
     [self.editView setDueDate:task.dueDate animated:NO];
 
     [self.mainCollectionViewController.collectionView setScrollEnabled:NO];
+    [self.mainCollectionViewController.collectionView setAllowsSelection:NO];
 
     [UIView animateWithDuration:0.2 animations:^{
         CGRect frame = self.editView.frame;

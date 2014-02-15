@@ -301,6 +301,7 @@ const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
         completions();
 
         [self.collectionView setScrollEnabled:YES];
+        [self.collectionView setAllowsSelection:YES];
         self.inset = NO;
         [self removeMotionEffects];
     }];
@@ -308,7 +309,7 @@ const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
 
 - (void)deselectSelectedCells
 {
-    [[self.collectionView indexPathsForSelectedItems] enumerateObjectsUsingBlock:^(NSIndexPath *indexPath, NSUInteger idx, BOOL *stop) {
+    [[self.collectionView indexPathsForVisibleItems] enumerateObjectsUsingBlock:^(NSIndexPath *indexPath, NSUInteger idx, BOOL *stop) {
         MRMainCollectionViewCell *cell = (MRMainCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
         [cell performDeselection];
     }];
@@ -320,6 +321,7 @@ const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
 {
     if (!self.collectionView.scrollEnabled && self.isInset && self.collectionView.contentOffset.y == -100) {
         [self.collectionView setScrollEnabled:YES];
+        [self.collectionView setAllowsSelection:YES];
     }
 
     if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidScroll:)]) {
@@ -469,6 +471,7 @@ const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
             [self.collectionView setCenter:center];
         } completion:^(BOOL finished) {
             [self.collectionView setScrollEnabled:done];
+            [self.collectionView setAllowsSelection:done];
 
             if (done) {
                 [self moveToFront];
