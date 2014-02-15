@@ -212,14 +212,20 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
         [self.superview bringSubviewToFront:self];
         self.shadow = YES;
 
-        self.mainView.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.mainView.bounds].CGPath;
-        self.mainView.layer.masksToBounds = NO;
-        self.mainView.layer.shadowOffset = CGSizeMake(0, 0);
-        self.mainView.layer.shadowRadius = 3;
+        CALayer *layer = self.mainView.layer;
 
-        [UIView animateWithDuration:0.2 animations:^{
-            self.mainView.layer.shadowOpacity = 0.5;
-        }];
+        layer.shadowPath = [UIBezierPath bezierPathWithRect:self.mainView.bounds].CGPath;
+        layer.masksToBounds = NO;
+        layer.shadowOffset = CGSizeMake(0, 0);
+        layer.shadowRadius = 3;
+
+        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"shadowOpacity"];
+        animation.fromValue = [NSNumber numberWithFloat:0.0];
+        animation.toValue = [NSNumber numberWithFloat:0.5];
+        animation.duration = 0.2;
+
+        [layer addAnimation:animation forKey:@"shadowOpacity"];
+        layer.shadowOpacity = 0.5;
     }
 }
 
@@ -228,10 +234,21 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
     if (self.hasShadow) {
         self.shadow = NO;
 
-        [UIView animateWithDuration:0.2 animations:^{
-            self.mainView.layer.masksToBounds = YES;
-            self.mainView.layer.shadowOpacity = 0.0;
+        CALayer *layer = self.mainView.layer;
+
+        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"shadowOpacity"];
+        animation.fromValue = [NSNumber numberWithFloat:0.5];
+        animation.toValue = [NSNumber numberWithFloat:0.0];
+        animation.duration = 0.2;
+
+        [CATransaction begin];
+        [CATransaction setCompletionBlock:^{
+            layer.masksToBounds = YES;
         }];
+
+        [layer addAnimation:animation forKey:@"shadowOpacity"];
+        layer.shadowOpacity = 0.0;
+        [CATransaction commit];
     }
 }
 
