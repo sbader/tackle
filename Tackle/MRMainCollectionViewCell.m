@@ -330,6 +330,7 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
 
         if (maxVelocity < 825) {
             UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:gestureRecognizer.view snapToPoint:self.startCenter];
+            [snap setDamping:0.7];
             [self.animator addBehavior:snap];
 
             [UIView animateWithDuration:0.2 animations:^{
