@@ -30,6 +30,7 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
 @property (nonatomic, getter = isDragging) BOOL dragging;
 @property (nonatomic, getter = isLongPressed) BOOL longPressed;
 @property (nonatomic, getter = hasShadow) BOOL shadow;
+@property (nonatomic) CGPoint startCenter;
 
 @end
 
@@ -105,6 +106,7 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
     [self.mainView setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
     [self.topSeparator setFrame:CGRectMake(0, 0, self.frame.size.width, 0.25f)];
     [self.bottomSeparator setFrame:CGRectMake(0, self.frame.size.height - 0.25f, self.frame.size.width, 0.25f)];
+    self.startCenter = self.mainView.center;
 }
 
 - (void)setupMainView
@@ -124,6 +126,7 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
 - (void)setupLongPressGestureRecognizer
 {
     self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
+    [self.longPressGestureRecognizer setMinimumPressDuration:0.4];
     [self.longPressGestureRecognizer setDelegate:self];
     [self.mainView addGestureRecognizer:self.longPressGestureRecognizer];
 }
@@ -206,6 +209,7 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
 - (void)addShadow
 {
     if (!self.hasShadow) {
+        [self.superview bringSubviewToFront:self];
         self.shadow = YES;
 
         self.mainView.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.mainView.bounds].CGPath;
@@ -260,7 +264,6 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
     }
 
     static UIAttachmentBehavior *attachment;
-    static CGPoint startCenter;
     static CFAbsoluteTime lastTime;
     static CGFloat lastAngle;
     static CGFloat angularVelocity;
@@ -271,7 +274,6 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
         [self.animator removeAllBehaviors];
         [self.superview bringSubviewToFront:self];
 
-        startCenter = gestureRecognizer.view.center;
         CGPoint pointWithinAnimatedView = [gestureRecognizer locationInView:gestureRecognizer.view];
         UIOffset offset = UIOffsetMake(pointWithinAnimatedView.x - gestureRecognizer.view.bounds.size.width / 2.0, pointWithinAnimatedView.y - gestureRecognizer.view.bounds.size.height / 2.0);
 
@@ -310,7 +312,7 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
         CGFloat maxVelocity = MAX(fabs(velocity.x), fabs(velocity.y));
 
         if (maxVelocity < 825) {
-            UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:gestureRecognizer.view snapToPoint:startCenter];
+            UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:gestureRecognizer.view snapToPoint:self.startCenter];
             [self.animator addBehavior:snap];
 
             [UIView animateWithDuration:0.2 animations:^{
