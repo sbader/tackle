@@ -268,7 +268,7 @@ const CGFloat kMRCollectionViewEndOffset = 0.0f;
     }
 
     CGRect frame = self.editView.frame;
-    [self.editView setFrame:CGRectMake(frame.origin.x, verticalOffset, frame.size.width, frame.size.height)];
+    [self.editView setFrame:CGRectMake(frame.origin.x, MAX(kMRCollectionViewStartOffset, verticalOffset), frame.size.width, frame.size.height)];
 }
 
 - (void)panGestureWillReachEnd
