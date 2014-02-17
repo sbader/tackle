@@ -419,7 +419,8 @@ const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
     }
     else if (gestureRecognizer.state == UIGestureRecognizerStateChanged) {
         CGFloat verticalOffset = self.startTouchPoint.y - touchPoint.y;
-        CGFloat relativeOffset = verticalOffset * 2.1f;
+        CGFloat topMultiplier = (kMRMainCollectionViewVerticalCenterEnd - kMRMainCollectionViewVerticalCenterStart)/kMREditViewHeight;
+        CGFloat relativeOffset = verticalOffset * topMultiplier;
         CGFloat offsetY = 0.0f - relativeOffset;
 
         [self.panGestureDelegate panGestureDidPanWithVerticalOffset:offsetY];
@@ -427,19 +428,15 @@ const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
         CGFloat scaleMultiplier = 0.1f/kMREditViewHeight;
         CGFloat scale = 0.9;
 
-        if (offsetY <= 20) {
+        if (offsetY <= 0) {
             CGFloat calculatedScale = 0.9f + ((0.0f - offsetY) * scaleMultiplier);
             scale = MIN(calculatedScale, 1);
         }
 
-        CGFloat centerY = kMRMainCollectionViewVerticalCenterEnd;
+        CGFloat centerY = MAX(kMRMainCollectionViewVerticalCenterStart, kMRMainCollectionViewVerticalCenterEnd - ((0 - offsetY) * topMultiplier));
 
-        if (verticalOffset > 0 && verticalOffset <= 100) {
-            CGFloat topMultiplier = (kMRMainCollectionViewVerticalCenterEnd - kMRMainCollectionViewVerticalCenterStart)/kMREditViewHeight;
-            centerY = kMRMainCollectionViewVerticalCenterEnd - ((20.0f - offsetY) * topMultiplier);
-        }
-        else if (verticalOffset > 100) {
-            centerY = kMRMainCollectionViewVerticalCenterStart;
+        if (centerY <= kMRMainCollectionViewVerticalCenterStart) {
+            [self.panGestureDelegate panGestureDidReachEnd];
         }
 
         CGPoint center = self.collectionView.center;
