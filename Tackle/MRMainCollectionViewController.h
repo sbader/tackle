@@ -36,10 +36,12 @@
 @optional
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView;
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView isInset:(BOOL)isInset;
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate;
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset;
 - (void)scrollViewDidInsetContent:(UIScrollView *)scrollView;
 - (void)scrollViewDidResetContent:(UIScrollView *)scrollView;
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView;
 
 @end
 
@@ -56,5 +58,6 @@
 - (void)panGestureDidPanWithVerticalOffset:(CGFloat)verticalOffset;
 - (void)panGestureWillReachEnd;
 - (void)panGestureDidReachEnd;
+- (void)panGestureDidFinish;
 
 @end

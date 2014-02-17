@@ -18,6 +18,8 @@
 @property (nonatomic) NSDate *startDate;
 @property (nonatomic) NSDate *visibleDate;
 @property (nonatomic) NSTimeInterval incrementer;
+@property (nonatomic, strong) UIView *topAreaView;
+@property (nonatomic, strong) UIView *bottomMaskView;
 
 @end
 
@@ -36,10 +38,12 @@
 
         self.incrementing = NO;
 
+        [self setupTopArea];
         [self setupTextField];
         [self setupDueDateButton];
         [self setupBottomButtonView];
         [self setupDatePicker];
+        [self setupBottomMaskView];
 
         [self addObservers];
     }
@@ -56,22 +60,46 @@
 //    [self removeObserver:self forKeyPath:@"dueDate"];
 }
 
+- (void)hideBottomMaskView
+{
+    [self.bottomMaskView setHidden:YES];
+}
+
+- (void)showBottomMaskView
+{
+    [self.bottomMaskView setHidden:NO];
+}
+
+- (void)setupBottomMaskView
+{
+    self.bottomMaskView = [[UIView alloc] initWithFrame:CGRectMake(0, 165.0f, self.frame.size.width, 20.0f)];
+    [self.bottomMaskView setBackgroundColor:UIColorFromRGB(0xEBEBEB)];
+    [self addSubview:self.bottomMaskView];
+}
+
+- (void)setupTopArea
+{
+    self.topAreaView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 20.0f)];
+    [self.topAreaView setBackgroundColor:UIColorFromRGB(0xEBEBEB)];
+    [self addSubview:self.topAreaView];
+}
+
 - (void)setupTextField
 {
-    self.textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 50.0f)];
+    self.textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 20, self.frame.size.width, 50.0f)];
     [self.textField setTextAlignment:NSTextAlignmentCenter];
     [self.textField setPlaceholder:@"What do you want to tackle?"];
     [self.textField setFont:[UIFont effraRegularWithSize:20.0f]];
     [self.textField setBackgroundColor:UIColorFromRGB(0xEBEBEB)];
     [self.textField setTintColor:UIColorFromRGB(0xA37BB9)];
 
-    self.textField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 50.0f)];
+    self.textField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 20, 5, 50.0f)];
     [self.textField setLeftViewMode:UITextFieldViewModeAlways];
 
-    self.textField.rightView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 50.0f)];
+    self.textField.rightView = [[UIView alloc] initWithFrame:CGRectMake(0, 20, 5, 50.0f)];
     [self.textField setRightViewMode:UITextFieldViewModeAlways];
 
-    UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(0, 50.0f, self.frame.size.width, 1.0f)];
+    UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(0, 70.0f, self.frame.size.width, 1.0f)];
     [separatorView setBackgroundColor:UIColorFromRGB(0xCACACA)];
 
     [self addSubview:self.textField];
@@ -80,7 +108,7 @@
 
 - (void)setupDueDateButton
 {
-    self.dueDateButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 51.0f, self.frame.size.width, 56.0f)];
+    self.dueDateButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 71.0f, self.frame.size.width, 56.0f)];
     [self.dueDateButton setTitleColor:UIColorFromRGB(0x7091BC) forState:UIControlStateNormal];
     [self.dueDateButton setTitleColor:UIColorFromRGB(0x82AADD) forState:UIControlStateHighlighted];
     [self.dueDateButton setTitleColor:UIColorFromRGB(0x82AADD) forState:UIControlStateSelected];
@@ -94,7 +122,7 @@
 
 - (void)setupBottomButtonView
 {
-    self.bottomButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 108, self.frame.size.width, 59.0f)];
+    self.bottomButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 128, self.frame.size.width, 59.0f)];
 
     UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 1.0f)];
     [separatorView setBackgroundColor:UIColorFromRGB(0xCACACA)];
@@ -116,7 +144,7 @@
     UITapGestureRecognizer *doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
     [doubleTapGestureRecognizer setNumberOfTapsRequired:2];
 
-    self.datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 108.0f, self.frame.size.width, 120.0f)];
+    self.datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 128.0f, self.frame.size.width, 120.0f)];
     [self.datePicker setHidden:YES];
     [self.datePicker addTarget:self action:@selector(datePickerChanged:) forControlEvents:UIControlEventValueChanged];
     [self.datePicker setDate:self.dueDate];
@@ -190,11 +218,7 @@
     [self.submitButton.titleLabel setFont:[UIFont effraRegularWithSize:29.5f]];
     [self.submitButton addTarget:self action:@selector(handleSubmit:) forControlEvents:UIControlEventTouchUpInside];
 
-    UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(0, self.bottomButtonView.frame.size.height - 2, self.bottomButtonView.frame.size.width, 1.0f)];
-    [separatorView setBackgroundColor:UIColorFromRGB(0xCACACA)];
-
     [self.bottomButtonView addSubview:self.submitButton];
-    [self.bottomButtonView addSubview:separatorView];
 }
 
 - (void)handleSubmit:(id)sender

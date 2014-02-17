@@ -23,6 +23,8 @@
 @property (strong, nonatomic) UIView *bottomButtonView;
 @property (strong, nonatomic) NSDate *dueDate;
 
+- (void)showBottomMaskView;
+- (void)hideBottomMaskView;
 - (void)resetContent;
 - (void)setDueDate:(NSDate *)dueDate animated:(BOOL)animated;
 - (void)showDatePickerAnimated:(BOOL)animated;
