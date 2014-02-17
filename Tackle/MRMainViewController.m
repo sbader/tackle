@@ -11,12 +11,17 @@
 #import "MRMainFlowLayout.h"
 #import "Task.h"
 
+const CGFloat kMREditViewHeight = 185.0f;
+const CGFloat kMRCollectionViewStartOffset = -165.0f;
+const CGFloat kMRCollectionViewEndOffset = 0.0f;
+
 @interface MRMainViewController ()
 
 @property (nonatomic, strong) MRTaskEditView *editView;
 @property (nonatomic, strong) Task *editingTask;
 @property (nonatomic, strong) UIPanGestureRecognizer *gestureRecognizer;
 @property (nonatomic) CGPoint startTouchPoint;
+@property (nonatomic) BOOL shouldStatusBarBeHidden;
 
 @end
 
@@ -32,7 +37,9 @@
 
         [self setupMainCollectionViewController];
         [self setupEditView];
-        [self setupTopSpace];
+
+        self.shouldStatusBarBeHidden = NO;
+//        [self setupTopSpace];
     }
 
     return self;
@@ -69,7 +76,7 @@
 
 - (void)setupEditView
 {
-    self.editView = [[MRTaskEditView alloc] initWithFrame:CGRectMake(0, -190.0f, self.view.frame.size.width, 165.0f)];
+    self.editView = [[MRTaskEditView alloc] initWithFrame:CGRectMake(0, kMRCollectionViewStartOffset, self.view.frame.size.width, kMREditViewHeight)];
     [self.editView setDelegate:self];
 //    [self.editView setHidden:YES];
 //    CALayer *layer = self.editView.layer;
@@ -93,9 +100,28 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)hideStatusBar
+{
+    if (!self.shouldStatusBarBeHidden) {
+        self.shouldStatusBarBeHidden = YES;
+        [self setNeedsStatusBarAppearanceUpdate];
+    }
+}
+
+- (void)showStatusBar
+{
+    if (self.shouldStatusBarBeHidden) {
+        self.shouldStatusBarBeHidden = NO;
+        [self setNeedsStatusBarAppearanceUpdate];
+    }
+}
+
 - (void)editTask:(Task *)task
 {
     [self setEditingTask:task];
+
+    [self.editView hideBottomMaskView];
+    [self hideStatusBar];
 
     [self.editView.textField setText:task.text];
     [self.editView setDueDate:task.dueDate animated:NO];
@@ -105,9 +131,10 @@
 
     [UIView animateWithDuration:0.2 animations:^{
         CGRect frame = self.editView.frame;
-        [self.editView setFrame:CGRectMake(frame.origin.x, 20, frame.size.width, frame.size.height)];
+        [self.editView setFrame:CGRectMake(frame.origin.x, 0, frame.size.width, frame.size.height)];
         [self.mainCollectionViewController moveToBack];
     } completion:^(BOOL finished) {
+        [self showStatusBar];
     }];
 }
 
@@ -121,13 +148,19 @@
 
     CGPoint offset = scrollView.contentOffset;
     CGRect frame = self.editView.frame;
-    CGFloat offsetY = -190.0f - (offset.y * 2.1);
+    CGFloat offsetMultiplier = (kMRCollectionViewEndOffset - kMRCollectionViewStartOffset)/100;
+    CGFloat offsetY = MAX(kMRCollectionViewStartOffset, kMRCollectionViewStartOffset - (offset.y * offsetMultiplier));
+
+    if (offsetY > kMRCollectionViewStartOffset) {
+        [self hideStatusBar];
+        [self.editView hideBottomMaskView];
+    }
 
     [self.editView setFrame:CGRectMake(frame.origin.x, offsetY, frame.size.width, frame.size.height)];
 
     CALayer *layer = self.mainCollectionViewController.collectionView.layer;
 
-    if (offset.y <= 0) {
+    if (offset.y <= kMRCollectionViewEndOffset) {
         CGFloat scale = MAX(1 - (ABS(offset.y) * 0.001f), 0.9);
         [layer setTransform:CATransform3DMakeScale(scale, scale, 1)];
     }
@@ -136,8 +169,24 @@
     }
 }
 
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView isInset:(BOOL)isInset
+{
+    [self showStatusBar];
+    
+    if (!isInset) {
+        [self.editView showBottomMaskView];
+    }
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
+{
+    [self showStatusBar];
+    [self.editView showBottomMaskView];
+}
+
 - (void)scrollViewDidInsetContent:(UIScrollView *)scrollView
 {
+    [self showStatusBar];
     [self.editView.textField becomeFirstResponder];
 }
 
@@ -145,6 +194,8 @@
 {
     self.editingTask = nil;
     [self.editView resetContent];
+    [self.editView showBottomMaskView];
+    [self showStatusBar];
 }
 
 #pragma mark - TackMainCollectionViewSelectionDelegate
@@ -189,8 +240,8 @@
 
     [self.mainCollectionViewController resetContentOffsetWithAnimations:^{
         CGRect frame = self.editView.frame;
-        if (frame.origin.y != -190.0f) {
-            [self.editView setFrame:CGRectMake(frame.origin.x, -190.0f, frame.size.width, frame.size.height)];
+        if (frame.origin.y != kMRCollectionViewStartOffset) {
+            [self.editView setFrame:CGRectMake(frame.origin.x, kMRCollectionViewStartOffset, frame.size.width, frame.size.height)];
         }
     } completions:^{
         [self.editView resetContent];
@@ -206,7 +257,9 @@
 
 - (void)panGestureDidPanWithVerticalOffset:(CGFloat)verticalOffset
 {
-    if (verticalOffset < 20 && !self.editView.datePicker.hidden) {
+    [self hideStatusBar];
+
+    if (verticalOffset < 0 && !self.editView.datePicker.hidden) {
         [self.editView hideDatePickerAnimated:YES];
     }
 
@@ -226,6 +279,16 @@
 - (void)panGestureDidReachEnd
 {
     [self scrollViewDidResetContent:self.mainCollectionViewController.collectionView];
+    [self.editView showBottomMaskView];
+}
+
+- (void)panGestureDidFinish
+{
+    [self showStatusBar];
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return self.shouldStatusBarBeHidden;
 }
 
 @end

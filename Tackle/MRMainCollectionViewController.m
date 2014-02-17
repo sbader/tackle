@@ -10,6 +10,7 @@
 
 #import "MRLongDateFormatter.h"
 #import "MRHeartbeat.h"
+#import "MRMainViewController.h"
 
 const CGFloat kMRMainCollectionViewVerticalCenterStart = 274.0f;
 const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
@@ -329,6 +330,20 @@ const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
     }
 }
 
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
+{
+    if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidEndScrollingAnimation:)]) {
+        [self.scrollViewDelegate scrollViewDidEndScrollingAnimation:scrollView];
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidEndDecelerating:isInset:)]) {
+        [self.scrollViewDelegate scrollViewDidEndDecelerating:scrollView isInset:self.isInset];
+    }
+}
+
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
 {
     if (!self.isInset && scrollView.contentOffset.y <= -100) {
@@ -405,22 +420,22 @@ const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
     else if (gestureRecognizer.state == UIGestureRecognizerStateChanged) {
         CGFloat verticalOffset = self.startTouchPoint.y - touchPoint.y;
         CGFloat relativeOffset = verticalOffset * 2.1f;
-        CGFloat offsetY = 20.0f - relativeOffset;
+        CGFloat offsetY = 0.0f - relativeOffset;
 
         [self.panGestureDelegate panGestureDidPanWithVerticalOffset:offsetY];
 
-        CGFloat scaleMultiplier = 0.1f/210.0f; /* 0.000476 */
+        CGFloat scaleMultiplier = 0.1f/kMREditViewHeight;
         CGFloat scale = 0.9;
 
         if (offsetY <= 20) {
-            CGFloat calculatedScale = 0.9f + ((20.0f - offsetY) * scaleMultiplier);
+            CGFloat calculatedScale = 0.9f + ((0.0f - offsetY) * scaleMultiplier);
             scale = MIN(calculatedScale, 1);
         }
 
         CGFloat centerY = kMRMainCollectionViewVerticalCenterEnd;
 
         if (verticalOffset > 0 && verticalOffset <= 100) {
-            CGFloat topMultiplier = (kMRMainCollectionViewVerticalCenterEnd - kMRMainCollectionViewVerticalCenterStart)/210.0f;
+            CGFloat topMultiplier = (kMRMainCollectionViewVerticalCenterEnd - kMRMainCollectionViewVerticalCenterStart)/kMREditViewHeight;
             centerY = kMRMainCollectionViewVerticalCenterEnd - ((20.0f - offsetY) * topMultiplier);
         }
         else if (verticalOffset > 100) {
@@ -444,7 +459,7 @@ const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
         CGPoint velocity = [gestureRecognizer velocityInView:gestureRecognizer.view];
         CALayer *layer = self.collectionView.layer;
         CGFloat scale = 0.9;
-        CGFloat endPosition = 20;
+        CGFloat endPosition = kMRCollectionViewEndOffset;
         CGFloat centerY = kMRMainCollectionViewVerticalCenterEnd;
 
         BOOL done = NO;
@@ -453,7 +468,7 @@ const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
 
         if (velocity.y < -30 || verticalOffset > 40) {
             scale = 1;
-            endPosition = -190;
+            endPosition = kMRCollectionViewStartOffset;
             done = YES;
             centerY = kMRMainCollectionViewVerticalCenterStart;
         }
@@ -477,6 +492,8 @@ const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
                 [self moveToFront];
                 [self.panGestureDelegate panGestureDidReachEnd];
             }
+
+            [self.panGestureDelegate panGestureDidFinish];
         }];
     }
 }

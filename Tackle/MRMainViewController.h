@@ -11,6 +11,10 @@
 #import "MRMainCollectionViewController.h"
 #import "MRTaskEditView.h"
 
+const extern CGFloat kMREditViewHeight;
+const extern CGFloat kMRCollectionViewStartOffset;
+const extern CGFloat kMRCollectionViewEndOffset;
+
 @interface MRMainViewController : UIViewController <MRMainCollectionViewScrollViewDelegate, MRMainCollectionViewSelectionDelegate, MRTaskEditViewDelegate, MRMainCollectionViewPanGestureDelegate>
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
