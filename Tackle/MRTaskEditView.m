@@ -19,7 +19,6 @@
 @property (nonatomic) NSDate *visibleDate;
 @property (nonatomic) NSTimeInterval incrementer;
 @property (nonatomic, strong) UIView *topAreaView;
-@property (nonatomic, strong) UIView *bottomMaskView;
 
 @end
 
@@ -43,7 +42,6 @@
         [self setupDueDateButton];
         [self setupBottomButtonView];
         [self setupDatePicker];
-        [self setupBottomMaskView];
 
         [self addObservers];
     }
@@ -58,23 +56,6 @@
 - (void)removeObservers
 {
 //    [self removeObserver:self forKeyPath:@"dueDate"];
-}
-
-- (void)hideBottomMaskView
-{
-    [self.bottomMaskView setHidden:YES];
-}
-
-- (void)showBottomMaskView
-{
-    [self.bottomMaskView setHidden:NO];
-}
-
-- (void)setupBottomMaskView
-{
-    self.bottomMaskView = [[UIView alloc] initWithFrame:CGRectMake(0, 165.0f, self.frame.size.width, 20.0f)];
-    [self.bottomMaskView setBackgroundColor:UIColorFromRGB(0xEBEBEB)];
-    [self addSubview:self.bottomMaskView];
 }
 
 - (void)setupTopArea
@@ -113,7 +94,7 @@
     [self.dueDateButton setTitleColor:UIColorFromRGB(0x82AADD) forState:UIControlStateHighlighted];
     [self.dueDateButton setTitleColor:UIColorFromRGB(0x82AADD) forState:UIControlStateSelected];
     [self.dueDateButton setTitle:[self.dueDate tackleStringSinceDate:self.startDate] forState:UIControlStateNormal];
-    [self.dueDateButton.titleLabel setFont:[UIFont effraRegularWithSize:18.0f]];
+    [self.dueDateButton.titleLabel setFont:[UIFont effraRegularWithSize:21.0f]];
 
     [self.dueDateButton addTarget:self action:@selector(toggleDatePicker:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -164,11 +145,11 @@
 
     [self.addTenMinutesButton addTarget:self action:@selector(handleAddTenMinutes:) forControlEvents:UIControlEventTouchUpInside];
 
-    UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(108, 0, 1.0f, 57.0f)];
-    [separatorView setBackgroundColor:UIColorFromRGB(0xCACACA)];
+//    UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(108, 0, 1.0f, 57.0f)];
+//    [separatorView setBackgroundColor:UIColorFromRGB(0xCACACA)];
 
     [self.bottomButtonView addSubview:self.addTenMinutesButton];
-    [self.bottomButtonView addSubview:separatorView];
+//    [self.bottomButtonView addSubview:separatorView];
 }
 
 - (void)setupAddOneHourButton
@@ -182,11 +163,11 @@
 
     [self.addOneHourButton addTarget:self action:@selector(handleAddOneHour:) forControlEvents:UIControlEventTouchUpInside];
 
-    UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(187.0f, 0, 1.0f, 57.0f)];
-    [separatorView setBackgroundColor:UIColorFromRGB(0xCACACA)];
+//    UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(187.0f, 0, 1.0f, 57.0f)];
+//    [separatorView setBackgroundColor:UIColorFromRGB(0xCACACA)];
 
     [self.bottomButtonView addSubview:self.addOneHourButton];
-    [self.bottomButtonView addSubview:separatorView];
+//    [self.bottomButtonView addSubview:separatorView];
 }
 
 - (void)setupAddOneDayButton
@@ -200,11 +181,11 @@
 
     [self.addOneDayButton addTarget:self action:@selector(handleAddOneDay:) forControlEvents:UIControlEventTouchUpInside];
 
-    UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(259.0f, 0, 1.0f, 57.0f)];
-    [separatorView setBackgroundColor:UIColorFromRGB(0xCACACA)];
+//    UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(259.0f, 0, 1.0f, 57.0f)];
+//    [separatorView setBackgroundColor:UIColorFromRGB(0xCACACA)];
 
     [self.bottomButtonView addSubview:self.addOneDayButton];
-    [self.bottomButtonView addSubview:separatorView];
+//    [self.bottomButtonView addSubview:separatorView];
 }
 
 - (void)setupSubmitButton

@@ -339,8 +339,8 @@ const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidEndDecelerating:isInset:)]) {
-        [self.scrollViewDelegate scrollViewDidEndDecelerating:scrollView isInset:self.isInset];
+    if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidEndDecelerating:)]) {
+        [self.scrollViewDelegate scrollViewDidEndDecelerating:scrollView];
     }
 }
 
