@@ -96,6 +96,7 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
     [self.animator removeAllBehaviors];
     [self.mainView setTransform:CGAffineTransformIdentity];
     [self.mainView setBackgroundColor:[UIColor whiteColor]];
+    [self removeShadow];
 
     self.dragging = NO;
     self.longPressed = NO;
