@@ -41,7 +41,7 @@ const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
         [self.collectionView setPagingEnabled:NO];
         [self.collectionView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
         [self.collectionView setShowsVerticalScrollIndicator:NO];
-        [self setupMotion];
+
         [self setupGestureRecognizer];
     }
     return self;
@@ -80,33 +80,6 @@ const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
     self.gestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
     [self.gestureRecognizer setDelegate:self];
     [self.view addGestureRecognizer:self.gestureRecognizer];
-}
-
-
-- (void)setupMotion
-{
-    UIInterpolatingMotionEffect *verticalMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y" type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
-
-    verticalMotionEffect.minimumRelativeValue = @(-20);
-    verticalMotionEffect.maximumRelativeValue = @(20);
-
-    UIInterpolatingMotionEffect *horizontalMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x" type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
-
-    horizontalMotionEffect.minimumRelativeValue = @(-20);
-    horizontalMotionEffect.maximumRelativeValue = @(20);
-
-    self.effectGroup = [UIMotionEffectGroup new];
-    self.effectGroup.motionEffects = @[horizontalMotionEffect, verticalMotionEffect];
-}
-
-- (void)addMotionEffects
-{
-    [self.collectionView addMotionEffect:self.effectGroup];
-}
-
-- (void)removeMotionEffects
-{
-    [self.collectionView removeMotionEffect:self.effectGroup];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -173,17 +146,15 @@ const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
     center.y = kMRMainCollectionViewVerticalCenterEnd;
     [self.collectionView setCenter:center];
 
-    [self addMotionEffects];
     self.inset = YES;
 }
 
 - (void)moveToFront
 {
     self.inset = NO;
-    [self removeMotionEffects];
 }
 
-#pragma mark - UICollectionViewDataSource
+#pragma mark - Collection View Data Source
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -304,7 +275,6 @@ const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
         [self.collectionView setScrollEnabled:YES];
         [self.collectionView setAllowsSelection:YES];
         self.inset = NO;
-        [self removeMotionEffects];
     }];
 }
 
@@ -356,8 +326,6 @@ const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
             if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidInsetContent:)]) {
                 [self.scrollViewDelegate scrollViewDidInsetContent:self.collectionView];
             }
-
-            [self addMotionEffects];
         }];
     }
     else if (self.isInset && scrollView.contentOffset.y > -100) {
@@ -372,7 +340,6 @@ const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
             if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidResetContent:)]) {
                 [self.scrollViewDelegate scrollViewDidResetContent:self.collectionView];
             }
-            [self removeMotionEffects];
         }];
     }
 }
