@@ -20,6 +20,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
+
+    [UIApplication cacheKeyboard];
+
     [self addSampleData];
     [self setupWindow];
     [self setupMainViewController];
