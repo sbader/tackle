@@ -11,8 +11,8 @@
 #import "MRMainFlowLayout.h"
 #import "Task.h"
 
-const CGFloat kMREditViewHeight = 185.0f;
-const CGFloat kMRCollectionViewStartOffset = -165.0f;
+const CGFloat kMREditViewHeight = 190.0f;
+const CGFloat kMRCollectionViewStartOffset = -170.0f;
 const CGFloat kMRCollectionViewEndOffset = 0.0f;
 
 @interface MRMainViewController ()
@@ -120,7 +120,6 @@ const CGFloat kMRCollectionViewEndOffset = 0.0f;
 {
     [self setEditingTask:task];
 
-    [self.editView hideBottomMaskView];
     [self hideStatusBar];
 
     [self.editView.textField setText:task.text];
@@ -140,7 +139,7 @@ const CGFloat kMRCollectionViewEndOffset = 0.0f;
 
 #pragma mark - TackMainCollectionViewScrollViewDelegate
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView;
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (scrollView.contentInset.top == 100 && !self.editView.datePicker.hidden) {
         [self.editView hideDatePickerAnimated:YES];
@@ -151,37 +150,32 @@ const CGFloat kMRCollectionViewEndOffset = 0.0f;
     CGFloat offsetMultiplier = (kMRCollectionViewEndOffset - kMRCollectionViewStartOffset)/100;
     CGFloat offsetY = MAX(kMRCollectionViewStartOffset, kMRCollectionViewStartOffset - (offset.y * offsetMultiplier));
 
-    if (offsetY > kMRCollectionViewStartOffset) {
-        [self hideStatusBar];
-        [self.editView hideBottomMaskView];
-    }
-
     [self.editView setFrame:CGRectMake(frame.origin.x, offsetY, frame.size.width, frame.size.height)];
 
     CALayer *layer = self.mainCollectionViewController.collectionView.layer;
+
+    if (offsetY > kMRCollectionViewStartOffset) {
+        [self hideStatusBar];
+    }
 
     if (offset.y <= kMRCollectionViewEndOffset) {
         CGFloat scale = MAX(1 - (ABS(offset.y) * 0.001f), 0.9);
         [layer setTransform:CATransform3DMakeScale(scale, scale, 1)];
     }
     else {
+        [self showStatusBar];
         [layer setTransform:CATransform3DMakeScale(1, 1, 1)];
     }
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView isInset:(BOOL)isInset
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     [self showStatusBar];
-    
-    if (!isInset) {
-        [self.editView showBottomMaskView];
-    }
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
     [self showStatusBar];
-    [self.editView showBottomMaskView];
 }
 
 - (void)scrollViewDidInsetContent:(UIScrollView *)scrollView
@@ -194,18 +188,17 @@ const CGFloat kMRCollectionViewEndOffset = 0.0f;
 {
     self.editingTask = nil;
     [self.editView resetContent];
-    [self.editView showBottomMaskView];
     [self showStatusBar];
 }
 
-#pragma mark - TackMainCollectionViewSelectionDelegate
+#pragma mark - Main Collection View Selection Delegate
 
 - (void)didSelectCellWithTask:(Task *)task
 {
     [self editTask:task];
 }
 
-#pragma mark - TackTaskEditViewDelegate
+#pragma mark - Task Edit View Delegate
 
 - (void)taskEditViewDidReturnWithText:(NSString *)text dueDate:(NSDate *)dueDate
 {
@@ -253,7 +246,7 @@ const CGFloat kMRCollectionViewEndOffset = 0.0f;
     [self.mainCollectionViewController selectTask:task];
 }
 
-#pragma mark - MRMainCollectionViewPanGestureDelegate
+#pragma mark - Main Collection View Pan Gesture Delegate
 
 - (void)panGestureDidPanWithVerticalOffset:(CGFloat)verticalOffset
 {
@@ -279,7 +272,6 @@ const CGFloat kMRCollectionViewEndOffset = 0.0f;
 - (void)panGestureDidReachEnd
 {
     [self scrollViewDidResetContent:self.mainCollectionViewController.collectionView];
-    [self.editView showBottomMaskView];
 }
 
 - (void)panGestureDidFinish

@@ -36,7 +36,7 @@
 @optional
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView;
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView isInset:(BOOL)isInset;
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView;
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate;
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset;
 - (void)scrollViewDidInsetContent:(UIScrollView *)scrollView;
