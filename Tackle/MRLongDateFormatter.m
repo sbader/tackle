@@ -18,7 +18,7 @@ NSString * const kCachedLongDateFormatterKey = @"CachedLongDateFormatterKey";
     MRLongDateFormatter *dateFormatter = [threadDictionary objectForKey:kCachedLongDateFormatterKey];
 
     if (!dateFormatter) {
-        NSString *formatString = [NSDateFormatter dateFormatFromTemplate:@"EEEEMMMMd"
+        NSString *formatString = [NSDateFormatter dateFormatFromTemplate:@"EEEEMMMd"
                                                                  options:0
                                                                   locale:[NSLocale currentLocale]];
 
