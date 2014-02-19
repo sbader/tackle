@@ -34,6 +34,7 @@
 		D139E57D1897329C007163AD /* Effra-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = D139E5791897329C007163AD /* Effra-BoldItalic.otf */; };
 		D139E57E1897329C007163AD /* Effra-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = D139E57A1897329C007163AD /* Effra-Italic.otf */; };
 		D139E57F1897329C007163AD /* Effra-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = D139E57B1897329C007163AD /* Effra-Regular.otf */; };
+		D16D24BC18B298F800FE35D1 /* UIResponder+KeyboardCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D16D24BB18B298F800FE35D1 /* UIResponder+KeyboardCache.m */; };
 		D172CF3F189739D900297A42 /* MRMainCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D172CF3E189739D900297A42 /* MRMainCollectionViewController.m */; };
 		D172CF4218973C4900297A42 /* MRMainCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D172CF4118973C4900297A42 /* MRMainCollectionViewCell.m */; };
 		D172CF451898A13500297A42 /* MRMainFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D172CF441898A13500297A42 /* MRMainFlowLayout.m */; };
@@ -93,6 +94,8 @@
 		D139E5791897329C007163AD /* Effra-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Effra-BoldItalic.otf"; sourceTree = "<group>"; };
 		D139E57A1897329C007163AD /* Effra-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Effra-Italic.otf"; sourceTree = "<group>"; };
 		D139E57B1897329C007163AD /* Effra-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Effra-Regular.otf"; sourceTree = "<group>"; };
+		D16D24BA18B298F800FE35D1 /* UIResponder+KeyboardCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIResponder+KeyboardCache.h"; sourceTree = "<group>"; };
+		D16D24BB18B298F800FE35D1 /* UIResponder+KeyboardCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+KeyboardCache.m"; sourceTree = "<group>"; };
 		D172CF3D189739D900297A42 /* MRMainCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRMainCollectionViewController.h; sourceTree = "<group>"; };
 		D172CF3E189739D900297A42 /* MRMainCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRMainCollectionViewController.m; sourceTree = "<group>"; };
 		D172CF4018973C4900297A42 /* MRMainCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRMainCollectionViewCell.h; sourceTree = "<group>"; };
@@ -271,6 +274,8 @@
 				D17BCFB2189F3D05001996C1 /* UIView+TackleAdditions.m */,
 				D19C952518A28ACF009082F3 /* NSDate+TackleAdditions.h */,
 				D19C952618A28ACF009082F3 /* NSDate+TackleAdditions.m */,
+				D16D24BA18B298F800FE35D1 /* UIResponder+KeyboardCache.h */,
+				D16D24BB18B298F800FE35D1 /* UIResponder+KeyboardCache.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -429,6 +434,7 @@
 				D172CF3F189739D900297A42 /* MRMainCollectionViewController.m in Sources */,
 				D1027FEE1890535700FF44A4 /* Task.m in Sources */,
 				D139E57418959F41007163AD /* MRLongDateFormatter.m in Sources */,
+				D16D24BC18B298F800FE35D1 /* UIResponder+KeyboardCache.m in Sources */,
 				D19C952718A28ACF009082F3 /* NSDate+TackleAdditions.m in Sources */,
 				D19C952B18A29297009082F3 /* MRMediumDateFormatter.m in Sources */,
 				D1027F7718904E8400FF44A4 /* main.m in Sources */,

@@ -18,4 +18,5 @@
     #import "UIColor+TackleAdditions.h"
     #import "UIView+TackleAdditions.h"
     #import "NSDate+TackleAdditions.h"
+    #import "UIResponder+KeyboardCache.h"
 #endif
