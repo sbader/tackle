@@ -167,11 +167,11 @@
         __block NSError *error;
         [self.editingTask.managedObjectContext performBlock:^{
             [self.editingTask.managedObjectContext save:&error];
-
-            if (shouldReschedule) {
-                [self.editingTask rescheduleNotification];
-            }
         }];
+
+        if (shouldReschedule) {
+            [self.editingTask rescheduleNotification];
+        }
 
         [self setEditingTask:nil];
     }
