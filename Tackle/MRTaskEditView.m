@@ -222,7 +222,15 @@
     }
 
     [self.textField resignFirstResponder];
-    [self.delegate taskEditViewDidReturnWithText:self.textField.text dueDate:self.dueDate];
+
+    NSTimeInterval interval = [self.dueDate timeIntervalSinceDate:self.startDate];
+    NSDate *dueDate = self.dueDate;
+
+    if (interval < 3600) {
+        dueDate = [NSDate dateWithTimeInterval:interval sinceDate:[NSDate date]];
+    }
+
+    [self.delegate taskEditViewDidReturnWithText:self.textField.text dueDate:dueDate];
 }
 
 - (void)handleAddTenMinutes:(id)sender
