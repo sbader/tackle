@@ -236,6 +236,7 @@ const CGFloat kMRMainCollectionViewInsetVerticalCenterEnd = 314.0f;
 
         case NSFetchedResultsChangeMove:
             [collectionView moveItemAtIndexPath:indexPath toIndexPath:newIndexPath];
+            [self updateCell:(MRMainCollectionViewCell *)[collectionView cellForItemAtIndexPath:newIndexPath] atIndexPath:newIndexPath];
             break;
     }
 }
@@ -287,7 +288,7 @@ const CGFloat kMRMainCollectionViewInsetVerticalCenterEnd = 314.0f;
     }];
 }
 
-#pragma mark - UIScrollViewDelegate
+#pragma mark - Scroll View Delegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -358,7 +359,7 @@ const CGFloat kMRMainCollectionViewInsetVerticalCenterEnd = 314.0f;
     }
 }
 
-#pragma mark - MRMainCollectionViewCellDelegate
+#pragma mark - Main Collection View Cell Delegate
 
 - (void)markAsDone:(MRMainCollectionViewCell *)cell
 {
@@ -389,7 +390,7 @@ const CGFloat kMRMainCollectionViewInsetVerticalCenterEnd = 314.0f;
     [cell performSelection];
 }
 
-#pragma mark - UIGestureRecognizerDelegate
+#pragma mark - Gesture Recognizer Delegate
 
 - (void)handlePanGesture:(UIPanGestureRecognizer *)gestureRecognizer
 {
@@ -400,13 +401,13 @@ const CGFloat kMRMainCollectionViewInsetVerticalCenterEnd = 314.0f;
     }
     else if (gestureRecognizer.state == UIGestureRecognizerStateChanged) {
         CGFloat verticalOffset = self.startTouchPoint.y - touchPoint.y;
-        CGFloat topMultiplier = (kMRMainCollectionViewVerticalCenterEnd - kMRMainCollectionViewVerticalCenterStart)/kMREditViewHeight;
+        CGFloat topMultiplier = (kMRMainCollectionViewVerticalCenterEnd - kMRMainCollectionViewVerticalCenterStart)/100;
         CGFloat relativeOffset = verticalOffset * topMultiplier;
         CGFloat offsetY = 0.0f - relativeOffset;
 
         [self.panGestureDelegate panGestureDidPanWithVerticalOffset:offsetY];
 
-        CGFloat scaleMultiplier = 0.1f/kMREditViewHeight;
+        CGFloat scaleMultiplier = 0.1f/100;
         CGFloat scale = 0.9;
 
         if (offsetY <= 0) {
@@ -415,10 +416,6 @@ const CGFloat kMRMainCollectionViewInsetVerticalCenterEnd = 314.0f;
         }
 
         CGFloat centerY = MAX(kMRMainCollectionViewVerticalCenterStart, kMRMainCollectionViewVerticalCenterEnd - ((0 - offsetY) * topMultiplier));
-
-        if (centerY <= kMRMainCollectionViewVerticalCenterStart) {
-            [self.panGestureDelegate panGestureDidReachEnd];
-        }
 
         CGPoint center = self.collectionView.center;
         if (centerY != center.y) {
