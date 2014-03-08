@@ -14,6 +14,7 @@
 
 const CGFloat kMRMainCollectionViewVerticalCenterStart = 274.0f;
 const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
+const CGFloat kMRMainCollectionViewInsetVerticalCenterEnd = 314.0f;
 
 @interface MRMainCollectionViewController ()
 
@@ -293,6 +294,19 @@ const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
     if (!self.collectionView.scrollEnabled && self.isInset && self.collectionView.contentOffset.y == -100) {
         [self.collectionView setScrollEnabled:YES];
         [self.collectionView setAllowsSelection:YES];
+    }
+
+    CGFloat verticalOffset = scrollView.contentOffset.y;
+
+    if (verticalOffset <= 0) {
+        CGFloat topMultiplier = (kMRMainCollectionViewInsetVerticalCenterEnd - kMRMainCollectionViewVerticalCenterStart)/100.0f;
+        CGFloat centerY = MIN(kMRMainCollectionViewInsetVerticalCenterEnd, kMRMainCollectionViewVerticalCenterStart + (-verticalOffset * topMultiplier));
+        CGPoint center = self.collectionView.center;
+
+        if (centerY != center.y) {
+            center.y = centerY;
+            [self.collectionView setCenter:center];
+        }
     }
 
     if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidScroll:)]) {
