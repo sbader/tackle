@@ -137,7 +137,7 @@ const CGFloat kMRCollectionViewEndOffset = 0.0f;
     }];
 }
 
-#pragma mark - TackMainCollectionViewScrollViewDelegate
+#pragma mark - Main Collection View Scroll View Delegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -250,8 +250,6 @@ const CGFloat kMRCollectionViewEndOffset = 0.0f;
 
 - (void)panGestureDidPanWithVerticalOffset:(CGFloat)verticalOffset
 {
-    [self hideStatusBar];
-
     if (verticalOffset < 0 && !self.editView.datePicker.hidden) {
         [self.editView hideDatePickerAnimated:YES];
     }
@@ -261,7 +259,19 @@ const CGFloat kMRCollectionViewEndOffset = 0.0f;
     }
 
     CGRect frame = self.editView.frame;
-    [self.editView setFrame:CGRectMake(frame.origin.x, MAX(kMRCollectionViewStartOffset, verticalOffset), frame.size.width, frame.size.height)];
+    CGFloat offsetMultiplier = (kMRCollectionViewEndOffset - kMRCollectionViewStartOffset)/100;
+    CGFloat offsetY = MAX(kMRCollectionViewStartOffset, verticalOffset * offsetMultiplier);
+
+    if (offsetY != frame.origin.y) {
+        if (offsetY == kMRCollectionViewStartOffset) {
+            [self showStatusBar];
+        }
+        else {
+            [self hideStatusBar];
+        }
+
+        [self.editView setFrame:CGRectMake(frame.origin.x, offsetY, frame.size.width, frame.size.height)];
+    }
 }
 
 - (void)panGestureWillReachEnd
