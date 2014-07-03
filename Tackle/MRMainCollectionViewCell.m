@@ -83,7 +83,9 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
 
 - (void)decrementDate
 {
-    [self.dueDateLabel setText:self.initialDueDate.tackleString];
+    if (self.initialDueDate) {
+        [self.dueDateLabel setText:self.initialDueDate.tackleString];
+    }
 }
 
 - (void)setSelected:(BOOL)selected
@@ -143,6 +145,10 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
     [self.dueDateLabel setFont:[UIFont effraRegularWithSize:18.0f]];
     [self.dueDateLabel setTextColor:[UIColor blackColor]];
 
+    if (!self.initialDueDate) {
+        self.dueDateLabel.text = @"Someday";
+    }
+
     [self.mainView addSubview:self.dueDateLabel];
 }
 
@@ -181,7 +187,15 @@ const CGFloat kMRMainCollectionViewCellHorizontalPadding = 8.0f;
 - (void)setDueDate:(NSDate *)dueDate
 {
     self.initialDueDate = dueDate;
-    [self.dueDateLabel setText:self.initialDueDate.tackleString];
+    NSString *text;
+    if (self.initialDueDate) {
+        text = self.initialDueDate.tackleString;
+    }
+    else {
+        text = @"Someday";
+    }
+
+    [self.dueDateLabel setText:text];
 }
 
 - (void)markAsDone
