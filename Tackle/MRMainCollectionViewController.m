@@ -292,12 +292,16 @@ const CGFloat kMRMainCollectionViewInsetVerticalCenterEnd = 314.0f;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (!self.collectionView.scrollEnabled && self.isInset && self.collectionView.contentOffset.y == -100) {
+    CGFloat verticalOffset = scrollView.contentOffset.y;
+    
+    if (!self.collectionView.scrollEnabled && self.isInset && verticalOffset == -100) {
         [self.collectionView setScrollEnabled:YES];
         [self.collectionView setAllowsSelection:YES];
     }
-
-    CGFloat verticalOffset = scrollView.contentOffset.y;
+    
+    if (self.isInset && verticalOffset > 0) {
+        verticalOffset = 0;
+    }
 
     if (verticalOffset <= 0) {
         CGFloat topMultiplier = (kMRMainCollectionViewInsetVerticalCenterEnd - kMRMainCollectionViewVerticalCenterStart)/100.0f;
