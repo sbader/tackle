@@ -56,6 +56,7 @@ const CGFloat kMRMainCollectionViewInsetVerticalCenterEnd = 314.0f;
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
     [self detachObservers];
 }
 
@@ -367,13 +368,17 @@ const CGFloat kMRMainCollectionViewInsetVerticalCenterEnd = 314.0f;
 
 - (void)markAsDone:(MRMainCollectionViewCell *)cell
 {
-    Task *task = [self.fetchedResultsController objectAtIndexPath:[self.collectionView indexPathForCell:cell]];
-    [task setIsDone:YES];
-    [task cancelNotification];
-
     __block NSError *error;
-    [task.managedObjectContext performBlock:^{
-        [task.managedObjectContext save:&error];
+    [self.collectionView performBatchUpdates:^{
+        Task *task = [self.fetchedResultsController objectAtIndexPath:[self.collectionView indexPathForCell:cell]];
+        [task setIsDone:YES];
+        [task cancelNotification];
+
+        [task.managedObjectContext performBlock:^{
+            [task.managedObjectContext save:&error];
+        }];
+    } completion:^(BOOL finished) {
+
     }];
 }
 
