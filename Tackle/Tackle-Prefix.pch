@@ -20,3 +20,6 @@
     #import "NSDate+TackleAdditions.h"
     #import "UIResponder+KeyboardCache.h"
 #endif
+
+#define IS_OS_7_OR_LATER    ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
+#define IS_OS_8_OR_LATER    ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)

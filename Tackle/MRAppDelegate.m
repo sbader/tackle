@@ -19,11 +19,21 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+
+    if (IS_OS_8_OR_LATER) {
+        UIUserNotificationType types = UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound;
+        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:types
+                                                                                        categories:nil]];
+    }
+
+    BOOL testing = NO;
+
+    if (testing) {
+        [[UIApplication sharedApplication] cancelAllLocalNotifications];
+        [self addSampleData];
+    }
 
     [UIApplication cacheKeyboard];
-
-//    [self addSampleData];
     [self setupWindow];
     [self setupMainViewController];
     [self.window makeKeyAndVisible];
@@ -87,7 +97,7 @@
 //    [Task insertItemWithText:@"Watch hockey" dueDate:[NSDate dateWithTimeIntervalSinceNow:280000] inManagedObjectContext:self.managedObjectContext];
 //    [Task insertItemWithText:@"Clean apartment" dueDate:[NSDate dateWithTimeIntervalSinceNow:290000] inManagedObjectContext:self.managedObjectContext];
 //    [Task insertItemWithText:@"Watch Archer" dueDate:[NSDate dateWithTimeIntervalSinceNow:300000] inManagedObjectContext:self.managedObjectContext];
-//
+
     NSError *error = nil;
 
     [self.managedObjectContext save:&error];
