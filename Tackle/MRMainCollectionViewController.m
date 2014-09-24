@@ -56,6 +56,7 @@ const CGFloat kMRMainCollectionViewInsetVerticalCenterEnd = 314.0f;
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
     [self detachObservers];
 }
 
