@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C786AB3F19D355810077F11C /* NSLayoutConstraint+CompactConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = C786AB3C19D355810077F11C /* NSLayoutConstraint+CompactConstraint.m */; };
+		C786AB4019D355810077F11C /* UIView+CompactConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = C786AB3E19D355810077F11C /* UIView+CompactConstraint.m */; };
+		C786AB4419D358DF0077F11C /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C786AB4319D358DF0077F11C /* Launch Screen.xib */; };
 		D1027F6918904E8400FF44A4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1027F6818904E8400FF44A4 /* Foundation.framework */; };
 		D1027F6B18904E8400FF44A4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1027F6A18904E8400FF44A4 /* CoreGraphics.framework */; };
 		D1027F6D18904E8400FF44A4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1027F6C18904E8400FF44A4 /* UIKit.framework */; };
@@ -58,6 +61,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C786AB3A19D355810077F11C /* CompactConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompactConstraint.h; path = vendor/CompactConstraint/CompactConstraint.h; sourceTree = "<group>"; };
+		C786AB3B19D355810077F11C /* NSLayoutConstraint+CompactConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSLayoutConstraint+CompactConstraint.h"; path = "vendor/CompactConstraint/NSLayoutConstraint+CompactConstraint.h"; sourceTree = "<group>"; };
+		C786AB3C19D355810077F11C /* NSLayoutConstraint+CompactConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSLayoutConstraint+CompactConstraint.m"; path = "vendor/CompactConstraint/NSLayoutConstraint+CompactConstraint.m"; sourceTree = "<group>"; };
+		C786AB3D19D355810077F11C /* UIView+CompactConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+CompactConstraint.h"; path = "vendor/CompactConstraint/UIView+CompactConstraint.h"; sourceTree = "<group>"; };
+		C786AB3E19D355810077F11C /* UIView+CompactConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+CompactConstraint.m"; path = "vendor/CompactConstraint/UIView+CompactConstraint.m"; sourceTree = "<group>"; };
+		C786AB4319D358DF0077F11C /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		D1027F6518904E8400FF44A4 /* Tackle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tackle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1027F6818904E8400FF44A4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D1027F6A18904E8400FF44A4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -144,6 +153,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C786AB4119D3558B0077F11C /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				C786AB4219D355900077F11C /* CompactConstraint */,
+			);
+			name = Vendor;
+			sourceTree = "<group>";
+		};
+		C786AB4219D355900077F11C /* CompactConstraint */ = {
+			isa = PBXGroup;
+			children = (
+				C786AB3A19D355810077F11C /* CompactConstraint.h */,
+				C786AB3B19D355810077F11C /* NSLayoutConstraint+CompactConstraint.h */,
+				C786AB3C19D355810077F11C /* NSLayoutConstraint+CompactConstraint.m */,
+				C786AB3D19D355810077F11C /* UIView+CompactConstraint.h */,
+				C786AB3E19D355810077F11C /* UIView+CompactConstraint.m */,
+			);
+			name = CompactConstraint;
+			sourceTree = "<group>";
+		};
 		D1027F5C18904E8400FF44A4 = {
 			isa = PBXGroup;
 			children = (
@@ -186,6 +215,7 @@
 				D1027FEF1890545800FF44A4 /* Models */,
 				D12E8774189454E1008119B8 /* Resources */,
 				D1027F7118904E8400FF44A4 /* Supporting Files */,
+				C786AB4119D3558B0077F11C /* Vendor */,
 				D12E878818957943008119B8 /* Views */,
 				D1027F7918904E8400FF44A4 /* MRAppDelegate.h */,
 				D1027F7A18904E8400FF44A4 /* MRAppDelegate.m */,
@@ -245,6 +275,7 @@
 			children = (
 				D1027F7F18904E8400FF44A4 /* Images.xcassets */,
 				D12E87751894550D008119B8 /* Fonts */,
+				C786AB4319D358DF0077F11C /* Launch Screen.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -416,6 +447,7 @@
 				D1027F8018904E8400FF44A4 /* Images.xcassets in Resources */,
 				D139E57E1897329C007163AD /* Effra-Italic.otf in Resources */,
 				D12E877918945525008119B8 /* Adonis-Regular.otf in Resources */,
+				C786AB4419D358DF0077F11C /* Launch Screen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -434,6 +466,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C786AB4019D355810077F11C /* UIView+CompactConstraint.m in Sources */,
 				D172CF3F189739D900297A42 /* MRMainCollectionViewController.m in Sources */,
 				D1027FEE1890535700FF44A4 /* Task.m in Sources */,
 				D139E57418959F41007163AD /* MRLongDateFormatter.m in Sources */,
@@ -446,6 +479,7 @@
 				D172CF4218973C4900297A42 /* MRMainCollectionViewCell.m in Sources */,
 				D12E8786189573FC008119B8 /* UIColor+TackleAdditions.m in Sources */,
 				D12E87831894A07B008119B8 /* UIFont+TackleAdditions.m in Sources */,
+				C786AB3F19D355810077F11C /* NSLayoutConstraint+CompactConstraint.m in Sources */,
 				D17BCFB3189F3D05001996C1 /* UIView+TackleAdditions.m in Sources */,
 				D12E877318944E6A008119B8 /* MRTaskEditView.m in Sources */,
 				D1027F7B18904E8400FF44A4 /* MRAppDelegate.m in Sources */,

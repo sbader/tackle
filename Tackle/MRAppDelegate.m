@@ -19,11 +19,21 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+
+    if (IS_OS_8_OR_LATER) {
+        UIUserNotificationType types = UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound;
+        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:types
+                                                                                        categories:nil]];
+    }
+
+    BOOL testing = YES;
+
+    if (testing) {
+        [[UIApplication sharedApplication] cancelAllLocalNotifications];
+        [self addSampleData];
+    }
 
     [UIApplication cacheKeyboard];
-
-//    [self addSampleData];
     [self setupWindow];
     [self setupMainViewController];
     [self.window makeKeyAndVisible];
@@ -77,17 +87,17 @@
         [self.managedObjectContext deleteObject:obj];
     }];
 
-//    [Task insertItemWithText:@"Prepare Expenses" dueDate:nil inManagedObjectContext:self.managedObjectContext];
-//    [Task insertItemWithText:@"Renew Apple Developer Program Membership" dueDate:nil inManagedObjectContext:self.managedObjectContext];
-//    [Task insertItemWithText:@"Read more about Objective-C" dueDate:[NSDate dateWithTimeIntervalSinceNow:72000] inManagedObjectContext:self.managedObjectContext];
-//    [Task insertItemWithText:@"Schedule a physical" dueDate:[NSDate dateWithTimeIntervalSinceNow:172800] inManagedObjectContext:self.managedObjectContext];
-//    [Task insertItemWithText:@"Work on Tackle" dueDate:[NSDate dateWithTimeIntervalSinceNow:171000] inManagedObjectContext:self.managedObjectContext];
-//    [Task insertItemWithText:@"Go to anniversary party" dueDate:[NSDate dateWithTimeIntervalSinceNow:220000] inManagedObjectContext:self.managedObjectContext];
-//    [Task insertItemWithText:@"Dinner with family" dueDate:[NSDate dateWithTimeIntervalSinceNow:240000] inManagedObjectContext:self.managedObjectContext];
-//    [Task insertItemWithText:@"Watch hockey" dueDate:[NSDate dateWithTimeIntervalSinceNow:280000] inManagedObjectContext:self.managedObjectContext];
-//    [Task insertItemWithText:@"Clean apartment" dueDate:[NSDate dateWithTimeIntervalSinceNow:290000] inManagedObjectContext:self.managedObjectContext];
-//    [Task insertItemWithText:@"Watch Archer" dueDate:[NSDate dateWithTimeIntervalSinceNow:300000] inManagedObjectContext:self.managedObjectContext];
-//
+    [Task insertItemWithText:@"Prepare Expenses" dueDate:nil inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithText:@"Renew Apple Developer Program Membership" dueDate:nil inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithText:@"Read more about Objective-C" dueDate:[NSDate dateWithTimeIntervalSinceNow:72000] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithText:@"Schedule a physical" dueDate:[NSDate dateWithTimeIntervalSinceNow:172800] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithText:@"Work on Tackle" dueDate:[NSDate dateWithTimeIntervalSinceNow:171000] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithText:@"Go to anniversary party" dueDate:[NSDate dateWithTimeIntervalSinceNow:220000] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithText:@"Dinner with family" dueDate:[NSDate dateWithTimeIntervalSinceNow:240000] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithText:@"Watch hockey" dueDate:[NSDate dateWithTimeIntervalSinceNow:280000] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithText:@"Clean apartment" dueDate:[NSDate dateWithTimeIntervalSinceNow:290000] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithText:@"Watch Archer" dueDate:[NSDate dateWithTimeIntervalSinceNow:300000] inManagedObjectContext:self.managedObjectContext];
+
     NSError *error = nil;
 
     [self.managedObjectContext save:&error];
