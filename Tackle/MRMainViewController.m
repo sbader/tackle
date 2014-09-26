@@ -27,9 +27,9 @@ const CGFloat kMRCollectionViewEndOffset = 0.0f;
 
 @implementation MRMainViewController
 
-- (id)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
-{
+- (id)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
     self = [super initWithNibName:nil bundle:nil];
+
     if (self) {
         self.managedObjectContext = managedObjectContext;
 
@@ -39,85 +39,75 @@ const CGFloat kMRCollectionViewEndOffset = 0.0f;
         [self setupEditView];
 
         self.shouldStatusBarBeHidden = NO;
-//        [self setupTopSpace];
     }
 
     return self;
 }
 
-- (void)setupTopSpace
-{
-    UIView *topSpaceView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 20.0f)];
-    [topSpaceView setBackgroundColor:[UIColor lightPlumColor]];
-
-    UIView *bottomSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, 19.5f, self.view.frame.size.width, 0.25f)];
-    [bottomSeparator setBackgroundColor:[UIColor lightPlumGrayColor]];
-    [topSpaceView addSubview:bottomSeparator];
-
-    [self.view addSubview:topSpaceView];
-}
-
-- (void)setupMainCollectionViewController
-{
+- (void)setupMainCollectionViewController {
     MRMainFlowLayout *layout  = [[MRMainFlowLayout alloc] init];
     [layout setItemSize:CGSizeMake(self.view.frame.size.width, 67.0f)];
 
     self.mainCollectionViewController = [[MRMainCollectionViewController alloc] initWithCollectionViewLayout:layout];
+
+    self.mainCollectionViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+
     [self.mainCollectionViewController setScrollViewDelegate:self];
     [self.mainCollectionViewController setSelectionDelegate:self];
     [self.mainCollectionViewController setPanGestureDelegate:self];
 
     [self.mainCollectionViewController setManagedObjectContext:self.managedObjectContext];
     [self addChildViewController:self.mainCollectionViewController];
-    [self.mainCollectionViewController.view setFrame:CGRectMake(0, 20.0f, self.view.frame.size.width, self.view.frame.size.height - 20.0f)];
+
+//    [self.mainCollectionViewController.view setFrame:CGRectMake(0, 20.0f, self.view.frame.size.width, self.view.frame.size.height - 20.0f)];
 
     [self.view addSubview:self.mainCollectionViewController.view];
+    
+    [self.view addCompactConstraints:@[
+                                       @"view.top = superview.top + 20",
+                                       @"view.leading = superview.leading",
+                                       @"view.trailing = superview.trailing",
+                                       @"view.bottom = superview.bottom"
+                                       ]
+                             metrics:@{
+                                       @"topOffset": @(20)
+                                       }
+                               views:@{
+                                       @"view": self.mainCollectionViewController.view,
+                                       @"superview": self.view
+                                       }];
 }
 
-- (void)setupEditView
-{
+- (void)setupEditView {
     self.editView = [[MRTaskEditView alloc] initWithFrame:CGRectMake(0, kMRCollectionViewStartOffset, self.view.frame.size.width, kMREditViewHeight)];
     [self.editView setDelegate:self];
-//    [self.editView setHidden:YES];
-//    CALayer *layer = self.editView.layer;
-//
-//    CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
-//    rotationAndPerspectiveTransform.m34 = 1.0 / -1000.0;
-//    rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, M_PI * 0.6, 1.0f, 0.0f, 0.0f);
-//    layer.anchorPoint = CGPointMake(0.5, 0);
-//    layer.transform = rotationAndPerspectiveTransform;
 
     [self.view addSubview:self.editView];
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-- (void)hideStatusBar
-{
+- (void)hideStatusBar {
     if (!self.shouldStatusBarBeHidden) {
         self.shouldStatusBarBeHidden = YES;
         [self setNeedsStatusBarAppearanceUpdate];
     }
 }
 
-- (void)showStatusBar
-{
+- (void)showStatusBar {
     if (self.shouldStatusBarBeHidden) {
         self.shouldStatusBarBeHidden = NO;
         [self setNeedsStatusBarAppearanceUpdate];
     }
 }
 
-- (void)editTask:(Task *)task
-{
+- (void)editTask:(Task *)task {
     [self setEditingTask:task];
 
     [self hideStatusBar];
@@ -139,8 +129,7 @@ const CGFloat kMRCollectionViewEndOffset = 0.0f;
 
 #pragma mark - Main Collection View Scroll View Delegate
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView.contentInset.top == 100 && !self.editView.datePicker.hidden) {
         [self.editView hideDatePickerAnimated:YES];
     }
@@ -168,24 +157,20 @@ const CGFloat kMRCollectionViewEndOffset = 0.0f;
     }
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     [self showStatusBar];
 }
 
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
     [self showStatusBar];
 }
 
-- (void)scrollViewDidInsetContent:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidInsetContent:(UIScrollView *)scrollView {
     [self showStatusBar];
     [self.editView.textField becomeFirstResponder];
 }
 
-- (void)scrollViewDidResetContent:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidResetContent:(UIScrollView *)scrollView {
     self.editingTask = nil;
     [self.editView resetContent];
     [self showStatusBar];
@@ -193,15 +178,13 @@ const CGFloat kMRCollectionViewEndOffset = 0.0f;
 
 #pragma mark - Main Collection View Selection Delegate
 
-- (void)didSelectCellWithTask:(Task *)task
-{
+- (void)didSelectCellWithTask:(Task *)task {
     [self editTask:task];
 }
 
 #pragma mark - Task Edit View Delegate
 
-- (void)taskEditViewDidReturnWithText:(NSString *)text dueDate:(NSDate *)dueDate
-{
+- (void)taskEditViewDidReturnWithText:(NSString *)text dueDate:(NSDate *)dueDate {
     if (self.editingTask) {
         BOOL shouldReschedule = !([dueDate isEqual:self.editingTask.dueDate]);
 
@@ -241,15 +224,13 @@ const CGFloat kMRCollectionViewEndOffset = 0.0f;
     }];
 }
 
-- (void)selectTask:(Task *)task
-{
+- (void)selectTask:(Task *)task {
     [self.mainCollectionViewController selectTask:task];
 }
 
 #pragma mark - Main Collection View Pan Gesture Delegate
 
-- (void)panGestureDidPanWithVerticalOffset:(CGFloat)verticalOffset
-{
+- (void)panGestureDidPanWithVerticalOffset:(CGFloat)verticalOffset {
     if (verticalOffset < 0 && !self.editView.datePicker.hidden) {
         [self.editView hideDatePickerAnimated:YES];
     }
@@ -274,18 +255,15 @@ const CGFloat kMRCollectionViewEndOffset = 0.0f;
     }
 }
 
-- (void)panGestureWillReachEnd
-{
+- (void)panGestureWillReachEnd {
     [self.mainCollectionViewController deselectSelectedCells];
 }
 
-- (void)panGestureDidReachEnd
-{
+- (void)panGestureDidReachEnd {
     [self scrollViewDidResetContent:self.mainCollectionViewController.collectionView];
 }
 
-- (void)panGestureDidFinish
-{
+- (void)panGestureDidFinish {
     [self showStatusBar];
 }
 
