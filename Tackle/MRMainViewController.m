@@ -48,7 +48,7 @@ const CGFloat kMRCollectionViewEndOffset = 0.0f;
     MRMainFlowLayout *layout  = [[MRMainFlowLayout alloc] init];
     [layout setItemSize:CGSizeMake(self.view.frame.size.width, 67.0f)];
 
-    self.mainCollectionViewController = [[MRMainCollectionViewController alloc] initWithCollectionViewLayout:layout];
+    self.mainCollectionViewController = [[MRMainCollectionViewController alloc] initWithCollectionViewLayout:layout managedObjectContext:self.managedObjectContext];
 
     self.mainCollectionViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
 
@@ -56,26 +56,29 @@ const CGFloat kMRCollectionViewEndOffset = 0.0f;
     [self.mainCollectionViewController setSelectionDelegate:self];
     [self.mainCollectionViewController setPanGestureDelegate:self];
 
-    [self.mainCollectionViewController setManagedObjectContext:self.managedObjectContext];
-    [self addChildViewController:self.mainCollectionViewController];
-
-//    [self.mainCollectionViewController.view setFrame:CGRectMake(0, 20.0f, self.view.frame.size.width, self.view.frame.size.height - 20.0f)];
-
     [self.view addSubview:self.mainCollectionViewController.view];
     
     [self.view addCompactConstraints:@[
-                                       @"view.top = superview.top + 20",
+                                       @"view.height = superview.height + topOffset",
                                        @"view.leading = superview.leading",
-                                       @"view.trailing = superview.trailing",
-                                       @"view.bottom = superview.bottom"
+                                       @"view.trailing = superview.trailing"
                                        ]
                              metrics:@{
-                                       @"topOffset": @(20)
+                                       @"topOffset": @(-20)
                                        }
                                views:@{
                                        @"view": self.mainCollectionViewController.view,
                                        @"superview": self.view
                                        }];
+
+    self.mainCollectionViewController.centerConstraint = [NSLayoutConstraint constraintWithItem:self.mainCollectionViewController.view
+                                                                                      attribute:NSLayoutAttributeCenterY
+                                                                                      relatedBy:NSLayoutRelationEqual
+                                                                                         toItem:self.view
+                                                                                      attribute:NSLayoutAttributeCenterY
+                                                                                     multiplier:1
+                                                                                       constant:10.0f];
+    [self.view addConstraint:self.mainCollectionViewController.centerConstraint];
 }
 
 - (void)setupEditView {

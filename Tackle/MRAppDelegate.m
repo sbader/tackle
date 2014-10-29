@@ -97,6 +97,9 @@
     [Task insertItemWithText:@"Watch hockey" dueDate:[NSDate dateWithTimeIntervalSinceNow:280000] inManagedObjectContext:self.managedObjectContext];
     [Task insertItemWithText:@"Clean apartment" dueDate:[NSDate dateWithTimeIntervalSinceNow:290000] inManagedObjectContext:self.managedObjectContext];
     [Task insertItemWithText:@"Watch Archer" dueDate:[NSDate dateWithTimeIntervalSinceNow:300000] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithText:@"Watch Doctor Who" dueDate:[NSDate dateWithTimeIntervalSinceNow:300000] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithText:@"Watch Baseball" dueDate:[NSDate dateWithTimeIntervalSinceNow:300000] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithText:@"Watch Football" dueDate:[NSDate dateWithTimeIntervalSinceNow:300000] inManagedObjectContext:self.managedObjectContext];
 
     NSError *error = nil;
 

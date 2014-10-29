@@ -377,19 +377,21 @@
 
 - (void)setDueDate:(NSDate *)dueDate animated:(BOOL)animated
 {
-    self.dueDate = dueDate;
+    if (dueDate) {
+        self.dueDate = dueDate;
 
-    if (animated) {
-        self.incrementing = YES;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(heartDidBeat) name:[MRHeartbeat heartbeatId] object:nil];
-        [self.dueDateButton setTitle:[self.visibleDate tackleStringSinceDate:self.startDate] forState:UIControlStateNormal];
-    }
-    else {
-        self.visibleDate = self.dueDate;
-        [self.dueDateButton setTitle:[self.visibleDate tackleStringSinceDate:self.startDate] forState:UIControlStateNormal];
-    }
+        if (animated) {
+            self.incrementing = YES;
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(heartDidBeat) name:[MRHeartbeat heartbeatId] object:nil];
+            [self.dueDateButton setTitle:[self.visibleDate tackleStringSinceDate:self.startDate] forState:UIControlStateNormal];
+        }
+        else {
+            self.visibleDate = self.dueDate;
+            [self.dueDateButton setTitle:[self.visibleDate tackleStringSinceDate:self.startDate] forState:UIControlStateNormal];
+        }
 
-    [self.datePicker setDate:self.dueDate animated:NO];
+        [self.datePicker setDate:self.dueDate animated:NO];
+    }
 }
 
 @end

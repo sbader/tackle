@@ -16,6 +16,10 @@ const CGFloat kMRMainCollectionViewVerticalCenterStart = 274.0f;
 const CGFloat kMRMainCollectionViewVerticalCenterEnd = 364.0f;
 const CGFloat kMRMainCollectionViewInsetVerticalCenterEnd = 314.0f;
 
+const CGFloat kMRMainCollectionViewVerticalCenterStartOffset = 10.0f;
+const CGFloat kMRMainCollectionViewVerticalCenterEndOffset = -130.0f;
+const CGFloat kMRMainCollectionViewInsetVerticalCenterEndOffset = -130.0f;
+
 @interface MRMainCollectionViewController ()
 
 @property (nonatomic, strong) UIMotionEffectGroup *effectGroup;
@@ -29,11 +33,11 @@ const CGFloat kMRMainCollectionViewInsetVerticalCenterEnd = 314.0f;
 
 @implementation MRMainCollectionViewController
 
-- (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout
-{
+- (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout managedObjectContext:(NSManagedObjectContext *)managedObjectContext {
     self = [super initWithCollectionViewLayout:layout];
     if (self) {
         self.inset = NO;
+        _managedObjectContext = managedObjectContext;
 
         [self.collectionView setRestorationIdentifier:@"CollectionView"];
         [self.collectionView setAlwaysBounceVertical:YES];
@@ -43,9 +47,12 @@ const CGFloat kMRMainCollectionViewInsetVerticalCenterEnd = 314.0f;
         [self.collectionView setKeyboardDismissMode:UIScrollViewKeyboardDismissModeOnDrag];
         [self.collectionView setShowsVerticalScrollIndicator:NO];
 
+        //                                               @"view.centerY = superview.centerY + topOffset",
+
         [self setupGestureRecognizer];
     }
     return self;
+
 }
 
 - (void)viewDidLoad
@@ -144,9 +151,12 @@ const CGFloat kMRMainCollectionViewInsetVerticalCenterEnd = 314.0f;
     CGFloat scale = 0.9;
     [layer setTransform:CATransform3DMakeScale(scale, scale, 1)];
 
-    CGPoint center = self.view.center;
-    center.y = kMRMainCollectionViewVerticalCenterEnd;
-    [self.collectionView setCenter:center];
+//    CGPoint center = self.view.center;
+//    center.y = kMRMainCollectionViewVerticalCenterEnd;
+//    [self.collectionView setCenter:center];
+
+    self.centerConstraint.constant = -40;
+    [self.view layoutIfNeeded];
 
     self.inset = YES;
 }
@@ -202,7 +212,11 @@ const CGFloat kMRMainCollectionViewInsetVerticalCenterEnd = 314.0f;
     [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO"]];
 
     //    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                                                                managedObjectContext:self.managedObjectContext
+                                                                                                  sectionNameKeyPath:nil
+                                                                                                           cacheName:nil];
+
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
 
@@ -305,14 +319,14 @@ const CGFloat kMRMainCollectionViewInsetVerticalCenterEnd = 314.0f;
     }
 
     if (verticalOffset <= 0) {
-        CGFloat topMultiplier = (kMRMainCollectionViewInsetVerticalCenterEnd - kMRMainCollectionViewVerticalCenterStart)/100.0f;
-        CGFloat centerY = MIN(kMRMainCollectionViewInsetVerticalCenterEnd, kMRMainCollectionViewVerticalCenterStart + (-verticalOffset * topMultiplier));
-        CGPoint center = self.collectionView.center;
+//        CGFloat topMultiplier = (kMRMainCollectionViewInsetVerticalCenterEnd - kMRMainCollectionViewVerticalCenterStart)/100.0f;
+//        NSLog(@"topMultiplier: %f", topMultiplier);
+        CGFloat topMultiplier = 0.4f;
+        CGFloat offsetY = MAX(10, verticalOffset * topMultiplier);
+        CGFloat centerY = MAX(-40, offsetY);
 
-        if (centerY != center.y) {
-            center.y = centerY;
-            [self.collectionView setCenter:center];
-        }
+        self.centerConstraint.constant = centerY;
+        [self.view layoutIfNeeded];
     }
 
     if ([self.scrollViewDelegate respondsToSelector:@selector(scrollViewDidScroll:)]) {
@@ -410,7 +424,7 @@ const CGFloat kMRMainCollectionViewInsetVerticalCenterEnd = 314.0f;
     }
     else if (gestureRecognizer.state == UIGestureRecognizerStateChanged) {
         CGFloat verticalOffset = self.startTouchPoint.y - touchPoint.y;
-        CGFloat topMultiplier = (kMRMainCollectionViewVerticalCenterEnd - kMRMainCollectionViewVerticalCenterStart)/100;
+        CGFloat topMultiplier = 0.4;
         CGFloat relativeOffset = verticalOffset * topMultiplier;
         CGFloat offsetY = 0.0f - relativeOffset;
 
@@ -424,13 +438,8 @@ const CGFloat kMRMainCollectionViewInsetVerticalCenterEnd = 314.0f;
             scale = MIN(calculatedScale, 1);
         }
 
-        CGFloat centerY = MAX(kMRMainCollectionViewVerticalCenterStart, kMRMainCollectionViewVerticalCenterEnd - ((0 - offsetY) * topMultiplier));
-
-        CGPoint center = self.collectionView.center;
-        if (centerY != center.y) {
-            center.y = centerY;
-            [self.collectionView setCenter:center];
-        }
+        self.centerConstraint.constant = -(relativeOffset + 40);
+        [self.view layoutIfNeeded];
 
         CALayer *layer = self.collectionView.layer;
         CATransform3D transform = CATransform3DMakeScale(scale, scale, 1);
@@ -444,7 +453,6 @@ const CGFloat kMRMainCollectionViewInsetVerticalCenterEnd = 314.0f;
         CALayer *layer = self.collectionView.layer;
         CGFloat scale = 0.9;
         CGFloat endPosition = kMRCollectionViewEndOffset;
-        CGFloat centerY = kMRMainCollectionViewVerticalCenterEnd;
 
         BOOL done = NO;
 
@@ -454,7 +462,8 @@ const CGFloat kMRMainCollectionViewInsetVerticalCenterEnd = 314.0f;
             scale = 1;
             endPosition = kMRCollectionViewStartOffset;
             done = YES;
-            centerY = kMRMainCollectionViewVerticalCenterStart;
+//            centerY = kMRMainCollectionViewVerticalCenterStart;
+            self.centerConstraint.constant = 10.0f;
         }
 
         [UIView animateWithDuration:0.2 animations:^{
@@ -465,9 +474,10 @@ const CGFloat kMRMainCollectionViewInsetVerticalCenterEnd = 314.0f;
                 [self.panGestureDelegate panGestureWillReachEnd];
             }
 
-            CGPoint center = self.collectionView.center;
-            center.y = centerY;
-            [self.collectionView setCenter:center];
+            [self.view layoutIfNeeded];
+//            CGPoint center = self.collectionView.center;
+//            center.y = centerY;
+//            [self.collectionView setCenter:center];
         } completion:^(BOOL finished) {
             [self.collectionView setScrollEnabled:done];
             [self.collectionView setAllowsSelection:done];

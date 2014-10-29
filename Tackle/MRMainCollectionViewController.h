@@ -23,6 +23,9 @@
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
+@property (nonatomic) NSLayoutConstraint *centerConstraint;
+
+- (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout managedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 - (void)resetContentOffsetWithAnimations:(void(^)(void))animations completions:(void(^)(void))completions;
 - (void)selectTask:(Task *)task;
 - (void)moveToBack;
