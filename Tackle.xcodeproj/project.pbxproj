@@ -273,8 +273,8 @@
 		D12E8774189454E1008119B8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				D1027F7F18904E8400FF44A4 /* Images.xcassets */,
 				D12E87751894550D008119B8 /* Fonts */,
+				D1027F7F18904E8400FF44A4 /* Images.xcassets */,
 				C786AB4319D358DF0077F11C /* Launch Screen.xib */,
 			);
 			name = Resources;

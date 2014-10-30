@@ -14,6 +14,7 @@
 const CGFloat kMREditViewHeight = 190.0f;
 const CGFloat kMRCollectionViewStartOffset = -170.0f;
 const CGFloat kMRCollectionViewEndOffset = 0.0f;
+const CGFloat kMREditViewInitialTop = 20.0f;
 
 @interface MRMainViewController ()
 
@@ -82,10 +83,37 @@ const CGFloat kMRCollectionViewEndOffset = 0.0f;
 }
 
 - (void)setupEditView {
-    self.editView = [[MRTaskEditView alloc] initWithFrame:CGRectMake(0, kMRCollectionViewStartOffset, self.view.frame.size.width, kMREditViewHeight)];
-    [self.editView setDelegate:self];
+//    self.editView = [[MRTaskEditView alloc] initWithFrame:CGRectMake(0, kMRCollectionViewStartOffset, self.view.frame.size.width, kMREditViewHeight)];
+    self.editView = [[MRTaskEditView alloc] init];
+    self.editView.translatesAutoresizingMaskIntoConstraints = NO;
 
     [self.view addSubview:self.editView];
+
+    [self.view addCompactConstraints:@[
+                                       @"view.leading = superview.leading",
+                                       @"view.trailing = superview.trailing",
+//                                       @"view.height = height"
+                                       ]
+                             metrics:@{
+                                       @"height": @(kMREditViewHeight)
+                                       }
+                               views:@{
+                                       @"view": self.editView,
+                                       @"superview": self.view
+                                       }];
+
+    self.editView.topConstraint = [NSLayoutConstraint constraintWithItem:self.editView
+                                                               attribute:NSLayoutAttributeTop
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:self.view
+                                                               attribute:NSLayoutAttributeTop
+                                                              multiplier:1
+                                                                constant:-(kMREditViewHeight - kMREditViewInitialTop)];
+
+    [self.view addConstraint:self.editView.topConstraint];
+
+
+    [self.editView setDelegate:self];
 }
 
 - (void)viewDidLoad {
@@ -122,8 +150,8 @@ const CGFloat kMRCollectionViewEndOffset = 0.0f;
     [self.mainCollectionViewController.collectionView setAllowsSelection:NO];
 
     [UIView animateWithDuration:0.2 animations:^{
-        CGRect frame = self.editView.frame;
-        [self.editView setFrame:CGRectMake(frame.origin.x, 0, frame.size.width, frame.size.height)];
+        self.editView.topConstraint.constant = 0;
+        [self.view layoutIfNeeded];
         [self.mainCollectionViewController moveToBack];
     } completion:^(BOOL finished) {
         [self showStatusBar];
@@ -138,11 +166,11 @@ const CGFloat kMRCollectionViewEndOffset = 0.0f;
     }
 
     CGPoint offset = scrollView.contentOffset;
-    CGRect frame = self.editView.frame;
     CGFloat offsetMultiplier = (kMRCollectionViewEndOffset - kMRCollectionViewStartOffset)/100;
     CGFloat offsetY = MAX(kMRCollectionViewStartOffset, kMRCollectionViewStartOffset - (offset.y * offsetMultiplier));
 
-    [self.editView setFrame:CGRectMake(frame.origin.x, offsetY, frame.size.width, frame.size.height)];
+    self.editView.topConstraint.constant = offsetY;
+    [self.view layoutIfNeeded];
 
     CALayer *layer = self.mainCollectionViewController.collectionView.layer;
 
@@ -218,10 +246,8 @@ const CGFloat kMRCollectionViewEndOffset = 0.0f;
     }
 
     [self.mainCollectionViewController resetContentOffsetWithAnimations:^{
-        CGRect frame = self.editView.frame;
-        if (frame.origin.y != kMRCollectionViewStartOffset) {
-            [self.editView setFrame:CGRectMake(frame.origin.x, kMRCollectionViewStartOffset, frame.size.width, frame.size.height)];
-        }
+        self.editView.topConstraint.constant = kMREditViewInitialTop;
+        [self.view layoutIfNeeded];
     } completions:^{
         [self.editView resetContent];
     }];
@@ -242,20 +268,30 @@ const CGFloat kMRCollectionViewEndOffset = 0.0f;
         [self.editView.textField resignFirstResponder];
     }
 
-    CGRect frame = self.editView.frame;
     CGFloat offsetMultiplier = (kMRCollectionViewEndOffset - kMRCollectionViewStartOffset)/100;
     CGFloat offsetY = MAX(kMRCollectionViewStartOffset, verticalOffset * offsetMultiplier);
 
-    if (offsetY != frame.origin.y) {
-        if (offsetY == kMRCollectionViewStartOffset) {
-            [self showStatusBar];
-        }
-        else {
-            [self hideStatusBar];
-        }
-
-        [self.editView setFrame:CGRectMake(frame.origin.x, offsetY, frame.size.width, frame.size.height)];
+    if (offsetY == kMRCollectionViewStartOffset) {
+        [self showStatusBar];
     }
+    else {
+        [self hideStatusBar];
+    }
+
+    self.editView.topConstraint.constant = offsetY;
+    [self.editView layoutIfNeeded];
+
+//    if (offsetY != frame.origin.y) {
+//        if (offsetY == kMRCollectionViewStartOffset) {
+//            [self showStatusBar];
+//        }
+//        else {
+//            [self hideStatusBar];
+//        }
+//
+//        self.editView.topConstraint.constant = offsetY;
+//        [self.editView layoutIfNeeded];
+//    }
 }
 
 - (void)panGestureWillReachEnd {
