@@ -12,6 +12,7 @@
 #import "MRTaskEditView.h"
 
 const extern CGFloat kMREditViewHeight;
+const extern CGFloat kMREditViewInitialTop;
 const extern CGFloat kMRCollectionViewStartOffset;
 const extern CGFloat kMRCollectionViewEndOffset;
 

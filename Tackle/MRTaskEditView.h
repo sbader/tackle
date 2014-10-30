@@ -22,6 +22,7 @@
 @property (strong, nonatomic) UIDatePicker *datePicker;
 @property (strong, nonatomic) UIView *bottomButtonView;
 @property (strong, nonatomic) NSDate *dueDate;
+@property (strong, nonatomic) NSLayoutConstraint *topConstraint;
 
 - (void)resetContent;
 - (void)setDueDate:(NSDate *)dueDate animated:(BOOL)animated;
