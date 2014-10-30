@@ -26,7 +26,7 @@
                                                                                         categories:nil]];
     }
 
-    BOOL testing = YES;
+    BOOL testing = NO;
 
     if (testing) {
         [[UIApplication sharedApplication] cancelAllLocalNotifications];
@@ -76,16 +76,7 @@
 
 - (BOOL)addSampleData
 {
-    NSFetchRequest *allTasks = [[NSFetchRequest alloc] init];
-    [allTasks setEntity:[NSEntityDescription entityForName:@"Task" inManagedObjectContext:self.managedObjectContext]];
-    [allTasks setIncludesPropertyValues:NO]; //only fetch the managedObjectID
-
-    NSError *requestError = nil;
-    NSArray *tasks = [self.managedObjectContext executeFetchRequest:allTasks error:&requestError];
-
-    [tasks enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [self.managedObjectContext deleteObject:obj];
-    }];
+    [self removeAllTasks];
 
     [Task insertItemWithText:@"Prepare Expenses" dueDate:nil inManagedObjectContext:self.managedObjectContext];
     [Task insertItemWithText:@"Renew Apple Developer Program Membership" dueDate:nil inManagedObjectContext:self.managedObjectContext];
@@ -105,6 +96,19 @@
 
     [self.managedObjectContext save:&error];
     return YES;
+}
+
+- (void)removeAllTasks {
+    NSFetchRequest *allTasks = [[NSFetchRequest alloc] init];
+    [allTasks setEntity:[NSEntityDescription entityForName:@"Task" inManagedObjectContext:self.managedObjectContext]];
+    [allTasks setIncludesPropertyValues:NO]; //only fetch the managedObjectID
+
+    NSError *requestError = nil;
+    NSArray *tasks = [self.managedObjectContext executeFetchRequest:allTasks error:&requestError];
+
+    [tasks enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [self.managedObjectContext deleteObject:obj];
+    }];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
