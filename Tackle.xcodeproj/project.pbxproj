@@ -621,6 +621,7 @@
 					Reveal,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "f73bce44-a678-4e88-a34c-7b6840d5d628";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -639,6 +640,7 @@
 				GCC_PREFIX_HEADER = "Tackle/Tackle-Prefix.pch";
 				INFOPLIST_FILE = "Tackle/Tackle-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "f73bce44-a678-4e88-a34c-7b6840d5d628";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -293,6 +293,7 @@ const CGFloat kMREditViewExpandedHeight = 406.0f;
     [self.datePicker setDate:self.dueDate];
     [self.datePicker setMinuteInterval:5];
     [self.datePicker addGestureRecognizer:doubleTapGestureRecognizer];
+    [self.datePicker setMinimumDate:[NSDate date]];
     [self addSubview:self.datePicker];
 
     [self addCompactConstraints:@[
