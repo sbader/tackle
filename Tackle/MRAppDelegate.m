@@ -19,11 +19,33 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-
     if (IS_OS_8_OR_LATER) {
         UIUserNotificationType types = UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound;
+
+        UIMutableUserNotificationAction *tenMinutesAction = [[UIMutableUserNotificationAction alloc] init];
+        tenMinutesAction.identifier = kMRAddTenMinutesActionIdentifier;
+        tenMinutesAction.destructive = NO;
+        tenMinutesAction.title = @"Add 10 Minutes";
+        tenMinutesAction.activationMode = UIUserNotificationActivationModeBackground;
+        tenMinutesAction.authenticationRequired = NO;
+
+        UIMutableUserNotificationAction *destroyAction = [[UIMutableUserNotificationAction alloc] init];
+        destroyAction.identifier = kMRDestroyTaskActionIdentifier;
+        destroyAction.destructive = YES;
+        destroyAction.title = @"Done";
+        destroyAction.activationMode = UIUserNotificationActivationModeBackground;
+        destroyAction.authenticationRequired = NO;
+
+        UIMutableUserNotificationCategory *category = [[UIMutableUserNotificationCategory alloc] init];
+        category.identifier = kMRTaskNotificationCategoryIdentifier;
+
+        [category setActions:@[tenMinutesAction, destroyAction] forContext:UIUserNotificationActionContextMinimal];
+        [category setActions:@[tenMinutesAction, destroyAction] forContext:UIUserNotificationActionContextDefault];
+
+        NSSet *categories = [[NSSet alloc] initWithObjects:category, nil];
+
         [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:types
-                                                                                        categories:nil]];
+                                                                                        categories:categories]];
     }
 
     BOOL testing = NO;
@@ -72,6 +94,39 @@
     NSManagedObjectID *managedObjectId = [self.persistentStoreCoordinator managedObjectIDForURIRepresentation:[NSURL URLWithString:urlString]];
     Task *task = (Task *)[self.managedObjectContext objectWithID:managedObjectId];
     [self.mainViewController selectTask:task];
+}
+
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void (^)())completionHandler {
+    Task *task = [self findTaskWithUniqueId:[notification.userInfo objectForKey:@"uniqueId"]];
+    if ([identifier isEqualToString:kMRAddTenMinutesActionIdentifier]) {
+        task.dueDate = [NSDate dateWithTimeIntervalSinceNow:600];
+
+        __block NSError *error;
+        [task.managedObjectContext performBlock:^{
+            [task.managedObjectContext save:&error];
+        }];
+
+        [task rescheduleNotification];
+        completionHandler();
+    }
+    else if([identifier isEqualToString:kMRDestroyTaskActionIdentifier]) {
+        [task setIsDone:YES];
+        [task cancelNotification];
+
+        __block NSError *error;
+        [task.managedObjectContext performBlock:^{
+            [task.managedObjectContext save:&error];
+        }];
+        completionHandler();
+    }
+    else {
+        NSLog(@"Cannot handle action with identifier %@", identifier);
+    }
+}
+
+- (Task *)findTaskWithUniqueId:(NSString *)uniqueId {
+    NSManagedObjectID *managedObjectId = [self.persistentStoreCoordinator managedObjectIDForURIRepresentation:[NSURL URLWithString:uniqueId]];
+    return (Task *)[self.managedObjectContext objectWithID:managedObjectId];
 }
 
 - (BOOL)addSampleData
