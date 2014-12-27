@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+extern NSString * const kMRAddTenMinutesActionIdentifier;
+extern NSString * const kMRDestroyTaskActionIdentifier;
+extern NSString * const kMRTaskNotificationCategoryIdentifier;
 
 @interface Task : NSManagedObject
 

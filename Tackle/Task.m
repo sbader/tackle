@@ -8,6 +8,9 @@
 
 #import "Task.h"
 
+NSString * const kMRAddTenMinutesActionIdentifier = @"addTenMinutesAction";
+NSString * const kMRDestroyTaskActionIdentifier = @"destroyTaskAction";
+NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCategory";
 
 @implementation Task
 
@@ -36,6 +39,7 @@
     [notification setAlertAction:@"Tackle"];
     [notification setSoundName:UILocalNotificationDefaultSoundName];
     [notification setUserInfo:@{@"uniqueId": self.objectID.URIRepresentation.absoluteString}];
+    [notification setCategory:@"taskNotificationCategory"];
 
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
 
