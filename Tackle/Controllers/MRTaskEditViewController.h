@@ -10,8 +10,18 @@
 
 #import "Task.h"
 
+@protocol MRTaskEditingDelegate;
+
 @interface MRTaskEditViewController : UIViewController
 
 - (instancetype)initWithTitle:(NSString *)title dueDate:(NSDate *)dueDate;
+
+@property (nonatomic) id<MRTaskEditingDelegate> delegate;
+
+@end
+
+@protocol MRTaskEditingDelegate <NSObject>
+
+- (void)editedTaskTitle:(NSString *)title dueDate:(NSDate *)dueDate;
 
 @end

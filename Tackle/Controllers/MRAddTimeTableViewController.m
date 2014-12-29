@@ -12,10 +12,22 @@
 
 static NSString *addTimeCellReuseIdentifier = @"AddTimeCell";
 
+@interface MRAddTimeTableViewController () <UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic) NSArray *timeIntervals;
+
+@end
+
 @implementation MRAddTimeTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    self.timeIntervals = @[
+                           [MRTimeInterval timeIntervalWithName:@"ten minutes" unit:NSCalendarUnitMinute interval:10],
+                           [MRTimeInterval timeIntervalWithName:@"an hour" unit:NSCalendarUnitHour interval:1],
+                           [MRTimeInterval timeIntervalWithName:@"a day" unit:NSCalendarUnitDay interval:1],
+                           ];
 
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.tableView.backgroundColor = [UIColor clearColor];
@@ -23,7 +35,6 @@ static NSString *addTimeCellReuseIdentifier = @"AddTimeCell";
     self.tableView.delegate = self;
     self.tableView.scrollEnabled = NO;
     self.tableView.separatorColor = [UIColor grayBorderColor];
-//    self.tableView.separatorInset = UIEdgeInsetsZero;
     self.tableView.allowsMultipleSelectionDuringEditing = NO;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.tableView registerClass:[MRAddTimeTableViewCell class] forCellReuseIdentifier:addTimeCellReuseIdentifier];
@@ -32,33 +43,24 @@ static NSString *addTimeCellReuseIdentifier = @"AddTimeCell";
 #pragma mark - Table View Data Source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return self.timeIntervals.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MRAddTimeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:addTimeCellReuseIdentifier forIndexPath:indexPath];
-    NSString *text;
-
-    switch (indexPath.row) {
-        case 0:
-            text = @"Add ten minutes";
-            break;
-        case 1:
-            text = @"Add an hour";
-            break;
-        case 2:
-            text = @"Add a day";
-            break;
-        default:
-            break;
-    }
-
-    cell.textLabel.text = text;
+    MRTimeInterval *timeInterval = self.timeIntervals[indexPath.row];
+    cell.textLabel.text = [NSString stringWithFormat:@"Add %@", timeInterval.name];
 
     return cell;
 }
 
 #pragma mark - Table View Delegate
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.timeIntervalDelegate selectedTimeInterval:self.timeIntervals[indexPath.row]];
+
+    return nil;
+}
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewAutomaticDimension;

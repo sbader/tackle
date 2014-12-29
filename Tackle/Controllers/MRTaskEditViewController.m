@@ -15,7 +15,7 @@
 #import "MRCalendarCollectionViewFlowLayout.h"
 #import "MRCalendarCollectionViewController.h"
 
-@interface MRTaskEditViewController () <MRDateSelectionDelegate>
+@interface MRTaskEditViewController () <MRDateSelectionDelegate, MRTimeIntervalSelectionDelegate>
 
 @property (nonatomic) UIScrollView *scrollView;
 @property (nonatomic) UIView *topView;
@@ -29,8 +29,8 @@
 @property (nonatomic) MRCalendarCollectionViewController *calendarViewController;
 @property (nonatomic) MRAddTimeTableViewController *addTimeController;
 
-@property (nonatomic) NSDate *dueDate;
-@property (nonatomic) NSString *title;
+@property (nonatomic) NSDate *taskDueDate;
+@property (nonatomic) NSString *taskTitle;
 
 @end
 
@@ -40,8 +40,8 @@
     self = [super init];
 
     if (self) {
-        self.title = title;
-        self.dueDate = dueDate;
+        self.taskTitle = title;
+        self.taskDueDate = dueDate;
     }
 
     return self;
@@ -71,8 +71,8 @@
                                                                              target:self
                                                                              action:@selector(handleSaveButton:)];
 
-    if (!self.dueDate) {
-        self.dueDate = [[NSCalendar currentCalendar] dateByAddingUnit:NSCalendarUnitMinute value:10 toDate:[NSDate date] options:0];
+    if (!self.taskDueDate) {
+        self.taskDueDate = [[NSCalendar currentCalendar] dateByAddingUnit:NSCalendarUnitMinute value:1 toDate:[NSDate date] options:0];
     }
 
     [self updateTitleField];
@@ -203,6 +203,7 @@
     [self.scrollView addSubview:self.addTimeView];
 
     self.addTimeController = [[MRAddTimeTableViewController alloc] init];
+    self.addTimeController.timeIntervalDelegate = self;
     [self.addTimeView addSubview:self.addTimeController.view];
 
     [self.addTimeView horizontalConstraintsMatchSuperview];
@@ -272,97 +273,38 @@
 }
 
 - (void)handleSaveButton:(id)sender {
+    if ([self.titleField.text length] == 0) {
+        CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"] ;
+
+        animation.values = @[
+                             [NSValue valueWithCATransform3D:CATransform3DMakeTranslation(-5.0f, 0.0f, 0.0f)],
+                             [NSValue valueWithCATransform3D:CATransform3DMakeTranslation(5.0f, 0.0f, 0.0f)]
+                             ];
+
+        animation.autoreverses = YES ;
+        animation.repeatCount = 5.0f ;
+        animation.duration = 0.05f ;
+
+        [self.titleField.layer addAnimation:animation forKey:nil] ;
+
+        return;
+    }
+
+    [self.delegate editedTaskTitle:self.titleField.text dueDate:self.taskDueDate];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-//- (void)updateFromTask:(Task *)task {
-//    if (self.title) {
-//        self.titleField.text = self.title;
-//    }
-//
-//    if (self.dueDate) {
-//        [self.dateButton setTitle:self.dueDate.tackleString forState:UIControlStateNormal];
-//    }
-//}
-
 - (void)updateTitleField {
-    if (self.title) {
-        self.titleField.text = self.title;
+    if (self.taskTitle) {
+        self.titleField.text = self.taskTitle;
     }
 }
 
 - (void)updateDueDateButton {
-    if (self.dueDate) {
-        [self.dateButton setTitle:self.dueDate.tackleString forState:UIControlStateNormal];
+    if (self.taskDueDate) {
+        [self.dateButton setTitle:self.taskDueDate.tackleString forState:UIControlStateNormal];
     }
 }
-
-//- (void)handleSubmit:(id)sender {
-//    if ([self.textField.text length] == 0) {
-//        CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"] ;
-//
-//        animation.values = @[
-//                             [NSValue valueWithCATransform3D:CATransform3DMakeTranslation(-5.0f, 0.0f, 0.0f)],
-//                             [NSValue valueWithCATransform3D:CATransform3DMakeTranslation(5.0f, 0.0f, 0.0f)]
-//                             ];
-//
-//        animation.autoreverses = YES ;
-//        animation.repeatCount = 5.0f ;
-//        animation.duration = 0.05f ;
-//
-//        [self.textField.layer addAnimation:animation forKey:nil] ;
-//
-//        return;
-//    }
-//
-//    [self.textField resignFirstResponder];
-//
-//    NSTimeInterval interval = [self.dueDate timeIntervalSinceDate:self.startDate];
-//    NSDate *dueDate = self.dueDate;
-//
-//    if (interval < 3600) {
-//        dueDate = [NSDate dateWithTimeInterval:interval sinceDate:[NSDate date]];
-//    }
-//
-//    [self.delegate taskEditViewDidReturnWithText:self.textField.text dueDate:dueDate];
-//}
-
-//- (void)heartDidBeat {
-//    NSTimeInterval difference = [self.dueDate timeIntervalSinceDate:self.visibleDate];
-//
-//    if (!self.incrementer) {
-//        NSUInteger interval = 5;
-//        self.incrementer = ceil(difference/interval);
-//    }
-//
-//    if (self.incrementer > 0 && difference > 0) {
-//        self.visibleDate = [self.visibleDate dateByAddingTimeInterval:self.incrementer];
-//        [self.dueDateButton setTitle:[self.visibleDate tackleStringSinceDate:self.startDate] forState:UIControlStateNormal];
-//    }
-//    else {
-//        self.incrementing = NO;
-//        self.incrementer = 0;
-//        [[NSNotificationCenter defaultCenter] removeObserver:self name:[MRHeartbeat heartbeatId] object:nil];
-//    }
-//}
-
-//- (void)setDueDate:(NSDate *)dueDate animated:(BOOL)animated {
-//    if (dueDate) {
-//        self.dueDate = dueDate;
-//
-//        if (animated) {
-//            self.incrementing = YES;
-//            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(heartDidBeat) name:[MRHeartbeat heartbeatId] object:nil];
-//            [self.dueDateButton setTitle:[self.visibleDate tackleStringSinceDate:self.startDate] forState:UIControlStateNormal];
-//        }
-//        else {
-//            self.visibleDate = self.dueDate;
-//            [self.dueDateButton setTitle:[self.visibleDate tackleStringSinceDate:self.startDate] forState:UIControlStateNormal];
-//        }
-//
-//        [self.datePicker setDate:self.dueDate animated:NO];
-//    }
-//}
 
 #pragma mark - Date Selection Delegate
 
@@ -372,12 +314,24 @@
                                                fromDate:date];
 
     NSDateComponents *newComponents = [calendar components:NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitSecond|NSCalendarUnitTimeZone
-                                                  fromDate:self.dueDate];
+                                                  fromDate:self.taskDueDate];
     newComponents.year = components.year;
     newComponents.month = components.month;
     newComponents.day = components.day;
 
-    self.dueDate = [calendar dateFromComponents:newComponents];
+    self.taskDueDate = [calendar dateFromComponents:newComponents];
+
+    [self updateDueDateButton];
+}
+
+#pragma mark - Time Interval Selection Delegate
+
+- (void)selectedTimeInterval:(MRTimeInterval *)timeInterval {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    self.taskDueDate = [calendar dateByAddingUnit:timeInterval.unit
+                                            value:timeInterval.interval
+                                           toDate:self.taskDueDate
+                                          options:0];
 
     [self updateDueDateButton];
 }

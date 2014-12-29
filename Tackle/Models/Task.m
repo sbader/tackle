@@ -18,8 +18,7 @@ NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCateg
 @dynamic dueDate;
 @dynamic isDone;
 
-+ (Task *)insertItemWithText:(NSString*)text dueDate:(NSDate *)dueDate inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
-{
++ (Task *)insertItemWithText:(NSString*)text dueDate:(NSDate *)dueDate inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
     Task *task = [NSEntityDescription insertNewObjectForEntityForName:@"Task"
                                                inManagedObjectContext:managedObjectContext];
 
@@ -29,8 +28,22 @@ NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCateg
     return task;
 }
 
-- (BOOL)scheduleNotification
-{
++ (NSArray *)allOpenTasksWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext error:(NSError **)error {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:managedObjectContext];
+    [fetchRequest setEntity:entity];
+    [fetchRequest setFetchBatchSize:20];
+
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"dueDate" ascending:YES];
+    NSArray *sortDescriptors = @[sortDescriptor];
+
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO"]];
+
+    return [managedObjectContext executeFetchRequest:fetchRequest error:error];
+}
+
+- (BOOL)scheduleNotification {
     UILocalNotification *notification = [[UILocalNotification alloc] init];
 
     [notification setFireDate:self.dueDate];
@@ -46,8 +59,7 @@ NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCateg
     return YES;
 }
 
-- (void)cancelNotification
-{
+- (void)cancelNotification {
     NSArray *localNotifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
 
     NSUInteger index = [localNotifications indexOfObjectPassingTest:^BOOL(UILocalNotification *notification, NSUInteger idx, BOOL *stop) {
@@ -63,16 +75,34 @@ NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCateg
     [[UIApplication sharedApplication] cancelLocalNotification:notification];
 }
 
-- (void)rescheduleNotification
-{
+- (void)rescheduleNotification {
     [self cancelNotification];
     [self scheduleNotification];
 }
 
-- (void)markAsDone
-{
+- (void)markAsDone {
     [self setIsDone:YES];
     [self cancelNotification];
+}
+
++ (void)rescheduleAllNotificationsWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+
+    NSError *error;
+    NSArray *tasks = [self allOpenTasksWithManagedObjectContext:managedObjectContext error:&error];
+
+    if (error) {
+        NSLog(@"error getting tasks: %@", error);
+        return;
+    }
+
+    [tasks enumerateObjectsUsingBlock:^(Task *task, NSUInteger idx, BOOL *stop) {
+        [task scheduleNotification];
+    }];
+}
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@ %@", self.text, self.dueDate];
 }
 
 @end

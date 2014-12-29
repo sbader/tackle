@@ -9,18 +9,19 @@
 #import <UIKit/UIKit.h>
 
 @class Task;
-@protocol MRTaskEditingDelegate;
+@protocol MRTaskTableViewDelegate;
 
 @interface MRTaskTableViewController : UITableViewController
 
 - (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 
-@property (nonatomic) id<MRTaskEditingDelegate> taskEditingDelegate;
+@property (nonatomic) id<MRTaskTableViewDelegate> taskDelegate;
 
 @end
 
-@protocol MRTaskEditingDelegate <NSObject>
+@protocol MRTaskTableViewDelegate <NSObject>
 
-- (void)editTask:(Task *)task;
+- (void)selectedTask:(Task *)task;
+- (void)completedTask:(Task *)task;
 
 @end
