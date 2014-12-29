@@ -13,9 +13,10 @@
 #import "MRTaskEditNavigationController.h"
 #import "MRTaskEditViewController.h"
 
-@interface MRTaskListViewController () <MRTaskEditingDelegate>
+@interface MRTaskListViewController () <MRTaskTableViewDelegate, MRTaskEditingDelegate>
 
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic) Task *editingTask;
 
 @end
 
@@ -36,7 +37,7 @@
     [super viewDidLoad];
 
     MRTaskTableViewController *tableViewController = [[MRTaskTableViewController alloc] initWithManagedObjectContext:self.managedObjectContext];
-    tableViewController.taskEditingDelegate = self;
+    tableViewController.taskDelegate = self;
     [self addChildViewController:tableViewController];
     [self.view addSubview:tableViewController.view];
     [tableViewController.view constraintsMatchSuperview];
@@ -55,51 +56,15 @@
 
 - (void)displayEditViewWithTitle:(NSString *)title dueDate:(NSDate *)dueDate {
     MRTaskEditViewController *editController = [[MRTaskEditViewController alloc] initWithTitle:title dueDate:dueDate];
+    editController.delegate = self;
     MRTaskEditNavigationController *navigationController = [[MRTaskEditNavigationController alloc] initWithRootViewController:editController];
     [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 - (void)handleAddButton:(id)sender {
+    self.editingTask = nil;
     [self displayEditViewWithTitle:nil dueDate:nil];
 }
-
-//- (void)taskEditViewDidReturnWithText:(NSString *)text dueDate:(NSDate *)dueDate {
-//    if (self.editingTask) {
-//        BOOL shouldReschedule = !([dueDate isEqual:self.editingTask.dueDate]);
-//
-//        [self.editingTask setText:text];
-//        [self.editingTask setDueDate:dueDate];
-//
-//        __block NSError *error;
-//        [self.editingTask.managedObjectContext performBlock:^{
-//            [self.editingTask.managedObjectContext save:&error];
-//        }];
-//
-//        if (shouldReschedule) {
-//            [self.editingTask rescheduleNotification];
-//        }
-//
-//        [self setEditingTask:nil];
-//    }
-//    else {
-//        Task *task = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-//        [task setText:text];
-//        [task setDueDate:dueDate];
-//
-//        __block NSError *error;
-//        [task.managedObjectContext performBlock:^{
-//            [task.managedObjectContext save:&error];
-//            [task scheduleNotification];
-//        }];
-//    }
-//
-//    [self.mainCollectionViewController resetContentOffsetWithAnimations:^{
-//        self.editView.topConstraint.constant = kMREditViewInitialTop;
-//        [self.view layoutIfNeeded];
-//    } completions:^{
-//        [self.editView resetContent];
-//    }];
-//}
 
 //- (void)markAsDone:(MRMainCollectionViewCell *)cell {
 //    __block NSError *error;
@@ -116,10 +81,48 @@
 //    }];
 //}
 
+- (void)saveEditingTaskWithTitle:(NSString *)title dueDate:(NSDate *)dueDate {
+    Task *task;
+
+    if (self.editingTask) {
+        task = self.editingTask;
+    }
+    else {
+        task = [NSEntityDescription insertNewObjectForEntityForName:@"Task"
+                                                   inManagedObjectContext:self.managedObjectContext];
+    }
+
+    task.text = title;
+    task.dueDate = dueDate;
+
+    __block NSError *error;
+    [task.managedObjectContext performBlock:^{
+        [task.managedObjectContext save:&error];
+        [Task rescheduleAllNotificationsWithManagedObjectContext:task.managedObjectContext];
+    }];
+}
+
+#pragma mark - Task Selection Delegate
+
+- (void)selectedTask:(Task *)task {
+    self.editingTask = task;
+    [self displayEditViewWithTitle:task.text dueDate:task.dueDate];
+}
+
+- (void)completedTask:(Task *)task {
+    __block NSError *error;
+    task.isDone = YES;
+
+    [task.managedObjectContext performBlock:^{
+        [task.managedObjectContext save:&error];
+        [Task rescheduleAllNotificationsWithManagedObjectContext:task.managedObjectContext];
+    }];
+}
+
 #pragma mark - Task Editing Delegate
 
-- (void)editTask:(Task *)task {
-    [self displayEditViewWithTitle:task.text dueDate:task.dueDate];
+- (void)editedTaskTitle:(NSString *)title dueDate:(NSDate *)dueDate {
+    [self saveEditingTaskWithTitle:title dueDate:dueDate];
 }
 
 @end

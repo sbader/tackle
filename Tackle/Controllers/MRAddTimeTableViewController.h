@@ -8,6 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MRTimeInterval.h"
+@protocol MRTimeIntervalSelectionDelegate;
+
 @interface MRAddTimeTableViewController : UITableViewController
+
+@property (nonatomic) id<MRTimeIntervalSelectionDelegate> timeIntervalDelegate;
+
+@end
+
+@protocol MRTimeIntervalSelectionDelegate <NSObject>
+
+- (void)selectedTimeInterval:(MRTimeInterval *)timeInterval;
 
 @end

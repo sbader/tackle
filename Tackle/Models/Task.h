@@ -20,6 +20,8 @@ extern NSString * const kMRTaskNotificationCategoryIdentifier;
 @property (nonatomic) BOOL isDone;
 
 + (Task *)insertItemWithText:(NSString*)text dueDate:(NSDate *)dueDate inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
++ (NSArray *)allOpenTasksWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext error:(NSError **)error ;
++ (void)rescheduleAllNotificationsWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 - (BOOL)scheduleNotification;
 - (void)markAsDone;
 - (void)cancelNotification;

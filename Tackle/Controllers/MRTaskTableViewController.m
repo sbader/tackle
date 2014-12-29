@@ -9,6 +9,7 @@
 #import "MRTaskTableViewController.h"
 
 #import "Task.h"
+#import "MRHeartbeat.h"
 #import "MRTaskTableViewCell.h"
 
 @interface MRTaskTableViewController () <NSFetchedResultsControllerDelegate>
@@ -42,6 +43,16 @@ static NSString * const taskCellReuseIdentifier = @"TaskCell";
     return self;
 }
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self attachObservers];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self detachObservers];
+}
+
 - (void)updateCell:(MRTaskTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textLabel.text = task.text;
@@ -54,6 +65,21 @@ static NSString * const taskCellReuseIdentifier = @"TaskCell";
     }
 
     return _prototypeCell;
+}
+
+- (void)attachObservers {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(heartDidBeat:) name:[MRHeartbeat slowHeartbeatId] object:nil];
+}
+
+- (void)detachObservers {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:[MRHeartbeat heartbeatId] object:nil];
+}
+
+- (void)heartDidBeat:(NSNotification *)notification {
+    [[self.tableView visibleCells] enumerateObjectsUsingBlock:^(MRTaskTableViewCell *cell, NSUInteger idx, BOOL *stop) {
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        [self updateCell:cell atIndexPath:indexPath];
+    }];
 }
 
 #pragma mark - Fetched results controller
@@ -136,7 +162,23 @@ static NSString * const taskCellReuseIdentifier = @"TaskCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    [self.taskEditingDelegate editTask:task];
+    [self.taskDelegate selectedTask:task];
+}
+
+- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewRowAction *action = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Done" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+        Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        [self.taskDelegate completedTask:task];
+    }];
+
+    return @[action];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 @end
