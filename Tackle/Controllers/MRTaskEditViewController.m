@@ -15,7 +15,7 @@
 #import "MRCalendarCollectionViewFlowLayout.h"
 #import "MRCalendarCollectionViewController.h"
 
-@interface MRTaskEditViewController () <MRDateSelectionDelegate, MRTimeIntervalSelectionDelegate>
+@interface MRTaskEditViewController () <MRDateSelectionDelegate, MRTimeIntervalSelectionDelegate, UITextFieldDelegate>
 
 @property (nonatomic) UIScrollView *scrollView;
 @property (nonatomic) UIView *topView;
@@ -79,6 +79,12 @@
     [self updateDueDateButton];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    [self.titleField becomeFirstResponder];
+}
+
 - (void)setupScrollView {
     self.scrollView = [[UIScrollView alloc] init];
     self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -106,6 +112,8 @@
     self.titleField.placeholder = @"What do you want to tackle?";
     self.titleField.textColor = [UIColor grayTextColor];
     self.titleField.font = [UIFont effraLightWithSize:20.0];
+    self.titleField.returnKeyType = UIReturnKeyDone;
+    self.titleField.delegate = self;
     [self.titleView addSubview:self.titleField];
 
     self.titleField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 20, 5, 50.0f)];
@@ -136,16 +144,16 @@
     self.dateButton = [MRHorizontalButton buttonWithType:UIButtonTypeSystem];
     self.dateButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.dateButton.titleLabel.font = [UIFont effraLightWithSize:24.0];
-    [self.dateButton setTitle:@"Tomorrow at 1:45 PM" forState:UIControlStateNormal];
     [self.dateButton setImage:[PaintCodeStyleKit imageOfAlarmClockIcon] forState:UIControlStateNormal];
+    self.dateButton.contentEdgeInsets = UIEdgeInsetsMake(10, 0, 10, 0);
     [self.dateView addSubview:self.dateButton];
 
     [self.dateView horizontalConstraintsMatchSuperview];
     [self.dateView addCompactConstraints:@[
-                                           @"button.leading = view.leading + 20",
-                                           @"button.trailing = view.trailing - 20",
-                                           @"button.top = view.top + 20",
-                                           @"button.bottom = view.bottom - 20",
+                                           @"button.leading = view.leading",
+                                           @"button.trailing = view.trailing",
+                                           @"button.top = view.top + 10",
+                                           @"button.bottom = view.bottom - 10",
                                            ]
                                  metrics:@{}
                                    views:@{
@@ -269,6 +277,10 @@
 }
 
 - (void)handleCancelButton:(id)sender {
+    if (self.titleField.isFirstResponder) {
+        [self.titleField resignFirstResponder];
+    }
+
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -285,9 +297,13 @@
         animation.repeatCount = 5.0f ;
         animation.duration = 0.05f ;
 
-        [self.titleField.layer addAnimation:animation forKey:nil] ;
+        [self.titleField.layer addAnimation:animation forKey:nil ] ;
 
         return;
+    }
+
+    if (self.titleField.isFirstResponder) {
+        [self.titleField resignFirstResponder];
     }
 
     [self.delegate editedTaskTitle:self.titleField.text dueDate:self.taskDueDate];
@@ -334,6 +350,13 @@
                                           options:0];
 
     [self updateDueDateButton];
+}
+
+#pragma mark - Text Field Delegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return NO;
 }
 
 @end

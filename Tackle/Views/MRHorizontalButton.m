@@ -19,8 +19,8 @@
     CGRect imageFrame = imageView.frame;
     CGRect labelFrame = label.frame;
 
-    labelFrame.origin.x = 0;
-    imageFrame.origin.x = self.frame.size.width - imageFrame.size.width;
+    labelFrame.origin.x = 0 + 20;
+    imageFrame.origin.x = self.frame.size.width - imageFrame.size.width - 20;
 
     imageView.frame = imageFrame;
     label.frame = labelFrame;
