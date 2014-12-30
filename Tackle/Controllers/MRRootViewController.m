@@ -8,10 +8,12 @@
 
 #import "MRRootViewController.h"
 
+#import "Task.h"
 #import "MRTaskListViewController.h"
 
 @interface MRRootViewController ()
 
+@property (nonatomic) MRTaskListViewController *taskListController;
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic) UINavigationController *navigationController;
 
@@ -25,14 +27,18 @@
     if (self) {
         self.managedObjectContext = managedObjectContext;
 
-        MRTaskListViewController *taskListViewController = [[MRTaskListViewController alloc] initWithManagedObjectContext:self.managedObjectContext];
-        self.navigationController = [[UINavigationController alloc] initWithRootViewController:taskListViewController];
+        self.taskListController = [[MRTaskListViewController alloc] initWithManagedObjectContext:self.managedObjectContext];
+        self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.taskListController];
         
         [self addChildViewController:self.navigationController];
         [self.view addSubview:self.navigationController.view];
     }
 
     return self;
+}
+
+- (void)handleNotificationForTask:(Task *)task {
+    [self.taskListController handleNotificationForTask:task];
 }
 
 @end

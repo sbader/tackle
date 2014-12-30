@@ -11,6 +11,12 @@
 #import "Task.h"
 #import "MRRootViewController.h"
 
+@interface MRAppDelegate ()
+
+@property (nonatomic) MRRootViewController *rootController;
+
+@end
+
 @implementation MRAppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -72,8 +78,8 @@
 }
 
 - (void)setupRootViewController {
-    MRRootViewController *rootController = [[MRRootViewController alloc] initWithManagedObjectContext:self.managedObjectContext];
-    [self.window setRootViewController:rootController];
+    self.rootController = [[MRRootViewController alloc] initWithManagedObjectContext:self.managedObjectContext];
+    [self.window setRootViewController:self.rootController];
 }
 
 - (void)setupAppearance {
@@ -97,11 +103,10 @@
 }
 
 - (void)handleLocalNotification:(UILocalNotification *)notification {
-//    NSString *urlString = [notification.userInfo objectForKey:@"uniqueId"];
-//    NSManagedObjectID *managedObjectId = [self.persistentStoreCoordinator managedObjectIDForURIRepresentation:[NSURL URLWithString:urlString]];
-//    Task *task = (Task *)[self.managedObjectContext objectWithID:managedObjectId];
-//    NSLog(@"localNotification fired for %@", urlString);
-    // TODO: Handle Task
+    NSString *urlString = [notification.userInfo objectForKey:@"uniqueId"];
+    NSManagedObjectID *managedObjectId = [self.persistentStoreCoordinator managedObjectIDForURIRepresentation:[NSURL URLWithString:urlString]];
+    Task *task = (Task *)[self.managedObjectContext objectWithID:managedObjectId];
+    [self.rootController handleNotificationForTask:task];
 }
 
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void (^)())completionHandler {

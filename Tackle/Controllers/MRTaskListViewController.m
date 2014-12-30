@@ -8,6 +8,7 @@
 
 #import "MRTaskListViewController.h"
 
+#import "Task.h"
 #import "PaintCodeStyleKit.h"
 #import "MRTaskTableViewController.h"
 #import "MRTaskEditNavigationController.h"
@@ -100,6 +101,10 @@
         [task.managedObjectContext save:&error];
         [Task rescheduleAllNotificationsWithManagedObjectContext:task.managedObjectContext];
     }];
+}
+
+- (void)handleNotificationForTask:(Task *)task {
+    [self selectedTask:task];
 }
 
 #pragma mark - Task Selection Delegate
