@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class Task;
+
 @interface MRRootViewController : UIViewController
 
 - (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
+- (void)handleNotificationForTask:(Task *)task;
 
 @end
