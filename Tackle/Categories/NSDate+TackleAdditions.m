@@ -95,18 +95,18 @@
     if (timeInterval > -86400 && timeInterval < 0) {
         timeInterval = ABS(timeInterval);
         NSNumber *hours = [[NSNumber alloc] initWithInt:timeInterval/3600];
-        NSNumber *minutes = [[NSNumber alloc] initWithInt:(timeInterval - ([hours intValue] * 3600)) / 60];
-        NSNumber *seconds = [[NSNumber alloc] initWithInt:timeInterval - 60 * [minutes intValue] - 3600 * [hours intValue]];
+        NSNumber *minutes = [[NSNumber alloc] initWithInt:(timeInterval - ([hours integerValue] * 3600)) / 60];
+        NSNumber *seconds = [[NSNumber alloc] initWithInt:timeInterval - 60 * [minutes integerValue] - 3600 * [hours integerValue]];
 
         NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
 
-        if ([hours intValue] > 0) {
+        if ([hours integerValue] > 0) {
             formattedString = [NSString stringWithFormat:@"%@ hours ago", [numberFormatter stringFromNumber:hours]];
         }
-        else if ([minutes intValue] > 0 && [seconds intValue] > 0) {
+        else if ([minutes integerValue] > 0 && [seconds integerValue] > 0) {
             formattedString = [NSString stringWithFormat:@"%@ minutes %@ seconds ago", [numberFormatter stringFromNumber:minutes], [numberFormatter stringFromNumber:seconds]];
         }
-        else if ([minutes intValue] > 0) {
+        else if ([minutes integerValue] > 0) {
             formattedString = [NSString stringWithFormat:@"%@ minutes ago", [numberFormatter stringFromNumber:minutes]];
         }
         else {
@@ -114,16 +114,32 @@
         }
     }
     else if (timeInterval < 3600) {
-        NSNumber *hours = [[NSNumber alloc] initWithInt:timeInterval/3600];
-        NSNumber *minutes = [[NSNumber alloc] initWithInt:(timeInterval - ([hours intValue] * 3600)) / 60];
-        NSNumber *seconds = [[NSNumber alloc] initWithInt:timeInterval - 60 * [minutes intValue] - 3600 * [hours intValue]];
-
+        NSNumber *hours = [[NSNumber alloc] initWithInteger:timeInterval/3600];
         NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
 
-        if ([minutes intValue] > 0 && [seconds intValue] > 0) {
+        NSNumber *minutes;
+        NSNumber *seconds;
+
+        if (timeInterval < 60) {
+            minutes = @(0);
+            seconds = [[NSNumber alloc] initWithInteger:timeInterval - 60 * [minutes integerValue] - 3600 * [hours integerValue]];
+        }
+        else {
+            NSInteger minutesInt = (timeInterval - ([hours integerValue] * 3600)) / 60;
+            seconds = @(0);
+            NSInteger sec = timeInterval - 60 * [minutes integerValue] - 3600 * [hours integerValue];
+
+            if (sec > 0) {
+                minutesInt = minutesInt + 1;
+            }
+
+            minutes = [[NSNumber alloc] initWithInteger:minutesInt];
+        }
+
+        if ([minutes integerValue] > 0 && [seconds integerValue] > 0) {
             formattedString = [NSString stringWithFormat:@"In %@ minutes %@ seconds", [numberFormatter stringFromNumber:minutes], [numberFormatter stringFromNumber:seconds]];
         }
-        else if ([minutes intValue] > 0) {
+        else if ([minutes integerValue] > 0) {
             formattedString = [NSString stringWithFormat:@"In %@ minutes", [numberFormatter stringFromNumber:minutes]];
         }
         else {

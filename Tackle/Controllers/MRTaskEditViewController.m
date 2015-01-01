@@ -72,7 +72,12 @@
                                                                              action:@selector(handleSaveButton:)];
 
     if (!self.taskDueDate) {
-        self.taskDueDate = [[NSCalendar currentCalendar] dateByAddingUnit:NSCalendarUnitMinute value:1 toDate:[NSDate date] options:0];
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        NSDateComponents *components = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear|NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitTimeZone
+                                                   fromDate:[NSDate date]];
+
+        NSDate *currentDate = [calendar dateFromComponents:components];
+        self.taskDueDate = [[NSCalendar currentCalendar] dateByAddingUnit:NSCalendarUnitMinute value:10 toDate:currentDate options:0];
     }
 
     [self updateTitleField];
