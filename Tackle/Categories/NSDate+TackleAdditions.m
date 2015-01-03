@@ -31,7 +31,7 @@
 - (BOOL)isDayAfterDate:(NSDate *)date
 {
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = [calendar components:(NSMonthCalendarUnit|NSYearCalendarUnit|NSDayCalendarUnit) fromDate:date];
+    NSDateComponents *components = [calendar components:(NSCalendarUnitMonth|NSCalendarUnitYear|NSCalendarUnitDay) fromDate:date];
     components.day = components.day + 1;
 
     NSDate *dayAfter = [calendar dateFromComponents:components];
@@ -81,7 +81,7 @@
 - (NSDate *)beginningOfDay
 {
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = [calendar components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit) fromDate:self];
+    NSDateComponents *components = [calendar components:(NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay) fromDate:self];
     NSDate *beginningOfDay = [calendar dateFromComponents:components];
 
     return beginningOfDay;

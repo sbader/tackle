@@ -10,14 +10,16 @@
 
 #import "PaintCodeStyleKit.h"
 
+#import "MRScrollView.h"
 #import "MRHorizontalButton.h"
+#import "MRDatePickerViewController.h"
 #import "MRAddTimeTableViewController.h"
 #import "MRCalendarCollectionViewFlowLayout.h"
 #import "MRCalendarCollectionViewController.h"
 
-@interface MRTaskEditViewController () <MRDateSelectionDelegate, MRTimeIntervalSelectionDelegate, UITextFieldDelegate>
+@interface MRTaskEditViewController () <MRDateSelectionDelegate, MRTimeIntervalSelectionDelegate, MRDatePickerViewControllerDelegate, UITextFieldDelegate, UIScrollViewDelegate>
 
-@property (nonatomic) UIScrollView *scrollView;
+@property (nonatomic) MRScrollView *scrollView;
 @property (nonatomic) UIView *topView;
 @property (nonatomic) UIView *titleView;
 @property (nonatomic) UIView *dateView;
@@ -28,6 +30,8 @@
 @property (nonatomic) UITextField *titleField;
 @property (nonatomic) MRCalendarCollectionViewController *calendarViewController;
 @property (nonatomic) MRAddTimeTableViewController *addTimeController;
+@property (nonatomic) NSLayoutConstraint *scrollViewBottomConstraint;
+@property (nonatomic) UIView *activeView;
 
 @property (nonatomic) NSDate *taskDueDate;
 @property (nonatomic) NSString *taskTitle;
@@ -76,24 +80,57 @@
         NSDateComponents *components = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear|NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitTimeZone
                                                    fromDate:[NSDate date]];
 
+        NSInteger minutes = 10 - (components.minute % 10);
         NSDate *currentDate = [calendar dateFromComponents:components];
-        self.taskDueDate = [[NSCalendar currentCalendar] dateByAddingUnit:NSCalendarUnitMinute value:10 toDate:currentDate options:0];
+        self.taskDueDate = [[NSCalendar currentCalendar] dateByAddingUnit:NSCalendarUnitMinute value:minutes toDate:currentDate options:0];
     }
 
     [self updateTitleField];
     [self updateDueDateButton];
+    [self registerForKeyboardNotifications];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+
+    [self unregisterKeyboardNotifications];
+}
+
+- (void)registerForKeyboardNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeShown:)
+                                                 name:UIKeyboardWillShowNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+
+}
+
+- (void)unregisterKeyboardNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                 name:UIKeyboardWillShowNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    [self.titleField becomeFirstResponder];
+    if (!self.taskTitle || [self.taskTitle isEqualToString:@""]) {
+        [self.titleField becomeFirstResponder];
+    }
 }
 
 - (void)setupScrollView {
-    self.scrollView = [[UIScrollView alloc] init];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+
+    self.scrollView = [[MRScrollView alloc] init];
     self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
     self.scrollView.alwaysBounceVertical = YES;
+    self.scrollView.delegate = self;
+    self.scrollView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     [self.view addSubview:self.scrollView];
 
     self.topView = [[UIView alloc] init];
@@ -119,20 +156,23 @@
     self.titleField.font = [UIFont effraLightWithSize:20.0];
     self.titleField.returnKeyType = UIReturnKeyDone;
     self.titleField.delegate = self;
+    self.titleField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     [self.titleView addSubview:self.titleField];
 
     self.titleField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 20, 5, 50.0f)];
+    self.titleField.leftView.userInteractionEnabled = NO;
     self.titleField.leftViewMode = UITextFieldViewModeAlways;
 
     self.titleField.rightView = [[UIView alloc] initWithFrame:CGRectMake(0, 20, 5, 50.0f)];
+    self.titleField.rightView.userInteractionEnabled = NO;
     self.titleField.rightViewMode = UITextFieldViewModeAlways;
 
     [self.titleView horizontalConstraintsMatchSuperview];
     [self.titleField horizontalConstraintsMatchSuperview];
 
     [self.titleView addCompactConstraints:@[
-                                            @"title.top = view.top + 25",
-                                            @"title.bottom = view.bottom - 25",
+                                            @"title.top = view.top",
+                                            @"title.bottom = view.bottom",
                                             ]
                                   metrics:@{}
                                     views:@{
@@ -150,6 +190,7 @@
     self.dateButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.dateButton.titleLabel.font = [UIFont effraLightWithSize:24.0];
     [self.dateButton setImage:[PaintCodeStyleKit imageOfAlarmClockIcon] forState:UIControlStateNormal];
+    [self.dateButton addTarget:self action:@selector(handleDateButton:) forControlEvents:UIControlEventTouchUpInside];
     self.dateButton.contentEdgeInsets = UIEdgeInsetsMake(10, 0, 10, 0);
     [self.dateView addSubview:self.dateButton];
 
@@ -268,7 +309,8 @@
                                              @"titleView.width = view.width",
                                              @"dateView.width = view.width",
                                              @"calendarView.width = view.width",
-                                             @"addTimeView.width = view.width"
+                                             @"addTimeView.width = view.width",
+                                             @"addTimeView.bottom = view.bottom - 20"
                                              ]
                                    metrics:@{}
                                      views:@{
@@ -327,6 +369,37 @@
     }
 }
 
+- (void)keyboardWillBeShown:(NSNotification *)notification {
+    NSDictionary *info = [notification userInfo];
+    CGRect keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
+
+    UIEdgeInsets contentInset = self.scrollView.contentInset;
+    contentInset.bottom = keyboardRect.size.height;
+    self.scrollView.scrollIndicatorInsets = contentInset;
+    self.scrollView.contentInset = contentInset;
+
+    CGRect viewRect = self.view.frame;
+    viewRect.size.height -= keyboardRect.size.height;
+    if (!CGRectContainsPoint(viewRect, self.activeView.frame.origin) ) {
+        [self.scrollView scrollRectToVisible:self.activeView.frame animated:YES];
+    }
+}
+
+- (void)keyboardWillBeHidden:(id)sender {
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    self.scrollView.contentInset = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets;
+}
+
+#pragma mark - Handlers
+
+- (void)handleDateButton:(id)sender {
+    MRDatePickerViewController *datePickerController = [[MRDatePickerViewController alloc] initWithDate:self.taskDueDate];
+    datePickerController.delegate = self;
+    [self mr_presentViewControllerModally:datePickerController animated:YES completion:nil];
+}
+
 #pragma mark - Date Selection Delegate
 
 - (void)selectedDate:(NSDate *)date {
@@ -362,6 +435,21 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return NO;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    self.activeView = textField.superview;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    self.activeView = nil;
+}
+
+#pragma mark - Date Picker Delegate
+
+- (void)didSelectDate:(NSDate *)date {
+    self.taskDueDate = date;
+    [self updateDueDateButton];
 }
 
 @end

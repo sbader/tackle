@@ -31,5 +31,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 + (UIColor *)grayBackgroundColor;
 + (UIColor *)grayNavigationBarBackgroundColor;
 + (UIColor *)lightGrayFormBackgroundColor;
++ (UIColor *)destructiveColor;
 
 @end
