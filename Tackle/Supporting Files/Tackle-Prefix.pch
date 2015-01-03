@@ -17,6 +17,7 @@
     #import "UIFont+TackleAdditions.h"
     #import "UIColor+TackleAdditions.h"
     #import "UIView+TackleAdditions.h"
+    #import "UIViewController+MRAdditions.h"
     #import "NSDate+TackleAdditions.h"
     #import "CompactConstraint.h"
 #endif

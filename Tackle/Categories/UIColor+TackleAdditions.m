@@ -38,4 +38,8 @@
     return UIColorFromRGB(0xDADADC);
 }
 
++ (UIColor *)destructiveColor {
+    return UIColorFromRGB(0x9F4545);
+}
+
 @end

@@ -46,7 +46,7 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[PaintCodeStyleKit imageOfLetterTIcon]
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
-                                                                            action:nil];
+                                                                            action:@selector(handleLogoButton:)];
 
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[PaintCodeStyleKit imageOfAddIcon]
                                                                               style:UIBarButtonItemStylePlain
@@ -61,26 +61,6 @@
     MRTaskEditNavigationController *navigationController = [[MRTaskEditNavigationController alloc] initWithRootViewController:editController];
     [self presentViewController:navigationController animated:YES completion:nil];
 }
-
-- (void)handleAddButton:(id)sender {
-    self.editingTask = nil;
-    [self displayEditViewWithTitle:nil dueDate:nil];
-}
-
-//- (void)markAsDone:(MRMainCollectionViewCell *)cell {
-//    __block NSError *error;
-//    [self.collectionView performBatchUpdates:^{
-//        Task *task = [self.fetchedResultsController objectAtIndexPath:[self.collectionView indexPathForCell:cell]];
-//        [task setIsDone:YES];
-//        [task cancelNotification];
-//
-//        [task.managedObjectContext performBlock:^{
-//            [task.managedObjectContext save:&error];
-//        }];
-//    } completion:^(BOOL finished) {
-//
-//    }];
-//}
 
 - (void)saveEditingTaskWithTitle:(NSString *)title dueDate:(NSDate *)dueDate {
     Task *task;
@@ -105,6 +85,16 @@
 
 - (void)handleNotificationForTask:(Task *)task {
     [self selectedTask:task];
+}
+
+#pragma mark - Handlers
+
+- (void)handleAddButton:(id)sender {
+    self.editingTask = nil;
+    [self displayEditViewWithTitle:nil dueDate:nil];
+}
+
+- (void)handleLogoButton:(id)sender {
 }
 
 #pragma mark - Task Selection Delegate

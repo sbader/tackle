@@ -48,7 +48,7 @@ NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCateg
 
     [notification setFireDate:self.dueDate];
     [notification setAlertBody:self.text];
-    [notification setRepeatInterval:NSMinuteCalendarUnit];
+    [notification setRepeatInterval:NSCalendarUnitMinute];
     [notification setAlertAction:@"Tackle"];
     [notification setSoundName:UILocalNotificationDefaultSoundName];
     [notification setUserInfo:@{@"uniqueId": self.objectID.URIRepresentation.absoluteString}];
