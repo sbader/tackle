@@ -54,7 +54,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.title = @"Task";
     self.view.backgroundColor = [UIColor lightGrayFormBackgroundColor];
 
     [self setupScrollView];
@@ -76,6 +75,8 @@
                                                                              action:@selector(handleSaveButton:)];
 
     if (!self.taskDueDate) {
+        self.title = @"New Task";
+
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDateComponents *components = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear|NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitTimeZone
                                                    fromDate:[NSDate date]];
@@ -83,6 +84,9 @@
         NSInteger minutes = 10 - (components.minute % 10);
         NSDate *currentDate = [calendar dateFromComponents:components];
         self.taskDueDate = [[NSCalendar currentCalendar] dateByAddingUnit:NSCalendarUnitMinute value:minutes toDate:currentDate options:0];
+    }
+    else {
+        self.title = @"Edit Task";
     }
 
     [self updateTitleField];
