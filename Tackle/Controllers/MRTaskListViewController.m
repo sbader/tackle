@@ -8,6 +8,8 @@
 
 #import "MRTaskListViewController.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "Task.h"
 #import "PaintCodeStyleKit.h"
 #import "MRTaskTableViewController.h"
@@ -18,6 +20,7 @@
 
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic) Task *editingTask;
+@property (nonatomic) UIView *infoView;
 
 @end
 
@@ -32,6 +35,10 @@
     }
     
     return self;
+}
+
+- (void)dealloc {
+    [self removeObservers];
 }
 
 - (void)viewDidLoad {
@@ -53,6 +60,58 @@
                                                                              target:self
                                                                              action:@selector(handleAddButton:)];
 
+    [self setupInfoView];
+    [self addObservers];
+    [self displayInfoViewWithOpenTasks];
+}
+
+
+- (void)addObservers {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(managedObjectContextDidChange:)
+                                                 name:NSManagedObjectContextObjectsDidChangeNotification
+                                               object:self.managedObjectContext];
+}
+
+- (void)removeObservers {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:self.managedObjectContext];
+}
+
+- (void)setupInfoView {
+    self.infoView = [[UIView alloc] init];
+    self.infoView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.infoView.layer.cornerRadius = 5;
+    self.infoView.backgroundColor = [UIColor offWhiteBackgroundColor];
+    [self.view addSubview:self.infoView];
+
+    [self.infoView topConstraintMatchesSuperviewWithConstant:35.0];
+    [self.infoView leadingConstraintMatchesSuperviewWithConstant:10.0];
+    [self.infoView trailingConstraintMatchesSuperviewWithConstant:-10.0];
+
+    UILabel *infoLabel = [[UILabel alloc] init];
+    infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    infoLabel.text = @"You have nothing to tackle right now. You can add a task by hitting the plus sign above.";
+    infoLabel.textAlignment = NSTextAlignmentLeft;
+    infoLabel.font = [UIFont effraRegularWithSize:20.0];
+    infoLabel.numberOfLines = 0;
+    [self.infoView addSubview:infoLabel];
+
+    [infoLabel topConstraintMatchesSuperviewWithConstant:15.0];
+    [infoLabel bottomConstraintMatchesSuperviewWithConstant:-15.0];
+    [infoLabel leadingConstraintMatchesSuperviewWithConstant:13.0];
+
+    UIImageView *arrowImageView = [[UIImageView alloc] initWithImage:[PaintCodeStyleKit imageOfArrow]];
+    arrowImageView.tintColor = [UIColor grayBackgroundColor];
+    arrowImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.infoView addSubview:arrowImageView];
+
+    [arrowImageView topConstraintMatchesSuperviewWithConstant:12.0];
+    [arrowImageView bottomConstraintMatchesSuperviewWithConstant:-20.0];
+    [arrowImageView trailingConstraintMatchesSuperviewWithConstant:-10.0];
+    [arrowImageView staticHeightConstraint:80.0];
+    [arrowImageView staticWidthConstraint:20.0];
+
+    [self.infoView addConstraint:[NSLayoutConstraint constraintWithItem:infoLabel attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:arrowImageView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:-22.0]];
 }
 
 - (void)displayEditViewWithTitle:(NSString *)title dueDate:(NSDate *)dueDate {
@@ -87,6 +146,11 @@
     [self selectedTask:task];
 }
 
+- (void)displayInfoViewWithOpenTasks {
+    NSInteger tasks = [Task numberOfOpenTasksInManagedObjectContext:self.managedObjectContext];
+    self.infoView.hidden = (tasks > 0);
+}
+
 #pragma mark - Handlers
 
 - (void)handleAddButton:(id)sender {
@@ -118,6 +182,12 @@
 
 - (void)editedTaskTitle:(NSString *)title dueDate:(NSDate *)dueDate {
     [self saveEditingTaskWithTitle:title dueDate:dueDate];
+}
+
+#pragma mark - Core Data Observer
+
+- (void)managedObjectContextDidChange:(id)sender {
+    [self displayInfoViewWithOpenTasks];
 }
 
 @end
