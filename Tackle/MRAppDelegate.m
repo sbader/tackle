@@ -83,15 +83,24 @@
 }
 
 - (void)setupAppearance {
-    NSDictionary *textAttributes = @{
-                                     NSForegroundColorAttributeName: [UIColor plumTintColor],
-                                     NSFontAttributeName: [UIFont effraMediumWithSize:25.0]
-                                     };
+    NSDictionary *barTitleTextAttributes = @{
+                                             NSForegroundColorAttributeName: [UIColor plumTintColor],
+                                             NSFontAttributeName: [UIFont effraMediumWithSize:25.0]
+                                             };
 
     UINavigationBar *navigationBar = [UINavigationBar appearance];
     navigationBar.backgroundColor = [UIColor grayNavigationBarBackgroundColor];
     navigationBar.translucent = NO;
-    navigationBar.titleTextAttributes = textAttributes;
+    navigationBar.titleTextAttributes = barTitleTextAttributes;
+
+    UIBarButtonItem *barButtonItem = [UIBarButtonItem appearance];
+
+    NSDictionary *barButtonTitleTextAttributes = @{
+                                                   NSForegroundColorAttributeName: [UIColor plumTintColor],
+                                                   NSFontAttributeName: [UIFont effraRegularWithSize:18.0]
+                                                   };
+
+    [barButtonItem setTitleTextAttributes:barButtonTitleTextAttributes forState:UIControlStateNormal];
 
 
     UIView *view = [UIView appearance];
