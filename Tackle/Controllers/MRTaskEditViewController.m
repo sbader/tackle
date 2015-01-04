@@ -189,7 +189,7 @@
     self.dateButton = [MRHorizontalButton buttonWithType:UIButtonTypeSystem];
     self.dateButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.dateButton.titleLabel.font = [UIFont effraLightWithSize:24.0];
-    [self.dateButton setImage:[PaintCodeStyleKit imageOfAlarmClockIcon] forState:UIControlStateNormal];
+    [self.dateButton setImage:[PaintCodeStyleKit imageOfClock] forState:UIControlStateNormal];
     [self.dateButton addTarget:self action:@selector(handleDateButton:) forControlEvents:UIControlEventTouchUpInside];
     self.dateButton.contentEdgeInsets = UIEdgeInsetsMake(10, 0, 10, 0);
     [self.dateView addSubview:self.dateButton];
