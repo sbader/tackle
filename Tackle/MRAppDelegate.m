@@ -84,8 +84,8 @@
 
 - (void)setupAppearance {
     NSDictionary *barTitleTextAttributes = @{
-                                             NSForegroundColorAttributeName: [UIColor plumTintColor],
-                                             NSFontAttributeName: [UIFont effraMediumWithSize:25.0]
+                                             NSForegroundColorAttributeName: [UIColor grayTextColor],
+                                             NSFontAttributeName: [UIFont fontForBarTitle]
                                              };
 
     UINavigationBar *navigationBar = [UINavigationBar appearance];
@@ -96,12 +96,10 @@
     UIBarButtonItem *barButtonItem = [UIBarButtonItem appearance];
 
     NSDictionary *barButtonTitleTextAttributes = @{
-                                                   NSForegroundColorAttributeName: [UIColor plumTintColor],
-                                                   NSFontAttributeName: [UIFont effraRegularWithSize:18.0]
+                                                   NSFontAttributeName: [UIFont fontForBarButtonItemStandardStyle]
                                                    };
 
     [barButtonItem setTitleTextAttributes:barButtonTitleTextAttributes forState:UIControlStateNormal];
-
 
     UIView *view = [UIView appearance];
     view.tintColor = [UIColor plumTintColor];

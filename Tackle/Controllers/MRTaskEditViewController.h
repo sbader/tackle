@@ -14,7 +14,7 @@
 
 @interface MRTaskEditViewController : UIViewController
 
-- (instancetype)initWithTitle:(NSString *)title dueDate:(NSDate *)dueDate;
+- (instancetype)initWithTitle:(NSString *)title dueDate:(NSDate *)dueDate managedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 
 @property (nonatomic) id<MRTaskEditingDelegate> delegate;
 
