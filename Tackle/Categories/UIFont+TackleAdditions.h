@@ -10,9 +10,19 @@
 
 @interface UIFont (TackleAdditions)
 
-+ (UIFont *)adonisRegularWithSize:(CGFloat)size;
-+ (UIFont *)effraRegularWithSize:(CGFloat)size;
-+ (UIFont *)effraLightWithSize:(CGFloat)size;
-+ (UIFont *)effraMediumWithSize:(CGFloat)size;
++ (UIFont *)fontForFormTableViewCellTextLabel;
++ (UIFont *)fontForFormLabel;
++ (UIFont *)fontForBarTitle;
++ (UIFont *)fontForBarButtonItemStandardStyle;
++ (UIFont *)fontForBarButtonItemDoneStyle;
++ (UIFont *)fontForCalendarWeekday;
++ (UIFont *)fontForCalendarDayOfMonth;
++ (UIFont *)fontForCalendarMonth;
++ (UIFont *)fontForFormButtons;
++ (UIFont *)fontForFormTextField;
++ (UIFont *)fontForLargeFormButtons;
++ (UIFont *)fontForInfoLabel;
++ (UIFont *)fontForTableViewTextLabel;
++ (UIFont *)fontForTableViewDetailLabel;
 
 @end

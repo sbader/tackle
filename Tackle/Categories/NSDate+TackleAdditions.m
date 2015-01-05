@@ -137,13 +137,13 @@
         }
 
         if ([minutes integerValue] > 0 && [seconds integerValue] > 0) {
-            formattedString = [NSString stringWithFormat:@"In %@ minutes %@ seconds", [numberFormatter stringFromNumber:minutes], [numberFormatter stringFromNumber:seconds]];
+            formattedString = [NSString stringWithFormat:@"In %@ Minutes %@ Seconds", [numberFormatter stringFromNumber:minutes], [numberFormatter stringFromNumber:seconds]];
         }
         else if ([minutes integerValue] > 0) {
-            formattedString = [NSString stringWithFormat:@"In %@ minutes", [numberFormatter stringFromNumber:minutes]];
+            formattedString = [NSString stringWithFormat:@"In %@ Minutes", [numberFormatter stringFromNumber:minutes]];
         }
         else {
-            formattedString = [NSString stringWithFormat:@"In %@ seconds", [numberFormatter stringFromNumber:seconds]];
+            formattedString = [NSString stringWithFormat:@"In %@ Seconds", [numberFormatter stringFromNumber:seconds]];
         }
     }
     else if ([self isSameDayAsDate:date]) {

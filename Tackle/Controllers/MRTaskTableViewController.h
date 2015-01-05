@@ -8,20 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MRTaskTableViewDelegate.h"
+
 @class Task;
-@protocol MRTaskTableViewDelegate;
 
 @interface MRTaskTableViewController : UITableViewController
 
 - (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 
 @property (nonatomic) id<MRTaskTableViewDelegate> taskDelegate;
-
-@end
-
-@protocol MRTaskTableViewDelegate <NSObject>
-
-- (void)selectedTask:(Task *)task;
-- (void)completedTask:(Task *)task;
 
 @end

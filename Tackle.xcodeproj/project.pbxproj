@@ -29,10 +29,8 @@
 		D12E87831894A07B008119B8 /* UIFont+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D12E87821894A07B008119B8 /* UIFont+TackleAdditions.m */; };
 		D12E8786189573FC008119B8 /* UIColor+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D12E8785189573FC008119B8 /* UIColor+TackleAdditions.m */; };
 		D139E57418959F41007163AD /* MRLongDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D139E57318959F41007163AD /* MRLongDateFormatter.m */; };
-		D139E57F1897329C007163AD /* Effra-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = D139E57B1897329C007163AD /* Effra-Regular.otf */; };
 		D162856B1A55AB770006929E /* MRScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = D162856A1A55AB770006929E /* MRScrollView.m */; };
 		D17BCFB3189F3D05001996C1 /* UIView+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D17BCFB2189F3D05001996C1 /* UIView+TackleAdditions.m */; };
-		D188D64718A090D2009D747E /* Effra-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = D188D64618A090D2009D747E /* Effra-Light.otf */; };
 		D194BEBB18A1CCC600E5E4DA /* MRHeartbeat.m in Sources */ = {isa = PBXBuildFile; fileRef = D194BEBA18A1CCC600E5E4DA /* MRHeartbeat.m */; };
 		D19C952718A28ACF009082F3 /* NSDate+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D19C952618A28ACF009082F3 /* NSDate+TackleAdditions.m */; };
 		D19C952B18A29297009082F3 /* MRMediumDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D19C952A18A29297009082F3 /* MRMediumDateFormatter.m */; };
@@ -40,6 +38,8 @@
 		D1A36E5A18A2B2070020EAEB /* MRTimeDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A36E5918A2B2070020EAEB /* MRTimeDateFormatter.m */; };
 		D1A3FDDB1A505EE400A384FE /* PaintCodeStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A3FDDA1A505EE400A384FE /* PaintCodeStyleKit.m */; };
 		D1A3FDDE1A511B9F00A384FE /* MRMonthDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A3FDDD1A511B9F00A384FE /* MRMonthDateFormatter.m */; };
+		D1AD45B91A59BB5C001FDAC5 /* MRPreviousTasksTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1AD45B81A59BB5C001FDAC5 /* MRPreviousTasksTableViewController.m */; };
+		D1AD45BC1A59BBBB001FDAC5 /* MRPreviousTaskTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1AD45BB1A59BBBB001FDAC5 /* MRPreviousTaskTableViewCell.m */; };
 		D1BC012D1A539A4B00F87D06 /* MRDatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1BC012C1A539A4B00F87D06 /* MRDatePickerViewController.m */; };
 		D1CF84871A5639890020DB50 /* MRModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1CF84861A5639890020DB50 /* MRModalViewController.m */; };
 		D1CF848D1A563D4B0020DB50 /* UIViewController+MRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D1CF848C1A563D4B0020DB50 /* UIViewController+MRAdditions.m */; };
@@ -49,7 +49,6 @@
 		D1E1410C1A4F7A0100992B1E /* MRTaskTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E1410B1A4F7A0100992B1E /* MRTaskTableViewController.m */; };
 		D1E1410F1A4F7A1E00992B1E /* MRTaskTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E1410E1A4F7A1E00992B1E /* MRTaskTableViewCell.m */; };
 		D1E141121A4F7A4300992B1E /* MRRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E141111A4F7A4300992B1E /* MRRootViewController.m */; };
-		D1E141171A4FBCF600992B1E /* Effra-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = D1E141161A4FBCF600992B1E /* Effra-Medium.otf */; };
 		D1E1411A1A4FD37500992B1E /* MRTaskEditNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E141191A4FD37500992B1E /* MRTaskEditNavigationController.m */; };
 		D1E1411D1A4FDA1A00992B1E /* MRAddTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E1411C1A4FDA1A00992B1E /* MRAddTimeTableViewController.m */; };
 		D1E141201A4FDD2D00992B1E /* MRAddTimeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E1411F1A4FDD2D00992B1E /* MRAddTimeTableViewCell.m */; };
@@ -105,12 +104,10 @@
 		D12E8785189573FC008119B8 /* UIColor+TackleAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+TackleAdditions.m"; sourceTree = "<group>"; };
 		D139E57218959F41007163AD /* MRLongDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRLongDateFormatter.h; sourceTree = "<group>"; };
 		D139E57318959F41007163AD /* MRLongDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRLongDateFormatter.m; sourceTree = "<group>"; };
-		D139E57B1897329C007163AD /* Effra-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Effra-Regular.otf"; path = "Resources/Fonts/Effra-Regular.otf"; sourceTree = "<group>"; };
 		D16285691A55AB770006929E /* MRScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRScrollView.h; sourceTree = "<group>"; };
 		D162856A1A55AB770006929E /* MRScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRScrollView.m; sourceTree = "<group>"; };
 		D17BCFB1189F3D05001996C1 /* UIView+TackleAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TackleAdditions.h"; sourceTree = "<group>"; };
 		D17BCFB2189F3D05001996C1 /* UIView+TackleAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TackleAdditions.m"; sourceTree = "<group>"; };
-		D188D64618A090D2009D747E /* Effra-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Effra-Light.otf"; path = "Resources/Fonts/Effra-Light.otf"; sourceTree = "<group>"; };
 		D194BEB918A1CCC600E5E4DA /* MRHeartbeat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRHeartbeat.h; sourceTree = "<group>"; };
 		D194BEBA18A1CCC600E5E4DA /* MRHeartbeat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRHeartbeat.m; sourceTree = "<group>"; };
 		D19C952518A28ACF009082F3 /* NSDate+TackleAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+TackleAdditions.h"; sourceTree = "<group>"; };
@@ -125,6 +122,11 @@
 		D1A3FDDA1A505EE400A384FE /* PaintCodeStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaintCodeStyleKit.m; sourceTree = "<group>"; };
 		D1A3FDDC1A511B9F00A384FE /* MRMonthDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRMonthDateFormatter.h; sourceTree = "<group>"; };
 		D1A3FDDD1A511B9F00A384FE /* MRMonthDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRMonthDateFormatter.m; sourceTree = "<group>"; };
+		D1AD45B71A59BB5C001FDAC5 /* MRPreviousTasksTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRPreviousTasksTableViewController.h; sourceTree = "<group>"; };
+		D1AD45B81A59BB5C001FDAC5 /* MRPreviousTasksTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRPreviousTasksTableViewController.m; sourceTree = "<group>"; };
+		D1AD45BA1A59BBBB001FDAC5 /* MRPreviousTaskTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRPreviousTaskTableViewCell.h; sourceTree = "<group>"; };
+		D1AD45BB1A59BBBB001FDAC5 /* MRPreviousTaskTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRPreviousTaskTableViewCell.m; sourceTree = "<group>"; };
+		D1AD45BE1A59BDE3001FDAC5 /* MRTaskTableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRTaskTableViewDelegate.h; sourceTree = "<group>"; };
 		D1BC012B1A539A4B00F87D06 /* MRDatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRDatePickerViewController.h; sourceTree = "<group>"; };
 		D1BC012C1A539A4B00F87D06 /* MRDatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRDatePickerViewController.m; sourceTree = "<group>"; };
 		D1CF84851A5639890020DB50 /* MRModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRModalViewController.h; sourceTree = "<group>"; };
@@ -143,7 +145,6 @@
 		D1E1410E1A4F7A1E00992B1E /* MRTaskTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRTaskTableViewCell.m; sourceTree = "<group>"; };
 		D1E141101A4F7A4300992B1E /* MRRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRRootViewController.h; sourceTree = "<group>"; };
 		D1E141111A4F7A4300992B1E /* MRRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRRootViewController.m; sourceTree = "<group>"; };
-		D1E141161A4FBCF600992B1E /* Effra-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Effra-Medium.otf"; path = "Resources/Fonts/Effra-Medium.otf"; sourceTree = "<group>"; };
 		D1E141181A4FD37500992B1E /* MRTaskEditNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRTaskEditNavigationController.h; sourceTree = "<group>"; };
 		D1E141191A4FD37500992B1E /* MRTaskEditNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRTaskEditNavigationController.m; sourceTree = "<group>"; };
 		D1E1411B1A4FDA1A00992B1E /* MRAddTimeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRAddTimeTableViewController.h; sourceTree = "<group>"; };
@@ -254,6 +255,7 @@
 				D19C952818A28DBF009082F3 /* Formatters */,
 				D139E57118959EF6007163AD /* Lib */,
 				D1027FEF1890545800FF44A4 /* Models */,
+				D1AD45BD1A59BDBF001FDAC5 /* Protocols */,
 				D12E8774189454E1008119B8 /* Resources */,
 				D1027F7118904E8400FF44A4 /* Supporting Files */,
 				C786AB4119D3558B0077F11C /* Vendor */,
@@ -314,21 +316,10 @@
 		D12E8774189454E1008119B8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				D12E87751894550D008119B8 /* Fonts */,
 				D1027F7F18904E8400FF44A4 /* Images.xcassets */,
 				C786AB4319D358DF0077F11C /* Launch Screen.xib */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
-		};
-		D12E87751894550D008119B8 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				D1E141161A4FBCF600992B1E /* Effra-Medium.otf */,
-				D188D64618A090D2009D747E /* Effra-Light.otf */,
-				D139E57B1897329C007163AD /* Effra-Regular.otf */,
-			);
-			name = Fonts;
 			sourceTree = "<group>";
 		};
 		D12E877A18949FFD008119B8 /* Categories */ = {
@@ -365,6 +356,8 @@
 				D1E141281A4FE23E00992B1E /* MRCalendarCollectionViewController.m */,
 				D1E1411B1A4FDA1A00992B1E /* MRAddTimeTableViewController.h */,
 				D1E1411C1A4FDA1A00992B1E /* MRAddTimeTableViewController.m */,
+				D1AD45B71A59BB5C001FDAC5 /* MRPreviousTasksTableViewController.h */,
+				D1AD45B81A59BB5C001FDAC5 /* MRPreviousTasksTableViewController.m */,
 				D1BC012B1A539A4B00F87D06 /* MRDatePickerViewController.h */,
 				D1BC012C1A539A4B00F87D06 /* MRDatePickerViewController.m */,
 				D1CF84851A5639890020DB50 /* MRModalViewController.h */,
@@ -386,6 +379,8 @@
 				D1E141251A4FE22200992B1E /* MRDateCollectionViewCell.m */,
 				D16285691A55AB770006929E /* MRScrollView.h */,
 				D162856A1A55AB770006929E /* MRScrollView.m */,
+				D1AD45BA1A59BBBB001FDAC5 /* MRPreviousTaskTableViewCell.h */,
+				D1AD45BB1A59BBBB001FDAC5 /* MRPreviousTaskTableViewCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -422,6 +417,14 @@
 				D1A3FDDD1A511B9F00A384FE /* MRMonthDateFormatter.m */,
 			);
 			path = Formatters;
+			sourceTree = "<group>";
+		};
+		D1AD45BD1A59BDBF001FDAC5 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				D1AD45BE1A59BDE3001FDAC5 /* MRTaskTableViewDelegate.h */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -504,9 +507,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1027F7518904E8400FF44A4 /* InfoPlist.strings in Resources */,
-				D1E141171A4FBCF600992B1E /* Effra-Medium.otf in Resources */,
-				D139E57F1897329C007163AD /* Effra-Regular.otf in Resources */,
-				D188D64718A090D2009D747E /* Effra-Light.otf in Resources */,
 				D1027F8018904E8400FF44A4 /* Images.xcassets in Resources */,
 				C786AB4419D358DF0077F11C /* Launch Screen.xib in Resources */,
 			);
@@ -547,6 +547,7 @@
 				D1E141061A4F79D500992B1E /* MRTaskEditViewController.m in Sources */,
 				D12E8786189573FC008119B8 /* UIColor+TackleAdditions.m in Sources */,
 				D1E141291A4FE23E00992B1E /* MRCalendarCollectionViewController.m in Sources */,
+				D1AD45B91A59BB5C001FDAC5 /* MRPreviousTasksTableViewController.m in Sources */,
 				D1A3FDDB1A505EE400A384FE /* PaintCodeStyleKit.m in Sources */,
 				D1BC012D1A539A4B00F87D06 /* MRDatePickerViewController.m in Sources */,
 				D12E87831894A07B008119B8 /* UIFont+TackleAdditions.m in Sources */,
@@ -560,6 +561,7 @@
 				D1027F7B18904E8400FF44A4 /* MRAppDelegate.m in Sources */,
 				D1E141231A4FE09C00992B1E /* MRHorizontalButton.m in Sources */,
 				D194BEBB18A1CCC600E5E4DA /* MRHeartbeat.m in Sources */,
+				D1AD45BC1A59BBBB001FDAC5 /* MRPreviousTaskTableViewCell.m in Sources */,
 				D1CFD4EE1A51F455004489AC /* MRTimeInterval.m in Sources */,
 				D1A36E5A18A2B2070020EAEB /* MRTimeDateFormatter.m in Sources */,
 				D1CF848D1A563D4B0020DB50 /* UIViewController+MRAdditions.m in Sources */,

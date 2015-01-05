@@ -49,7 +49,7 @@
 - (void)setupLabel {
     self.label = [[UILabel alloc] init];
     self.label.translatesAutoresizingMaskIntoConstraints = NO;
-    self.label.font = [UIFont effraRegularWithSize:16.0];
+    self.label.font = [UIFont fontForFormLabel];
     self.label.text = @"Select Due Date";
 
     [self.view addSubview:self.label];
@@ -104,7 +104,7 @@
 
     UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeSystem];
     closeButton.translatesAutoresizingMaskIntoConstraints = NO;
-    closeButton.titleLabel.font = [UIFont effraMediumWithSize:19.0];
+    closeButton.titleLabel.font = [UIFont fontForFormButtons];
     closeButton.tintColor = [UIColor destructiveColor];
     closeButton.contentEdgeInsets = UIEdgeInsetsMake(20.0, 0, 20.0, 0);
     [closeButton setTitle:@"Cancel" forState:UIControlStateNormal];
@@ -117,7 +117,7 @@
 
     UIButton *saveButton = [UIButton buttonWithType:UIButtonTypeSystem];
     saveButton.translatesAutoresizingMaskIntoConstraints = NO;
-    saveButton.titleLabel.font = [UIFont effraMediumWithSize:19.0];
+    saveButton.titleLabel.font = [UIFont fontForFormButtons];
     saveButton.contentEdgeInsets = UIEdgeInsetsMake(20.0, 0, 20.0, 0);
     [saveButton setTitle:@"Save" forState:UIControlStateNormal];
     [saveButton addTarget:self action:@selector(handleSaveButton:) forControlEvents:UIControlEventTouchUpInside];

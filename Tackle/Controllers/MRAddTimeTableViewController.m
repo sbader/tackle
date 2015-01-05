@@ -24,9 +24,9 @@ static NSString *addTimeCellReuseIdentifier = @"AddTimeCell";
     [super viewDidLoad];
 
     self.timeIntervals = @[
-                           [MRTimeInterval timeIntervalWithName:@"ten minutes" unit:NSCalendarUnitMinute interval:10],
-                           [MRTimeInterval timeIntervalWithName:@"an hour" unit:NSCalendarUnitHour interval:1],
-                           [MRTimeInterval timeIntervalWithName:@"a day" unit:NSCalendarUnitDay interval:1],
+                           [MRTimeInterval timeIntervalWithName:@"Ten Minutes" unit:NSCalendarUnitMinute interval:10],
+                           [MRTimeInterval timeIntervalWithName:@"An Hour" unit:NSCalendarUnitHour interval:1],
+                           [MRTimeInterval timeIntervalWithName:@"A Day" unit:NSCalendarUnitDay interval:1],
                            ];
 
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
@@ -64,6 +64,10 @@ static NSString *addTimeCellReuseIdentifier = @"AddTimeCell";
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewAutomaticDimension;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 50.0;
 }
 
 @end

@@ -1,76 +1,61 @@
 //
-//  MRTaskTableViewController.m
+//  MRPreviousTasksTableViewController.m
 //  Tackle
 //
-//  Created by Scott Bader on 12/27/14.
-//  Copyright (c) 2014 Melody Road. All rights reserved.
+//  Created by Scott Bader on 1/4/15.
+//  Copyright (c) 2015 Melody Road. All rights reserved.
 //
 
-#import "MRTaskTableViewController.h"
+#import "MRPreviousTasksTableViewController.h"
 
 #import "Task.h"
-#import "MRHeartbeat.h"
-#import "MRTaskTableViewCell.h"
+#import "MRPreviousTaskTableViewCell.h"
 
-@interface MRTaskTableViewController () <NSFetchedResultsControllerDelegate>
+@interface MRPreviousTasksTableViewController () <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
 
-@property (nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic) NSManagedObjectContext  *managedObjectContext;
 @property (nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic) NSLayoutConstraint *heightConstraint;
 
 @end
 
-static NSString * const taskCellReuseIdentifier = @"TaskCell";
+static NSString * const previousTaskCellReuseIdentifier = @"PreviousTaskCell";
 
-@implementation MRTaskTableViewController
+@implementation MRPreviousTasksTableViewController
 
 - (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
     self = [super init];
 
     if (self) {
         self.managedObjectContext = managedObjectContext;
-        [self.tableView registerClass:[MRTaskTableViewCell class] forCellReuseIdentifier:taskCellReuseIdentifier];
+        [self.tableView registerClass:[MRPreviousTaskTableViewCell class] forCellReuseIdentifier:previousTaskCellReuseIdentifier];
         self.view.translatesAutoresizingMaskIntoConstraints = NO;
         self.tableView.backgroundColor = [UIColor clearColor];
         self.tableView.dataSource = self;
         self.tableView.delegate = self;
         self.tableView.separatorColor = [UIColor grayBorderColor];
-        self.tableView.separatorInset = UIEdgeInsetsZero;
+//        self.tableView.separatorInset = UIEdgeInsetsZero;
         self.tableView.allowsMultipleSelectionDuringEditing = NO;
         self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+
+        [self observeValueForKeyPath:@"contentSize" ofObject:self.tableView change:0 context:nil];
+        self.heightConstraint = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:0];
+        self.heightConstraint.priority = UILayoutPriorityDefaultLow;
+
+        [self.view addConstraint:self.heightConstraint];
+        [self updateTableContentSize];
     }
 
     return self;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [self attachObservers];
+- (void)updateTableContentSize {
+    self.heightConstraint.constant = self.tableView.contentSize.height;
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [self detachObservers];
-}
-
-- (void)updateCell:(MRTaskTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)updateCell:(MRPreviousTaskTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textLabel.text = task.text;
-    cell.detailTextLabel.text = task.dueDate.tackleString;
-}
-
-- (void)attachObservers {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(heartDidBeat:) name:[MRHeartbeat slowHeartbeatId] object:nil];
-}
-
-- (void)detachObservers {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:[MRHeartbeat heartbeatId] object:nil];
-}
-
-- (void)heartDidBeat:(NSNotification *)notification {
-    [[self.tableView visibleCells] enumerateObjectsUsingBlock:^(MRTaskTableViewCell *cell, NSUInteger idx, BOOL *stop) {
-        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-        [self updateCell:cell atIndexPath:indexPath];
-    }];
 }
 
 #pragma mark - Fetched results controller
@@ -82,14 +67,14 @@ static NSString * const taskCellReuseIdentifier = @"TaskCell";
 
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    [fetchRequest setFetchBatchSize:20];
+    fetchRequest.entity = entity;
+    fetchRequest.fetchLimit = 5;
 
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"dueDate" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"dueDate" ascending:NO];
     NSArray *sortDescriptors = @[sortDescriptor];
 
     [fetchRequest setSortDescriptors:sortDescriptors];
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO"]];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == YES"]];
 
     NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                                                 managedObjectContext:self.managedObjectContext
@@ -121,12 +106,12 @@ static NSString * const taskCellReuseIdentifier = @"TaskCell";
             break;
 
         case NSFetchedResultsChangeUpdate:
-            [self updateCell:(MRTaskTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            [self updateCell:(MRPreviousTaskTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
             break;
 
         case NSFetchedResultsChangeMove:
             [self.tableView moveRowAtIndexPath:indexPath toIndexPath:newIndexPath];
-            [self updateCell:(MRTaskTableViewCell *)[self.tableView cellForRowAtIndexPath:newIndexPath] atIndexPath:newIndexPath];
+            [self updateCell:(MRPreviousTaskTableViewCell *)[self.tableView cellForRowAtIndexPath:newIndexPath] atIndexPath:newIndexPath];
             break;
     }
 }
@@ -139,7 +124,7 @@ static NSString * const taskCellReuseIdentifier = @"TaskCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MRTaskTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:taskCellReuseIdentifier forIndexPath:indexPath];
+    MRPreviousTaskTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:previousTaskCellReuseIdentifier forIndexPath:indexPath];
     [self updateCell:cell atIndexPath:indexPath];
 
     return cell;
@@ -151,28 +136,21 @@ static NSString * const taskCellReuseIdentifier = @"TaskCell";
     return UITableViewAutomaticDimension;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
     [self.taskDelegate selectedTask:task];
+
+    return nil;
 }
 
-- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewRowAction *action = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Done" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-        Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+//    return @"Use Previous Task";
+//}
 
-        if ([self.taskDelegate respondsToSelector:@selector(completedTask:)]) {
-            [self.taskDelegate completedTask:task];
-        }
-    }];
+#pragma mark - KVO
 
-    return @[action];
-}
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    [self updateTableContentSize];
 }
 
 @end

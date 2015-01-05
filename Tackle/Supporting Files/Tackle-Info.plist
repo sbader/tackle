@@ -25,11 +25,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIAppFonts</key>
-	<array>
-		<string>Effra-Regular.otf</string>
-		<string>Effra-Light.otf</string>
-		<string>Effra-Medium.otf</string>
-	</array>
+	<array/>
 	<key>UILaunchStoryboardName</key>
 	<string>Launch Screen</string>
 	<key>UIRequiredDeviceCapabilities</key>

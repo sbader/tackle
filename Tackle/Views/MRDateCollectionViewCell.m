@@ -50,7 +50,7 @@
     self.dayOfMonthLabel = [[UILabel alloc] init];
     self.dayOfMonthLabel.translatesAutoresizingMaskIntoConstraints = NO;
     self.dayOfMonthLabel.textColor = [UIColor plumTintColor];
-    self.dayOfMonthLabel.font = [UIFont effraRegularWithSize:22.0];
+    self.dayOfMonthLabel.font = [UIFont fontForCalendarDayOfMonth];
     self.dayOfMonthLabel.textAlignment = NSTextAlignmentCenter;
 
     [self.contentView addSubview:self.dayOfMonthLabel];
@@ -61,7 +61,7 @@
     self.weekdayLabel = [[UILabel alloc] init];
     self.weekdayLabel.translatesAutoresizingMaskIntoConstraints = NO;
     self.weekdayLabel.textColor = [UIColor grayTextColor];
-    self.weekdayLabel.font = [UIFont effraRegularWithSize:12.0];
+    self.weekdayLabel.font = [UIFont fontForCalendarWeekday];
     self.weekdayLabel.textAlignment = NSTextAlignmentCenter;
 
     [self.contentView addSubview:self.weekdayLabel];
@@ -72,7 +72,7 @@
     self.monthLabel = [[UILabel alloc] init];
     self.monthLabel.translatesAutoresizingMaskIntoConstraints = NO;
     self.monthLabel.textColor = [UIColor grayTextColor];
-    self.monthLabel.font = [UIFont effraRegularWithSize:13.0];
+    self.monthLabel.font = [UIFont fontForCalendarMonth];
     self.monthLabel.textAlignment = NSTextAlignmentCenter;
 
     [self.contentView addSubview:self.monthLabel];

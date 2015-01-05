@@ -10,11 +10,13 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+
 #import "Task.h"
 #import "PaintCodeStyleKit.h"
+#import "MRTaskTableViewDelegate.h"
+#import "MRTaskEditViewController.h"
 #import "MRTaskTableViewController.h"
 #import "MRTaskEditNavigationController.h"
-#import "MRTaskEditViewController.h"
 
 @interface MRTaskListViewController () <MRTaskTableViewDelegate, MRTaskEditingDelegate>
 
@@ -92,7 +94,7 @@
     infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
     infoLabel.text = @"You have nothing to tackle right now. You can add a task by hitting the plus sign above.";
     infoLabel.textAlignment = NSTextAlignmentLeft;
-    infoLabel.font = [UIFont effraRegularWithSize:20.0];
+    infoLabel.font = [UIFont fontForInfoLabel];
     infoLabel.numberOfLines = 0;
     [self.infoView addSubview:infoLabel];
 
@@ -115,7 +117,7 @@
 }
 
 - (void)displayEditViewWithTitle:(NSString *)title dueDate:(NSDate *)dueDate {
-    MRTaskEditViewController *editController = [[MRTaskEditViewController alloc] initWithTitle:title dueDate:dueDate];
+    MRTaskEditViewController *editController = [[MRTaskEditViewController alloc] initWithTitle:title dueDate:dueDate managedObjectContext:self.managedObjectContext];
     editController.delegate = self;
     MRTaskEditNavigationController *navigationController = [[MRTaskEditNavigationController alloc] initWithRootViewController:editController];
     [self presentViewController:navigationController animated:YES completion:nil];
