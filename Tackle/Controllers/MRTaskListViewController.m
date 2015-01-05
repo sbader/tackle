@@ -57,10 +57,9 @@
                                                                             target:self
                                                                             action:@selector(handleLogoButton:)];
 
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[PaintCodeStyleKit imageOfAddIcon]
-                                                                              style:UIBarButtonItemStylePlain
-                                                                             target:self
-                                                                             action:@selector(handleAddButton:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                                                           target:self
+                                                                                           action:@selector(handleAddButton:)];
 
     [self setupInfoView];
     [self addObservers];
