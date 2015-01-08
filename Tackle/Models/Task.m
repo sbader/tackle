@@ -14,15 +14,22 @@ NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCateg
 
 @implementation Task
 
-@dynamic text;
+@dynamic title;
 @dynamic dueDate;
 @dynamic isDone;
+@dynamic createdDate;
+@dynamic completedDate;
 
-+ (Task *)insertItemWithText:(NSString*)text dueDate:(NSDate *)dueDate inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
+- (void) awakeFromInsert {
+    [super awakeFromInsert];
+    self.createdDate = [NSDate date];
+}
+
++ (Task *)insertItemWithTitle:(NSString*)title dueDate:(NSDate *)dueDate inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
     Task *task = [NSEntityDescription insertNewObjectForEntityForName:@"Task"
                                                inManagedObjectContext:managedObjectContext];
 
-    task.text = text;
+    task.title = title;
     task.dueDate = dueDate;
 
     return task;
@@ -32,7 +39,18 @@ NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCateg
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:managedObjectContext];
     fetchRequest.entity = entity;
+    fetchRequest.includesPropertyValues = NO;
     fetchRequest.predicate = [NSPredicate predicateWithFormat:@"isDone == NO"];
+
+    return [managedObjectContext countForFetchRequest:fetchRequest error:nil];
+}
+
++ (NSInteger)numberOfCompletedTasksInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:managedObjectContext];
+    fetchRequest.entity = entity;
+    fetchRequest.includesPropertyValues = NO;
+    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"isDone == YES"];
 
     return [managedObjectContext countForFetchRequest:fetchRequest error:nil];
 }
@@ -56,7 +74,7 @@ NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCateg
     UILocalNotification *notification = [[UILocalNotification alloc] init];
 
     [notification setFireDate:self.dueDate];
-    [notification setAlertBody:self.text];
+    [notification setAlertBody:self.title];
     [notification setRepeatInterval:NSCalendarUnitMinute];
     [notification setAlertAction:@"Tackle"];
     [notification setSoundName:UILocalNotificationDefaultSoundName];
@@ -111,7 +129,7 @@ NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCateg
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@ %@", self.text, self.dueDate];
+    return [NSString stringWithFormat:@"%@ %@", self.title, self.dueDate];
 }
 
 @end

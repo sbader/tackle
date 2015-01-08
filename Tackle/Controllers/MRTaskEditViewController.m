@@ -19,7 +19,7 @@
 #import "MRCalendarCollectionViewFlowLayout.h"
 #import "MRCalendarCollectionViewController.h"
 
-@interface MRTaskEditViewController () <MRDateSelectionDelegate, MRTimeIntervalSelectionDelegate, MRDatePickerViewControllerDelegate, MRTaskTableViewDelegate, UITextFieldDelegate, UIScrollViewDelegate>
+@interface MRTaskEditViewController () <MRDateSelectionDelegate, MRTimeIntervalSelectionDelegate, MRDatePickerViewControllerDelegate, MRPreviousTaskTitleDelegate, UITextFieldDelegate, UIScrollViewDelegate>
 
 @property (nonatomic) MRScrollView *scrollView;
 @property (nonatomic) UIView *topView;
@@ -38,6 +38,7 @@
 
 @property (nonatomic) NSDate *taskDueDate;
 @property (nonatomic) NSString *taskTitle;
+@property (nonatomic) BOOL shouldDisplayPreviousTasks;
 
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
 
@@ -52,6 +53,7 @@
         self.taskTitle = title;
         self.taskDueDate = dueDate;
         self.managedObjectContext = managedObjectContext;
+        self.shouldDisplayPreviousTasks = (title == nil);
     }
 
     return self;
@@ -67,7 +69,11 @@
     [self setupDateView];
     [self setupCalendarView];
     [self setupAddTimeView];
-//    [self setupPreviousTaskView];
+
+    if (self.shouldDisplayPreviousTasks) {
+        [self setupPreviousTaskView];
+    }
+
     [self setupConstraints];
 
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
@@ -322,22 +328,24 @@
     [self.previousTasksController.view bottomConstraintMatchesSuperview];
     [self.previousTasksController.view horizontalConstraintsMatchSuperview];
 
-    UIView *borderTop = [[UIView alloc] init];
-    borderTop.translatesAutoresizingMaskIntoConstraints = NO;
-    borderTop.backgroundColor = [UIColor grayBorderColor];
-    [self.previousTasksView addSubview:borderTop];
+    if ([Task numberOfCompletedTasksInManagedObjectContext:self.managedObjectContext] > 0) {
+        UIView *borderTop = [[UIView alloc] init];
+        borderTop.translatesAutoresizingMaskIntoConstraints = NO;
+        borderTop.backgroundColor = [UIColor grayBorderColor];
+        [self.previousTasksView addSubview:borderTop];
 
-    UIView *borderBottom = [[UIView alloc] init];
-    borderBottom.translatesAutoresizingMaskIntoConstraints = NO;
-    borderBottom.backgroundColor = [UIColor grayBorderColor];
-    [self.previousTasksView addSubview:borderBottom];
+        UIView *borderBottom = [[UIView alloc] init];
+        borderBottom.translatesAutoresizingMaskIntoConstraints = NO;
+        borderBottom.backgroundColor = [UIColor grayBorderColor];
+        [self.previousTasksView addSubview:borderBottom];
 
-    [borderTop horizontalConstraintsMatchSuperview];
-    [borderTop staticHeightConstraint:1.0];
-    [borderTop topConstraintMatchesSuperview];
-    [borderBottom staticHeightConstraint:1.0];
-    [borderBottom horizontalConstraintsMatchSuperview];
-    [borderBottom bottomConstraintMatchesSuperview];
+        [borderTop horizontalConstraintsMatchSuperview];
+        [borderTop staticHeightConstraint:1.0];
+        [borderTop topConstraintMatchesSuperview];
+        [borderBottom staticHeightConstraint:1.0];
+        [borderBottom horizontalConstraintsMatchSuperview];
+        [borderBottom bottomConstraintMatchesSuperview];
+    }
 }
 
 - (void)setupConstraints {
@@ -356,11 +364,6 @@
                                              @"dateView.width = view.width",
                                              @"calendarView.width = view.width",
                                              @"addTimeView.width = view.width",
-                                             @"addTimeView.bottom = view.bottom - 20",
-//                                             @"previousTasksView.top = addTimeView.bottom + 50",
-//                                             @"previousTasksView.bottom = view.bottom - 20 @1000",
-//                                             @"previousTasksView.height = previousTasksTableView.height",
-//                                             @"previousTasksView.height >= 242",
                                              ]
                                    metrics:@{}
                                      views:@{
@@ -369,10 +372,33 @@
                                              @"dateView": self.dateView,
                                              @"calendarView": self.calendarView,
                                              @"addTimeView": self.addTimeView,
-//                                             @"previousTasksTableView": self.previousTasksController.tableView,
-//                                             @"previousTasksView": self.previousTasksView,
                                              @"view": self.scrollView
                                              }];
+
+    if (self.shouldDisplayPreviousTasks) {
+        [self.scrollView addCompactConstraints:@[
+                                                 @"previousTasksView.top = addTimeView.bottom + 50",
+                                                 @"previousTasksView.bottom = view.bottom - 20 @1000",
+                                                 @"previousTasksView.height = previousTasksTableView.height",
+                                                 ]
+                                       metrics:@{}
+                                         views:@{
+                                                 @"previousTasksTableView": self.previousTasksController.tableView,
+                                                 @"previousTasksView": self.previousTasksView,
+                                                 @"addTimeView": self.addTimeView,
+                                                 @"view": self.scrollView
+                                                 }];
+    }
+    else {
+        [self.scrollView addCompactConstraints:@[
+                                                 @"addTimeView.bottom = view.bottom - 20",
+                                                 ]
+                                       metrics:@{}
+                                         views:@{
+                                                 @"addTimeView": self.addTimeView,
+                                                 @"view": self.scrollView
+                                                 }];
+    }
 }
 
 - (void)handleCancelButton:(id)sender {
@@ -498,6 +524,7 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
+    textField.text = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     self.activeView = nil;
 }
 
@@ -508,10 +535,10 @@
     [self updateDueDateButton];
 }
 
-#pragma mark - Task Table View Delegate
+#pragma mark - Previous Task Title Delegate
 
-- (void)selectedTask:(Task *)task {
-    self.taskTitle = task.text;
+- (void)selectedPreviousTaskTitle:(NSString *)title {
+    self.taskTitle = title;
     [self updateTitleField];
 }
 

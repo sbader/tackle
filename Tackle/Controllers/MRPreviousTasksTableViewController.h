@@ -10,9 +10,17 @@
 
 #import "MRTaskTableViewDelegate.h"
 
+@protocol MRPreviousTaskTitleDelegate;
+
 @interface MRPreviousTasksTableViewController : UITableViewController
 
-@property (nonatomic) id<MRTaskTableViewDelegate> taskDelegate;
+@property (nonatomic) id<MRPreviousTaskTitleDelegate> taskDelegate;
 - (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
+
+@end
+
+@protocol MRPreviousTaskTitleDelegate <NSObject>
+
+- (void)selectedPreviousTaskTitle:(NSString *)title;
 
 @end

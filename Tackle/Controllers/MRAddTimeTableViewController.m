@@ -9,6 +9,7 @@
 #import "MRAddTimeTableViewController.h"
 
 #import "MRAddTimeTableViewCell.h"
+#import "PaintCodeStyleKit.h"
 
 static NSString *addTimeCellReuseIdentifier = @"AddTimeCell";
 
@@ -24,9 +25,9 @@ static NSString *addTimeCellReuseIdentifier = @"AddTimeCell";
     [super viewDidLoad];
 
     self.timeIntervals = @[
-                           [MRTimeInterval timeIntervalWithName:@"Ten Minutes" unit:NSCalendarUnitMinute interval:10],
-                           [MRTimeInterval timeIntervalWithName:@"An Hour" unit:NSCalendarUnitHour interval:1],
-                           [MRTimeInterval timeIntervalWithName:@"A Day" unit:NSCalendarUnitDay interval:1],
+                           [MRTimeInterval timeIntervalWithName:@"Ten Minutes" icon:[PaintCodeStyleKit imageOfStopWatch] unit:NSCalendarUnitMinute interval:10],
+                           [MRTimeInterval timeIntervalWithName:@"an Hour" icon:[PaintCodeStyleKit imageOfHourglassIcon]  unit:NSCalendarUnitHour interval:1],
+                           [MRTimeInterval timeIntervalWithName:@"a Day" icon:[PaintCodeStyleKit imageOfCalendarIcon]  unit:NSCalendarUnitDay interval:1],
                            ];
 
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
@@ -50,6 +51,7 @@ static NSString *addTimeCellReuseIdentifier = @"AddTimeCell";
     MRAddTimeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:addTimeCellReuseIdentifier forIndexPath:indexPath];
     MRTimeInterval *timeInterval = self.timeIntervals[indexPath.row];
     cell.textLabel.text = [NSString stringWithFormat:@"Add %@", timeInterval.name];
+    cell.iconImageView.image = timeInterval.icon;
 
     return cell;
 }

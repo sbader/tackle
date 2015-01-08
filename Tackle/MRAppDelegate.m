@@ -152,15 +152,15 @@
 - (BOOL)addSampleData {
     [self removeAllTasks];
 
-    [Task insertItemWithText:@"Islanders" dueDate:[NSDate dateWithTimeIntervalSinceNow:14400] inManagedObjectContext:self.managedObjectContext];
-    [Task insertItemWithText:@"Renew Apple developer program membership" dueDate:[NSDate dateWithTimeIntervalSinceNow:72000] inManagedObjectContext:self.managedObjectContext];
-    [Task insertItemWithText:@"Pay Cobra" dueDate:[NSDate dateWithTimeIntervalSinceNow:86400] inManagedObjectContext:self.managedObjectContext];
-    [Task insertItemWithText:@"Go to party" dueDate:[NSDate dateWithTimeIntervalSinceNow:172800] inManagedObjectContext:self.managedObjectContext];
-    [Task insertItemWithText:@"Work on presentation for developer event" dueDate:[NSDate dateWithTimeIntervalSinceNow:171000] inManagedObjectContext:self.managedObjectContext];
-    [Task insertItemWithText:@"Developer event" dueDate:[NSDate dateWithTimeIntervalSinceNow:220000] inManagedObjectContext:self.managedObjectContext];
-    [Task insertItemWithText:@"Read about Objective-C and learn how to work with the Responder Chain" dueDate:[NSDate dateWithTimeIntervalSinceNow:240000] inManagedObjectContext:self.managedObjectContext];
-    [Task insertItemWithText:@"Leave for the Islanders game" dueDate:[NSDate dateWithTimeIntervalSinceNow:280000] inManagedObjectContext:self.managedObjectContext];
-    [Task insertItemWithText:@"Go to office party" dueDate:[NSDate dateWithTimeIntervalSinceNow:290000] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithTitle:@"Islanders" dueDate:[NSDate dateWithTimeIntervalSinceNow:14400] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithTitle:@"Renew Apple developer program membership" dueDate:[NSDate dateWithTimeIntervalSinceNow:72000] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithTitle:@"Pay Cobra" dueDate:[NSDate dateWithTimeIntervalSinceNow:86400] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithTitle:@"Go to party" dueDate:[NSDate dateWithTimeIntervalSinceNow:172800] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithTitle:@"Work on presentation for developer event" dueDate:[NSDate dateWithTimeIntervalSinceNow:171000] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithTitle:@"Developer event" dueDate:[NSDate dateWithTimeIntervalSinceNow:220000] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithTitle:@"Read about Objective-C and learn how to work with the Responder Chain" dueDate:[NSDate dateWithTimeIntervalSinceNow:240000] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithTitle:@"Leave for the Islanders game" dueDate:[NSDate dateWithTimeIntervalSinceNow:280000] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithTitle:@"Go to office party" dueDate:[NSDate dateWithTimeIntervalSinceNow:290000] inManagedObjectContext:self.managedObjectContext];
 
     NSError *error = nil;
 

@@ -24,5 +24,6 @@
 + (UIFont *)fontForInfoLabel;
 + (UIFont *)fontForTableViewTextLabel;
 + (UIFont *)fontForTableViewDetailLabel;
++ (UIFont *)fontForTableViewSectionHeader;
 
 @end
