@@ -43,7 +43,7 @@
 }
 
 + (UIFont *)fontForCalendarWeekday {
-    return [self avenirNextRegularWithSize:12.0];
+    return [self avenirNextRegularWithSize:11.0];
 }
 
 + (UIFont *)fontForCalendarDayOfMonth {
@@ -76,6 +76,10 @@
 
 + (UIFont *)fontForTableViewDetailLabel {
     return [self avenirNextRegularWithSize:14.0];
+}
+
++ (UIFont *)fontForTableViewSectionHeader {
+    return [self avenirNextMediumWithSize:12.0];
 }
 
 @end

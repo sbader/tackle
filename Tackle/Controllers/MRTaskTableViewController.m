@@ -54,7 +54,7 @@ static NSString * const taskCellReuseIdentifier = @"TaskCell";
 
 - (void)updateCell:(MRTaskTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = task.text;
+    cell.textLabel.text = task.title;
     cell.detailTextLabel.text = task.dueDate.tackleString;
 }
 

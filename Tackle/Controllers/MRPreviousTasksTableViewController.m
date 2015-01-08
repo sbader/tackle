@@ -24,7 +24,7 @@ static NSString * const previousTaskCellReuseIdentifier = @"PreviousTaskCell";
 @implementation MRPreviousTasksTableViewController
 
 - (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
-    self = [super init];
+    self = [super initWithStyle:UITableViewStylePlain];
 
     if (self) {
         self.managedObjectContext = managedObjectContext;
@@ -34,12 +34,18 @@ static NSString * const previousTaskCellReuseIdentifier = @"PreviousTaskCell";
         self.tableView.dataSource = self;
         self.tableView.delegate = self;
         self.tableView.separatorColor = [UIColor grayBorderColor];
-//        self.tableView.separatorInset = UIEdgeInsetsZero;
         self.tableView.allowsMultipleSelectionDuringEditing = NO;
         self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 
         [self observeValueForKeyPath:@"contentSize" ofObject:self.tableView change:0 context:nil];
-        self.heightConstraint = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:0];
+        self.heightConstraint = [NSLayoutConstraint constraintWithItem:self.view
+                                                             attribute:NSLayoutAttributeHeight
+                                                             relatedBy:NSLayoutRelationEqual
+                                                                toItem:nil
+                                                             attribute:NSLayoutAttributeNotAnAttribute
+                                                            multiplier:1.0
+                                                              constant:0];
+
         self.heightConstraint.priority = UILayoutPriorityDefaultLow;
 
         [self.view addConstraint:self.heightConstraint];
@@ -50,12 +56,13 @@ static NSString * const previousTaskCellReuseIdentifier = @"PreviousTaskCell";
 }
 
 - (void)updateTableContentSize {
+    [self.tableView layoutIfNeeded];
     self.heightConstraint.constant = self.tableView.contentSize.height;
 }
 
 - (void)updateCell:(MRPreviousTaskTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = task.text;
+    NSDictionary *dict = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.textLabel.text = dict[@"title"];
 }
 
 #pragma mark - Fetched results controller
@@ -68,9 +75,14 @@ static NSString * const previousTaskCellReuseIdentifier = @"PreviousTaskCell";
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
     fetchRequest.entity = entity;
+    fetchRequest.propertiesToFetch = @[
+                                       [[entity propertiesByName] objectForKey:@"title"]
+                                       ];
+    fetchRequest.returnsDistinctResults = YES;
+    fetchRequest.resultType = NSDictionaryResultType;
     fetchRequest.fetchLimit = 5;
 
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"dueDate" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"completedDate" ascending:NO];
     NSArray *sortDescriptors = @[sortDescriptor];
 
     [fetchRequest setSortDescriptors:sortDescriptors];
@@ -92,30 +104,6 @@ static NSString * const previousTaskCellReuseIdentifier = @"PreviousTaskCell";
     return _fetchedResultsController;
 }
 
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
-       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
-      newIndexPath:(NSIndexPath *)newIndexPath {
-    switch(type) {
-        case NSFetchedResultsChangeInsert:
-            [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            break;
-
-        case NSFetchedResultsChangeDelete:
-            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            break;
-
-        case NSFetchedResultsChangeUpdate:
-            [self updateCell:(MRPreviousTaskTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
-            break;
-
-        case NSFetchedResultsChangeMove:
-            [self.tableView moveRowAtIndexPath:indexPath toIndexPath:newIndexPath];
-            [self updateCell:(MRPreviousTaskTableViewCell *)[self.tableView cellForRowAtIndexPath:newIndexPath] atIndexPath:newIndexPath];
-            break;
-    }
-}
-
 #pragma mark - Table View Data Source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -130,6 +118,42 @@ static NSString * const previousTaskCellReuseIdentifier = @"PreviousTaskCell";
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if ([self tableView:tableView numberOfRowsInSection:section] > 0) {
+        return 25.0;
+    }
+    else {
+        return 0;
+    }
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *view;
+    if ([self tableView:tableView numberOfRowsInSection:section] > 0) {
+        view = [[UIView alloc] init];
+        UILabel *label = [[UILabel alloc] init];
+        label.translatesAutoresizingMaskIntoConstraints = NO;
+        label.text = @"Use Previous Task";
+        label.font = [UIFont fontForTableViewSectionHeader];
+        [view addSubview:label];
+
+        [label leadingConstraintMatchesSuperviewWithConstant:20.0];
+        [label trailingConstraintMatchesSuperview];
+        [label verticalCenterConstraintMatchesSuperview];
+
+        UIView *separator = [[UIView alloc] init];
+        separator.translatesAutoresizingMaskIntoConstraints = NO;
+        separator.backgroundColor = [UIColor grayBorderColor];
+        [view addSubview:separator];
+
+        [separator bottomConstraintMatchesSuperview];
+        [separator horizontalConstraintsMatchSuperview];
+        [separator staticHeightConstraint:0.5];
+    }
+
+    return view;
+}
+
 #pragma mark - Table View Delegate
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -137,15 +161,11 @@ static NSString * const previousTaskCellReuseIdentifier = @"PreviousTaskCell";
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    [self.taskDelegate selectedTask:task];
+    NSDictionary *taskDict = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [self.taskDelegate selectedPreviousTaskTitle:taskDict[@"title"]];
 
     return nil;
 }
-
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-//    return @"Use Previous Task";
-//}
 
 #pragma mark - KVO
 

@@ -10,4 +10,6 @@
 
 @interface MRAddTimeTableViewCell : UITableViewCell
 
+@property (nonatomic) UIImageView *iconImageView;
+
 @end

@@ -10,11 +10,12 @@
 
 @implementation MRTimeInterval
 
-+ (instancetype)timeIntervalWithName:(NSString *)name unit:(NSCalendarUnit)unit interval:(NSUInteger)interval {
++ (instancetype)timeIntervalWithName:(NSString *)name icon:(UIImage *)icon unit:(NSCalendarUnit)unit interval:(NSUInteger)interval {
     MRTimeInterval *timeInterval = [[MRTimeInterval alloc] init];
     timeInterval.name = name;
     timeInterval.unit = unit;
     timeInterval.interval = interval;
+    timeInterval.icon = icon;
 
     return timeInterval;
 }

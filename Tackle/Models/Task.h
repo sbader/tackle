@@ -15,14 +15,17 @@ extern NSString * const kMRTaskNotificationCategoryIdentifier;
 
 @interface Task : NSManagedObject
 
-@property (nonatomic, retain) NSString * text;
-@property (nonatomic, retain) NSDate * dueDate;
+@property (nonatomic, retain) NSString *title;
+@property (nonatomic, retain) NSDate *dueDate;
+@property (nonatomic, retain) NSDate *createdDate;
+@property (nonatomic, retain) NSDate *completedDate;
 @property (nonatomic) BOOL isDone;
 
-+ (Task *)insertItemWithText:(NSString*)text dueDate:(NSDate *)dueDate inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
++ (Task *)insertItemWithTitle:(NSString*)title dueDate:(NSDate *)dueDate inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 + (NSArray *)allOpenTasksWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext error:(NSError **)error
 ;
 + (NSInteger)numberOfOpenTasksInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
++ (NSInteger)numberOfCompletedTasksInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 + (void)rescheduleAllNotificationsWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 - (BOOL)scheduleNotification;
 - (void)markAsDone;

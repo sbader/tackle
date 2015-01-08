@@ -13,7 +13,8 @@
 @property (nonatomic) NSCalendarUnit unit;
 @property (nonatomic) NSUInteger interval;
 @property (nonatomic) NSString *name;
+@property (nonatomic) UIImage *icon;
 
-+ (instancetype)timeIntervalWithName:(NSString *)name unit:(NSCalendarUnit)unit interval:(NSUInteger)interval;
++ (instancetype)timeIntervalWithName:(NSString *)name icon:(UIImage *)icon unit:(NSCalendarUnit)unit interval:(NSUInteger)interval;
 
 @end

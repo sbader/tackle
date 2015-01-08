@@ -133,7 +133,7 @@
                                                    inManagedObjectContext:self.managedObjectContext];
     }
 
-    task.text = title;
+    task.title = title;
     task.dueDate = dueDate;
 
     __block NSError *error;
@@ -166,12 +166,13 @@
 
 - (void)selectedTask:(Task *)task {
     self.editingTask = task;
-    [self displayEditViewWithTitle:task.text dueDate:task.dueDate];
+    [self displayEditViewWithTitle:task.title dueDate:task.dueDate];
 }
 
 - (void)completedTask:(Task *)task {
     __block NSError *error;
     task.isDone = YES;
+    task.completedDate = [NSDate date];
 
     [task.managedObjectContext performBlock:^{
         [task.managedObjectContext save:&error];
