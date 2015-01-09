@@ -26,10 +26,6 @@ extern NSString * const kMRTaskNotificationCategoryIdentifier;
 ;
 + (NSInteger)numberOfOpenTasksInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 + (NSInteger)numberOfCompletedTasksInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
-+ (void)rescheduleAllNotificationsWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
-- (BOOL)scheduleNotification;
 - (void)markAsDone;
-- (void)cancelNotification;
-- (void)rescheduleNotification;
 
 @end

@@ -13,6 +13,7 @@
 
 #import "Task.h"
 #import "PaintCodeStyleKit.h"
+#import "MRNotificationProvider.h"
 #import "MRTaskTableViewDelegate.h"
 #import "MRTaskEditViewController.h"
 #import "MRTaskTableViewController.h"
@@ -139,7 +140,7 @@
     __block NSError *error;
     [task.managedObjectContext performBlock:^{
         [task.managedObjectContext save:&error];
-        [Task rescheduleAllNotificationsWithManagedObjectContext:task.managedObjectContext];
+        [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:task.managedObjectContext];
     }];
 }
 
@@ -176,7 +177,7 @@
 
     [task.managedObjectContext performBlock:^{
         [task.managedObjectContext save:&error];
-        [Task rescheduleAllNotificationsWithManagedObjectContext:task.managedObjectContext];
+        [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:task.managedObjectContext];
     }];
 }
 
