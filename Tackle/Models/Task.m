@@ -70,62 +70,8 @@ NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCateg
     return [managedObjectContext executeFetchRequest:fetchRequest error:error];
 }
 
-- (BOOL)scheduleNotification {
-    UILocalNotification *notification = [[UILocalNotification alloc] init];
-
-    [notification setFireDate:self.dueDate];
-    [notification setAlertBody:self.title];
-    [notification setRepeatInterval:NSCalendarUnitMinute];
-    [notification setAlertAction:@"Tackle"];
-    [notification setSoundName:UILocalNotificationDefaultSoundName];
-    [notification setUserInfo:@{@"uniqueId": self.objectID.URIRepresentation.absoluteString}];
-    [notification setCategory:@"taskNotificationCategory"];
-
-    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-
-    return YES;
-}
-
-- (void)cancelNotification {
-    NSArray *localNotifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
-
-    NSUInteger index = [localNotifications indexOfObjectPassingTest:^BOOL(UILocalNotification *notification, NSUInteger idx, BOOL *stop) {
-        NSString *uniqueId = (NSString *)[notification.userInfo objectForKey:@"uniqueId"];
-        return [uniqueId isEqualToString:self.objectID.URIRepresentation.absoluteString];
-    }];
-
-    if (index == NSNotFound) {
-        return;
-    }
-
-    UILocalNotification *notification = [localNotifications objectAtIndex:index];
-    [[UIApplication sharedApplication] cancelLocalNotification:notification];
-}
-
-- (void)rescheduleNotification {
-    [self cancelNotification];
-    [self scheduleNotification];
-}
-
 - (void)markAsDone {
     [self setIsDone:YES];
-    [self cancelNotification];
-}
-
-+ (void)rescheduleAllNotificationsWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
-    [[UIApplication sharedApplication] cancelAllLocalNotifications];
-
-    NSError *error;
-    NSArray *tasks = [self allOpenTasksWithManagedObjectContext:managedObjectContext error:&error];
-
-    if (error) {
-        NSLog(@"error getting tasks: %@", error);
-        return;
-    }
-
-    [tasks enumerateObjectsUsingBlock:^(Task *task, NSUInteger idx, BOOL *stop) {
-        [task scheduleNotification];
-    }];
 }
 
 - (NSString *)description {

@@ -29,12 +29,20 @@
 		D12E87831894A07B008119B8 /* UIFont+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D12E87821894A07B008119B8 /* UIFont+TackleAdditions.m */; };
 		D12E8786189573FC008119B8 /* UIColor+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D12E8785189573FC008119B8 /* UIColor+TackleAdditions.m */; };
 		D139E57418959F41007163AD /* MRLongDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D139E57318959F41007163AD /* MRLongDateFormatter.m */; };
+		D150540A1A5F54AA000CA868 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D15054091A5F54AA000CA868 /* NotificationCenter.framework */; };
+		D15054151A5F54AA000CA868 /* TackleToday.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D15054081A5F54AA000CA868 /* TackleToday.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D150541B1A5F5724000CA868 /* Tackle.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D1027F7C18904E8400FF44A4 /* Tackle.xcdatamodeld */; };
+		D150541D1A5F572C000CA868 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = D1027FED1890535700FF44A4 /* Task.m */; };
+		D15054211A5F5B41000CA868 /* MRNotificationProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = D15054201A5F5B41000CA868 /* MRNotificationProvider.m */; };
 		D162856B1A55AB770006929E /* MRScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = D162856A1A55AB770006929E /* MRScrollView.m */; };
 		D17BCFB3189F3D05001996C1 /* UIView+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D17BCFB2189F3D05001996C1 /* UIView+TackleAdditions.m */; };
 		D194BEBB18A1CCC600E5E4DA /* MRHeartbeat.m in Sources */ = {isa = PBXBuildFile; fileRef = D194BEBA18A1CCC600E5E4DA /* MRHeartbeat.m */; };
 		D19C952718A28ACF009082F3 /* NSDate+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D19C952618A28ACF009082F3 /* NSDate+TackleAdditions.m */; };
 		D19C952B18A29297009082F3 /* MRMediumDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D19C952A18A29297009082F3 /* MRMediumDateFormatter.m */; };
 		D19C952E18A29368009082F3 /* MRShortDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D19C952D18A29368009082F3 /* MRShortDateFormatter.m */; };
+		D1A065BF1A5F7DC60093D08E /* MRTodayMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A065BE1A5F7DC60093D08E /* MRTodayMainViewController.m */; };
+		D1A065C21A5F7DEB0093D08E /* MRTodayTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A065C11A5F7DEB0093D08E /* MRTodayTableViewController.m */; };
+		D1A065C31A5F82FC0093D08E /* UIView+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D17BCFB2189F3D05001996C1 /* UIView+TackleAdditions.m */; };
 		D1A36E5A18A2B2070020EAEB /* MRTimeDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A36E5918A2B2070020EAEB /* MRTimeDateFormatter.m */; };
 		D1A3FDDB1A505EE400A384FE /* PaintCodeStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A3FDDA1A505EE400A384FE /* PaintCodeStyleKit.m */; };
 		D1A3FDDE1A511B9F00A384FE /* MRMonthDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A3FDDD1A511B9F00A384FE /* MRMonthDateFormatter.m */; };
@@ -58,6 +66,12 @@
 		D1E1412C1A4FE77F00992B1E /* MRWeekdayDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E1412B1A4FE77F00992B1E /* MRWeekdayDateFormatter.m */; };
 		D1E1412F1A4FE82000992B1E /* MRDayOfMonthDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E1412E1A4FE82000992B1E /* MRDayOfMonthDateFormatter.m */; };
 		D1E141321A4FEC8700992B1E /* MRCalendarCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E141311A4FEC8700992B1E /* MRCalendarCollectionViewFlowLayout.m */; };
+		D1F80B5A1A5F660000F9D762 /* NSDate+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D19C952618A28ACF009082F3 /* NSDate+TackleAdditions.m */; };
+		D1F80B5B1A5F667100F9D762 /* MRLongDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D139E57318959F41007163AD /* MRLongDateFormatter.m */; };
+		D1F80B5C1A5F667400F9D762 /* MRMediumDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D19C952A18A29297009082F3 /* MRMediumDateFormatter.m */; };
+		D1F80B5D1A5F667900F9D762 /* MRShortDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D19C952D18A29368009082F3 /* MRShortDateFormatter.m */; };
+		D1F80B5E1A5F667B00F9D762 /* MRTimeDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A36E5918A2B2070020EAEB /* MRTimeDateFormatter.m */; };
+		D1F80B621A5F67F000F9D762 /* MRTodayTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1F80B611A5F67F000F9D762 /* MRTodayTableViewCell.m */; };
 		D1F968901A565338009813C0 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1F9688F1A565338009813C0 /* Accelerate.framework */; };
 /* End PBXBuildFile section */
 
@@ -69,7 +83,28 @@
 			remoteGlobalIDString = D1027F6418904E8400FF44A4;
 			remoteInfo = Tackle;
 		};
+		D15054131A5F54AA000CA868 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D1027F5D18904E8400FF44A4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D15054071A5F54AA000CA868;
+			remoteInfo = TackleToday;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D15054191A5F54AA000CA868 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				D15054151A5F54AA000CA868 /* TackleToday.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		C786AB3A19D355810077F11C /* CompactConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompactConstraint.h; sourceTree = "<group>"; };
@@ -104,6 +139,13 @@
 		D12E8785189573FC008119B8 /* UIColor+TackleAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+TackleAdditions.m"; sourceTree = "<group>"; };
 		D139E57218959F41007163AD /* MRLongDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRLongDateFormatter.h; sourceTree = "<group>"; };
 		D139E57318959F41007163AD /* MRLongDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRLongDateFormatter.m; sourceTree = "<group>"; };
+		D15054081A5F54AA000CA868 /* TackleToday.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TackleToday.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		D15054091A5F54AA000CA868 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		D150540D1A5F54AA000CA868 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D150541A1A5F56EB000CA868 /* Tackle.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Tackle.entitlements; sourceTree = "<group>"; };
+		D150541E1A5F5842000CA868 /* TackleToday.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TackleToday.entitlements; sourceTree = "<group>"; };
+		D150541F1A5F5B41000CA868 /* MRNotificationProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRNotificationProvider.h; sourceTree = "<group>"; };
+		D15054201A5F5B41000CA868 /* MRNotificationProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRNotificationProvider.m; sourceTree = "<group>"; };
 		D16285691A55AB770006929E /* MRScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRScrollView.h; sourceTree = "<group>"; };
 		D162856A1A55AB770006929E /* MRScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRScrollView.m; sourceTree = "<group>"; };
 		D17BCFB1189F3D05001996C1 /* UIView+TackleAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TackleAdditions.h"; sourceTree = "<group>"; };
@@ -116,6 +158,10 @@
 		D19C952A18A29297009082F3 /* MRMediumDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRMediumDateFormatter.m; sourceTree = "<group>"; };
 		D19C952C18A29368009082F3 /* MRShortDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRShortDateFormatter.h; sourceTree = "<group>"; };
 		D19C952D18A29368009082F3 /* MRShortDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRShortDateFormatter.m; sourceTree = "<group>"; };
+		D1A065BD1A5F7DC60093D08E /* MRTodayMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRTodayMainViewController.h; sourceTree = "<group>"; };
+		D1A065BE1A5F7DC60093D08E /* MRTodayMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRTodayMainViewController.m; sourceTree = "<group>"; };
+		D1A065C01A5F7DEB0093D08E /* MRTodayTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRTodayTableViewController.h; sourceTree = "<group>"; };
+		D1A065C11A5F7DEB0093D08E /* MRTodayTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRTodayTableViewController.m; sourceTree = "<group>"; };
 		D1A36E5818A2B2070020EAEB /* MRTimeDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRTimeDateFormatter.h; sourceTree = "<group>"; };
 		D1A36E5918A2B2070020EAEB /* MRTimeDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRTimeDateFormatter.m; sourceTree = "<group>"; };
 		D1A3FDD91A505EE400A384FE /* PaintCodeStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaintCodeStyleKit.h; sourceTree = "<group>"; };
@@ -163,6 +209,8 @@
 		D1E1412E1A4FE82000992B1E /* MRDayOfMonthDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRDayOfMonthDateFormatter.m; sourceTree = "<group>"; };
 		D1E141301A4FEC8700992B1E /* MRCalendarCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRCalendarCollectionViewFlowLayout.h; sourceTree = "<group>"; };
 		D1E141311A4FEC8700992B1E /* MRCalendarCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRCalendarCollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		D1F80B601A5F67F000F9D762 /* MRTodayTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRTodayTableViewCell.h; sourceTree = "<group>"; };
+		D1F80B611A5F67F000F9D762 /* MRTodayTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRTodayTableViewCell.m; sourceTree = "<group>"; };
 		D1F9688F1A565338009813C0 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -187,6 +235,14 @@
 				D1027F8A18904E8400FF44A4 /* CoreData.framework in Frameworks */,
 				D1027F8918904E8400FF44A4 /* UIKit.framework in Frameworks */,
 				D1027F8818904E8400FF44A4 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D15054051A5F54AA000CA868 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D150540A1A5F54AA000CA868 /* NotificationCenter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +274,7 @@
 			children = (
 				D1027F7018904E8400FF44A4 /* Tackle */,
 				D1027F8D18904E8400FF44A4 /* TackleTests */,
+				D150540B1A5F54AA000CA868 /* TackleToday */,
 				D1027F6718904E8400FF44A4 /* Frameworks */,
 				D1027F6618904E8400FF44A4 /* Products */,
 			);
@@ -228,6 +285,7 @@
 			children = (
 				D1027F6518904E8400FF44A4 /* Tackle.app */,
 				D1027F8518904E8400FF44A4 /* TackleTests.xctest */,
+				D15054081A5F54AA000CA868 /* TackleToday.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -241,6 +299,7 @@
 				D1027F6C18904E8400FF44A4 /* UIKit.framework */,
 				D1027F6E18904E8400FF44A4 /* CoreData.framework */,
 				D1027F8618904E8400FF44A4 /* XCTest.framework */,
+				D15054091A5F54AA000CA868 /* NotificationCenter.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -248,6 +307,7 @@
 		D1027F7018904E8400FF44A4 /* Tackle */ = {
 			isa = PBXGroup;
 			children = (
+				D150541A1A5F56EB000CA868 /* Tackle.entitlements */,
 				D1027F7918904E8400FF44A4 /* MRAppDelegate.h */,
 				D1027F7A18904E8400FF44A4 /* MRAppDelegate.m */,
 				D12E877A18949FFD008119B8 /* Categories */,
@@ -301,6 +361,8 @@
 				D1027FED1890535700FF44A4 /* Task.m */,
 				D1CFD4EC1A51F455004489AC /* MRTimeInterval.h */,
 				D1CFD4ED1A51F455004489AC /* MRTimeInterval.m */,
+				D150541F1A5F5B41000CA868 /* MRNotificationProvider.h */,
+				D15054201A5F5B41000CA868 /* MRNotificationProvider.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -398,6 +460,29 @@
 			path = Lib;
 			sourceTree = "<group>";
 		};
+		D150540B1A5F54AA000CA868 /* TackleToday */ = {
+			isa = PBXGroup;
+			children = (
+				D150541E1A5F5842000CA868 /* TackleToday.entitlements */,
+				D1A065BD1A5F7DC60093D08E /* MRTodayMainViewController.h */,
+				D1A065BE1A5F7DC60093D08E /* MRTodayMainViewController.m */,
+				D1A065C01A5F7DEB0093D08E /* MRTodayTableViewController.h */,
+				D1A065C11A5F7DEB0093D08E /* MRTodayTableViewController.m */,
+				D1F80B601A5F67F000F9D762 /* MRTodayTableViewCell.h */,
+				D1F80B611A5F67F000F9D762 /* MRTodayTableViewCell.m */,
+				D150540C1A5F54AA000CA868 /* Supporting Files */,
+			);
+			path = TackleToday;
+			sourceTree = "<group>";
+		};
+		D150540C1A5F54AA000CA868 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D150540D1A5F54AA000CA868 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		D19C952818A28DBF009082F3 /* Formatters */ = {
 			isa = PBXGroup;
 			children = (
@@ -437,10 +522,12 @@
 				D1027F6118904E8400FF44A4 /* Sources */,
 				D1027F6218904E8400FF44A4 /* Frameworks */,
 				D1027F6318904E8400FF44A4 /* Resources */,
+				D15054191A5F54AA000CA868 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				D15054141A5F54AA000CA868 /* PBXTargetDependency */,
 			);
 			name = Tackle;
 			productName = Tackle;
@@ -465,6 +552,23 @@
 			productReference = D1027F8518904E8400FF44A4 /* TackleTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		D15054071A5F54AA000CA868 /* TackleToday */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D15054181A5F54AA000CA868 /* Build configuration list for PBXNativeTarget "TackleToday" */;
+			buildPhases = (
+				D15054041A5F54AA000CA868 /* Sources */,
+				D15054051A5F54AA000CA868 /* Frameworks */,
+				D15054061A5F54AA000CA868 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TackleToday;
+			productName = TackleToday;
+			productReference = D15054081A5F54AA000CA868 /* TackleToday.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -477,9 +581,23 @@
 				TargetAttributes = {
 					D1027F6418904E8400FF44A4 = {
 						DevelopmentTeam = 42UWJ9W9ZX;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					D1027F8418904E8400FF44A4 = {
 						TestTargetID = D1027F6418904E8400FF44A4;
+					};
+					D15054071A5F54AA000CA868 = {
+						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 42UWJ9W9ZX;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -497,6 +615,7 @@
 			targets = (
 				D1027F6418904E8400FF44A4 /* Tackle */,
 				D1027F8418904E8400FF44A4 /* TackleTests */,
+				D15054071A5F54AA000CA868 /* TackleToday */,
 			);
 		};
 /* End PBXProject section */
@@ -517,6 +636,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1027F9218904E8400FF44A4 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D15054061A5F54AA000CA868 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,6 +668,7 @@
 				D1027F7718904E8400FF44A4 /* main.m in Sources */,
 				D19C952E18A29368009082F3 /* MRShortDateFormatter.m in Sources */,
 				D1E141121A4F7A4300992B1E /* MRRootViewController.m in Sources */,
+				D15054211A5F5B41000CA868 /* MRNotificationProvider.m in Sources */,
 				D162856B1A55AB770006929E /* MRScrollView.m in Sources */,
 				D1027F7E18904E8400FF44A4 /* Tackle.xcdatamodeld in Sources */,
 				D1E141061A4F79D500992B1E /* MRTaskEditViewController.m in Sources */,
@@ -576,6 +703,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D15054041A5F54AA000CA868 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1F80B5E1A5F667B00F9D762 /* MRTimeDateFormatter.m in Sources */,
+				D1A065C31A5F82FC0093D08E /* UIView+TackleAdditions.m in Sources */,
+				D1F80B5C1A5F667400F9D762 /* MRMediumDateFormatter.m in Sources */,
+				D1F80B5D1A5F667900F9D762 /* MRShortDateFormatter.m in Sources */,
+				D1F80B5A1A5F660000F9D762 /* NSDate+TackleAdditions.m in Sources */,
+				D150541D1A5F572C000CA868 /* Task.m in Sources */,
+				D1A065BF1A5F7DC60093D08E /* MRTodayMainViewController.m in Sources */,
+				D1A065C21A5F7DEB0093D08E /* MRTodayTableViewController.m in Sources */,
+				D150541B1A5F5724000CA868 /* Tackle.xcdatamodeld in Sources */,
+				D1F80B5B1A5F667100F9D762 /* MRLongDateFormatter.m in Sources */,
+				D1F80B621A5F67F000F9D762 /* MRTodayTableViewCell.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -583,6 +728,11 @@
 			isa = PBXTargetDependency;
 			target = D1027F6418904E8400FF44A4 /* Tackle */;
 			targetProxy = D1027F8B18904E8400FF44A4 /* PBXContainerItemProxy */;
+		};
+		D15054141A5F54AA000CA868 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D15054071A5F54AA000CA868 /* TackleToday */;
+			targetProxy = D15054131A5F54AA000CA868 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -685,7 +835,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Tackle/Tackle.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -705,7 +857,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Tackle/Tackle.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -759,6 +913,46 @@
 			};
 			name = Release;
 		};
+		D15054161A5F54AA000CA868 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_ENTITLEMENTS = TackleToday/TackleToday.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = TackleToday/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		D15054171A5F54AA000CA868 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_ENTITLEMENTS = TackleToday/TackleToday.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = TackleToday/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -785,6 +979,15 @@
 			buildConfigurations = (
 				D1027F9B18904E8400FF44A4 /* Debug */,
 				D1027F9C18904E8400FF44A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D15054181A5F54AA000CA868 /* Build configuration list for PBXNativeTarget "TackleToday" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D15054161A5F54AA000CA868 /* Debug */,
+				D15054171A5F54AA000CA868 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
