@@ -35,6 +35,12 @@ NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCateg
     return task;
 }
 
++ (Task *)findTaskWithUniqueId:(NSString *)uniqueId inManagedObjectContext:(NSManagedObjectContext *)managedObjectContentext {
+    NSManagedObjectID *managedObjectId = [[managedObjectContentext persistentStoreCoordinator] managedObjectIDForURIRepresentation:[NSURL URLWithString:uniqueId]];
+    NSError *error;
+    return (Task *)[managedObjectContentext existingObjectWithID:managedObjectId error:&error];
+}
+
 + (NSInteger)numberOfOpenTasksInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:managedObjectContext];

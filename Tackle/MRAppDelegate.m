@@ -118,7 +118,7 @@
 }
 
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void (^)())completionHandler {
-    Task *task = [self findTaskWithUniqueId:[notification.userInfo objectForKey:@"uniqueId"]];
+    Task *task = [Task findTaskWithUniqueId:[notification.userInfo objectForKey:@"uniqueId"] inManagedObjectContext:self.managedObjectContext];
     if ([identifier isEqualToString:kMRAddTenMinutesActionIdentifier]) {
         task.dueDate = [NSDate dateWithTimeIntervalSinceNow:600];
 
@@ -143,12 +143,6 @@
     else {
         NSLog(@"Cannot handle action with identifier %@", identifier);
     }
-}
-
-- (Task *)findTaskWithUniqueId:(NSString *)uniqueId {
-    NSManagedObjectID *managedObjectId = [self.persistentStoreCoordinator managedObjectIDForURIRepresentation:[NSURL URLWithString:uniqueId]];
-    NSError *error;
-    return (Task *)[self.managedObjectContext existingObjectWithID:managedObjectId error:&error];
 }
 
 - (BOOL)addSampleData {
@@ -188,7 +182,7 @@
     NSString *base64URLString = [url lastPathComponent];
     NSData *data = [[NSData alloc] initWithBase64EncodedString:base64URLString options:0];
     NSString *urlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    Task *task = [self findTaskWithUniqueId:urlString];
+    Task *task = [Task findTaskWithUniqueId:urlString inManagedObjectContext:self.managedObjectContext];
     if (task) {
         [self.rootController handleNotificationForTask:task];
     }
@@ -254,5 +248,16 @@
         }
     }
 }
+
+#pragma mark - WatchKit
+
+- (void)application:(UIApplication *)application handleWatchKitExtensionRequest:(NSDictionary *)userInfo reply:(void(^)(NSDictionary *replyInfo))reply{
+    // Receives text input result from the WatchKit app extension.
+    NSLog(@"User Info: %@", userInfo);
+
+    // Sends a confirmation message to the WatchKit app extension that the text input result was received.
+    reply(@{@"Confirmation" : @"Text was received."});
+}
+
 
 @end
