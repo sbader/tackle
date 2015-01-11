@@ -23,5 +23,6 @@
 @protocol MRTaskEditingDelegate <NSObject>
 
 - (void)editedTaskTitle:(NSString *)title dueDate:(NSDate *)dueDate;
+- (void)completedTask;
 
 @end

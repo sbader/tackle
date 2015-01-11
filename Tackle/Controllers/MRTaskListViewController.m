@@ -183,6 +183,13 @@
 
 #pragma mark - Task Editing Delegate
 
+
+- (void)completedTask {
+    if (self.editingTask) {
+        [self completedTask:self.editingTask];
+    }
+}
+
 - (void)editedTaskTitle:(NSString *)title dueDate:(NSDate *)dueDate {
     [self saveEditingTaskWithTitle:title dueDate:dueDate];
 }
