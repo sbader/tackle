@@ -18,6 +18,8 @@
         self.textLabel.numberOfLines = 1;
         self.backgroundColor = [UIColor offWhiteBackgroundColor];
         self.textLabel.font = [UIFont fontForFormTableViewCellTextLabel];
+
+        [self.contentView staticHeightConstraint:50.0];
     }
 
     return self;
