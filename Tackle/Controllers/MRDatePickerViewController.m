@@ -76,7 +76,7 @@
     self.datePicker.translatesAutoresizingMaskIntoConstraints = NO;
     self.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
     self.datePicker.minimumDate = [NSDate date];
-    self.datePicker.minuteInterval = 10;
+    self.datePicker.minuteInterval = 5;
     [self.datePicker setDate:self.date animated:NO];
     [self.datePickerContainer addSubview:self.datePicker];
 
