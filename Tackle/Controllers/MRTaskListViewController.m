@@ -67,6 +67,19 @@
     [self displayInfoViewWithOpenTasks];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self becomeFirstResponder];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self resignFirstResponder];
+}
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
 
 - (void)addObservers {
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -175,10 +188,28 @@
     task.isDone = YES;
     task.completedDate = [NSDate date];
 
+    [self.undoManager registerUndoWithTarget:self selector:@selector(undoCompleted:) object:task];
+    [self.undoManager setActionName:@"Completed Task"];
+
     [task.managedObjectContext performBlock:^{
         [task.managedObjectContext save:&error];
         [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:task.managedObjectContext];
     }];
+}
+
+- (void)undoCompleted:(Task *)task {
+    __block NSError *error;
+    task.isDone = NO;
+    task.completedDate = nil;
+
+    [self.undoManager registerUndoWithTarget:self selector:@selector(completedTask:) object:task];
+    [self.undoManager setActionName:@"Completed Task"];
+
+    [task.managedObjectContext performBlock:^{
+        [task.managedObjectContext save:&error];
+        [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:task.managedObjectContext];
+    }];
+
 }
 
 #pragma mark - Task Editing Delegate
