@@ -10,13 +10,13 @@
 
 #import "Task.h"
 #import "MRMainRowController.h"
-#import "MRPersistenceController.h"
+#import "MRDataReadingController.h"
 #import "NSDate+TackleAdditions.h"
 
 
 @interface MRMainInterfaceController()
 
-@property (strong) MRPersistenceController *persistenceController;
+@property (strong) MRDataReadingController *persistenceController;
 @property (weak) IBOutlet WKInterfaceTable *mainTable;
 @property (nonatomic) NSArray *todoItems;
 
@@ -29,7 +29,7 @@
     [super awakeWithContext:context];
     self.todoItems = @[];
 
-    self.persistenceController = [[MRPersistenceController alloc] initWithCallback:^{
+    self.persistenceController = [[MRDataReadingController alloc] initWithCallback:^{
         [self completeUserInterface];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleManagedObjectContextDidSave:) name:NSManagedObjectContextDidSaveNotification object:nil];
     }];

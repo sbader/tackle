@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 
 #import "MRTaskTableViewDelegate.h"
+#import "MRPersistenceController.h"
 
 @class Task;
 
 @interface MRTaskTableViewController : UITableViewController
 
-- (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
+- (instancetype)initWithPersistenceController:(MRPersistenceController *)persistenceController;
 - (void)refreshTasks;
 
 @property (nonatomic) id<MRTaskTableViewDelegate> taskDelegate;

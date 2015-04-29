@@ -14,7 +14,7 @@
 
 @interface MRTaskTableViewController () <NSFetchedResultsControllerDelegate>
 
-@property (nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic) MRPersistenceController *persistenceController;
 @property (nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 @end
@@ -23,11 +23,11 @@ static NSString * const taskCellReuseIdentifier = @"TaskCell";
 
 @implementation MRTaskTableViewController
 
-- (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
+- (instancetype)initWithPersistenceController:(MRPersistenceController *)persistenceController {
     self = [super init];
 
     if (self) {
-        self.managedObjectContext = managedObjectContext;
+        _persistenceController = persistenceController;
         [self.tableView registerClass:[MRTaskTableViewCell class] forCellReuseIdentifier:taskCellReuseIdentifier];
         self.view.translatesAutoresizingMaskIntoConstraints = NO;
         self.tableView.backgroundColor = [UIColor clearColor];
@@ -85,7 +85,7 @@ static NSString * const taskCellReuseIdentifier = @"TaskCell";
     }
 
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:self.persistenceController.managedObjectContext];
     [fetchRequest setEntity:entity];
     [fetchRequest setFetchBatchSize:20];
 
@@ -95,13 +95,13 @@ static NSString * const taskCellReuseIdentifier = @"TaskCell";
     [fetchRequest setSortDescriptors:sortDescriptors];
     [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO"]];
 
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                                                                                managedObjectContext:self.managedObjectContext
-                                                                                                  sectionNameKeyPath:nil
-                                                                                                           cacheName:nil];
+    NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                                         managedObjectContext:self.persistenceController.managedObjectContext
+                                                                           sectionNameKeyPath:nil
+                                                                                    cacheName:nil];
 
-    aFetchedResultsController.delegate = self;
-    self.fetchedResultsController = aFetchedResultsController;
+    frc.delegate = self;
+    self.fetchedResultsController = frc;
 
     NSError *error = nil;
     if (![self.fetchedResultsController performFetch:&error]) {

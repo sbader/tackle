@@ -10,11 +10,10 @@
 
 #import <CoreData/CoreData.h>
 
-@interface MRPersistenceController : NSObject
+@interface MRDataReadingController : NSObject
 
 @property (readonly) NSManagedObjectContext *managedObjectContext;
 
 - (instancetype)initWithCallback:(void(^)())callback;
-- (void)save;
 
 @end

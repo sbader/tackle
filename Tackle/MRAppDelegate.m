@@ -11,20 +11,28 @@
 #import "Task.h"
 #import "MRRootViewController.h"
 #import "MRNotificationProvider.h"
+#import "MRTackleDataConstants.h"
+#import "MRPersistenceController.h"
 
 @interface MRAppDelegate ()
 
 @property (nonatomic) MRRootViewController *rootController;
+@property (strong) MRPersistenceController *persistenceController;
 
 @end
 
 @implementation MRAppDelegate
 
-@synthesize managedObjectContext = _managedObjectContext;
-@synthesize managedObjectModel = _managedObjectModel;
-@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
+    self.persistenceController = [[MRPersistenceController alloc] initWithCallback:^{
+        [self completUserInterfaceWithApplication:application launchOptions:launchOptions];
+    }];
+
+    return YES;
+}
+
+- (void)completUserInterfaceWithApplication:(UIApplication *)application launchOptions:(NSDictionary *)launchOptions {
     if (IS_OS_8_OR_LATER) {
         UIUserNotificationType types = UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound;
 
@@ -69,8 +77,6 @@
     if (notification) {
         [self handleLocalNotification:notification];
     }
-
-    return YES;
 }
 
 - (void)setupWindow {
@@ -79,7 +85,7 @@
 }
 
 - (void)setupRootViewController {
-    self.rootController = [[MRRootViewController alloc] initWithManagedObjectContext:self.managedObjectContext];
+    self.rootController = [[MRRootViewController alloc] initWithPersistenceController:self.persistenceController];
     [self.window setRootViewController:self.rootController];
 }
 
@@ -112,32 +118,27 @@
 
 - (void)handleLocalNotification:(UILocalNotification *)notification {
     NSString *urlString = [notification.userInfo objectForKey:@"uniqueId"];
-    NSManagedObjectID *managedObjectId = [self.persistentStoreCoordinator managedObjectIDForURIRepresentation:[NSURL URLWithString:urlString]];
-    Task *task = (Task *)[self.managedObjectContext objectWithID:managedObjectId];
+    NSManagedObjectID *managedObjectId = [self.persistenceController.managedObjectContext.persistentStoreCoordinator managedObjectIDForURIRepresentation:[NSURL URLWithString:urlString]];
+
+    Task *task = (Task *)[self.persistenceController.managedObjectContext objectWithID:managedObjectId];
     [self.rootController handleNotificationForTask:task];
 }
 
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void (^)())completionHandler {
-    Task *task = [Task findTaskWithUniqueId:[notification.userInfo objectForKey:@"uniqueId"] inManagedObjectContext:self.managedObjectContext];
+    Task *task = [Task findTaskWithUniqueId:[notification.userInfo objectForKey:@"uniqueId"] inManagedObjectContext:self.persistenceController.managedObjectContext];
     if ([identifier isEqualToString:kMRAddTenMinutesActionIdentifier]) {
         task.dueDate = [NSDate dateWithTimeIntervalSinceNow:600];
 
-        __block NSError *error;
-        [task.managedObjectContext performBlock:^{
-            [task.managedObjectContext save:&error];
-        }];
-
+        [self.persistenceController save];
         [[MRNotificationProvider sharedProvider] rescheduleNotificationForTask:task];
+
         completionHandler();
     }
     else if([identifier isEqualToString:kMRDestroyTaskActionIdentifier]) {
         task.isDone = YES;
         [[MRNotificationProvider sharedProvider] cancelNotificationForTask:task];
 
-        __block NSError *error;
-        [task.managedObjectContext performBlock:^{
-            [task.managedObjectContext save:&error];
-        }];
+        [self.persistenceController save];
         completionHandler();
     }
     else {
@@ -148,32 +149,32 @@
 - (BOOL)addSampleData {
     [self removeAllTasks];
 
-    [Task insertItemWithTitle:@"Mets" dueDate:[NSDate dateWithTimeIntervalSinceNow:14400] inManagedObjectContext:self.managedObjectContext];
-    [Task insertItemWithTitle:@"Renew Apple developer program membership" dueDate:[NSDate dateWithTimeIntervalSinceNow:72000] inManagedObjectContext:self.managedObjectContext];
-    [Task insertItemWithTitle:@"Pay Cobra" dueDate:[NSDate dateWithTimeIntervalSinceNow:86400] inManagedObjectContext:self.managedObjectContext];
-    [Task insertItemWithTitle:@"Go to party" dueDate:[NSDate dateWithTimeIntervalSinceNow:172800] inManagedObjectContext:self.managedObjectContext];
-    [Task insertItemWithTitle:@"Work on presentation for developer event" dueDate:[NSDate dateWithTimeIntervalSinceNow:171000] inManagedObjectContext:self.managedObjectContext];
-//    [Task insertItemWithTitle:@"Developer event" dueDate:[NSDate dateWithTimeIntervalSinceNow:220000] inManagedObjectContext:self.managedObjectContext];
-//    [Task insertItemWithTitle:@"Read about Objective-C and learn how to work with the Responder Chain" dueDate:[NSDate dateWithTimeIntervalSinceNow:240000] inManagedObjectContext:self.managedObjectContext];
-//    [Task insertItemWithTitle:@"Leave for the Islanders game" dueDate:[NSDate dateWithTimeIntervalSinceNow:280000] inManagedObjectContext:self.managedObjectContext];
-//    [Task insertItemWithTitle:@"Go to office party" dueDate:[NSDate dateWithTimeIntervalSinceNow:290000] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithTitle:@"Mets" dueDate:[NSDate dateWithTimeIntervalSinceNow:14400] inManagedObjectContext:self.persistenceController.managedObjectContext];
+    [Task insertItemWithTitle:@"Renew Apple developer program membership" dueDate:[NSDate dateWithTimeIntervalSinceNow:72000] inManagedObjectContext:self.persistenceController.managedObjectContext];
+    [Task insertItemWithTitle:@"Pay Cobra" dueDate:[NSDate dateWithTimeIntervalSinceNow:86400] inManagedObjectContext:self.persistenceController.managedObjectContext];
+    [Task insertItemWithTitle:@"Go to party" dueDate:[NSDate dateWithTimeIntervalSinceNow:172800] inManagedObjectContext:self.persistenceController.managedObjectContext];
+    [Task insertItemWithTitle:@"Work on presentation for developer event" dueDate:[NSDate dateWithTimeIntervalSinceNow:171000] inManagedObjectContext:self.persistenceController.managedObjectContext];
+//    [Task insertItemWithTitle:@"Developer event" dueDate:[NSDate dateWithTimeIntervalSinceNow:220000] inManagedObjectContext:self.persistenceController.managedObjectContext];
+//    [Task insertItemWithTitle:@"Read about Objective-C and learn how to work with the Responder Chain" dueDate:[NSDate dateWithTimeIntervalSinceNow:240000] inManagedObjectContext:self.persistenceController.managedObjectContext];
+//    [Task insertItemWithTitle:@"Leave for the Islanders game" dueDate:[NSDate dateWithTimeIntervalSinceNow:280000] inManagedObjectContext:self.persistenceController.managedObjectContext];
+//    [Task insertItemWithTitle:@"Go to office party" dueDate:[NSDate dateWithTimeIntervalSinceNow:290000] inManagedObjectContext:self.persistenceController.managedObjectContext];
 
     NSError *error = nil;
 
-    [self.managedObjectContext save:&error];
+    [self.persistenceController.managedObjectContext save:&error];
     return YES;
 }
 
 - (void)removeAllTasks {
     NSFetchRequest *allTasks = [[NSFetchRequest alloc] init];
-    [allTasks setEntity:[NSEntityDescription entityForName:@"Task" inManagedObjectContext:self.managedObjectContext]];
+    [allTasks setEntity:[NSEntityDescription entityForName:@"Task" inManagedObjectContext:self.persistenceController.managedObjectContext]];
     [allTasks setIncludesPropertyValues:NO]; //only fetch the managedObjectID
 
     NSError *requestError = nil;
-    NSArray *tasks = [self.managedObjectContext executeFetchRequest:allTasks error:&requestError];
+    NSArray *tasks = [self.persistenceController.managedObjectContext executeFetchRequest:allTasks error:&requestError];
 
     [tasks enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [self.managedObjectContext deleteObject:obj];
+        [self.persistenceController.managedObjectContext deleteObject:obj];
     }];
 }
 
@@ -182,59 +183,12 @@
     NSString *base64URLString = [url lastPathComponent];
     NSData *data = [[NSData alloc] initWithBase64EncodedString:base64URLString options:0];
     NSString *urlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    Task *task = [Task findTaskWithUniqueId:urlString inManagedObjectContext:self.managedObjectContext];
+    Task *task = [Task findTaskWithUniqueId:urlString inManagedObjectContext:self.persistenceController.managedObjectContext];
     if (task) {
         [self.rootController handleNotificationForTask:task];
     }
 
     return YES;
-}
-
-#pragma mark - Core Data stack
-
-- (NSManagedObjectContext *)managedObjectContext {
-    if (_managedObjectContext != nil) {
-        return _managedObjectContext;
-    }
-    
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (coordinator != nil) {
-        _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
-    }
-    return _managedObjectContext;
-}
-
-- (NSManagedObjectModel *)managedObjectModel {
-    if (_managedObjectModel != nil) {
-        return _managedObjectModel;
-    }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Tackle" withExtension:@"momd"];
-    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-    return _managedObjectModel;
-}
-
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
-    if (_persistentStoreCoordinator != nil) {
-        return _persistentStoreCoordinator;
-    }
-
-    NSURL *directory = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.TackleDataGroup"];
-    NSURL *storeURL = [directory  URLByAppendingPathComponent:@"Tackle.sqlite"];
-
-    NSError *error = nil;
-    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-    }    
-    
-    return _persistentStoreCoordinator;
-}
-
-#pragma mark - Application's Documents directory
-
-- (NSURL *)applicationDocumentsDirectory {
-    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
 #pragma mark - Utilities
@@ -252,17 +206,34 @@
 #pragma mark - WatchKit
 
 - (void)application:(UIApplication *)application handleWatchKitExtensionRequest:(NSDictionary *)userInfo reply:(void(^)(NSDictionary *replyInfo))reply {
-    NSString *requestType = [userInfo objectForKey:@"openRequestType"];
+    NSString *requestType = [userInfo objectForKey:kMRDataNotificationTypeKey];
     if (requestType) {
-        if ([requestType isEqualToString:@"refreshContext"]) {
-            [self.rootController refreshTasks];
-            [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.managedObjectContext];
-            reply(@{@"openResponse" : @"success"});
-            return;
+        if ([requestType isEqualToString:kMRDataNotificationTypeTaskCreate]) {
+            NSDictionary *attributes = [userInfo objectForKey:kMRDataNotificationContextKey];
+            NSString *title;
+            NSDate *dueDate;
+            if (attributes) {
+                title = [attributes objectForKey:kMRDataNotificationTaskAttributeTitle];
+                dueDate = [attributes objectForKey:kMRDataNotificationTaskAttributeDueDate];
+            }
+
+            if (title && dueDate) {
+                [Task insertItemWithTitle:title dueDate:dueDate inManagedObjectContext:self.persistenceController.managedObjectContext];
+                [self.persistenceController save];
+
+                NSDictionary *responseInfo = @{
+                                               kMRDataNotificationResponseTypeKey: kMRDataNotificationResponseSuccess
+                                               };
+                reply(responseInfo);
+                return;
+            }
         }
     }
 
-    reply(@{@"openResponse" : @"error"});
+    NSDictionary *responseInfo = @{
+                                   kMRDataNotificationResponseTypeKey: kMRDataNotificationResponseFailure
+                                   };
+    reply(responseInfo);
 }
 
 
