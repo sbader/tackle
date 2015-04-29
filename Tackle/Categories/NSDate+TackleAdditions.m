@@ -87,6 +87,125 @@
     return beginningOfDay;
 }
 
+- (NSArray *)tackleStringComponentsSinceDate:(NSDate *)date {
+    NSString *formattedString;
+    NSTimeInterval timeInterval = ceil([self timeIntervalSinceDate:date]);
+
+    NSString *firstComponent;
+    NSString *secondComponent;
+
+    if (timeInterval > -86400 && timeInterval < 0) {
+        timeInterval = ABS(timeInterval);
+        NSNumber *hours = [[NSNumber alloc] initWithInt:timeInterval/3600];
+        NSNumber *minutes = [[NSNumber alloc] initWithInt:(timeInterval - ([hours integerValue] * 3600)) / 60];
+        NSNumber *seconds = [[NSNumber alloc] initWithInt:timeInterval - 60 * [minutes integerValue] - 3600 * [hours integerValue]];
+
+        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+
+        if ([hours integerValue] > 0) {
+            formattedString = [NSString stringWithFormat:@"%@ hours ago", [numberFormatter stringFromNumber:hours]];
+        }
+        else if ([minutes integerValue] > 0 && [seconds integerValue] > 0) {
+            formattedString = [NSString stringWithFormat:@"%@ minutes %@ seconds ago", [numberFormatter stringFromNumber:minutes], [numberFormatter stringFromNumber:seconds]];
+        }
+        else if ([minutes integerValue] > 0) {
+            formattedString = [NSString stringWithFormat:@"%@ minutes ago", [numberFormatter stringFromNumber:minutes]];
+        }
+        else {
+            formattedString = [NSString stringWithFormat:@"%@ seconds ago", [numberFormatter stringFromNumber:seconds]];
+        }
+
+        firstComponent = formattedString;
+    }
+    else if (timeInterval < 3600) {
+        NSNumber *hours = [[NSNumber alloc] initWithInteger:timeInterval/3600];
+        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+
+        NSNumber *minutes;
+        NSNumber *seconds;
+
+        if (timeInterval < 60) {
+            minutes = @(0);
+            seconds = [[NSNumber alloc] initWithInteger:timeInterval - 60 * [minutes integerValue] - 3600 * [hours integerValue]];
+        }
+        else {
+            NSInteger minutesInt = (timeInterval - ([hours integerValue] * 3600)) / 60;
+            seconds = @(0);
+            NSInteger sec = timeInterval - 60 * [minutes integerValue] - 3600 * [hours integerValue];
+
+            if (sec > 0) {
+                minutesInt = minutesInt + 1;
+            }
+
+            minutes = [[NSNumber alloc] initWithInteger:minutesInt];
+        }
+
+        if ([minutes integerValue] > 0 && [seconds integerValue] > 0) {
+            formattedString = [NSString stringWithFormat:@"In %@ Minutes %@ Seconds", [numberFormatter stringFromNumber:minutes], [numberFormatter stringFromNumber:seconds]];
+        }
+        else if ([minutes integerValue] > 0) {
+            formattedString = [NSString stringWithFormat:@"In %@ Minutes", [numberFormatter stringFromNumber:minutes]];
+        }
+        else {
+            formattedString = [NSString stringWithFormat:@"In %@ Seconds", [numberFormatter stringFromNumber:seconds]];
+        }
+        firstComponent = formattedString;
+    }
+    else if ([self isSameDayAsDate:date]) {
+        MRTimeDateFormatter *timeFormatter = [MRTimeDateFormatter sharedInstance];
+        NSString *time = [timeFormatter stringFromDate:self];
+
+//        formattedString = [NSString stringWithFormat:@"%@", time];
+        firstComponent = @"Today";
+        secondComponent = time;
+    }
+    else if ([self isDayBeforeOrAfterDate:date]) {
+        MRShortDateFormatter *formatter = [MRShortDateFormatter sharedInstance];
+        NSString *relativeDay = [formatter stringFromDate:self];
+
+        MRTimeDateFormatter *timeFormatter = [MRTimeDateFormatter sharedInstance];
+        NSString *time = [timeFormatter stringFromDate:self];
+
+//        formattedString = [NSString stringWithFormat:@"%@ at %@", relativeDay, time];
+        firstComponent = relativeDay;
+        secondComponent = time;
+    }
+    else if([self isWithinAWeek]) {
+        MRMediumDateFormatter *formatter = [MRMediumDateFormatter sharedInstance];
+        NSString *weekday = [formatter stringFromDate:self];
+
+        MRTimeDateFormatter *timeFormatter = [MRTimeDateFormatter sharedInstance];
+        NSString *time = [timeFormatter stringFromDate:self];
+
+//        formattedString = [NSString stringWithFormat:@"%@ at %@", weekday, time];
+        firstComponent = weekday;
+        secondComponent = time;
+    }
+    else {
+        MRLongDateFormatter *formatter = [MRLongDateFormatter sharedInstance];
+        NSString *date = [formatter stringFromDate:self];
+
+        MRTimeDateFormatter *timeFormatter = [MRTimeDateFormatter sharedInstance];
+        NSString *time = [timeFormatter stringFromDate:self];
+
+//        formattedString = [NSString stringWithFormat:@"%@ at %@", date, time];
+        firstComponent = date;
+        secondComponent = time;
+    }
+
+    if (firstComponent && secondComponent) {
+        return @[firstComponent, secondComponent];
+    }
+    else if (secondComponent) {
+        return @[secondComponent];
+    }
+    else if (firstComponent) {
+        return @[firstComponent];
+    }
+
+    return @[];
+}
+
 - (NSString *)tackleStringSinceDate:(NSDate *)date
 {
     NSString *formattedString;

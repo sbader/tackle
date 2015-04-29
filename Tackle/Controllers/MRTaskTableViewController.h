@@ -15,6 +15,7 @@
 @interface MRTaskTableViewController : UITableViewController
 
 - (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
+- (void)refreshTasks;
 
 @property (nonatomic) id<MRTaskTableViewDelegate> taskDelegate;
 

@@ -41,4 +41,8 @@
     [self.taskListController handleNotificationForTask:task];
 }
 
+- (void)refreshTasks {
+    [self.taskListController refreshTasks];
+}
+
 @end

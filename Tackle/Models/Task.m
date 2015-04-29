@@ -35,6 +35,28 @@ NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCateg
     return task;
 }
 
++ (Task *)firstOpenTaskInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:managedObjectContext];
+    [fetchRequest setEntity:entity];
+    [fetchRequest setFetchLimit:1];
+
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"dueDate" ascending:YES];
+    NSArray *sortDescriptors = @[sortDescriptor];
+
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO"]];
+
+    NSError *error;
+    NSArray *tasks = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+
+    if (tasks.count > 0) {
+        return tasks[0];
+    }
+
+    return nil;
+}
+
 + (Task *)findTaskWithUniqueId:(NSString *)uniqueId inManagedObjectContext:(NSManagedObjectContext *)managedObjectContentext {
     NSManagedObjectID *managedObjectId = [[managedObjectContentext persistentStoreCoordinator] managedObjectIDForURIRepresentation:[NSURL URLWithString:uniqueId]];
     NSError *error;

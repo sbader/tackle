@@ -14,5 +14,6 @@
 
 - (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 - (void)handleNotificationForTask:(Task *)task;
+- (void)refreshTasks;
 
 @end
