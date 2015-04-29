@@ -12,7 +12,8 @@
 
 @interface MRParentDataCoordinator : NSObject
 
-- (void)updateTask:(Task *)task withCompletion:(void(^)(NSError *))completion;
-- (void)createTask:(Task *)task withCompletion:(void(^)(NSError *))completion;
+- (void)completeTask:(Task *)task withCompletion:(void(^)(NSError *error))completion;
+- (void)updateTask:(Task *)task withCompletion:(void(^)(NSError *error))completion;
+- (void)createTask:(Task *)task withCompletion:(void(^)(NSError *error))completion;
 
 @end

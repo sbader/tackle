@@ -20,3 +20,4 @@ NSString * const kMRDataNotificationResponseFailure = @"DataNotificationResponse
 
 NSString * const kMRDataNotificationTaskAttributeDueDate = @"TaskDueDate";
 NSString * const kMRDataNotificationTaskAttributeTitle = @"TaskTitle";
+NSString * const kMRDataNotificationTaskAttributeUniqueID = @"TaskUniqueID";

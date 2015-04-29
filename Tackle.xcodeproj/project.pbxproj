@@ -36,8 +36,8 @@
 		D15054211A5F5B41000CA868 /* MRNotificationProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = D15054201A5F5B41000CA868 /* MRNotificationProvider.m */; };
 		D162856B1A55AB770006929E /* MRScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = D162856A1A55AB770006929E /* MRScrollView.m */; };
 		D1657F661AF0020A0037BB51 /* MRMainInterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1657F651AF0020A0037BB51 /* MRMainInterfaceController.m */; };
-		D1657F691AF0020A0037BB51 /* NotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1657F681AF0020A0037BB51 /* NotificationController.m */; };
-		D1657F6C1AF0020A0037BB51 /* GlanceController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1657F6B1AF0020A0037BB51 /* GlanceController.m */; };
+		D1657F691AF0020A0037BB51 /* MRNotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1657F681AF0020A0037BB51 /* MRNotificationController.m */; };
+		D1657F6C1AF0020A0037BB51 /* MRGlanceController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1657F6B1AF0020A0037BB51 /* MRGlanceController.m */; };
 		D1657F6E1AF0020A0037BB51 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D1657F6D1AF0020A0037BB51 /* Images.xcassets */; };
 		D1657F721AF0020A0037BB51 /* Tackle WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = D1657F711AF0020A0037BB51 /* Tackle WatchKit App.app */; };
 		D1657F7A1AF0020A0037BB51 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1657F781AF0020A0037BB51 /* Interface.storyboard */; };
@@ -193,10 +193,10 @@
 		D1657F631AF0020A0037BB51 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		D1657F641AF0020A0037BB51 /* MRMainInterfaceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MRMainInterfaceController.h; sourceTree = "<group>"; };
 		D1657F651AF0020A0037BB51 /* MRMainInterfaceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MRMainInterfaceController.m; sourceTree = "<group>"; };
-		D1657F671AF0020A0037BB51 /* NotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationController.h; sourceTree = "<group>"; };
-		D1657F681AF0020A0037BB51 /* NotificationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationController.m; sourceTree = "<group>"; };
-		D1657F6A1AF0020A0037BB51 /* GlanceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlanceController.h; sourceTree = "<group>"; };
-		D1657F6B1AF0020A0037BB51 /* GlanceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlanceController.m; sourceTree = "<group>"; };
+		D1657F671AF0020A0037BB51 /* MRNotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MRNotificationController.h; sourceTree = "<group>"; };
+		D1657F681AF0020A0037BB51 /* MRNotificationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MRNotificationController.m; sourceTree = "<group>"; };
+		D1657F6A1AF0020A0037BB51 /* MRGlanceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MRGlanceController.h; sourceTree = "<group>"; };
+		D1657F6B1AF0020A0037BB51 /* MRGlanceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MRGlanceController.m; sourceTree = "<group>"; };
 		D1657F6D1AF0020A0037BB51 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D1657F711AF0020A0037BB51 /* Tackle WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tackle WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1657F771AF0020A0037BB51 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -645,8 +645,8 @@
 		D1FF2B631AF02C8C002A6F4E /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
-				D1657F671AF0020A0037BB51 /* NotificationController.h */,
-				D1657F681AF0020A0037BB51 /* NotificationController.m */,
+				D1657F671AF0020A0037BB51 /* MRNotificationController.h */,
+				D1657F681AF0020A0037BB51 /* MRNotificationController.m */,
 			);
 			name = Notifications;
 			sourceTree = "<group>";
@@ -667,8 +667,8 @@
 		D1FF2B651AF02CB0002A6F4E /* Glances */ = {
 			isa = PBXGroup;
 			children = (
-				D1657F6A1AF0020A0037BB51 /* GlanceController.h */,
-				D1657F6B1AF0020A0037BB51 /* GlanceController.m */,
+				D1657F6A1AF0020A0037BB51 /* MRGlanceController.h */,
+				D1657F6B1AF0020A0037BB51 /* MRGlanceController.m */,
 			);
 			name = Glances;
 			sourceTree = "<group>";
@@ -965,9 +965,9 @@
 				D168E6861AF016D7003CBB6A /* MRMonthDateFormatter.m in Sources */,
 				D1657F891AF006620037BB51 /* MRDataReadingController.m in Sources */,
 				D168E6801AF016C5003CBB6A /* MRLongDateFormatter.m in Sources */,
-				D1657F691AF0020A0037BB51 /* NotificationController.m in Sources */,
+				D1657F691AF0020A0037BB51 /* MRNotificationController.m in Sources */,
 				D1657F661AF0020A0037BB51 /* MRMainInterfaceController.m in Sources */,
-				D1657F6C1AF0020A0037BB51 /* GlanceController.m in Sources */,
+				D1657F6C1AF0020A0037BB51 /* MRGlanceController.m in Sources */,
 				D168E67D1AF00EE0003CBB6A /* MRMainRowController.m in Sources */,
 				D1F6528E1AF12DF800085D88 /* MRTackleDataConstants.m in Sources */,
 				D1FF2B681AF02DCB002A6F4E /* MRTaskInterfaceController.m in Sources */,
