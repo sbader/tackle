@@ -10,7 +10,7 @@
 
 #import "Task.h"
 #import "NSDate+TackleAdditions.h"
-#import "MRPersistenceController.h"
+#import "MRDataReadingController.h"
 
 @interface MRTaskInterfaceController ()
 
@@ -22,7 +22,7 @@
 @property (weak) IBOutlet WKInterfaceButton *addADayButton;
 
 @property (nonatomic) Task *task;
-@property (nonatomic) MRPersistenceController *persistenceController;
+@property (nonatomic) MRDataReadingController *persistenceController;
 
 @end
 
@@ -52,31 +52,20 @@
     [super didDeactivate];
 }
 
-//- (void)tellParentApplicationToRescheduleNotifications {
-//    NSDictionary *userInfo = @{
-//                               @"openRequestType": @"rescheduleNotifications"
-//                               };
-//    [MRTaskInterfaceController openParentApplication:userInfo reply:^(NSDictionary *replyInfo, NSError *error) {
-//    }];
-//}
-
 - (void)updateTaskDueDateWithUnit:(NSCalendarUnit)unit interval:(NSTimeInterval)interval {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     self.task.dueDate = [calendar dateByAddingUnit:unit
                                             value:interval
                                            toDate:self.task.dueDate
                                           options:0];
-    [self.persistenceController save];
-//    [self tellParentApplicationToRescheduleNotifications];
+//    [self.persistenceController save];
     [self updateDateLabel];
 }
 
 - (IBAction)handleDoneButton:(id)sender {
     self.task.isDone = YES;
     self.task.completedDate = [NSDate date];
-    [self.persistenceController save];
-
-//    [self tellParentApplicationToRescheduleNotifications];
+//    [self.persistenceController save];
     [self popController];
 }
 

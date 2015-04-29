@@ -14,20 +14,20 @@
 @interface MRRootViewController ()
 
 @property (nonatomic) MRTaskListViewController *taskListController;
-@property (nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic) MRPersistenceController *persistenceController;
 @property (nonatomic) UINavigationController *navigationController;
 
 @end
 
 @implementation MRRootViewController
 
-- (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
+- (instancetype)initWithPersistenceController:(MRPersistenceController *)persistenceController {
     self = [super init];
 
     if (self) {
-        self.managedObjectContext = managedObjectContext;
+        _persistenceController = persistenceController;
 
-        self.taskListController = [[MRTaskListViewController alloc] initWithManagedObjectContext:self.managedObjectContext];
+        self.taskListController = [[MRTaskListViewController alloc] initWithPersistenceController:self.persistenceController];
         self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.taskListController];
         
         [self addChildViewController:self.navigationController];

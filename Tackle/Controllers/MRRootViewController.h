@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MRPersistenceController.h"
+
 @class Task;
 
 @interface MRRootViewController : UIViewController
 
-- (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
+- (instancetype)initWithPersistenceController:(MRPersistenceController *)persistenceController;
 - (void)handleNotificationForTask:(Task *)task;
 - (void)refreshTasks;
 

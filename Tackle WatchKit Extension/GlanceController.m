@@ -10,7 +10,7 @@
 
 #import "Task.h"
 #import "NSDate+TackleAdditions.h"
-#import "MRPersistenceController.h"
+#import "MRDataReadingController.h"
 
 
 @interface GlanceController()
@@ -18,7 +18,7 @@
 @property (weak) IBOutlet WKInterfaceLabel *headingLabel;
 @property (weak) IBOutlet WKInterfaceLabel *titleLabel;
 @property (weak) IBOutlet WKInterfaceLabel *dateLabel;
-@property (strong) MRPersistenceController *persistenceController;
+@property (strong) MRDataReadingController *persistenceController;
 
 @end
 
@@ -28,7 +28,7 @@
 - (void)awakeWithContext:(id)context {
     [super awakeWithContext:context];
 
-    self.persistenceController = [[MRPersistenceController alloc] initWithCallback:^{
+    self.persistenceController = [[MRDataReadingController alloc] initWithCallback:^{
         NSError *error;
         NSArray *tasks = [Task allOpenTasksWithManagedObjectContext:self.persistenceController.managedObjectContext error:&error];
 

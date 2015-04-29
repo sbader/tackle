@@ -12,7 +12,6 @@
 
 @property (strong, readwrite) NSManagedObjectContext *managedObjectContext;
 @property (strong) NSManagedObjectContext *privateContext;
-
 @property (copy) void(^initCallback)();
 
 - (void)initializeCoreData;
@@ -47,7 +46,8 @@
     [self setManagedObjectContext:[[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType]];
     [self setPrivateContext:[[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType]];
     [[self privateContext] setPersistentStoreCoordinator:coordinator];
-    [[self managedObjectContext] setParentContext:[self privateContext]];
+
+    [[self managedObjectContext] setParentContext:self.privateContext];
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         NSPersistentStoreCoordinator *psc = [[self privateContext] persistentStoreCoordinator];
@@ -70,11 +70,13 @@
             [self initCallback]();
         });
     });
-
+    
 }
 
 - (void)save {
-    if (![[self privateContext] hasChanges] && ![[self managedObjectContext] hasChanges]) return;
+    if (![[self privateContext] hasChanges] && ![[self managedObjectContext] hasChanges]) {
+        return;
+    }
 
     [[self managedObjectContext] performBlockAndWait:^{
         NSError *error = nil;

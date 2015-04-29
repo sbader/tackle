@@ -21,7 +21,7 @@
 
 @interface MRTaskListViewController () <MRTaskTableViewDelegate, MRTaskEditingDelegate>
 
-@property (nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic) MRPersistenceController *persistenceController;
 @property (nonatomic) Task *editingTask;
 @property (nonatomic) UIView *infoView;
 @property (nonatomic) MRTaskTableViewController *tableViewController;
@@ -30,12 +30,12 @@
 
 @implementation MRTaskListViewController
 
-- (instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
+- (instancetype)initWithPersistenceController:(MRPersistenceController *)persistenceController {
     self = [super init];
 
     if (self) {
         self.title = @"Tasks";
-        self.managedObjectContext = managedObjectContext;
+        _persistenceController = persistenceController;
     }
     
     return self;
@@ -48,7 +48,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.tableViewController = [[MRTaskTableViewController alloc] initWithManagedObjectContext:self.managedObjectContext];
+    self.tableViewController = [[MRTaskTableViewController alloc] initWithPersistenceController:self.persistenceController];
     self.tableViewController.taskDelegate = self;
     [self addChildViewController:self.tableViewController];
     [self.view addSubview:self.tableViewController.view];
@@ -86,11 +86,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(managedObjectContextDidChange:)
                                                  name:NSManagedObjectContextObjectsDidChangeNotification
-                                               object:self.managedObjectContext];
+                                               object:self.persistenceController.managedObjectContext];
 }
 
 - (void)removeObservers {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:self.managedObjectContext];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:self.persistenceController.managedObjectContext];
 }
 
 - (void)setupInfoView {
@@ -131,7 +131,7 @@
 }
 
 - (void)displayEditViewWithTitle:(NSString *)title dueDate:(NSDate *)dueDate {
-    MRTaskEditViewController *editController = [[MRTaskEditViewController alloc] initWithTitle:title dueDate:dueDate managedObjectContext:self.managedObjectContext];
+    MRTaskEditViewController *editController = [[MRTaskEditViewController alloc] initWithTitle:title dueDate:dueDate managedObjectContext:self.persistenceController.managedObjectContext];
     editController.delegate = self;
     MRTaskEditNavigationController *navigationController = [[MRTaskEditNavigationController alloc] initWithRootViewController:editController];
     [self presentViewController:navigationController animated:YES completion:nil];
@@ -145,17 +145,14 @@
     }
     else {
         task = [NSEntityDescription insertNewObjectForEntityForName:@"Task"
-                                                   inManagedObjectContext:self.managedObjectContext];
+                                                   inManagedObjectContext:self.persistenceController.managedObjectContext];
     }
 
     task.title = title;
     task.dueDate = dueDate;
 
-    __block NSError *error;
-    [task.managedObjectContext performBlock:^{
-        [task.managedObjectContext save:&error];
-        [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:task.managedObjectContext];
-    }];
+    [self.persistenceController save];
+    [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:task.managedObjectContext];
 }
 
 - (void)handleNotificationForTask:(Task *)task {
@@ -167,7 +164,7 @@
 }
 
 - (void)displayInfoViewWithOpenTasks {
-    NSInteger tasks = [Task numberOfOpenTasksInManagedObjectContext:self.managedObjectContext];
+    NSInteger tasks = [Task numberOfOpenTasksInManagedObjectContext:self.persistenceController.managedObjectContext];
     self.infoView.hidden = (tasks > 0);
 }
 
@@ -189,32 +186,25 @@
 }
 
 - (void)completedTask:(Task *)task {
-    __block NSError *error;
     task.isDone = YES;
     task.completedDate = [NSDate date];
 
     [self.undoManager registerUndoWithTarget:self selector:@selector(undoCompleted:) object:task];
     [self.undoManager setActionName:@"Completed Task"];
 
-    [task.managedObjectContext performBlock:^{
-        [task.managedObjectContext save:&error];
-        [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:task.managedObjectContext];
-    }];
+    [self.persistenceController save];
+    [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:task.managedObjectContext];
 }
 
 - (void)undoCompleted:(Task *)task {
-    __block NSError *error;
     task.isDone = NO;
     task.completedDate = nil;
 
     [self.undoManager registerUndoWithTarget:self selector:@selector(completedTask:) object:task];
     [self.undoManager setActionName:@"Completed Task"];
 
-    [task.managedObjectContext performBlock:^{
-        [task.managedObjectContext save:&error];
-        [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:task.managedObjectContext];
-    }];
-
+    [self.persistenceController save];
+    [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:task.managedObjectContext];
 }
 
 #pragma mark - Task Editing Delegate
