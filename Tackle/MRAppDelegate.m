@@ -148,15 +148,15 @@
 - (BOOL)addSampleData {
     [self removeAllTasks];
 
-    [Task insertItemWithTitle:@"Islanders" dueDate:[NSDate dateWithTimeIntervalSinceNow:14400] inManagedObjectContext:self.managedObjectContext];
+    [Task insertItemWithTitle:@"Mets" dueDate:[NSDate dateWithTimeIntervalSinceNow:14400] inManagedObjectContext:self.managedObjectContext];
     [Task insertItemWithTitle:@"Renew Apple developer program membership" dueDate:[NSDate dateWithTimeIntervalSinceNow:72000] inManagedObjectContext:self.managedObjectContext];
     [Task insertItemWithTitle:@"Pay Cobra" dueDate:[NSDate dateWithTimeIntervalSinceNow:86400] inManagedObjectContext:self.managedObjectContext];
     [Task insertItemWithTitle:@"Go to party" dueDate:[NSDate dateWithTimeIntervalSinceNow:172800] inManagedObjectContext:self.managedObjectContext];
     [Task insertItemWithTitle:@"Work on presentation for developer event" dueDate:[NSDate dateWithTimeIntervalSinceNow:171000] inManagedObjectContext:self.managedObjectContext];
-    [Task insertItemWithTitle:@"Developer event" dueDate:[NSDate dateWithTimeIntervalSinceNow:220000] inManagedObjectContext:self.managedObjectContext];
-    [Task insertItemWithTitle:@"Read about Objective-C and learn how to work with the Responder Chain" dueDate:[NSDate dateWithTimeIntervalSinceNow:240000] inManagedObjectContext:self.managedObjectContext];
-    [Task insertItemWithTitle:@"Leave for the Islanders game" dueDate:[NSDate dateWithTimeIntervalSinceNow:280000] inManagedObjectContext:self.managedObjectContext];
-    [Task insertItemWithTitle:@"Go to office party" dueDate:[NSDate dateWithTimeIntervalSinceNow:290000] inManagedObjectContext:self.managedObjectContext];
+//    [Task insertItemWithTitle:@"Developer event" dueDate:[NSDate dateWithTimeIntervalSinceNow:220000] inManagedObjectContext:self.managedObjectContext];
+//    [Task insertItemWithTitle:@"Read about Objective-C and learn how to work with the Responder Chain" dueDate:[NSDate dateWithTimeIntervalSinceNow:240000] inManagedObjectContext:self.managedObjectContext];
+//    [Task insertItemWithTitle:@"Leave for the Islanders game" dueDate:[NSDate dateWithTimeIntervalSinceNow:280000] inManagedObjectContext:self.managedObjectContext];
+//    [Task insertItemWithTitle:@"Go to office party" dueDate:[NSDate dateWithTimeIntervalSinceNow:290000] inManagedObjectContext:self.managedObjectContext];
 
     NSError *error = nil;
 
@@ -251,12 +251,18 @@
 
 #pragma mark - WatchKit
 
-- (void)application:(UIApplication *)application handleWatchKitExtensionRequest:(NSDictionary *)userInfo reply:(void(^)(NSDictionary *replyInfo))reply{
-    // Receives text input result from the WatchKit app extension.
-    NSLog(@"User Info: %@", userInfo);
+- (void)application:(UIApplication *)application handleWatchKitExtensionRequest:(NSDictionary *)userInfo reply:(void(^)(NSDictionary *replyInfo))reply {
+    NSString *requestType = [userInfo objectForKey:@"openRequestType"];
+    if (requestType) {
+        if ([requestType isEqualToString:@"refreshContext"]) {
+            [self.rootController refreshTasks];
+            [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.managedObjectContext];
+            reply(@{@"openResponse" : @"success"});
+            return;
+        }
+    }
 
-    // Sends a confirmation message to the WatchKit app extension that the text input result was received.
-    reply(@{@"Confirmation" : @"Text was received."});
+    reply(@{@"openResponse" : @"error"});
 }
 
 

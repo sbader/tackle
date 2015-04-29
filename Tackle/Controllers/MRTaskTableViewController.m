@@ -52,6 +52,10 @@ static NSString * const taskCellReuseIdentifier = @"TaskCell";
     [self detachObservers];
 }
 
+- (void)refreshTasks {
+    [self.tableView reloadData];
+}
+
 - (void)updateCell:(MRTaskTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textLabel.text = task.title;

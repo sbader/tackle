@@ -4,6 +4,21 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Tackle WatchKit App.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>Tackle WatchKit Glances App.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>Tackle WatchKit Notification App.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
 		<key>Tackle.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -28,6 +43,11 @@
 			<true/>
 		</dict>
 		<key>D15054071A5F54AA000CA868</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D1657F701AF0020A0037BB51</key>
 		<dict>
 			<key>primary</key>
 			<true/>

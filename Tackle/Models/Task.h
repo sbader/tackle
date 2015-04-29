@@ -21,6 +21,7 @@ extern NSString * const kMRTaskNotificationCategoryIdentifier;
 @property (nonatomic, retain) NSDate *completedDate;
 @property (nonatomic) BOOL isDone;
 
++ (Task *)firstOpenTaskInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 + (Task *)insertItemWithTitle:(NSString*)title dueDate:(NSDate *)dueDate inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 + (Task *)findTaskWithUniqueId:(NSString *)uniqueId inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 + (NSArray *)allOpenTasksWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext error:(NSError **)error

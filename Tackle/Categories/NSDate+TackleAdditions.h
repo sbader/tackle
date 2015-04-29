@@ -12,6 +12,7 @@
 
 - (NSString *)tackleString;
 - (NSString *)tackleStringSinceDate:(NSDate *)date;
+- (NSArray *)tackleStringComponentsSinceDate:(NSDate *)date;
 - (NSDate *)beginningOfDay;
 
 - (BOOL)isDayBeforeDate:(NSDate *)date;

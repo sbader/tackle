@@ -24,6 +24,7 @@
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic) Task *editingTask;
 @property (nonatomic) UIView *infoView;
+@property (nonatomic) MRTaskTableViewController *tableViewController;
 
 @end
 
@@ -47,11 +48,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    MRTaskTableViewController *tableViewController = [[MRTaskTableViewController alloc] initWithManagedObjectContext:self.managedObjectContext];
-    tableViewController.taskDelegate = self;
-    [self addChildViewController:tableViewController];
-    [self.view addSubview:tableViewController.view];
-    [tableViewController.view constraintsMatchSuperview];
+    self.tableViewController = [[MRTaskTableViewController alloc] initWithManagedObjectContext:self.managedObjectContext];
+    self.tableViewController.taskDelegate = self;
+    [self addChildViewController:self.tableViewController];
+    [self.view addSubview:self.tableViewController.view];
+    [self.tableViewController.view constraintsMatchSuperview];
 
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[PaintCodeStyleKit imageOfLetterTIcon]
                                                                              style:UIBarButtonItemStylePlain
@@ -159,6 +160,10 @@
 
 - (void)handleNotificationForTask:(Task *)task {
     [self selectedTask:task];
+}
+
+- (void)refreshTasks {
+    [self.tableViewController refreshTasks];
 }
 
 - (void)displayInfoViewWithOpenTasks {
