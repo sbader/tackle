@@ -297,7 +297,6 @@
                             NSDictionary *responseInfo = @{
                                                            kMRDataNotificationResponseTypeKey: kMRDataNotificationResponseSuccess
                                                            };
-                            NSLog(@"calling response");
                             reply(responseInfo);
                             return;
                         }
