@@ -2,11 +2,11 @@
     "aps": {
         "alert": {
             "body": "Go to developer meeting",
-            "title": "Optional title"
+            "title": "Developer Meeting"
         },
         "category": "taskNotificationCategory"
     },
-    
+
     "WatchKit Simulator Actions": [
         {
             "title": "Add Ten Minutes",

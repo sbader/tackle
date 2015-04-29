@@ -6,14 +6,14 @@
 //  Copyright (c) 2015 Melody Road. All rights reserved.
 //
 
-#import "GlanceController.h"
+#import "MRGlanceController.h"
 
 #import "Task.h"
 #import "NSDate+TackleAdditions.h"
 #import "MRDataReadingController.h"
 
 
-@interface GlanceController()
+@interface MRGlanceController()
 
 @property (weak) IBOutlet WKInterfaceLabel *headingLabel;
 @property (weak) IBOutlet WKInterfaceLabel *titleLabel;
@@ -23,7 +23,7 @@
 @end
 
 
-@implementation GlanceController
+@implementation MRGlanceController
 
 - (void)awakeWithContext:(id)context {
     [super awakeWithContext:context];

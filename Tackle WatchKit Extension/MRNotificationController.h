@@ -1,5 +1,5 @@
 //
-//  GlanceController.h
+//  NotificationController.h
 //  Tackle WatchKit Extension
 //
 //  Created by Scott Bader on 4/28/15.
@@ -9,6 +9,6 @@
 #import <WatchKit/WatchKit.h>
 #import <Foundation/Foundation.h>
 
-@interface GlanceController : WKInterfaceController
+@interface MRNotificationController : WKUserNotificationInterfaceController
 
 @end

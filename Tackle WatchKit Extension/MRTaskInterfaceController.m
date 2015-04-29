@@ -9,6 +9,7 @@
 #import "MRTaskInterfaceController.h"
 
 #import "Task.h"
+#import "MRParentDataCoordinator.h"
 #import "NSDate+TackleAdditions.h"
 #import "MRDataReadingController.h"
 
@@ -22,6 +23,7 @@
 @property (weak) IBOutlet WKInterfaceButton *addADayButton;
 
 @property (nonatomic) Task *task;
+@property (nonatomic) MRParentDataCoordinator *parentDataCoordinator;
 @property (nonatomic) MRDataReadingController *persistenceController;
 
 @end
@@ -35,6 +37,7 @@
 
     self.task = contextDictionary[@"task"];
     self.persistenceController = contextDictionary[@"persistenceController"];
+    self.parentDataCoordinator = contextDictionary[@"parentDataCoordinator"];
 
     [self.titleLabel setText:self.task.title];
     [self updateDateLabel];
@@ -58,14 +61,29 @@
                                             value:interval
                                            toDate:self.task.dueDate
                                           options:0];
-//    [self.persistenceController save];
+
+    [self.parentDataCoordinator updateTask:self.task withCompletion:^(NSError *error) {
+        if (error) {
+            NSLog(@"Error updating task %@", error.localizedDescription);
+        }
+        else {
+            NSLog(@"Successfully updated task");
+        }
+    }];
+
     [self updateDateLabel];
 }
 
 - (IBAction)handleDoneButton:(id)sender {
-    self.task.isDone = YES;
-    self.task.completedDate = [NSDate date];
-//    [self.persistenceController save];
+    [self.parentDataCoordinator completeTask:self.task withCompletion:^(NSError *error) {
+        if (error) {
+            NSLog(@"Error completing task %@", error.localizedDescription);
+        }
+        else {
+            NSLog(@"Successfully completed task");
+        }
+    }];
+
     [self popController];
 }
 

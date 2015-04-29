@@ -6,17 +6,17 @@
 //  Copyright (c) 2015 Melody Road. All rights reserved.
 //
 
-#import "NotificationController.h"
+#import "MRNotificationController.h"
 
 
-@interface NotificationController()
+@interface MRNotificationController()
 
 @property (weak) IBOutlet WKInterfaceLabel *titleLabel;
 
 @end
 
 
-@implementation NotificationController
+@implementation MRNotificationController
 
 - (instancetype)init {
     self = [super init];
@@ -34,12 +34,6 @@
     // This method is called when watch view controller is no longer visible
     [super didDeactivate];
 }
-
-
-//- (void)didReceiveLocalNotification:(UILocalNotification *)localNotification withCompletion:(void (^)(WKUserNotificationInterfaceType))completionHandler {
-//    NSLog(@"received local notification");
-//    completionHandler(WKUserNotificationInterfaceTypeDefault);
-//}
 
 @end
 

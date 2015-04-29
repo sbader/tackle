@@ -12,6 +12,7 @@ extern NSString * const kMRDataNotificationTypeKey;
 extern NSString * const kMRDataNotificationContextKey;
 extern NSString * const kMRDataNotificationTypeTaskCreate;
 extern NSString * const kMRDataNotificationTypeTaskUpdate;
+extern NSString * const kMRDataNotificationTypeTaskCompleted;
 
 extern NSString * const kMRDataNotificationResponseTypeKey;
 extern NSString * const kMRDataNotificationResponseSuccess;
@@ -19,3 +20,4 @@ extern NSString * const kMRDataNotificationResponseFailure;
 
 extern NSString * const kMRDataNotificationTaskAttributeDueDate;
 extern NSString * const kMRDataNotificationTaskAttributeTitle;
+extern NSString * const kMRDataNotificationTaskAttributeUniqueID;

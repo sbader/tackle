@@ -93,7 +93,7 @@
         <!--Glance Interface Controller-->
         <scene sceneID="BOz-TT-tkC">
             <objects>
-                <glanceController spacing="0.0" topTemplateType="body1Large" id="0uZ-2p-rRc" customClass="GlanceController">
+                <glanceController spacing="0.0" topTemplateType="body1Large" id="0uZ-2p-rRc" customClass="MRGlanceController">
                     <items>
                         <label alignment="left" text="Tackle" id="uNL-bI-Vex"/>
                         <label alignment="left" text="3 Tasks" minimumScaleFactor="0.5" id="Ore-oO-hlD"/>
@@ -126,12 +126,24 @@
             <objects>
                 <notificationController id="YCC-NB-fut">
                     <items>
-                        <label width="1" alignment="left" text="Alert Label" numberOfLines="0" id="XkS-y5-khE"/>
+                        <group width="1" alignment="left" layout="vertical" radius="0.0" id="D8h-kg-Rp5">
+                            <items>
+                                <label alignment="left" text="Time's Up" id="gcp-tU-DuV">
+                                    <color key="textColor" red="0.53958821300000004" green="0.47714358569999998" blue="0.60636383299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
+                                </label>
+                                <label width="1" alignment="left" text="Alert Label" numberOfLines="0" id="XkS-y5-khE">
+                                    <color key="textColor" red="0.23137254900000001" green="0.23137254900000001" blue="0.23137254900000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
+                                </label>
+                            </items>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            <edgeInsets key="margins" left="5" right="0.0" top="6" bottom="5"/>
+                        </group>
                     </items>
                     <notificationCategory key="notificationCategory" identifier="taskNotificationCategory" wantsSashBlur="YES" id="JfB-70-Muf">
                         <color key="sashColor" red="0.53958821296691895" green="0.47714358568191528" blue="0.60636383295059204" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </notificationCategory>
-                    <edgeInsets key="margins" left="1" right="1" top="2" bottom="2"/>
                     <connections>
                         <outlet property="notificationAlertLabel" destination="XkS-y5-khE" id="49B-RR-99y"/>
                         <segue destination="gdX-wl-uQE" kind="relationship" relationship="dynamicNotificationInterface" id="fKh-qV-3T2"/>
@@ -143,7 +155,7 @@
         <!--Notification Controller-->
         <scene sceneID="KIl-fV-djm">
             <objects>
-                <controller id="gdX-wl-uQE" customClass="NotificationController">
+                <controller id="gdX-wl-uQE" customClass="MRNotificationController">
                     <items>
                         <label width="1" alignment="left" text="Buy a birthday card" numberOfLines="0" id="pXa-xf-3S8"/>
                     </items>

@@ -10,6 +10,7 @@
 
 #import "Task.h"
 #import "MRMainRowController.h"
+#import "MRParentDataCoordinator.h"
 #import "MRDataReadingController.h"
 #import "NSDate+TackleAdditions.h"
 
@@ -17,6 +18,7 @@
 @interface MRMainInterfaceController()
 
 @property (strong) MRDataReadingController *persistenceController;
+@property (strong) MRParentDataCoordinator *parentDataCoordinator;
 @property (weak) IBOutlet WKInterfaceTable *mainTable;
 @property (nonatomic) NSArray *todoItems;
 
@@ -31,8 +33,8 @@
 
     self.persistenceController = [[MRDataReadingController alloc] initWithCallback:^{
         [self completeUserInterface];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleManagedObjectContextDidSave:) name:NSManagedObjectContextDidSaveNotification object:nil];
     }];
+    self.parentDataCoordinator = [[MRParentDataCoordinator alloc] init];
 }
 
 - (void)completeUserInterface {
@@ -83,23 +85,11 @@
 - (void)table:(WKInterfaceTable *)table didSelectRowAtIndex:(NSInteger)rowIndex {
     NSDictionary *context = @{
                               @"task": [self.todoItems objectAtIndex:rowIndex],
-                              @"persistenceController": self.persistenceController
+                              @"persistenceController": self.persistenceController,
+                              @"parentDataCoordinator": self.parentDataCoordinator
                               };
 
     [self pushControllerWithName:@"TaskInterfaceController" context:context];
-}
-
-- (void)tellParentApplicationToRefresh {
-    NSDictionary *userInfo = @{
-                               @"openRequestType": @"refreshContext"
-                               };
-
-    [WKInterfaceController openParentApplication:userInfo reply:^(NSDictionary *replyInfo, NSError *error) {
-    }];
-}
-
-- (void)handleManagedObjectContextDidSave:(id)sender {
-    [self tellParentApplicationToRefresh];
 }
 
 @end
