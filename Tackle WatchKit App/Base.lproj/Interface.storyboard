@@ -10,7 +10,11 @@
             <objects>
                 <controller id="AgC-eL-Hgc" customClass="MRMainInterfaceController">
                     <items>
-                        <button width="1" alignment="left" title="New Task" id="2BJ-c8-V3V"/>
+                        <button width="1" alignment="left" title="New Task" id="2BJ-c8-V3V">
+                            <connections>
+                                <action selector="handleAddTaskButton:" destination="AgC-eL-Hgc" id="V73-xg-ZIh"/>
+                            </connections>
+                        </button>
                         <table alignment="left" id="eWy-PN-PJU">
                             <items>
                                 <tableRow identifier="mainRowType" id="5HT-S4-mxh" customClass="MRMainRowController">
@@ -18,13 +22,16 @@
                                         <items>
                                             <group width="1" height="2" alignment="left" id="nSz-5H-fCd"/>
                                             <label width="1" alignment="left" text="Buy a birthday card" numberOfLines="0" id="Xo9-Dd-1aw">
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
                                             </label>
-                                            <label width="1" alignment="left" text="Tomorrow at 2:30 PM" numberOfLines="0" id="und-rt-okA">
+                                            <label width="1" alignment="left" text="Tomorrow at 2:30 PM" minimumScaleFactor="0.5" id="und-rt-okA">
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="font" style="UICTFontTextStyleBody"/>
                                             </label>
                                             <group width="1" height="2" alignment="left" id="h8H-rx-1wH"/>
                                         </items>
+                                        <color key="backgroundColor" red="0.42140495777130127" green="0.31595766544342041" blue="0.53267228603363037" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </group>
                                     <connections>
                                         <outlet property="dateLabel" destination="und-rt-okA" id="gfV-UC-HCD"/>
@@ -39,21 +46,29 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="235" y="347"/>
+            <point key="canvasLocation" x="249" y="298"/>
         </scene>
-        <!--TaskInterfaceController-->
+        <!--Task-->
         <scene sceneID="90z-pe-bFg">
             <objects>
-                <controller identifier="TaskInterfaceController" id="dzi-F9-9Aw" customClass="MRTaskInterfaceController">
+                <controller identifier="TaskInterfaceController" title="Task" id="dzi-F9-9Aw" customClass="MRTaskInterfaceController">
                     <items>
                         <group width="1" alignment="left" layout="vertical" id="SWT-8X-8Gn">
                             <items>
-                                <label width="1" alignment="left" text="Buy a birthday card" numberOfLines="0" id="Ki7-Jr-d1l">
-                                    <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
-                                </label>
-                                <label width="1" alignment="left" text="Tomorrow at 2:30 PM" numberOfLines="0" id="kO8-So-GJ4">
-                                    <fontDescription key="font" style="UICTFontTextStyleBody"/>
-                                </label>
+                                <group width="1" alignment="left" layout="vertical" radius="6" spacing="2" id="Mfe-8F-ZUz">
+                                    <items>
+                                        <label width="1" alignment="left" text="Buy a birthday card" numberOfLines="0" id="Ki7-Jr-d1l">
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="font" type="system" weight="semibold" pointSize="20"/>
+                                        </label>
+                                        <label width="1" alignment="left" text="Tomorrow at 2:30 PM" minimumScaleFactor="0.5" id="kO8-So-GJ4">
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="font" style="UICTFontTextStyleBody"/>
+                                        </label>
+                                    </items>
+                                    <color key="backgroundColor" red="0.42140495777130127" green="0.31595766544342041" blue="0.53267228603363037" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <edgeInsets key="margins" left="2" right="2" top="2" bottom="2"/>
+                                </group>
                                 <button width="1" alignment="left" title="Done" id="LGq-0l-S9C">
                                     <color key="backgroundColor" red="0.58431372550000005" green="0.14117647059999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
                                     <connections>
@@ -88,7 +103,58 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="412" y="347"/>
+            <point key="canvasLocation" x="439" y="341.5"/>
+        </scene>
+        <!--Add Task-->
+        <scene sceneID="DjH-nO-zO9">
+            <objects>
+                <controller identifier="AddTaskInterfaceController" title="Add Task" id="u0p-Pv-saz" customClass="MRNewTaskInterfaceController">
+                    <items>
+                        <group width="1" alignment="left" layout="vertical" id="lpY-np-2bg">
+                            <items>
+                                <label width="1" alignment="left" text="Buy a birthday card" numberOfLines="0" id="O5G-ub-8Oe">
+                                    <fontDescription key="font" type="system" weight="semibold" pointSize="20"/>
+                                </label>
+                                <label alignment="left" text="Tomorrow at 2:30 PM" minimumScaleFactor="0.5" id="tcb-RD-UjO"/>
+                            </items>
+                            <color key="backgroundColor" red="0.42140495777130127" green="0.31595766544342041" blue="0.53267228603363037" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <edgeInsets key="margins" left="2" right="2" top="2" bottom="2"/>
+                        </group>
+                        <button width="1" alignment="left" title="Save" id="8Qo-js-MxE">
+                            <color key="backgroundColor" red="0.043137254899999998" green="0.37647058820000001" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="handleSaveButton:" destination="u0p-Pv-saz" id="C6g-px-XFx"/>
+                            </connections>
+                        </button>
+                        <button width="1" alignment="left" title="Edit Title" id="Fhs-Z8-9GA">
+                            <connections>
+                                <action selector="handleEditTitleButton:" destination="u0p-Pv-saz" id="ELu-pE-63R"/>
+                            </connections>
+                        </button>
+                        <button width="1" alignment="left" title="Add Ten Minutes" id="Emx-q2-NAx">
+                            <connections>
+                                <action selector="handleAddTenMinutesButton:" destination="u0p-Pv-saz" id="JUc-Bz-PgH"/>
+                            </connections>
+                        </button>
+                        <button width="1" alignment="left" title="Add an Hour" id="cWk-uc-6ga">
+                            <connections>
+                                <action selector="handleAddAnHourButton:" destination="u0p-Pv-saz" id="i34-84-3vJ"/>
+                            </connections>
+                        </button>
+                        <button width="1" alignment="left" title="Add a Day" id="YXF-uf-Oqv">
+                            <connections>
+                                <action selector="handleAddADayButton:" destination="u0p-Pv-saz" id="PZN-A6-hX0"/>
+                            </connections>
+                        </button>
+                    </items>
+                    <connections>
+                        <outlet property="dueDateLabel" destination="tcb-RD-UjO" id="G51-nX-JL4"/>
+                        <outlet property="saveButton" destination="8Qo-js-MxE" id="kBB-KH-h6O"/>
+                        <outlet property="titleLabel" destination="O5G-ub-8Oe" id="4za-Fp-PvF"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="628" y="362.25"/>
         </scene>
         <!--Glance Interface Controller-->
         <scene sceneID="BOz-TT-tkC">
@@ -100,14 +166,18 @@
                         <group alignment="left" layout="vertical" id="qEL-x6-d4K">
                             <items>
                                 <label alignment="left" text="Up Next" id="qbh-b6-IA6">
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
                                 </label>
                                 <label width="1" alignment="left" text="Buy a birthday card" numberOfLines="0" id="rsR-uA-3f9">
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
                                 </label>
-                                <label alignment="left" text="Tomorrow at 2:30 PM" numberOfLines="0" id="RdK-eo-eIh"/>
+                                <label alignment="left" text="Tomorrow at 2:30 PM" minimumScaleFactor="0.5" id="RdK-eo-eIh">
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </label>
                             </items>
-                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="0.42140495777130127" green="0.31595766544342041" blue="0.53267228603363037" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <edgeInsets key="margins" left="2" right="2" top="2" bottom="2"/>
                         </group>
                     </items>
@@ -129,15 +199,15 @@
                         <group width="1" alignment="left" layout="vertical" radius="0.0" id="D8h-kg-Rp5">
                             <items>
                                 <label alignment="left" text="Time's Up" id="gcp-tU-DuV">
-                                    <color key="textColor" red="0.53958821300000004" green="0.47714358569999998" blue="0.60636383299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
                                 </label>
-                                <label width="1" alignment="left" text="Alert Label" numberOfLines="0" id="XkS-y5-khE">
-                                    <color key="textColor" red="0.23137254900000001" green="0.23137254900000001" blue="0.23137254900000001" alpha="1" colorSpace="calibratedRGB"/>
-                                    <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
+                                <label width="1" alignment="left" text="Buy a birthday card" numberOfLines="0" id="XkS-y5-khE">
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="font" style="UICTFontTextStyleBody"/>
                                 </label>
                             </items>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="0.42140495777130127" green="0.31595766544342041" blue="0.53267228603363037" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <edgeInsets key="margins" left="5" right="0.0" top="6" bottom="5"/>
                         </group>
                     </items>
@@ -157,7 +227,19 @@
             <objects>
                 <controller id="gdX-wl-uQE" customClass="MRNotificationController">
                     <items>
-                        <label width="1" alignment="left" text="Buy a birthday card" numberOfLines="0" id="pXa-xf-3S8"/>
+                        <group width="1" alignment="left" layout="vertical" radius="0.0" id="m6g-rq-i4X">
+                            <items>
+                                <label alignment="left" text="Time's Up" id="eNC-VY-K2P">
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
+                                </label>
+                                <label width="1" alignment="left" text="Buy a birthday card" numberOfLines="0" id="pXa-xf-3S8">
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </label>
+                            </items>
+                            <color key="backgroundColor" red="0.42140495777130127" green="0.31595766544342041" blue="0.53267228603363037" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <edgeInsets key="margins" left="5" right="0.0" top="6" bottom="5"/>
+                        </group>
                     </items>
                 </controller>
             </objects>

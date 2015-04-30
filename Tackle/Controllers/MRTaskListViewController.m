@@ -7,9 +7,7 @@
 //
 
 #import "MRTaskListViewController.h"
-
 #import <QuartzCore/QuartzCore.h>
-
 
 #import "Task.h"
 #import "PaintCodeStyleKit.h"

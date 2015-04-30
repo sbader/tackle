@@ -14,6 +14,6 @@
 
 - (void)completeTask:(Task *)task withCompletion:(void(^)(NSError *error))completion;
 - (void)updateTask:(Task *)task withCompletion:(void(^)(NSError *error))completion;
-- (void)createTask:(Task *)task withCompletion:(void(^)(NSError *error))completion;
+- (void)createTaskWithTitle:(NSString *)title dueDate:(NSDate *)dueDate completion:(void(^)(NSError *error))completion;
 
 @end

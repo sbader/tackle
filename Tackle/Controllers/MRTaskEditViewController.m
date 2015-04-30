@@ -39,6 +39,13 @@
 @property (nonatomic) NSString *taskTitle;
 @property (nonatomic) BOOL shouldDisplayPreviousTasks;
 @property (nonatomic) BOOL shouldDisplayDoneButton;
+@property (nonatomic) NSDataDetector *dateDetector;
+
+@property (nonatomic) NSDate *possibleDate;
+@property (nonatomic) UIView *possibleDateContainer;
+@property (nonatomic) MRHorizontalButton *possibleDateButton;
+@property (nonatomic) NSString *leftoverTitleText;
+@property (nonatomic) NSLayoutConstraint *possibleDateViewHeightConstraint;
 
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
 
@@ -65,8 +72,14 @@
 
     self.view.backgroundColor = [UIColor lightGrayFormBackgroundColor];
 
+    NSError *error = nil;
+    self.dateDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeDate
+                                                               error:&error];
+
+
     [self setupScrollView];
     [self setupTitleView];
+    [self setupPossibleDateButton];
     [self setupDateView];
     [self setupCalendarView];
     [self setupAddTimeView];
@@ -186,6 +199,10 @@
     self.titleField.rightView.userInteractionEnabled = NO;
     self.titleField.rightViewMode = UITextFieldViewModeAlways;
 
+    [self.titleField addTarget:self
+                        action:@selector(titleFieldDidChange:)
+              forControlEvents:UIControlEventEditingChanged];
+
     [self.titleView horizontalConstraintsMatchSuperview];
     [self.titleField horizontalConstraintsMatchSuperview];
 
@@ -225,6 +242,56 @@
                                            @"button": self.dateButton,
                                            @"view": self.dateView
                                            }];
+}
+
+- (void)setupPossibleDateButton {
+    self.possibleDateContainer = [[UIView alloc] init];
+    self.possibleDateContainer.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.scrollView addSubview:self.possibleDateContainer];
+
+    self.possibleDateButton = [MRHorizontalButton buttonWithType:UIButtonTypeSystem];
+    self.possibleDateButton.translatesAutoresizingMaskIntoConstraints = NO;
+    self.possibleDateButton.titleLabel.font = [UIFont fontForLargeFormButtons];
+    [self.possibleDateButton addTarget:self action:@selector(handlePossibleDateButton:) forControlEvents:UIControlEventTouchUpInside];
+    self.possibleDateButton.contentEdgeInsets = UIEdgeInsetsMake(10, 0, 10, 0);
+    [self.possibleDateContainer addSubview:self.possibleDateButton];
+    [self.possibleDateButton setTintColor:[UIColor whiteColor]];
+    [self.possibleDateContainer setBackgroundColor:[UIColor plumTintColor]];
+
+    [self.possibleDateContainer horizontalConstraintsMatchSuperview];
+    [self.possibleDateContainer addCompactConstraints:@[
+                                           @"button.leading = view.leading",
+                                           @"button.trailing = view.trailing",
+                                           @"button.centerY = view.centerY",
+//                                           @"button.top = view.top + 10",
+//                                           @"button.bottom = view.bottom - 7",
+                                           ]
+                                 metrics:@{}
+                                   views:@{
+                                           @"button": self.possibleDateButton,
+                                           @"view": self.possibleDateContainer
+                                           }];
+
+    self.possibleDateViewHeightConstraint = [NSLayoutConstraint constraintWithItem:self.possibleDateContainer
+                                                                         attribute:NSLayoutAttributeHeight
+                                                                         relatedBy:NSLayoutRelationEqual
+                                                                            toItem:nil
+                                                                         attribute:NSLayoutAttributeNotAnAttribute
+                                                                        multiplier:1.0
+                                                                          constant:0];
+    [self.possibleDateContainer addConstraint:self.possibleDateViewHeightConstraint];
+
+}
+
+- (void)displayPossibleDateButton {
+    self.possibleDateViewHeightConstraint.constant = 45;
+    [self.possibleDateContainer layoutIfNeeded];
+}
+
+- (void)hidePossibleDateButton {
+    [self.possibleDateButton setTitle:nil forState:UIControlStateNormal];
+    self.possibleDateViewHeightConstraint.constant = 0;
+    [self.possibleDateContainer layoutIfNeeded];
 }
 
 - (void)setupCalendarView {
@@ -298,7 +365,8 @@
                                              @"topView.width = view.width",
                                              @"titleView.top = view.top",
                                              @"titleView.height = 75",
-                                             @"dateView.top = titleView.bottom",
+                                             @"possibleDateView.top = titleView.bottom",
+                                             @"dateView.top = possibleDateView.bottom",
                                              @"calendarView.top = dateView.bottom",
                                              @"calendarView.height = 74",
                                              @"tableViewContainer.top = calendarView.bottom + 0",
@@ -314,6 +382,7 @@
                                              @"topView": self.topView,
                                              @"titleView": self.titleView,
                                              @"dateView": self.dateView,
+                                             @"possibleDateView": self.possibleDateContainer,
                                              @"calendarView": self.calendarView,
                                              @"tableViewContainer": self.addTimeView,
                                              @"tableView": self.addTimeController.tableView,
@@ -391,6 +460,41 @@
 }
 
 #pragma mark - Handlers
+
+- (void)handlePossibleDateButton:(id)sender {
+    if (self.possibleDate) {
+        [self didSelectDate:self.possibleDate];
+        self.possibleDate = nil;
+        if (self.leftoverTitleText.length > 0) {
+            self.taskTitle = self.leftoverTitleText;
+            [self updateTitleField];
+        }
+        self.leftoverTitleText = nil;
+    }
+
+    [self.possibleDateButton setTitle:nil forState:UIControlStateNormal];
+    [self hidePossibleDateButton];
+}
+
+- (void)titleFieldDidChange:(id)sender {
+    NSTextCheckingResult *result = [self.dateDetector firstMatchInString:self.titleField.text options:kNilOptions range:NSMakeRange(0, self.titleField.text.length)];
+
+    if (result && [result.date compare:[NSDate date]] == NSOrderedDescending) {
+        NSString *leftoverText = [self.titleField.text stringByReplacingCharactersInRange:result.range withString:@""];
+        self.leftoverTitleText = [leftoverText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        [self displayPossibleDateButton];
+        NSString *buttonText = [NSString stringWithFormat:@"Set to %@", result.date.tackleString];
+        [self.possibleDateButton setTitle:buttonText forState:UIControlStateNormal];
+        self.possibleDate = result.date;
+
+        return;
+    }
+
+    [self.possibleDateButton setTitle:nil forState:UIControlStateNormal];
+    [self hidePossibleDateButton];
+    self.possibleDate = nil;
+    self.leftoverTitleText = nil;
+}
 
 - (void)handleDateButton:(id)sender {
     if (self.titleField.isFirstResponder) {

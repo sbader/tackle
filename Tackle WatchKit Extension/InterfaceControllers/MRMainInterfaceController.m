@@ -10,10 +10,13 @@
 
 #import "Task.h"
 #import "MRMainRowController.h"
+#import "NSDate+TackleAdditions.h"
 #import "MRParentDataCoordinator.h"
 #import "MRDataReadingController.h"
-#import "NSDate+TackleAdditions.h"
 
+NSString * const kMRInterfaceControllerContextTask = @"Task";
+NSString * const kMRInterfaceControllerContextPersistenceController = @"PersistenceController";
+NSString * const kMRInterfaceControllerContextDataReadingController = @"DataReadingController";
 
 @interface MRMainInterfaceController()
 
@@ -73,23 +76,30 @@
 
 - (void)willActivate {
     [super willActivate];
-
     [self refreshTable];
 }
 
 - (void)didDeactivate {
-    // This method is called when watch view controller is no longer visible
     [super didDeactivate];
 }
 
 - (void)table:(WKInterfaceTable *)table didSelectRowAtIndex:(NSInteger)rowIndex {
     NSDictionary *context = @{
-                              @"task": [self.todoItems objectAtIndex:rowIndex],
-                              @"persistenceController": self.persistenceController,
-                              @"parentDataCoordinator": self.parentDataCoordinator
+                              kMRInterfaceControllerContextTask: [self.todoItems objectAtIndex:rowIndex],
+                              kMRInterfaceControllerContextPersistenceController: self.persistenceController,
+                              kMRInterfaceControllerContextDataReadingController: self.parentDataCoordinator
                               };
 
     [self pushControllerWithName:@"TaskInterfaceController" context:context];
+}
+
+- (IBAction)handleAddTaskButton:(id)sender {
+    NSDictionary *context = @{
+                              kMRInterfaceControllerContextPersistenceController: self.persistenceController,
+                              kMRInterfaceControllerContextDataReadingController: self.parentDataCoordinator
+                              };
+
+    [self pushControllerWithName:@"AddTaskInterfaceController" context:context];
 }
 
 @end

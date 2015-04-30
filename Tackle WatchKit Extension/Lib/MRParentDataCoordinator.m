@@ -71,10 +71,10 @@
     }];
 }
 
-- (void)createTask:(Task *)task withCompletion:(void(^)(NSError *error))completion {
+- (void)createTaskWithTitle:(NSString *)title dueDate:(NSDate *)dueDate completion:(void(^)(NSError *error))completion {
     NSDictionary *context = @{
-                              kMRDataNotificationTaskAttributeTitle: task.title,
-                              kMRDataNotificationTaskAttributeDueDate: task.dueDate
+                              kMRDataNotificationTaskAttributeTitle: title,
+                              kMRDataNotificationTaskAttributeDueDate: dueDate
                               };
 
     [self notifyParentApplicationWithNotificationType:kMRDataNotificationTypeTaskCreate context:context completion:^(NSError *error) {

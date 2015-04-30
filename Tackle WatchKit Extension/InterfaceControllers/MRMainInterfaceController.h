@@ -9,6 +9,10 @@
 #import <WatchKit/WatchKit.h>
 #import <Foundation/Foundation.h>
 
+extern NSString * const kMRInterfaceControllerContextTask;
+extern NSString * const kMRInterfaceControllerContextPersistenceController;
+extern NSString * const kMRInterfaceControllerContextDataReadingController;
+
 @interface MRMainInterfaceController : WKInterfaceController
 
 @end
