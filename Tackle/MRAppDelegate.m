@@ -67,7 +67,6 @@
         [[UIApplication sharedApplication] cancelAllLocalNotifications];
         [self addSampleData];
     }
-    [self listAllTaskIDS];
 
     [self setupAppearance];
     [self setupWindow];

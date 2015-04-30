@@ -9,9 +9,10 @@
 #import "MRTaskInterfaceController.h"
 
 #import "Task.h"
-#import "MRParentDataCoordinator.h"
 #import "NSDate+TackleAdditions.h"
 #import "MRDataReadingController.h"
+#import "MRParentDataCoordinator.h"
+#import "MRMainInterfaceController.h"
 
 @interface MRTaskInterfaceController ()
 
@@ -35,9 +36,9 @@
 
     NSDictionary *contextDictionary = (NSDictionary *)context;
 
-    self.task = contextDictionary[@"task"];
-    self.persistenceController = contextDictionary[@"persistenceController"];
-    self.parentDataCoordinator = contextDictionary[@"parentDataCoordinator"];
+    self.task = contextDictionary[kMRInterfaceControllerContextTask];
+    self.persistenceController = contextDictionary[kMRInterfaceControllerContextPersistenceController];
+    self.parentDataCoordinator = contextDictionary[kMRInterfaceControllerContextDataReadingController];
 
     [self.titleLabel setText:self.task.title];
     [self updateDateLabel];
