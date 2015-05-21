@@ -48,9 +48,7 @@ NSString * const kMRInterfaceControllerContextDataReadingController = @"DataRead
 }
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:kMRDataUpdatedNotificationName
-                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)completeUserInterface {

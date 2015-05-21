@@ -88,7 +88,7 @@
 }
 
 - (void)removeObservers {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:self.persistenceController.managedObjectContext];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)setupInfoView {
