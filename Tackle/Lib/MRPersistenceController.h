@@ -12,7 +12,6 @@
 
 @property (strong, readonly) NSManagedObjectContext *managedObjectContext;
 
-- (id)initWithCallback:(void(^)())callback;
 - (void)save;
 
 @end

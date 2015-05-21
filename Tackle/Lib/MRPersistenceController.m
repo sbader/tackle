@@ -12,8 +12,6 @@
 
 @property (strong, readwrite) NSManagedObjectContext *managedObjectContext;
 @property (strong) NSManagedObjectContext *privateContext;
-@property (nonatomic) BOOL initializeAsynchronously;
-@property (copy) void(^initCallback)();
 
 - (void)initializeCoreData;
 
@@ -25,19 +23,6 @@
     self = [super init];
 
     if (self) {
-        _initializeAsynchronously = NO;
-        [self initializeCoreData];
-    }
-
-    return self;
-}
-
-- (instancetype)initWithCallback:(void(^)())callback {
-    self = [super init];
-
-    if (self) {
-        _initializeAsynchronously = YES;
-        [self setInitCallback:callback];
         [self initializeCoreData];
     }
 
@@ -57,58 +42,30 @@
     NSAssert(coordinator, @"Persistent Store Coordinator could not be initialized");
 
     [self setManagedObjectContext:[[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType]];
-    [self setPrivateContext:[[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType]];
-    [[self privateContext] setPersistentStoreCoordinator:coordinator];
+    [self.managedObjectContext setPersistentStoreCoordinator:coordinator];
 
-    [[self managedObjectContext] setParentContext:self.privateContext];
+    NSPersistentStoreCoordinator *psc = self.managedObjectContext.persistentStoreCoordinator;
+    NSMutableDictionary *options = [NSMutableDictionary dictionary];
+    options[NSMigratePersistentStoresAutomaticallyOption] = @YES;
+    options[NSInferMappingModelAutomaticallyOption] = @YES;
+    options[NSSQLitePragmasOption] = @{ @"journal_mode":@"DELETE" };
 
-    void (^setupPersistentStoreCoordinator)() = ^{
-        NSPersistentStoreCoordinator *psc = [[self privateContext] persistentStoreCoordinator];
-        NSMutableDictionary *options = [NSMutableDictionary dictionary];
-        options[NSMigratePersistentStoresAutomaticallyOption] = @YES;
-        options[NSInferMappingModelAutomaticallyOption] = @YES;
-        options[NSSQLitePragmasOption] = @{ @"journal_mode":@"DELETE" };
+    NSURL *directory = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.TackleDataGroup"];
+    NSURL *storeURL = [directory URLByAppendingPathComponent:@"Tackle.sqlite"];
 
-        NSURL *directory = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.TackleDataGroup"];
-        NSURL *storeURL = [directory URLByAppendingPathComponent:@"Tackle.sqlite"];
-
-        NSError *error = nil;
-        BOOL success = [psc addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error];
-        NSAssert(success, @"Could not add persistent store");
-
-        if (![self initCallback]) {
-            return;
-        }
-
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            [self initCallback]();
-        });
-    };
-
-    if (self.initializeAsynchronously) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            setupPersistentStoreCoordinator();
-        });
-    }
-    else {
-        setupPersistentStoreCoordinator();
-    }
+    NSError *error = nil;
+    BOOL success = [psc addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error];
+    NSAssert(success, @"Could not add persistent store");
 }
 
 - (void)save {
-    if (![[self privateContext] hasChanges] && ![[self managedObjectContext] hasChanges]) {
+    if (![self.managedObjectContext hasChanges]) {
         return;
     }
 
     [[self managedObjectContext] performBlockAndWait:^{
         NSError *error = nil;
-
         NSAssert([[self managedObjectContext] save:&error], @"Error saving main managed object context");
-
-        [[self privateContext] performBlock:^{
-            NSError *privateError = nil;
-            NSAssert([[self privateContext] save:&privateError], @"Error saving private managed object context");
-        }];
     }];
 }
 
