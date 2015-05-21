@@ -44,7 +44,7 @@
 		D1657F7A1AF0020A0037BB51 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1657F781AF0020A0037BB51 /* Interface.storyboard */; };
 		D1657F7C1AF0020A0037BB51 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D1657F7B1AF0020A0037BB51 /* Images.xcassets */; };
 		D1657F7F1AF0020A0037BB51 /* Tackle WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D1657F5F1AF0020A0037BB51 /* Tackle WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		D1657F891AF006620037BB51 /* MRDataReadingController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1657F881AF006620037BB51 /* MRDataReadingController.m */; };
+		D1657F891AF006620037BB51 /* MRReadOnlyPersistenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1657F881AF006620037BB51 /* MRReadOnlyPersistenceController.m */; };
 		D1657F8A1AF009780037BB51 /* Tackle.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D1027F7C18904E8400FF44A4 /* Tackle.xcdatamodeld */; };
 		D168E67D1AF00EE0003CBB6A /* MRMainRowController.m in Sources */ = {isa = PBXBuildFile; fileRef = D168E67C1AF00EE0003CBB6A /* MRMainRowController.m */; };
 		D168E67E1AF0111A003CBB6A /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = D1027FED1890535700FF44A4 /* Task.m */; };
@@ -57,6 +57,8 @@
 		D168E6851AF016D4003CBB6A /* MRDayOfMonthDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E1412E1A4FE82000992B1E /* MRDayOfMonthDateFormatter.m */; };
 		D168E6861AF016D7003CBB6A /* MRMonthDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A3FDDD1A511B9F00A384FE /* MRMonthDateFormatter.m */; };
 		D17BCFB3189F3D05001996C1 /* UIView+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D17BCFB2189F3D05001996C1 /* UIView+TackleAdditions.m */; };
+		D191D41A1AF99B0A008400D9 /* MRReadOnlyPersistenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1657F881AF006620037BB51 /* MRReadOnlyPersistenceController.m */; };
+		D191D41B1AF99B0B008400D9 /* MRReadOnlyPersistenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1657F881AF006620037BB51 /* MRReadOnlyPersistenceController.m */; };
 		D194BEBB18A1CCC600E5E4DA /* MRHeartbeat.m in Sources */ = {isa = PBXBuildFile; fileRef = D194BEBA18A1CCC600E5E4DA /* MRHeartbeat.m */; };
 		D19C952718A28ACF009082F3 /* NSDate+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D19C952618A28ACF009082F3 /* NSDate+TackleAdditions.m */; };
 		D19C952B18A29297009082F3 /* MRMediumDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D19C952A18A29297009082F3 /* MRMediumDateFormatter.m */; };
@@ -206,8 +208,8 @@
 		D1657F791AF0020A0037BB51 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		D1657F7B1AF0020A0037BB51 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D1657F861AF006060037BB51 /* Tackle WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Tackle WatchKit Extension.entitlements"; sourceTree = "<group>"; };
-		D1657F871AF006620037BB51 /* MRDataReadingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRDataReadingController.h; sourceTree = "<group>"; };
-		D1657F881AF006620037BB51 /* MRDataReadingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRDataReadingController.m; sourceTree = "<group>"; };
+		D1657F871AF006620037BB51 /* MRReadOnlyPersistenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRReadOnlyPersistenceController.h; path = "Tackle WatchKit Extension/Lib/MRReadOnlyPersistenceController.h"; sourceTree = SOURCE_ROOT; };
+		D1657F881AF006620037BB51 /* MRReadOnlyPersistenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRReadOnlyPersistenceController.m; path = "Tackle WatchKit Extension/Lib/MRReadOnlyPersistenceController.m"; sourceTree = SOURCE_ROOT; };
 		D168E67B1AF00EE0003CBB6A /* MRMainRowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRMainRowController.h; sourceTree = "<group>"; };
 		D168E67C1AF00EE0003CBB6A /* MRMainRowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRMainRowController.m; sourceTree = "<group>"; };
 		D17BCFB1189F3D05001996C1 /* UIView+TackleAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TackleAdditions.h"; sourceTree = "<group>"; };
@@ -537,6 +539,8 @@
 				D1F6528C1AF12D9500085D88 /* MRTackleDataConstants.m */,
 				D1F652901AF1317500085D88 /* MRPersistenceController.h */,
 				D1F652911AF1317500085D88 /* MRPersistenceController.m */,
+				D1657F871AF006620037BB51 /* MRReadOnlyPersistenceController.h */,
+				D1657F881AF006620037BB51 /* MRReadOnlyPersistenceController.m */,
 			);
 			path = Lib;
 			sourceTree = "<group>";
@@ -637,8 +641,6 @@
 		D1F652861AF129F000085D88 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
-				D1657F871AF006620037BB51 /* MRDataReadingController.h */,
-				D1657F881AF006620037BB51 /* MRDataReadingController.m */,
 				D1F652871AF12A2E00085D88 /* MRParentDataCoordinator.h */,
 				D1F652881AF12A2E00085D88 /* MRParentDataCoordinator.m */,
 			);
@@ -910,6 +912,7 @@
 				D1F6528D1AF12D9500085D88 /* MRTackleDataConstants.m in Sources */,
 				D1E141291A4FE23E00992B1E /* MRCalendarCollectionViewController.m in Sources */,
 				D1A3FDDB1A505EE400A384FE /* PaintCodeStyleKit.m in Sources */,
+				D191D41B1AF99B0B008400D9 /* MRReadOnlyPersistenceController.m in Sources */,
 				D1BC012D1A539A4B00F87D06 /* MRDatePickerViewController.m in Sources */,
 				D12E87831894A07B008119B8 /* UIFont+TackleAdditions.m in Sources */,
 				D1E1410C1A4F7A0100992B1E /* MRTaskTableViewController.m in Sources */,
@@ -947,6 +950,7 @@
 				D1F80B5D1A5F667900F9D762 /* MRShortDateFormatter.m in Sources */,
 				D1F80B5A1A5F660000F9D762 /* NSDate+TackleAdditions.m in Sources */,
 				D150541D1A5F572C000CA868 /* Task.m in Sources */,
+				D191D41A1AF99B0A008400D9 /* MRReadOnlyPersistenceController.m in Sources */,
 				D1A065BF1A5F7DC60093D08E /* MRTodayMainViewController.m in Sources */,
 				D1A065C21A5F7DEB0093D08E /* MRTodayTableViewController.m in Sources */,
 				D1F6528F1AF12DFA00085D88 /* MRTackleDataConstants.m in Sources */,
@@ -969,7 +973,7 @@
 				D158F0B81AF1D52D00FB2A09 /* MRNewTaskInterfaceController.m in Sources */,
 				D168E6811AF016C8003CBB6A /* MRMediumDateFormatter.m in Sources */,
 				D168E6861AF016D7003CBB6A /* MRMonthDateFormatter.m in Sources */,
-				D1657F891AF006620037BB51 /* MRDataReadingController.m in Sources */,
+				D1657F891AF006620037BB51 /* MRReadOnlyPersistenceController.m in Sources */,
 				D168E6801AF016C5003CBB6A /* MRLongDateFormatter.m in Sources */,
 				D1657F691AF0020A0037BB51 /* MRNotificationController.m in Sources */,
 				D1657F661AF0020A0037BB51 /* MRMainInterfaceController.m in Sources */,
@@ -1126,7 +1130,7 @@
 				INFOPLIST_FILE = "Tackle/Supporting Files/Tackle-Info.plist";
 				"OTHER_LDFLAGS[arch=*]" = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "45aad032-30ef-4c20-b9fe-843a9437c096";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;

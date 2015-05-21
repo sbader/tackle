@@ -10,25 +10,44 @@
 
 #import "Task.h"
 #import "NSDate+TackleAdditions.h"
-#import "MRDataReadingController.h"
-
+#import "MRReadOnlyPersistenceController.h"
 
 @interface MRGlanceController()
 
 @property (weak) IBOutlet WKInterfaceLabel *headingLabel;
+@property (weak) IBOutlet WKInterfaceLabel *subheadingLabel;
 @property (weak) IBOutlet WKInterfaceLabel *titleLabel;
 @property (weak) IBOutlet WKInterfaceLabel *dateLabel;
-@property (strong) MRDataReadingController *persistenceController;
+@property (strong) MRReadOnlyPersistenceController *persistenceController;
+
+@property(nonatomic, strong) NSThread *timerThread;
+@property(nonatomic, assign) NSInteger tick;
+@property(nonatomic, strong) NSTimer *timer;
 
 @end
-
 
 @implementation MRGlanceController
 
 - (void)awakeWithContext:(id)context {
     [super awakeWithContext:context];
+}
 
-    self.persistenceController = [[MRDataReadingController alloc] initWithCallback:^{
+- (void)startTimerThread {
+    NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:5.0
+                                                  target:self
+                                                selector:@selector(timerDidFire:)
+                                                userInfo:nil
+                                                 repeats:YES];
+    [runLoop run];
+}
+
+- (void)timerDidFire:(NSTimer *)timer {
+    [self refreshTasksList];
+}
+
+- (void)refreshTasksList {
+    if (self.persistenceController) {
         NSError *error;
         NSArray *tasks = [Task allOpenTasksWithManagedObjectContext:self.persistenceController.managedObjectContext error:&error];
 
@@ -47,22 +66,37 @@
                 }
 
                 [self.headingLabel setText:headingText];
+                [self.subheadingLabel setText:@"Up Next"];
+                [self.titleLabel setHidden:NO];
+                [self.dateLabel setHidden:NO];
             }
             else {
+                [self.headingLabel setText:@"No Tasks"];
+                [self.subheadingLabel setText:@"No upcoming tasks to tackle"];
+                [self.titleLabel setHidden:YES];
+                [self.dateLabel setHidden:YES];
                 [self.titleLabel setText:@""];
                 [self.dateLabel setText:@""];
-                [self.headingLabel setText:@"No Tasks"];
             }
         }
-    }];
+    }
 }
 
 - (void)willActivate {
     [super willActivate];
+
+    self.persistenceController = [[MRReadOnlyPersistenceController alloc] initWithCallback:^{
+        [self refreshTasksList];
+
+        self.timerThread = [[NSThread alloc] initWithTarget:self selector:@selector(startTimerThread) object:nil];
+        [self.timerThread start];
+    }];
 }
 
 - (void)didDeactivate {
     [super didDeactivate];
+
+    [self.timer invalidate];
 }
 
 @end

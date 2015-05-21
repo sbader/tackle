@@ -10,7 +10,7 @@
 
 #import <CoreData/CoreData.h>
 
-@interface MRDataReadingController : NSObject
+@interface MRReadOnlyPersistenceController : NSObject
 
 @property (readonly) NSManagedObjectContext *managedObjectContext;
 

@@ -10,12 +10,14 @@
 
 #import "MRTodayTableViewController.h"
 #import "UIView+TackleAdditions.h"
+#import "MRReadOnlyPersistenceController.h"
 
 #import <NotificationCenter/NotificationCenter.h>
 
 @interface MRTodayMainViewController () <NCWidgetProviding>
 
 @property (nonatomic) MRTodayTableViewController *tableViewController;
+@property (strong) MRReadOnlyPersistenceController *persistenceController;
 
 @end
 
@@ -23,9 +25,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    self.view.translatesAutoresizingMaskIntoConstraints = NO;
+    self.persistenceController = [[MRReadOnlyPersistenceController alloc] initWithCallback:^{
+        [self completeUserInterface];
+    }];
+}
 
-    self.tableViewController = [[MRTodayTableViewController alloc] initWithStyle:UITableViewStylePlain];
+- (void)completeUserInterface {
+    self.tableViewController = [[MRTodayTableViewController alloc] initWithPersistenceController:self.persistenceController];
     self.tableViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.tableViewController.view];
     [self.tableViewController.view constraintsMatchSuperview];
