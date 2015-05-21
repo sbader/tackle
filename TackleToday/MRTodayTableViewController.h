@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class MRReadOnlyPersistenceController;
+
 @interface MRTodayTableViewController : UITableViewController
 
-@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+- (instancetype)initWithPersistenceController:(MRReadOnlyPersistenceController *)persistenceController;
 
 @end

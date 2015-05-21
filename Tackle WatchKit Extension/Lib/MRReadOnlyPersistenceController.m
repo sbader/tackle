@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Melody Road. All rights reserved.
 //
 
-#import "MRDataReadingController.h"
+#import "MRReadOnlyPersistenceController.h"
 
-@interface MRDataReadingController ()
+@interface MRReadOnlyPersistenceController ()
 
 @property (strong, readwrite) NSManagedObjectContext *managedObjectContext;
 
@@ -18,7 +18,7 @@
 
 @end
 
-@implementation MRDataReadingController
+@implementation MRReadOnlyPersistenceController
 
 - (instancetype)initWithCallback:(void(^)())callback {
     self = [super init];

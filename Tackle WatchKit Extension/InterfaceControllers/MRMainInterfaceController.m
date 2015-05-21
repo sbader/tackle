@@ -12,15 +12,16 @@
 #import "MRMainRowController.h"
 #import "NSDate+TackleAdditions.h"
 #import "MRParentDataCoordinator.h"
-#import "MRDataReadingController.h"
+#import "MRReadOnlyPersistenceController.h"
 
+NSString * const kMRDataUpdatedNotificationName = @"MRDataUpdatedNotification";
 NSString * const kMRInterfaceControllerContextTask = @"Task";
 NSString * const kMRInterfaceControllerContextPersistenceController = @"PersistenceController";
 NSString * const kMRInterfaceControllerContextDataReadingController = @"DataReadingController";
 
 @interface MRMainInterfaceController()
 
-@property (strong) MRDataReadingController *persistenceController;
+@property (strong) MRReadOnlyPersistenceController *persistenceController;
 @property (strong) MRParentDataCoordinator *parentDataCoordinator;
 @property (weak) IBOutlet WKInterfaceTable *mainTable;
 @property (nonatomic) NSArray *todoItems;
@@ -34,17 +35,30 @@ NSString * const kMRInterfaceControllerContextDataReadingController = @"DataRead
     [super awakeWithContext:context];
     self.todoItems = @[];
 
-    self.persistenceController = [[MRDataReadingController alloc] initWithCallback:^{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(dataDidUpdate:)
+                                                 name:kMRDataUpdatedNotificationName
+                                               object:nil];
+
+    self.persistenceController = [[MRReadOnlyPersistenceController alloc] initWithCallback:^{
         [self completeUserInterface];
     }];
+
     self.parentDataCoordinator = [[MRParentDataCoordinator alloc] init];
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:kMRDataUpdatedNotificationName
+                                                  object:nil];
+}
+
 - (void)completeUserInterface {
+    [self refreshTodoItems];
     [self refreshTable];
 }
 
-- (void)refreshTable {
+- (void)refreshTodoItems {
     if (!self.persistenceController) {
         return;
     }
@@ -63,9 +77,15 @@ NSString * const kMRInterfaceControllerContextDataReadingController = @"DataRead
 
     NSError *error;
     self.todoItems = [self.persistenceController.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+}
 
-    [self.mainTable setNumberOfRows:self.todoItems.count withRowType:@"mainRowType"];
+- (void)refreshTable {
+    if (self.todoItems.count != self.mainTable.numberOfRows) {
+        [self.mainTable setNumberOfRows:self.todoItems.count withRowType:@"mainRowType"];
+    }
+
     NSInteger rowCount = self.mainTable.numberOfRows;
+
     for (NSInteger i = 0; i < rowCount; i++) {
         Task *task = [self.todoItems objectAtIndex:i];
         MRMainRowController *row = [self.mainTable rowControllerAtIndex:i];
@@ -76,30 +96,43 @@ NSString * const kMRInterfaceControllerContextDataReadingController = @"DataRead
 
 - (void)willActivate {
     [super willActivate];
-    [self refreshTable];
+
+    if (self.persistenceController) {
+        [self refreshTable];
+    }
 }
 
 - (void)didDeactivate {
     [super didDeactivate];
 }
 
-- (void)table:(WKInterfaceTable *)table didSelectRowAtIndex:(NSInteger)rowIndex {
-    NSDictionary *context = @{
-                              kMRInterfaceControllerContextTask: [self.todoItems objectAtIndex:rowIndex],
-                              kMRInterfaceControllerContextPersistenceController: self.persistenceController,
-                              kMRInterfaceControllerContextDataReadingController: self.parentDataCoordinator
-                              };
+- (id)contextForSegueWithIdentifier:(NSString *)segueIdentifier inTable:(WKInterfaceTable *)table rowIndex:(NSInteger)rowIndex {
+    if ([segueIdentifier isEqualToString:@"EditTaskSegue"]) {
+        return @{
+                 kMRInterfaceControllerContextTask: [self.todoItems objectAtIndex:rowIndex],
+                 kMRInterfaceControllerContextPersistenceController: self.persistenceController,
+                 kMRInterfaceControllerContextDataReadingController: self.parentDataCoordinator
+                 };
+    }
 
-    [self pushControllerWithName:@"TaskInterfaceController" context:context];
+    return nil;
 }
 
-- (IBAction)handleAddTaskButton:(id)sender {
-    NSDictionary *context = @{
-                              kMRInterfaceControllerContextPersistenceController: self.persistenceController,
-                              kMRInterfaceControllerContextDataReadingController: self.parentDataCoordinator
-                              };
+- (id)contextForSegueWithIdentifier:(NSString *)segueIdentifier {
+    if ([segueIdentifier isEqualToString:@"AddTaskSegue"]) {
+        return @{
+                 kMRInterfaceControllerContextPersistenceController: self.persistenceController,
+                 kMRInterfaceControllerContextDataReadingController: self.parentDataCoordinator
+                 };
+    }
 
-    [self pushControllerWithName:@"AddTaskInterfaceController" context:context];
+    return nil;
+}
+
+- (void)dataDidUpdate:(NSNotification *)notification {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self refreshTodoItems];
+    });
 }
 
 @end

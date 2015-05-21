@@ -150,7 +150,7 @@
     task.dueDate = dueDate;
 
     [self.persistenceController save];
-    [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:task.managedObjectContext];
+    [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
 }
 
 - (void)handleNotificationForTask:(Task *)task {
@@ -191,7 +191,7 @@
     [self.undoManager setActionName:@"Completed Task"];
 
     [self.persistenceController save];
-    [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:task.managedObjectContext];
+    [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
 }
 
 - (void)undoCompleted:(Task *)task {
@@ -202,7 +202,7 @@
     [self.undoManager setActionName:@"Completed Task"];
 
     [self.persistenceController save];
-    [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:task.managedObjectContext];
+    [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
 }
 
 #pragma mark - Task Editing Delegate

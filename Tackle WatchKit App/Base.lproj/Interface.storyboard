@@ -12,7 +12,7 @@
                     <items>
                         <button width="1" alignment="left" title="New Task" id="2BJ-c8-V3V">
                             <connections>
-                                <action selector="handleAddTaskButton:" destination="AgC-eL-Hgc" id="V73-xg-ZIh"/>
+                                <segue destination="u0p-Pv-saz" kind="modal" identifier="AddTaskSegue" id="ady-Lo-tZX"/>
                             </connections>
                         </button>
                         <table alignment="left" id="eWy-PN-PJU">
@@ -20,7 +20,6 @@
                                 <tableRow identifier="mainRowType" id="5HT-S4-mxh" customClass="MRMainRowController">
                                     <group key="rootItem" width="1" height="0.0" alignment="left" layout="vertical" id="cdy-Bn-sDt">
                                         <items>
-                                            <group width="1" height="2" alignment="left" id="nSz-5H-fCd"/>
                                             <label width="1" alignment="left" text="Buy a birthday card" numberOfLines="0" id="Xo9-Dd-1aw">
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
@@ -29,13 +28,14 @@
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="font" style="UICTFontTextStyleBody"/>
                                             </label>
-                                            <group width="1" height="2" alignment="left" id="h8H-rx-1wH"/>
                                         </items>
                                         <color key="backgroundColor" red="0.42140495777130127" green="0.31595766544342041" blue="0.53267228603363037" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <edgeInsets key="margins" left="4" right="4" top="4" bottom="4"/>
                                     </group>
                                     <connections>
                                         <outlet property="dateLabel" destination="und-rt-okA" id="gfV-UC-HCD"/>
                                         <outlet property="titleLabel" destination="Xo9-Dd-1aw" id="2Ru-QS-HCb"/>
+                                        <segue destination="dzi-F9-9Aw" kind="modal" identifier="EditTaskSegue" id="U1d-m0-6cX"/>
                                     </connections>
                                 </tableRow>
                             </items>
@@ -48,18 +48,18 @@
             </objects>
             <point key="canvasLocation" x="249" y="298"/>
         </scene>
-        <!--Task-->
+        <!--TaskInterfaceController-->
         <scene sceneID="90z-pe-bFg">
             <objects>
-                <controller identifier="TaskInterfaceController" title="Task" id="dzi-F9-9Aw" customClass="MRTaskInterfaceController">
+                <controller identifier="TaskInterfaceController" id="dzi-F9-9Aw" customClass="MRTaskInterfaceController">
                     <items>
                         <group width="1" alignment="left" layout="vertical" id="SWT-8X-8Gn">
                             <items>
-                                <group width="1" alignment="left" layout="vertical" radius="6" spacing="2" id="Mfe-8F-ZUz">
+                                <group width="1" alignment="left" layout="vertical" radius="6" id="Mfe-8F-ZUz">
                                     <items>
                                         <label width="1" alignment="left" text="Buy a birthday card" numberOfLines="0" id="Ki7-Jr-d1l">
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <fontDescription key="font" type="system" weight="semibold" pointSize="20"/>
+                                            <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
                                         </label>
                                         <label width="1" alignment="left" text="Tomorrow at 2:30 PM" minimumScaleFactor="0.5" id="kO8-So-GJ4">
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -67,12 +67,18 @@
                                         </label>
                                     </items>
                                     <color key="backgroundColor" red="0.42140495777130127" green="0.31595766544342041" blue="0.53267228603363037" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <edgeInsets key="margins" left="2" right="2" top="2" bottom="2"/>
+                                    <edgeInsets key="margins" left="4" right="4" top="4" bottom="4"/>
                                 </group>
-                                <button width="1" alignment="left" title="Done" id="LGq-0l-S9C">
-                                    <color key="backgroundColor" red="0.58431372550000005" green="0.14117647059999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <button width="1" alignment="left" title="Completed" id="LGq-0l-S9C">
+                                    <color key="backgroundColor" red="0.081513278186321259" green="0.57856017351150513" blue="0.28151538968086243" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <connections>
                                         <action selector="handleDoneButton:" destination="dzi-F9-9Aw" id="nix-3m-Gzc"/>
+                                    </connections>
+                                </button>
+                                <button width="1" alignment="left" title="Save" id="4yj-ok-BU7">
+                                    <color key="backgroundColor" red="0.043137254899999998" green="0.37647058820000001" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
+                                    <connections>
+                                        <action selector="handleSaveButton:" destination="dzi-F9-9Aw" id="BUE-4Q-hYc"/>
                                     </connections>
                                 </button>
                                 <button width="1" alignment="left" title="Add Ten Minutes" id="ORA-g5-lHd">
@@ -90,6 +96,12 @@
                                         <action selector="handleAddADayButton:" destination="dzi-F9-9Aw" id="wvR-Hg-Yde"/>
                                     </connections>
                                 </button>
+                                <button width="1" alignment="left" title="Cancel" id="cVp-Mp-zif">
+                                    <color key="backgroundColor" red="0.58431372550000005" green="0.14117647059999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <connections>
+                                        <action selector="handleCancelButton:" destination="dzi-F9-9Aw" id="Gpq-Ck-hXO"/>
+                                    </connections>
+                                </button>
                             </items>
                         </group>
                     </items>
@@ -103,12 +115,12 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="439" y="341.5"/>
+            <point key="canvasLocation" x="471" y="491"/>
         </scene>
-        <!--Add Task-->
+        <!--AddTaskInterfaceController-->
         <scene sceneID="DjH-nO-zO9">
             <objects>
-                <controller identifier="AddTaskInterfaceController" title="Add Task" id="u0p-Pv-saz" customClass="MRNewTaskInterfaceController">
+                <controller identifier="AddTaskInterfaceController" id="u0p-Pv-saz" customClass="MRNewTaskInterfaceController">
                     <items>
                         <group width="1" alignment="left" layout="vertical" id="lpY-np-2bg">
                             <items>
@@ -124,6 +136,12 @@
                             <color key="backgroundColor" red="0.043137254899999998" green="0.37647058820000001" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="handleSaveButton:" destination="u0p-Pv-saz" id="C6g-px-XFx"/>
+                            </connections>
+                        </button>
+                        <button width="1" alignment="left" title="Cancel" id="7rC-P7-I2p">
+                            <color key="backgroundColor" red="0.58431372550000005" green="0.14117647059999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="handleCancelButton:" destination="u0p-Pv-saz" id="Rey-iA-MCC"/>
                             </connections>
                         </button>
                         <button width="1" alignment="left" title="Edit Title" id="Fhs-Z8-9GA">
@@ -154,37 +172,42 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="628" y="362.25"/>
+            <point key="canvasLocation" x="632" y="106.25"/>
         </scene>
         <!--Glance Interface Controller-->
         <scene sceneID="BOz-TT-tkC">
             <objects>
                 <glanceController spacing="0.0" topTemplateType="body1Large" id="0uZ-2p-rRc" customClass="MRGlanceController">
                     <items>
-                        <label alignment="left" text="Tackle" id="uNL-bI-Vex"/>
-                        <label alignment="left" text="3 Tasks" minimumScaleFactor="0.5" id="Ore-oO-hlD"/>
+                        <label alignment="left" id="uNL-bI-Vex"/>
+                        <label alignment="left" text="No Tasks" minimumScaleFactor="0.5" id="Ore-oO-hlD"/>
                         <group alignment="left" layout="vertical" id="qEL-x6-d4K">
                             <items>
-                                <label alignment="left" text="Up Next" id="qbh-b6-IA6">
-                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
-                                </label>
-                                <label width="1" alignment="left" text="Buy a birthday card" numberOfLines="0" id="rsR-uA-3f9">
-                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
-                                </label>
-                                <label alignment="left" text="Tomorrow at 2:30 PM" minimumScaleFactor="0.5" id="RdK-eo-eIh">
-                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </label>
+                                <group width="1" alignment="left" layout="vertical" radius="4" id="LDz-U9-PfV">
+                                    <items>
+                                        <label alignment="left" text="No upcoming tasks to tackle" numberOfLines="0" id="qbh-b6-IA6">
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
+                                        </label>
+                                        <label width="1" alignment="left" hidden="YES" numberOfLines="0" id="rsR-uA-3f9">
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="font" style="UICTFontTextStyleHeadline"/>
+                                        </label>
+                                        <label alignment="left" hidden="YES" minimumScaleFactor="0.5" id="RdK-eo-eIh">
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </items>
+                                    <color key="backgroundColor" red="0.42140495779999998" green="0.31595766539999998" blue="0.53267228600000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <edgeInsets key="margins" left="4" right="4" top="4" bottom="4"/>
+                                </group>
                             </items>
-                            <color key="backgroundColor" red="0.42140495777130127" green="0.31595766544342041" blue="0.53267228603363037" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <edgeInsets key="margins" left="2" right="2" top="2" bottom="2"/>
                         </group>
                     </items>
                     <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="14"/>
                     <connections>
                         <outlet property="dateLabel" destination="RdK-eo-eIh" id="39p-ea-Vgm"/>
                         <outlet property="headingLabel" destination="Ore-oO-hlD" id="8zR-Yk-MJT"/>
+                        <outlet property="subheadingLabel" destination="qbh-b6-IA6" id="d8X-q5-cp2"/>
                         <outlet property="titleLabel" destination="rsR-uA-3f9" id="phG-Vv-fOO"/>
                     </connections>
                 </glanceController>

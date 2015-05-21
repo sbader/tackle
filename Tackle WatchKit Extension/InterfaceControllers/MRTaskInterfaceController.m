@@ -10,7 +10,7 @@
 
 #import "Task.h"
 #import "NSDate+TackleAdditions.h"
-#import "MRDataReadingController.h"
+#import "MRReadOnlyPersistenceController.h"
 #import "MRParentDataCoordinator.h"
 #import "MRMainInterfaceController.h"
 
@@ -24,8 +24,10 @@
 @property (weak) IBOutlet WKInterfaceButton *addADayButton;
 
 @property (nonatomic) Task *task;
+@property (nonatomic) NSString *currentTitle;
+@property (nonatomic) NSDate *currentDate;
 @property (nonatomic) MRParentDataCoordinator *parentDataCoordinator;
-@property (nonatomic) MRDataReadingController *persistenceController;
+@property (nonatomic) MRReadOnlyPersistenceController *persistenceController;
 
 @end
 
@@ -40,12 +42,15 @@
     self.persistenceController = contextDictionary[kMRInterfaceControllerContextPersistenceController];
     self.parentDataCoordinator = contextDictionary[kMRInterfaceControllerContextDataReadingController];
 
-    [self.titleLabel setText:self.task.title];
+    self.currentDate = [self.task.dueDate copy];
+    self.currentTitle = [self.task.title copy];
+
+    [self.titleLabel setText:self.currentTitle];
     [self updateDateLabel];
 }
 
 - (void)updateDateLabel {
-    [self.dateLabel setText:self.task.dueDate.tackleString];
+    [self.dateLabel setText:self.currentDate.tackleString];
 }
 
 - (void)willActivate {
@@ -58,10 +63,20 @@
 
 - (void)updateTaskDueDateWithUnit:(NSCalendarUnit)unit interval:(NSTimeInterval)interval {
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    self.task.dueDate = [calendar dateByAddingUnit:unit
+    self.currentDate = [calendar dateByAddingUnit:unit
                                             value:interval
-                                           toDate:self.task.dueDate
+                                           toDate:self.currentDate
                                           options:0];
+
+    [self updateDateLabel];
+}
+
+- (IBAction)handleCancelButton:(id)sender {
+    [self dismissController];
+}
+
+- (IBAction)handleSaveButton:(id)sender {
+    self.task.dueDate = self.currentDate;
 
     [self.parentDataCoordinator updateTask:self.task withCompletion:^(NSError *error) {
         if (error) {
@@ -69,10 +84,11 @@
         }
         else {
             NSLog(@"Successfully updated task");
+            [self sendDataUpdatedNotification];
         }
-    }];
 
-    [self updateDateLabel];
+        [self dismissController];
+    }];
 }
 
 - (IBAction)handleDoneButton:(id)sender {
@@ -82,10 +98,15 @@
         }
         else {
             NSLog(@"Successfully completed task");
+            [self sendDataUpdatedNotification];
         }
-    }];
 
-    [self popController];
+        [self dismissController];
+    }];
+}
+
+- (void)sendDataUpdatedNotification {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kMRDataUpdatedNotificationName object:nil];
 }
 
 - (IBAction)handleAddTenMinutesButton:(id)sender {

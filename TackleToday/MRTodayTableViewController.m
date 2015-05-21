@@ -13,6 +13,7 @@
 #import "Task.h"
 #import "MRTodayTableViewCell.h"
 #import "NSDate+TackleAdditions.h"
+#import "MRReadOnlyPersistenceController.h"
 
 NSString *todayViewControllerContentCellIdentifier = @"todayViewCell";
 
@@ -20,14 +21,21 @@ NSString *todayViewControllerContentCellIdentifier = @"todayViewCell";
 
 @property (nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic) NSLayoutConstraint *heightConstraint;
+@property (nonatomic) MRReadOnlyPersistenceController *persistenceController;
 
 @end
 
 @implementation MRTodayTableViewController
 
-@synthesize managedObjectContext = _managedObjectContext;
-@synthesize managedObjectModel = _managedObjectModel;
-@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+- (instancetype)initWithPersistenceController:(MRReadOnlyPersistenceController *)persistenceController {
+    self = [super initWithStyle:UITableViewStylePlain];
+
+    if (self) {
+        _persistenceController = persistenceController;
+    }
+
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -48,7 +56,6 @@ NSString *todayViewControllerContentCellIdentifier = @"todayViewCell";
 
     [self.view addConstraint:self.heightConstraint];
     [self updateTableContentSize];
-
 }
 
 - (void)updateTableContentSize {
@@ -71,7 +78,7 @@ NSString *todayViewControllerContentCellIdentifier = @"todayViewCell";
 
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task"
-                                              inManagedObjectContext:self.managedObjectContext];
+                                              inManagedObjectContext:self.persistenceController.managedObjectContext];
 
     [fetchRequest setEntity:entity];
 
@@ -82,7 +89,7 @@ NSString *todayViewControllerContentCellIdentifier = @"todayViewCell";
     [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO"]];
 
     NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                                                                                managedObjectContext:self.managedObjectContext
+                                                                                                managedObjectContext:self.persistenceController.managedObjectContext
                                                                                                   sectionNameKeyPath:nil
                                                                                                            cacheName:nil];
 
@@ -95,47 +102,6 @@ NSString *todayViewControllerContentCellIdentifier = @"todayViewCell";
     }
 
     return _fetchedResultsController;
-}
-
-#pragma mark - Core Data
-
-- (NSManagedObjectContext *)managedObjectContext {
-    if (_managedObjectContext != nil) {
-        return _managedObjectContext;
-    }
-
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (coordinator != nil) {
-        _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
-    }
-    return _managedObjectContext;
-}
-
-- (NSManagedObjectModel *)managedObjectModel {
-    if (_managedObjectModel != nil) {
-        return _managedObjectModel;
-    }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Tackle" withExtension:@"momd"];
-    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-    return _managedObjectModel;
-}
-
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
-    if (_persistentStoreCoordinator != nil) {
-        return _persistentStoreCoordinator;
-    }
-
-    NSURL *directory = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.TackleDataGroup"];
-    NSURL *storeURL = [directory URLByAppendingPathComponent:@"Tackle.sqlite"];
-
-    NSError *error = nil;
-    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-    }
-
-    return _persistentStoreCoordinator;
 }
 
 #pragma mark - Table View Data Source
