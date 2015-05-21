@@ -37,19 +37,19 @@ static NSString * const taskCellReuseIdentifier = @"TaskCell";
         self.tableView.separatorInset = UIEdgeInsetsZero;
         self.tableView.allowsMultipleSelectionDuringEditing = NO;
         self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+
+        [self attachObservers];
     }
 
     return self;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [self attachObservers];
+- (void)dealloc {
+    [self detachObservers];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [self detachObservers];
+- (void)viewDidLoad {
+    [super viewDidLoad];
 }
 
 - (void)refreshTasks {
