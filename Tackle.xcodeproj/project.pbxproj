@@ -1130,7 +1130,7 @@
 				INFOPLIST_FILE = "Tackle/Supporting Files/Tackle-Info.plist";
 				"OTHER_LDFLAGS[arch=*]" = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "45aad032-30ef-4c20-b9fe-843a9437c096";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
