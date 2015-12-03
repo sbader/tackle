@@ -53,8 +53,9 @@
         options[NSInferMappingModelAutomaticallyOption] = @YES;
         options[NSSQLitePragmasOption] = @{ @"journal_mode":@"DELETE" };
 
-        NSURL *directory = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.TackleDataGroup"];
-        NSURL *storeURL = [directory URLByAppendingPathComponent:@"Tackle.sqlite"];
+
+        NSURL *documentsURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+        NSURL *storeURL = [documentsURL URLByAppendingPathComponent:@"Tackle.sqlite"];
 
         NSError *error = nil;
         assert([psc addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]);

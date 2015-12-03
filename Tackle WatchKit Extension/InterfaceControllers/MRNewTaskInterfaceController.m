@@ -9,9 +9,10 @@
 #import "MRNewTaskInterfaceController.h"
 
 #import "NSDate+TackleAdditions.h"
-#import "MRReadOnlyPersistenceController.h"
-#import "MRParentDataCoordinator.h"
+#import "MRPersistenceController.h"
 #import "MRMainInterfaceController.h"
+#import "MRConnectivityController.h"
+#import "Task.h"
 
 @interface MRNewTaskInterfaceController()
 
@@ -23,8 +24,8 @@
 @property (nonatomic) NSDate *selectedDate;
 @property (nonatomic) NSString *title;
 
-@property (nonatomic) MRParentDataCoordinator *parentDataCoordinator;
-@property (nonatomic) MRReadOnlyPersistenceController *persistenceController;
+@property (nonatomic) MRPersistenceController *persistenceController;
+@property (nonatomic) MRConnectivityController *connectivityController;
 
 @end
 
@@ -39,7 +40,7 @@
     NSDictionary *contextDictionary = (NSDictionary *)context;
 
     self.persistenceController = contextDictionary[kMRInterfaceControllerContextPersistenceController];
-    self.parentDataCoordinator = contextDictionary[kMRInterfaceControllerContextDataReadingController];
+    self.connectivityController = contextDictionary[kMRInterfaceControllerContextConnectivityController];
 
     [self editTitle];
 }
@@ -98,17 +99,12 @@
 }
 
 - (IBAction)handleSaveButton:(id)sender {
-    [self.parentDataCoordinator createTaskWithTitle:self.title dueDate:self.selectedDate completion:^(NSError *error) {
-        if (error) {
-            NSLog(@"Error creating task %@", error.localizedDescription);
-        }
-        else {
-            NSLog(@"Successfully created task");
-            [self sendDataUpdatedNotification];
-        }
+    Task *task = [Task insertItemWithTitle:self.title dueDate:self.selectedDate identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
+    [self.persistenceController save];
+    [self sendDataUpdatedNotification];
 
-        [self dismissController];
-    }];
+    [self.connectivityController sendNewTaskNotificationWithTask:task];
+    [self dismissController];
 }
 
 - (void)sendDataUpdatedNotification {

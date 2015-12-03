@@ -54,8 +54,8 @@
     NSURL *storeURL = [directory URLByAppendingPathComponent:@"Tackle.sqlite"];
 
     NSError *error = nil;
-    BOOL success = [psc addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error];
-    NSAssert(success, @"Could not add persistent store");
+    NSPersistentStore *store = [psc addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error];
+    NSAssert(store, @"Could not add persistent store");
 }
 
 - (void)save {

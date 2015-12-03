@@ -18,6 +18,7 @@ NSString * const kMRDataNotificationResponseTypeKey = @"DataNotificationResponse
 NSString * const kMRDataNotificationResponseSuccess = @"DataNotificationResponseSuccess";
 NSString * const kMRDataNotificationResponseFailure = @"DataNotificationResponseFailure";
 
+NSString * const kMRDataNotificationTaskAttributeIdentifier = @"Identifier";
 NSString * const kMRDataNotificationTaskAttributeDueDate = @"TaskDueDate";
 NSString * const kMRDataNotificationTaskAttributeTitle = @"TaskTitle";
 NSString * const kMRDataNotificationTaskAttributeUniqueID = @"TaskUniqueID";

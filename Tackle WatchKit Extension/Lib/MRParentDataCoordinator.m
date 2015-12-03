@@ -10,54 +10,45 @@
 
 #import "MRTackleDataConstants.h"
 #import <WatchKit/WatchKit.h>
+#import <WatchConnectivity/WatchConnectivity.h>
+
+@interface MRParentDataCoordinator() <WCSessionDelegate>
+
+@property (nonatomic) WCSession *session;
+
+@end
 
 @implementation MRParentDataCoordinator
 
-- (void)notifyParentApplicationWithNotificationType:(NSString *)notificationType context:(id)context completion:(void(^)(NSError *error))completion {
+- (instancetype)init {
+    self = [super init];
+
+    if (self) {
+        if ([WCSession isSupported]) {
+            _session = [WCSession defaultSession];
+            _session.delegate = self;
+            [_session activateSession];
+        }
+    }
+
+    return self;
+}
+
+- (void)notifyParentApplicationWithNotificationType:(NSString *)notificationType context:(id)context {
     NSDictionary *userInfo = @{
                                kMRDataNotificationTypeKey: notificationType,
                                kMRDataNotificationContextKey: context
                                };
 
-    [WKInterfaceController openParentApplication:userInfo reply:^(NSDictionary *replyInfo, NSError *error) {
-        if (error) {
-            completion(error);
-            return;
-        }
-
-        NSString *success = [replyInfo objectForKey:kMRDataNotificationResponseTypeKey];
-        if (success) {
-            if ([success isEqualToString:kMRDataNotificationResponseSuccess]) {
-                completion(nil);
-            }
-            else {
-                NSDictionary *errorInfo = @{
-                                            NSLocalizedDescriptionKey: @"Parent application returned an error on save"
-                                            };
-
-                error = [NSError errorWithDomain:@"com.melodyroad.Tackle" code:-1001 userInfo:errorInfo];
-                completion(error);
-            }
-
-        }
-        else {
-            NSDictionary *errorInfo = @{
-                                        NSLocalizedDescriptionKey: @"No response returned from parent application"
-                                        };
-
-            error = [NSError errorWithDomain:@"com.melodyroad.Tackle" code:-1001 userInfo:errorInfo];
-            completion(error);
-        }
-    }];
+    [self.session transferUserInfo:userInfo];
 }
 
 - (void)completeTask:(Task *)task withCompletion:(void(^)(NSError *error))completion {
     NSDictionary *context = @{
                               kMRDataNotificationTaskAttributeUniqueID: [self uniqueIDForTask:task]
                               };
-    [self notifyParentApplicationWithNotificationType:kMRDataNotificationTypeTaskCompleted context:context completion:^(NSError *error) {
-        completion(error);
-    }];
+    [self notifyParentApplicationWithNotificationType:kMRDataNotificationTypeTaskCompleted context:context];
+    completion(nil);
 }
 
 - (void)updateTask:(Task *)task withCompletion:(void(^)(NSError *error))completion {
@@ -66,9 +57,8 @@
                               kMRDataNotificationTaskAttributeDueDate: task.dueDate,
                               kMRDataNotificationTaskAttributeUniqueID: [self uniqueIDForTask:task]
                               };
-    [self notifyParentApplicationWithNotificationType:kMRDataNotificationTypeTaskUpdate context:context completion:^(NSError *error) {
-        completion(error);
-    }];
+    [self notifyParentApplicationWithNotificationType:kMRDataNotificationTypeTaskUpdate context:context];
+    completion(nil);
 }
 
 - (void)createTaskWithTitle:(NSString *)title dueDate:(NSDate *)dueDate completion:(void(^)(NSError *error))completion {
@@ -77,14 +67,18 @@
                               kMRDataNotificationTaskAttributeDueDate: dueDate
                               };
 
-    [self notifyParentApplicationWithNotificationType:kMRDataNotificationTypeTaskCreate context:context completion:^(NSError *error) {
-        completion(error);
-    }];
+    [self notifyParentApplicationWithNotificationType:kMRDataNotificationTypeTaskCreate context:context];
+    completion(nil);
 }
 
 - (NSString *)uniqueIDForTask:(Task *)task {
     return task.objectID.URIRepresentation.absoluteString;
 }
 
+#pragma mark - WCSessionDelegate
+
+- (void)session:(WCSession *)session didReceiveUserInfo:(NSDictionary<NSString *,id> *)userInfo {
+    
+}
 
 @end

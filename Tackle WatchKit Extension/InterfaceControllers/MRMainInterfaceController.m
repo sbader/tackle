@@ -8,23 +8,26 @@
 
 #import "MRMainInterfaceController.h"
 
+#import <WatchConnectivity/WatchConnectivity.h>
+
 #import "Task.h"
 #import "MRMainRowController.h"
 #import "NSDate+TackleAdditions.h"
-#import "MRParentDataCoordinator.h"
-#import "MRReadOnlyPersistenceController.h"
+#import "MRPersistenceController.h"
+#import "MRConnectivityController.h"
 
 NSString * const kMRDataUpdatedNotificationName = @"MRDataUpdatedNotification";
 NSString * const kMRInterfaceControllerContextTask = @"Task";
 NSString * const kMRInterfaceControllerContextPersistenceController = @"PersistenceController";
+NSString * const kMRInterfaceControllerContextConnectivityController = @"ConnectivityController";
 NSString * const kMRInterfaceControllerContextDataReadingController = @"DataReadingController";
 
-@interface MRMainInterfaceController()
+@interface MRMainInterfaceController() <MRConnectivityControllerDelegate>
 
-@property (strong) MRReadOnlyPersistenceController *persistenceController;
-@property (strong) MRParentDataCoordinator *parentDataCoordinator;
+@property (strong) MRPersistenceController *persistenceController;
 @property (weak) IBOutlet WKInterfaceTable *mainTable;
 @property (nonatomic) NSArray *todoItems;
+@property (nonatomic) MRConnectivityController *connectivityController;
 
 @end
 
@@ -40,11 +43,11 @@ NSString * const kMRInterfaceControllerContextDataReadingController = @"DataRead
                                                  name:kMRDataUpdatedNotificationName
                                                object:nil];
 
-    self.persistenceController = [[MRReadOnlyPersistenceController alloc] initWithCallback:^{
-        [self completeUserInterface];
-    }];
+    self.persistenceController = [[MRPersistenceController alloc] init];
+    [self completeUserInterface];
 
-    self.parentDataCoordinator = [[MRParentDataCoordinator alloc] init];
+    self.connectivityController = [[MRConnectivityController alloc] initWithPersistenceController:self.persistenceController];
+    self.connectivityController.delegate = self;
 }
 
 - (void)dealloc {
@@ -75,6 +78,7 @@ NSString * const kMRInterfaceControllerContextDataReadingController = @"DataRead
 
     NSError *error;
     self.todoItems = [self.persistenceController.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    NSLog(@"found todo items %@", @(self.todoItems.count));
 }
 
 - (void)refreshTable {
@@ -109,7 +113,7 @@ NSString * const kMRInterfaceControllerContextDataReadingController = @"DataRead
         return @{
                  kMRInterfaceControllerContextTask: [self.todoItems objectAtIndex:rowIndex],
                  kMRInterfaceControllerContextPersistenceController: self.persistenceController,
-                 kMRInterfaceControllerContextDataReadingController: self.parentDataCoordinator
+                 kMRInterfaceControllerContextConnectivityController: self.connectivityController
                  };
     }
 
@@ -120,7 +124,7 @@ NSString * const kMRInterfaceControllerContextDataReadingController = @"DataRead
     if ([segueIdentifier isEqualToString:@"AddTaskSegue"]) {
         return @{
                  kMRInterfaceControllerContextPersistenceController: self.persistenceController,
-                 kMRInterfaceControllerContextDataReadingController: self.parentDataCoordinator
+                 kMRInterfaceControllerContextConnectivityController: self.connectivityController
                  };
     }
 
@@ -130,6 +134,27 @@ NSString * const kMRInterfaceControllerContextDataReadingController = @"DataRead
 - (void)dataDidUpdate:(NSNotification *)notification {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self refreshTodoItems];
+    });
+}
+
+- (void)connectivityController:(MRConnectivityController *)connectivityController didAddTask:(Task *)task {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self refreshTodoItems];
+        [self refreshTable];
+    });
+}
+
+- (void)connectivityController:(MRConnectivityController *)connectivityController didUpdateTask:(Task *)task {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self refreshTodoItems];
+        [self refreshTable];
+    });
+}
+
+- (void)connectivityController:(MRConnectivityController *)connectivityController didCompleteTask:(Task *)task {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self refreshTodoItems];
+        [self refreshTable];
     });
 }
 
