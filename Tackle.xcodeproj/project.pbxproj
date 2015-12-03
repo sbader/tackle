@@ -17,7 +17,6 @@
 		D1027F7518904E8400FF44A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D1027F7318904E8400FF44A4 /* InfoPlist.strings */; };
 		D1027F7718904E8400FF44A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D1027F7618904E8400FF44A4 /* main.m */; };
 		D1027F7B18904E8400FF44A4 /* MRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D1027F7A18904E8400FF44A4 /* MRAppDelegate.m */; };
-		D1027F7E18904E8400FF44A4 /* Tackle.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D1027F7C18904E8400FF44A4 /* Tackle.xcdatamodeld */; };
 		D1027F8018904E8400FF44A4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D1027F7F18904E8400FF44A4 /* Images.xcassets */; };
 		D1027F8718904E8400FF44A4 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1027F8618904E8400FF44A4 /* XCTest.framework */; };
 		D1027F8818904E8400FF44A4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1027F6818904E8400FF44A4 /* Foundation.framework */; };
@@ -26,12 +25,19 @@
 		D1027F9218904E8400FF44A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D1027F9018904E8400FF44A4 /* InfoPlist.strings */; };
 		D1027FEE1890535700FF44A4 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = D1027FED1890535700FF44A4 /* Task.m */; };
 		D1224AC618A679AE001FC205 /* NSDate+TackleAdditionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D1224AC518A679AE001FC205 /* NSDate+TackleAdditionsTest.m */; };
+		D12D71991B78FAE1008CF978 /* Tackle WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D1657F5F1AF0020A0037BB51 /* Tackle WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D12D719C1B78FAE1008CF978 /* Tackle WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = D1657F711AF0020A0037BB51 /* Tackle WatchKit App.app */; };
 		D12E87831894A07B008119B8 /* UIFont+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D12E87821894A07B008119B8 /* UIFont+TackleAdditions.m */; };
 		D12E8786189573FC008119B8 /* UIColor+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D12E8785189573FC008119B8 /* UIColor+TackleAdditions.m */; };
 		D139E57418959F41007163AD /* MRLongDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D139E57318959F41007163AD /* MRLongDateFormatter.m */; };
+		D13A960A1B798CBE0045DC04 /* MRConnectivityController.m in Sources */ = {isa = PBXBuildFile; fileRef = D13A96091B798CBE0045DC04 /* MRConnectivityController.m */; };
+		D13A960B1B798CC40045DC04 /* MRConnectivityController.m in Sources */ = {isa = PBXBuildFile; fileRef = D13A96091B798CBE0045DC04 /* MRConnectivityController.m */; };
+		D13A960C1B798D9B0045DC04 /* MRPersistenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1F652911AF1317500085D88 /* MRPersistenceController.m */; };
+		D13A96161B7995280045DC04 /* Tackle.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D13A96141B7995280045DC04 /* Tackle.xcdatamodeld */; };
+		D13A96171B7995280045DC04 /* Tackle.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D13A96141B7995280045DC04 /* Tackle.xcdatamodeld */; };
+		D13A96181B7995280045DC04 /* Tackle.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D13A96141B7995280045DC04 /* Tackle.xcdatamodeld */; };
 		D150540A1A5F54AA000CA868 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D15054091A5F54AA000CA868 /* NotificationCenter.framework */; };
 		D15054151A5F54AA000CA868 /* TackleToday.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D15054081A5F54AA000CA868 /* TackleToday.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		D150541B1A5F5724000CA868 /* Tackle.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D1027F7C18904E8400FF44A4 /* Tackle.xcdatamodeld */; };
 		D150541D1A5F572C000CA868 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = D1027FED1890535700FF44A4 /* Task.m */; };
 		D15054211A5F5B41000CA868 /* MRNotificationProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = D15054201A5F5B41000CA868 /* MRNotificationProvider.m */; };
 		D158F0B81AF1D52D00FB2A09 /* MRNewTaskInterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = D158F0B71AF1D52D00FB2A09 /* MRNewTaskInterfaceController.m */; };
@@ -40,12 +46,9 @@
 		D1657F691AF0020A0037BB51 /* MRNotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1657F681AF0020A0037BB51 /* MRNotificationController.m */; };
 		D1657F6C1AF0020A0037BB51 /* MRGlanceController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1657F6B1AF0020A0037BB51 /* MRGlanceController.m */; };
 		D1657F6E1AF0020A0037BB51 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D1657F6D1AF0020A0037BB51 /* Images.xcassets */; };
-		D1657F721AF0020A0037BB51 /* Tackle WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = D1657F711AF0020A0037BB51 /* Tackle WatchKit App.app */; };
 		D1657F7A1AF0020A0037BB51 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1657F781AF0020A0037BB51 /* Interface.storyboard */; };
 		D1657F7C1AF0020A0037BB51 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D1657F7B1AF0020A0037BB51 /* Images.xcassets */; };
-		D1657F7F1AF0020A0037BB51 /* Tackle WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D1657F5F1AF0020A0037BB51 /* Tackle WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D1657F891AF006620037BB51 /* MRReadOnlyPersistenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1657F881AF006620037BB51 /* MRReadOnlyPersistenceController.m */; };
-		D1657F8A1AF009780037BB51 /* Tackle.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D1027F7C18904E8400FF44A4 /* Tackle.xcdatamodeld */; };
 		D168E67D1AF00EE0003CBB6A /* MRMainRowController.m in Sources */ = {isa = PBXBuildFile; fileRef = D168E67C1AF00EE0003CBB6A /* MRMainRowController.m */; };
 		D168E67E1AF0111A003CBB6A /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = D1027FED1890535700FF44A4 /* Task.m */; };
 		D168E67F1AF015F6003CBB6A /* NSDate+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D19C952618A28ACF009082F3 /* NSDate+TackleAdditions.m */; };
@@ -111,6 +114,20 @@
 			remoteGlobalIDString = D1027F6418904E8400FF44A4;
 			remoteInfo = Tackle;
 		};
+		D12D71971B78FAE1008CF978 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D1027F5D18904E8400FF44A4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D1657F5E1AF0020A0037BB51;
+			remoteInfo = "Tackle WatchKit Extension";
+		};
+		D12D719A1B78FAE1008CF978 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D1027F5D18904E8400FF44A4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D1657F701AF0020A0037BB51;
+			remoteInfo = "Tackle WatchKit App";
+		};
 		D15054131A5F54AA000CA868 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D1027F5D18904E8400FF44A4 /* Project object */;
@@ -118,23 +135,31 @@
 			remoteGlobalIDString = D15054071A5F54AA000CA868;
 			remoteInfo = TackleToday;
 		};
-		D1657F731AF0020A0037BB51 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D1027F5D18904E8400FF44A4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D1657F701AF0020A0037BB51;
-			remoteInfo = "Tackle WatchKit App";
-		};
-		D1657F7D1AF0020A0037BB51 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D1027F5D18904E8400FF44A4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D1657F5E1AF0020A0037BB51;
-			remoteInfo = "Tackle WatchKit Extension";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		D12D719D1B78FAE1008CF978 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				D12D71991B78FAE1008CF978 /* Tackle WatchKit Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D12D719E1B78FAE1008CF978 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				D12D719C1B78FAE1008CF978 /* Tackle WatchKit App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D15054191A5F54AA000CA868 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -142,7 +167,6 @@
 			dstSubfolderSpec = 13;
 			files = (
 				D15054151A5F54AA000CA868 /* TackleToday.appex in Embed App Extensions */,
-				D1657F7F1AF0020A0037BB51 /* Tackle WatchKit Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -167,7 +191,6 @@
 		D1027F7818904E8400FF44A4 /* Tackle-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tackle-Prefix.pch"; sourceTree = "<group>"; };
 		D1027F7918904E8400FF44A4 /* MRAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MRAppDelegate.h; sourceTree = "<group>"; };
 		D1027F7A18904E8400FF44A4 /* MRAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MRAppDelegate.m; sourceTree = "<group>"; };
-		D1027F7D18904E8400FF44A4 /* Tackle.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tackle.xcdatamodel; sourceTree = "<group>"; };
 		D1027F7F18904E8400FF44A4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Resources/Images.xcassets; sourceTree = "<group>"; };
 		D1027F8518904E8400FF44A4 /* TackleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TackleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1027F8618904E8400FF44A4 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -182,6 +205,9 @@
 		D12E8785189573FC008119B8 /* UIColor+TackleAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+TackleAdditions.m"; sourceTree = "<group>"; };
 		D139E57218959F41007163AD /* MRLongDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRLongDateFormatter.h; sourceTree = "<group>"; };
 		D139E57318959F41007163AD /* MRLongDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRLongDateFormatter.m; sourceTree = "<group>"; };
+		D13A96081B798CBE0045DC04 /* MRConnectivityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRConnectivityController.h; sourceTree = "<group>"; };
+		D13A96091B798CBE0045DC04 /* MRConnectivityController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRConnectivityController.m; sourceTree = "<group>"; };
+		D13A96151B7995280045DC04 /* Tackle.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tackle.xcdatamodel; sourceTree = "<group>"; };
 		D15054081A5F54AA000CA868 /* TackleToday.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TackleToday.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		D15054091A5F54AA000CA868 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		D150540D1A5F54AA000CA868 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -437,7 +463,7 @@
 		D1027FEF1890545800FF44A4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D1027F7C18904E8400FF44A4 /* Tackle.xcdatamodeld */,
+				D13A96141B7995280045DC04 /* Tackle.xcdatamodeld */,
 				D1027FEC1890535700FF44A4 /* Task.h */,
 				D1027FED1890535700FF44A4 /* Task.m */,
 				D1CFD4EC1A51F455004489AC /* MRTimeInterval.h */,
@@ -541,6 +567,8 @@
 				D1F652911AF1317500085D88 /* MRPersistenceController.m */,
 				D1657F871AF006620037BB51 /* MRReadOnlyPersistenceController.h */,
 				D1657F881AF006620037BB51 /* MRReadOnlyPersistenceController.m */,
+				D13A96081B798CBE0045DC04 /* MRConnectivityController.h */,
+				D13A96091B798CBE0045DC04 /* MRConnectivityController.m */,
 			);
 			path = Lib;
 			sourceTree = "<group>";
@@ -691,12 +719,13 @@
 				D1027F6218904E8400FF44A4 /* Frameworks */,
 				D1027F6318904E8400FF44A4 /* Resources */,
 				D15054191A5F54AA000CA868 /* Embed App Extensions */,
+				D12D719E1B78FAE1008CF978 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				D15054141A5F54AA000CA868 /* PBXTargetDependency */,
-				D1657F7E1AF0020A0037BB51 /* PBXTargetDependency */,
+				D12D719B1B78FAE1008CF978 /* PBXTargetDependency */,
 			);
 			name = Tackle;
 			productName = Tackle;
@@ -749,27 +778,28 @@
 			buildRules = (
 			);
 			dependencies = (
-				D1657F741AF0020A0037BB51 /* PBXTargetDependency */,
 			);
 			name = "Tackle WatchKit Extension";
 			productName = "Tackle WatchKit Extension";
 			productReference = D1657F5F1AF0020A0037BB51 /* Tackle WatchKit Extension.appex */;
-			productType = "com.apple.product-type.watchkit-extension";
+			productType = "com.apple.product-type.watchkit2-extension";
 		};
 		D1657F701AF0020A0037BB51 /* Tackle WatchKit App */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D1657F841AF0020B0037BB51 /* Build configuration list for PBXNativeTarget "Tackle WatchKit App" */;
 			buildPhases = (
 				D1657F6F1AF0020A0037BB51 /* Resources */,
+				D12D719D1B78FAE1008CF978 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				D12D71981B78FAE1008CF978 /* PBXTargetDependency */,
 			);
 			name = "Tackle WatchKit App";
 			productName = "Tackle WatchKit App";
 			productReference = D1657F711AF0020A0037BB51 /* Tackle WatchKit App.app */;
-			productType = "com.apple.product-type.application.watchapp";
+			productType = "com.apple.product-type.application.watchapp2";
 		};
 /* End PBXNativeTarget section */
 
@@ -778,7 +808,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = MR;
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Melody Road";
 				TargetAttributes = {
 					D1027F6418904E8400FF44A4 = {
@@ -867,7 +897,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D1657F721AF0020A0037BB51 /* Tackle WatchKit App.app in Resources */,
 				D1657F6E1AF0020A0037BB51 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -889,6 +918,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1CF84871A5639890020DB50 /* MRModalViewController.m in Sources */,
+				D13A96161B7995280045DC04 /* Tackle.xcdatamodeld in Sources */,
 				C786AB4019D355810077F11C /* UIView+CompactConstraint.m in Sources */,
 				D1027FEE1890535700FF44A4 /* Task.m in Sources */,
 				D1A3FDDE1A511B9F00A384FE /* MRMonthDateFormatter.m in Sources */,
@@ -905,7 +935,7 @@
 				D1E141121A4F7A4300992B1E /* MRRootViewController.m in Sources */,
 				D15054211A5F5B41000CA868 /* MRNotificationProvider.m in Sources */,
 				D162856B1A55AB770006929E /* MRScrollView.m in Sources */,
-				D1027F7E18904E8400FF44A4 /* Tackle.xcdatamodeld in Sources */,
+				D13A960A1B798CBE0045DC04 /* MRConnectivityController.m in Sources */,
 				D1E141061A4F79D500992B1E /* MRTaskEditViewController.m in Sources */,
 				D12E8786189573FC008119B8 /* UIColor+TackleAdditions.m in Sources */,
 				D1F652921AF1317500085D88 /* MRPersistenceController.m in Sources */,
@@ -948,13 +978,13 @@
 				D1A065C31A5F82FC0093D08E /* UIView+TackleAdditions.m in Sources */,
 				D1F80B5C1A5F667400F9D762 /* MRMediumDateFormatter.m in Sources */,
 				D1F80B5D1A5F667900F9D762 /* MRShortDateFormatter.m in Sources */,
+				D13A96171B7995280045DC04 /* Tackle.xcdatamodeld in Sources */,
 				D1F80B5A1A5F660000F9D762 /* NSDate+TackleAdditions.m in Sources */,
 				D150541D1A5F572C000CA868 /* Task.m in Sources */,
 				D191D41A1AF99B0A008400D9 /* MRReadOnlyPersistenceController.m in Sources */,
 				D1A065BF1A5F7DC60093D08E /* MRTodayMainViewController.m in Sources */,
 				D1A065C21A5F7DEB0093D08E /* MRTodayTableViewController.m in Sources */,
 				D1F6528F1AF12DFA00085D88 /* MRTackleDataConstants.m in Sources */,
-				D150541B1A5F5724000CA868 /* Tackle.xcdatamodeld in Sources */,
 				D1F80B5B1A5F667100F9D762 /* MRLongDateFormatter.m in Sources */,
 				D1F80B621A5F67F000F9D762 /* MRTodayTableViewCell.m in Sources */,
 			);
@@ -965,6 +995,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D168E6841AF016D1003CBB6A /* MRWeekdayDateFormatter.m in Sources */,
+				D13A96181B7995280045DC04 /* Tackle.xcdatamodeld in Sources */,
 				D168E6831AF016CD003CBB6A /* MRTimeDateFormatter.m in Sources */,
 				D168E6851AF016D4003CBB6A /* MRDayOfMonthDateFormatter.m in Sources */,
 				D168E67F1AF015F6003CBB6A /* NSDate+TackleAdditions.m in Sources */,
@@ -981,8 +1012,9 @@
 				D168E67D1AF00EE0003CBB6A /* MRMainRowController.m in Sources */,
 				D1F6528E1AF12DF800085D88 /* MRTackleDataConstants.m in Sources */,
 				D1FF2B681AF02DCB002A6F4E /* MRTaskInterfaceController.m in Sources */,
+				D13A960C1B798D9B0045DC04 /* MRPersistenceController.m in Sources */,
 				D168E6821AF016CA003CBB6A /* MRShortDateFormatter.m in Sources */,
-				D1657F8A1AF009780037BB51 /* Tackle.xcdatamodeld in Sources */,
+				D13A960B1B798CC40045DC04 /* MRConnectivityController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -994,20 +1026,20 @@
 			target = D1027F6418904E8400FF44A4 /* Tackle */;
 			targetProxy = D1027F8B18904E8400FF44A4 /* PBXContainerItemProxy */;
 		};
+		D12D71981B78FAE1008CF978 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D1657F5E1AF0020A0037BB51 /* Tackle WatchKit Extension */;
+			targetProxy = D12D71971B78FAE1008CF978 /* PBXContainerItemProxy */;
+		};
+		D12D719B1B78FAE1008CF978 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D1657F701AF0020A0037BB51 /* Tackle WatchKit App */;
+			targetProxy = D12D719A1B78FAE1008CF978 /* PBXContainerItemProxy */;
+		};
 		D15054141A5F54AA000CA868 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D15054071A5F54AA000CA868 /* TackleToday */;
 			targetProxy = D15054131A5F54AA000CA868 /* PBXContainerItemProxy */;
-		};
-		D1657F741AF0020A0037BB51 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D1657F701AF0020A0037BB51 /* Tackle WatchKit App */;
-			targetProxy = D1657F731AF0020A0037BB51 /* PBXContainerItemProxy */;
-		};
-		D1657F7E1AF0020A0037BB51 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D1657F5E1AF0020A0037BB51 /* Tackle WatchKit Extension */;
-			targetProxy = D1657F7D1AF0020A0037BB51 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1057,6 +1089,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1074,7 +1107,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				ONLY_ACTIVE_ARCH = YES;
-				RUN_CLANG_STATIC_ANALYZER = YES;
+				RUN_CLANG_STATIC_ANALYZER = NO;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1107,7 +1140,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				RUN_CLANG_STATIC_ANALYZER = YES;
+				RUN_CLANG_STATIC_ANALYZER = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1129,6 +1162,7 @@
 				GCC_PREFIX_HEADER = "Tackle/Supporting Files/Tackle-Prefix.pch";
 				INFOPLIST_FILE = "Tackle/Supporting Files/Tackle-Info.plist";
 				"OTHER_LDFLAGS[arch=*]" = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.melodyroad.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -1150,6 +1184,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "Tackle/Supporting Files/Tackle-Prefix.pch";
 				INFOPLIST_FILE = "Tackle/Supporting Files/Tackle-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.melodyroad.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -1172,6 +1207,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "TackleTests/TackleTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.melodyroad.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -1190,6 +1226,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "Tackle/Supporting Files/Tackle-Prefix.pch";
 				INFOPLIST_FILE = "TackleTests/TackleTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.melodyroad.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -1212,6 +1249,7 @@
 				INFOPLIST_FILE = TackleToday/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.melodyroad.Tackle.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
@@ -1230,6 +1268,7 @@
 				INFOPLIST_FILE = TackleToday/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.melodyroad.Tackle.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
@@ -1243,6 +1282,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Tackle WatchKit Extension/Tackle WatchKit Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1255,9 +1295,13 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.melodyroad.Tackle.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
@@ -1268,6 +1312,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Tackle WatchKit Extension/Tackle WatchKit Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1277,9 +1322,13 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.melodyroad.Tackle.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
@@ -1298,12 +1347,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				IBSC_MODULE = Tackle_WatchKit_Extension;
 				INFOPLIST_FILE = "Tackle WatchKit App/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.melodyroad.Tackle.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
-				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
@@ -1319,12 +1369,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				IBSC_MODULE = Tackle_WatchKit_Extension;
 				INFOPLIST_FILE = "Tackle WatchKit App/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.melodyroad.Tackle.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
-				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
@@ -1388,12 +1439,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		D1027F7C18904E8400FF44A4 /* Tackle.xcdatamodeld */ = {
+		D13A96141B7995280045DC04 /* Tackle.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				D1027F7D18904E8400FF44A4 /* Tackle.xcdatamodel */,
+				D13A96151B7995280045DC04 /* Tackle.xcdatamodel */,
 			);
-			currentVersion = D1027F7D18904E8400FF44A4 /* Tackle.xcdatamodel */;
+			currentVersion = D13A96151B7995280045DC04 /* Tackle.xcdatamodel */;
 			path = Tackle.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

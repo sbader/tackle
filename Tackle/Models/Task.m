@@ -19,18 +19,20 @@ NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCateg
 @dynamic isDone;
 @dynamic createdDate;
 @dynamic completedDate;
+@dynamic identifier;
 
 - (void) awakeFromInsert {
     [super awakeFromInsert];
     self.createdDate = [NSDate date];
 }
 
-+ (Task *)insertItemWithTitle:(NSString*)title dueDate:(NSDate *)dueDate inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
++ (Task *)insertItemWithTitle:(NSString*)title dueDate:(NSDate *)dueDate identifier:(NSString *)identifier inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
     Task *task = [NSEntityDescription insertNewObjectForEntityForName:@"Task"
                                                inManagedObjectContext:managedObjectContext];
 
     task.title = title;
     task.dueDate = dueDate;
+    task.identifier = identifier;
 
     return task;
 }
@@ -57,10 +59,28 @@ NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCateg
     return nil;
 }
 
-+ (Task *)findTaskWithUniqueId:(NSString *)uniqueId inManagedObjectContext:(NSManagedObjectContext *)managedObjectContentext {
-    NSManagedObjectID *managedObjectId = [[managedObjectContentext persistentStoreCoordinator] managedObjectIDForURIRepresentation:[NSURL URLWithString:uniqueId]];
++ (Task *)findTaskWithUniqueId:(NSString *)uniqueId inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
+    NSManagedObjectID *managedObjectId = [[managedObjectContext persistentStoreCoordinator] managedObjectIDForURIRepresentation:[NSURL URLWithString:uniqueId]];
     NSError *error;
-    return (Task *)[managedObjectContentext existingObjectWithID:managedObjectId error:&error];
+    return (Task *)[managedObjectContext existingObjectWithID:managedObjectId error:&error];
+}
+
++ (Task *)findTaskWithIdentifier:(NSString *)identifier inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext  {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:managedObjectContext];
+    [fetchRequest setEntity:entity];
+    [fetchRequest setFetchLimit:1];
+
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"identifier == %@", identifier]];
+
+    NSError *error;
+    NSArray *tasks = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+
+    if (tasks.count > 0) {
+        return tasks[0];
+    }
+
+    return nil;
 }
 
 + (NSInteger)numberOfOpenTasksInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {

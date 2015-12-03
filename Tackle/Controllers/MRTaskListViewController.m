@@ -16,10 +16,12 @@
 #import "MRTaskEditViewController.h"
 #import "MRTaskTableViewController.h"
 #import "MRTaskEditNavigationController.h"
+#import "MRConnectivityController.h"
 
 @interface MRTaskListViewController () <MRTaskTableViewDelegate, MRTaskEditingDelegate>
 
 @property (nonatomic) MRPersistenceController *persistenceController;
+@property (nonatomic) MRConnectivityController *connectivityController;
 @property (nonatomic) Task *editingTask;
 @property (nonatomic) UIView *infoView;
 @property (nonatomic) MRTaskTableViewController *tableViewController;
@@ -28,12 +30,13 @@
 
 @implementation MRTaskListViewController
 
-- (instancetype)initWithPersistenceController:(MRPersistenceController *)persistenceController {
+- (instancetype)initWithPersistenceController:(MRPersistenceController *)persistenceController connectivityController:(MRConnectivityController *)connectivityController {
     self = [super init];
 
     if (self) {
         self.title = @"Tasks";
         _persistenceController = persistenceController;
+        _connectivityController = connectivityController;
     }
     
     return self;
@@ -138,12 +141,15 @@
 - (void)saveEditingTaskWithTitle:(NSString *)title dueDate:(NSDate *)dueDate {
     Task *task;
 
+    BOOL inserting = NO;
     if (self.editingTask) {
         task = self.editingTask;
     }
     else {
         task = [NSEntityDescription insertNewObjectForEntityForName:@"Task"
                                                    inManagedObjectContext:self.persistenceController.managedObjectContext];
+        task.identifier = [NSUUID UUID].UUIDString;
+        inserting = YES;
     }
 
     task.title = title;
@@ -151,6 +157,13 @@
 
     [self.persistenceController save];
     [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
+
+    if (inserting) {
+        [self.connectivityController sendNewTaskNotificationWithTask:task];
+    }
+    else {
+        [self.connectivityController sendUpdateTaskNotificationWithTask:task];
+    }
 }
 
 - (void)handleNotificationForTask:(Task *)task {
@@ -192,6 +205,8 @@
 
     [self.persistenceController save];
     [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
+
+    [self.connectivityController sendCompleteTaskNotificationWithTask:task];
 }
 
 - (void)undoCompleted:(Task *)task {

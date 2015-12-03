@@ -10,9 +10,9 @@
 
 #import "Task.h"
 #import "NSDate+TackleAdditions.h"
-#import "MRReadOnlyPersistenceController.h"
-#import "MRParentDataCoordinator.h"
+#import "MRPersistenceController.h"
 #import "MRMainInterfaceController.h"
+#import "MRConnectivityController.h"
 
 @interface MRTaskInterfaceController ()
 
@@ -26,8 +26,8 @@
 @property (nonatomic) Task *task;
 @property (nonatomic) NSString *currentTitle;
 @property (nonatomic) NSDate *currentDate;
-@property (nonatomic) MRParentDataCoordinator *parentDataCoordinator;
-@property (nonatomic) MRReadOnlyPersistenceController *persistenceController;
+@property (nonatomic) MRPersistenceController *persistenceController;
+@property (nonatomic) MRConnectivityController *connectivityController;
 
 @end
 
@@ -40,7 +40,7 @@
 
     self.task = contextDictionary[kMRInterfaceControllerContextTask];
     self.persistenceController = contextDictionary[kMRInterfaceControllerContextPersistenceController];
-    self.parentDataCoordinator = contextDictionary[kMRInterfaceControllerContextDataReadingController];
+    self.connectivityController = contextDictionary[kMRInterfaceControllerContextConnectivityController];
 
     self.currentDate = [self.task.dueDate copy];
     self.currentTitle = [self.task.title copy];
@@ -77,32 +77,19 @@
 
 - (IBAction)handleSaveButton:(id)sender {
     self.task.dueDate = self.currentDate;
-
-    [self.parentDataCoordinator updateTask:self.task withCompletion:^(NSError *error) {
-        if (error) {
-            NSLog(@"Error updating task %@", error.localizedDescription);
-        }
-        else {
-            NSLog(@"Successfully updated task");
-            [self sendDataUpdatedNotification];
-        }
-
-        [self dismissController];
-    }];
+    [self.persistenceController save];
+    [self.connectivityController sendUpdateTaskNotificationWithTask:self.task];
+    [self sendDataUpdatedNotification];
+    [self dismissController];
 }
 
 - (IBAction)handleDoneButton:(id)sender {
-    [self.parentDataCoordinator completeTask:self.task withCompletion:^(NSError *error) {
-        if (error) {
-            NSLog(@"Error completing task %@", error.localizedDescription);
-        }
-        else {
-            NSLog(@"Successfully completed task");
-            [self sendDataUpdatedNotification];
-        }
-
-        [self dismissController];
-    }];
+    self.task.completedDate = [NSDate date];
+    self.task.isDone = YES;
+    [self.persistenceController save];
+    [self.connectivityController sendCompleteTaskNotificationWithTask:self.task];
+    [self sendDataUpdatedNotification];
+    [self dismissController];
 }
 
 - (void)sendDataUpdatedNotification {

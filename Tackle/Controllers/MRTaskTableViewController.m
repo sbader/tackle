@@ -71,10 +71,13 @@ static NSString * const taskCellReuseIdentifier = @"TaskCell";
 }
 
 - (void)heartDidBeat:(NSNotification *)notification {
-    [[self.tableView visibleCells] enumerateObjectsUsingBlock:^(MRTaskTableViewCell *cell, NSUInteger idx, BOOL *stop) {
-        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-        [self updateCell:cell atIndexPath:indexPath];
-    }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[self.tableView visibleCells] enumerateObjectsUsingBlock:^(MRTaskTableViewCell *cell, NSUInteger idx, BOOL *stop) {
+            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+            [self updateCell:cell atIndexPath:indexPath];
+        }];
+
+    });
 }
 
 #pragma mark - Fetched results controller

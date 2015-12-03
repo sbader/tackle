@@ -11,10 +11,11 @@
 #import "MRPersistenceController.h"
 
 @class Task;
+@class MRConnectivityController;
 
 @interface MRRootViewController : UIViewController
 
-- (instancetype)initWithPersistenceController:(MRPersistenceController *)persistenceController;
+- (instancetype)initWithPersistenceController:(MRPersistenceController *)persistenceController connectivityController:(MRConnectivityController *)connectivityController;
 - (void)handleNotificationForTask:(Task *)task;
 - (void)refreshTasks;
 

@@ -13,6 +13,7 @@ extern NSString * const kMRDataUpdatedNotificationName;
 extern NSString * const kMRInterfaceControllerContextTask;
 extern NSString * const kMRInterfaceControllerContextPersistenceController;
 extern NSString * const kMRInterfaceControllerContextDataReadingController;
+extern NSString * const kMRInterfaceControllerContextConnectivityController;
 
 @interface MRMainInterfaceController : WKInterfaceController
 

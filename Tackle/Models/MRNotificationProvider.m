@@ -51,7 +51,7 @@
     [notification setRepeatInterval:NSCalendarUnitMinute];
     [notification setAlertAction:@"Tackle"];
     [notification setSoundName:UILocalNotificationDefaultSoundName];
-    [notification setUserInfo:@{@"uniqueId": task.objectID.URIRepresentation.absoluteString}];
+    [notification setUserInfo:@{@"identifier": task.identifier}];
     [notification setCategory:@"taskNotificationCategory"];
 
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
@@ -61,8 +61,8 @@
     NSArray *localNotifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
 
     NSUInteger index = [localNotifications indexOfObjectPassingTest:^BOOL(UILocalNotification *notification, NSUInteger idx, BOOL *stop) {
-        NSString *uniqueId = (NSString *)[notification.userInfo objectForKey:@"uniqueId"];
-        return [uniqueId isEqualToString:task.objectID.URIRepresentation.absoluteString];
+        NSString *taskIdentifier = (NSString *)[notification.userInfo objectForKey:@"identifier"];
+        return [taskIdentifier isEqualToString:task.identifier];
     }];
 
     if (index == NSNotFound) {

@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import <CoreData/CoreData.h>
+
 @interface MRPersistenceController : NSObject
 
 @property (strong, readonly) NSManagedObjectContext *managedObjectContext;

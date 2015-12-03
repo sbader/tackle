@@ -10,24 +10,27 @@
 
 #import "Task.h"
 #import "MRTaskListViewController.h"
+#import "MRConnectivityController.h"
 
 @interface MRRootViewController ()
 
 @property (nonatomic) MRTaskListViewController *taskListController;
 @property (nonatomic) MRPersistenceController *persistenceController;
+@property (nonatomic) MRConnectivityController *connectivityController;
 @property (nonatomic) UINavigationController *navigationController;
 
 @end
 
 @implementation MRRootViewController
 
-- (instancetype)initWithPersistenceController:(MRPersistenceController *)persistenceController {
+- (instancetype)initWithPersistenceController:(MRPersistenceController *)persistenceController connectivityController:(MRConnectivityController *)connectivityController {
     self = [super init];
 
     if (self) {
         _persistenceController = persistenceController;
+        _connectivityController = connectivityController;
 
-        self.taskListController = [[MRTaskListViewController alloc] initWithPersistenceController:self.persistenceController];
+        self.taskListController = [[MRTaskListViewController alloc] initWithPersistenceController:self.persistenceController connectivityController:self.connectivityController];
         self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.taskListController];
         
         [self addChildViewController:self.navigationController];

@@ -10,7 +10,7 @@
 
 #import "Task.h"
 #import "NSDate+TackleAdditions.h"
-#import "MRReadOnlyPersistenceController.h"
+#import "MRPersistenceController.h"
 
 @interface MRGlanceController()
 
@@ -18,7 +18,7 @@
 @property (weak) IBOutlet WKInterfaceLabel *subheadingLabel;
 @property (weak) IBOutlet WKInterfaceLabel *titleLabel;
 @property (weak) IBOutlet WKInterfaceLabel *dateLabel;
-@property (strong) MRReadOnlyPersistenceController *persistenceController;
+@property (strong) MRPersistenceController *persistenceController;
 
 @property(nonatomic, strong) NSThread *timerThread;
 @property(nonatomic, assign) NSInteger tick;
@@ -85,12 +85,11 @@
 - (void)willActivate {
     [super willActivate];
 
-    self.persistenceController = [[MRReadOnlyPersistenceController alloc] initWithCallback:^{
-        [self refreshTasksList];
+    self.persistenceController = [[MRPersistenceController alloc] init];
+    [self refreshTasksList];
 
-        self.timerThread = [[NSThread alloc] initWithTarget:self selector:@selector(startTimerThread) object:nil];
-        [self.timerThread start];
-    }];
+    self.timerThread = [[NSThread alloc] initWithTarget:self selector:@selector(startTimerThread) object:nil];
+    [self.timerThread start];
 }
 
 - (void)didDeactivate {
