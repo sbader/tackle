@@ -15,8 +15,7 @@
 
 @implementation NSDate (TackleAdditions)
 
-- (BOOL)isDayBeforeDate:(NSDate *)date
-{
+- (BOOL)isDayBeforeDate:(NSDate *)date {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *components = [calendar components:(NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay) fromDate:date];
     components.day =  components.day -1;
@@ -28,8 +27,7 @@
     return [dayBefore compare:beginningOfDay] == NSOrderedSame;
 }
 
-- (BOOL)isDayAfterDate:(NSDate *)date
-{
+- (BOOL)isDayAfterDate:(NSDate *)date {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *components = [calendar components:(NSCalendarUnitMonth|NSCalendarUnitYear|NSCalendarUnitDay) fromDate:date];
     components.day = components.day + 1;
@@ -41,25 +39,21 @@
     return [dayAfter compare:beginningOfDay] == NSOrderedSame;
 }
 
-- (BOOL)isDayBeforeOrAfterDate:(NSDate *)date
-{
+- (BOOL)isDayBeforeOrAfterDate:(NSDate *)date {
     return [self isDayBeforeDate:date] || [self isDayAfterDate:date];
 }
 
-- (BOOL)isSameDayAsDate:(NSDate *)date
-{
+- (BOOL)isSameDayAsDate:(NSDate *)date {
     NSDate *beginningOfDate = [date beginningOfDay];
     return [beginningOfDate compare:[self beginningOfDay]] == NSOrderedSame;
 }
 
-- (BOOL)isToday
-{
+- (BOOL)isToday {
     NSDate *beginningOfToday = [[NSDate date] beginningOfDay];
     return [beginningOfToday compare:[self beginningOfDay]] == NSOrderedSame;
 }
 
-- (BOOL)isWithinAWeek
-{
+- (BOOL)isWithinAWeek {
     NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
     dayComponent.day = 7;
 
@@ -68,8 +62,7 @@
     return [week compare:[self beginningOfDay]] == NSOrderedDescending;
 }
 
-- (BOOL)isTomorrow
-{
+- (BOOL)isTomorrow {
     NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
     dayComponent.day = 1;
 
@@ -78,8 +71,7 @@
     return [tomorrow compare:[self beginningOfDay]] == NSOrderedSame;
 }
 
-- (NSDate *)beginningOfDay
-{
+- (NSDate *)beginningOfDay {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *components = [calendar components:(NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay) fromDate:self];
     NSDate *beginningOfDay = [calendar dateFromComponents:components];
@@ -206,8 +198,7 @@
     return @[];
 }
 
-- (NSString *)tackleStringSinceDate:(NSDate *)date
-{
+- (NSString *)tackleStringSinceDate:(NSDate *)date {
     NSString *formattedString;
     NSTimeInterval timeInterval = ceil([self timeIntervalSinceDate:date]);
 
@@ -302,8 +293,7 @@
     return formattedString;
 }
 
-- (NSString *)tackleString
-{
+- (NSString *)tackleString {
     return [self tackleStringSinceDate:[NSDate date]];
 }
 

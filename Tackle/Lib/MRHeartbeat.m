@@ -21,8 +21,7 @@ NSString * const kSlowHeartbeatId = @"kSlowHeartbeatId";
 
 @implementation MRHeartbeat
 
-+ (MRHeartbeat *)heartbeatController
-{
++ (MRHeartbeat *)heartbeatController {
     static MRHeartbeat *heartbeat = nil;
     static dispatch_once_t onceToken;
 
@@ -37,8 +36,7 @@ NSString * const kSlowHeartbeatId = @"kSlowHeartbeatId";
 }
 
 
--(void)startTimerThread
-{
+- (void)startTimerThread {
     NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:kHeartbeatInterval
                                                   target:self
@@ -50,20 +48,17 @@ NSString * const kSlowHeartbeatId = @"kSlowHeartbeatId";
 }
 
 
-+ (NSString *)heartbeatId
-{
++ (NSString *)heartbeatId {
     [MRHeartbeat heartbeatController];
     return kHeartbeatId;
 }
 
-+ (NSString *)slowHeartbeatId
-{
++ (NSString *)slowHeartbeatId {
     [MRHeartbeat heartbeatController];
     return kSlowHeartbeatId;
 }
 
--(void)heartDidBeat:(NSTimer *)timer
-{
+- (void)heartDidBeat:(NSTimer *)timer {
     if (self.tick == 0) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kSlowHeartbeatId object:nil];
     }

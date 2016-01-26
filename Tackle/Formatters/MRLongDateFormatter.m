@@ -12,8 +12,7 @@
 
 NSString * const kCachedLongDateFormatterKey = @"CachedLongDateFormatterKey";
 
-+ (MRLongDateFormatter *)sharedInstance
-{
++ (MRLongDateFormatter *)sharedInstance {
     NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
     MRLongDateFormatter *dateFormatter = [threadDictionary objectForKey:kCachedLongDateFormatterKey];
 

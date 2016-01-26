@@ -12,8 +12,7 @@
 
 NSString * const kCachedTimeDateFormatterKey = @"CachedTimeDateFormatterKey";
 
-+ (MRTimeDateFormatter *)sharedInstance
-{
++ (MRTimeDateFormatter *)sharedInstance {
     NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
     MRTimeDateFormatter *dateFormatter = [threadDictionary objectForKey:kCachedTimeDateFormatterKey];
 
