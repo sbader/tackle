@@ -13,13 +13,11 @@
 #import "MRNotificationProvider.h"
 #import "MRTackleDataConstants.h"
 #import "MRPersistenceController.h"
-#import "MRConnectivityController.h"
 
-@interface MRAppDelegate () <MRConnectivityControllerDelegate>
+@interface MRAppDelegate ()
 
 @property (nonatomic) MRRootViewController *rootController;
 @property (strong) MRPersistenceController *persistenceController;
-@property (strong) MRConnectivityController *connectivityController;
 
 @end
 
@@ -27,8 +25,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.persistenceController = [[MRPersistenceController alloc] init];
-    self.connectivityController = [[MRConnectivityController alloc] initWithPersistenceController:self.persistenceController];
-    self.connectivityController.delegate = self;
     [self completeUserInterfaceWithApplication:application launchOptions:launchOptions];
 
     return YES;
@@ -89,7 +85,7 @@
 }
 
 - (void)setupRootViewController {
-    self.rootController = [[MRRootViewController alloc] initWithPersistenceController:self.persistenceController connectivityController:self.connectivityController];
+    self.rootController = [[MRRootViewController alloc] initWithPersistenceController:self.persistenceController];
     [self.window setRootViewController:self.rootController];
 }
 
@@ -139,8 +135,6 @@
         [self.persistenceController save];
         [[MRNotificationProvider sharedProvider] rescheduleNotificationForTask:task];
 
-        [self.connectivityController sendUpdateTaskNotificationWithTask:task];
-
         NSLog(@"addTenMinutes");
 
         completionHandler();
@@ -151,8 +145,6 @@
         [[MRNotificationProvider sharedProvider] cancelNotificationForTask:task];
 
         [self.persistenceController save];
-
-        [self.connectivityController sendCompleteTaskNotificationWithTask:task];
 
         NSLog(@"destroyTask");
 
@@ -236,20 +228,6 @@
             NSLog(@"  %@", name);
         }
     }
-}
-
-#pragma mark - Connectivity Controller Delegate
-
-- (void)connectivityController:(MRConnectivityController *)connectivityController didAddTask:(Task *)task {
-    [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
-}
-
-- (void)connectivityController:(MRConnectivityController *)connectivityController didCompleteTask:(Task *)task {
-    [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
-}
-
-- (void)connectivityController:(MRConnectivityController *)connectivityController didUpdateTask:(Task *)task {
-    [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
 }
 
 @end
