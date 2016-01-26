@@ -14,18 +14,7 @@
 
 @implementation NSDate_TackleAdditionsTest
 
-- (void)setUp
-{
-    [super setUp];
-}
-
-- (void)tearDown
-{
-    [super tearDown];
-}
-
-- (void)testIsWithinADayOfDate
-{
+- (void)testIsWithinADayOfDate {
     NSDate *startDate = [NSDate dateWithTimeIntervalSinceReferenceDate:21600];
 
     XCTAssertFalse([[NSDate dateWithTimeIntervalSinceReferenceDate:-95000] isDayBeforeOrAfterDate:startDate]);
@@ -34,56 +23,53 @@
     XCTAssertFalse([[NSDate dateWithTimeIntervalSinceReferenceDate:200000] isDayBeforeOrAfterDate:startDate]);
 }
 
-- (void)testDateWithinNextHourShouldShowMinutesAndSeconds
-{
+- (void)testDateWithinNextHourShouldShowMinutesAndSeconds {
     NSDate *startDate = [NSDate date];
 
     __block NSString *formattedDate;
 
     NSDictionary *testDictionary = @{
-                                     @32: @"In 32 seconds",
-                                     @601: @"In 10 minutes 1 seconds",
-                                     @3599: @"In 59 minutes 59 seconds"
+                                     @32: @"In 32 Seconds",
+                                     @601: @"In 10 Minutes 1 Seconds",
+                                     @3599: @"In 59 Minutes 59 Seconds"
                                     };
 
     [testDictionary enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, NSString *matchString, BOOL *stop) {
         formattedDate = [[NSDate dateWithTimeInterval:[key floatValue] sinceDate:startDate] tackleStringSinceDate:startDate];
-        XCTAssertEqualObjects(formattedDate, matchString, @"%@ does not match %@", formattedDate, matchString);
+        XCTAssertEqualObjects(formattedDate, matchString);
     }];
 }
 
-- (void)testDateWithinPastHourShouldShowMinutesAndSeconds
-{
+- (void)testDateWithinPastHourShouldShowMinutesAndSeconds {
     NSDate *startDate = [NSDate date];
 
     __block NSString *formattedDate;
 
     NSDictionary *testDictionary = @{
-                                     @44: @"44 seconds ago",
-                                     @608: @"10 minutes 8 seconds ago",
-                                     @3599: @"59 minutes 59 seconds ago"
+                                     @44: @"44 Seconds Ago",
+                                     @608: @"10 Minutes 8 Seconds Ago",
+                                     @3599: @"59 Minutes 59 Seconds Ago"
                                      };
 
     [testDictionary enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, NSString *matchString, BOOL *stop) {
         formattedDate = [[NSDate dateWithTimeInterval:-[key floatValue] sinceDate:startDate] tackleStringSinceDate:startDate];
-        XCTAssertEqualObjects(formattedDate, matchString, @"%@ does not match %@", formattedDate, matchString);
+        XCTAssertEqualObjects(formattedDate, matchString);
     }];
 }
 
-- (void)testDateWithinPastDayShouldShowMinutesAndSeconds
-{
+- (void)testDateWithinPastDayShouldShowMinutesAndSeconds {
     NSDate *startDate = [NSDate date];
 
     __block NSString *formattedDate;
 
     NSDictionary *testDictionary = @{
-                                     @7222: @"2 hours ago",
-                                     @10920: @"3 hours ago"
+                                     @7222: @"2 Hours Ago",
+                                     @10920: @"3 Hours Ago"
                                      };
 
     [testDictionary enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, NSString *matchString, BOOL *stop) {
         formattedDate = [[NSDate dateWithTimeInterval:-[key floatValue] sinceDate:startDate] tackleStringSinceDate:startDate];
-        XCTAssertEqualObjects(formattedDate, matchString, @"%@ does not match %@", formattedDate, matchString);
+        XCTAssertEqualObjects(formattedDate, matchString);
     }];
 }
 
