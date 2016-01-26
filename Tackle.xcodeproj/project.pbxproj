@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C786AB3F19D355810077F11C /* NSLayoutConstraint+CompactConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = C786AB3C19D355810077F11C /* NSLayoutConstraint+CompactConstraint.m */; };
-		C786AB4019D355810077F11C /* UIView+CompactConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = C786AB3E19D355810077F11C /* UIView+CompactConstraint.m */; };
 		C786AB4419D358DF0077F11C /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C786AB4319D358DF0077F11C /* Launch Screen.xib */; };
 		D1027F6918904E8400FF44A4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1027F6818904E8400FF44A4 /* Foundation.framework */; };
 		D1027F6B18904E8400FF44A4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1027F6A18904E8400FF44A4 /* CoreGraphics.framework */; };
@@ -97,11 +95,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		C786AB3A19D355810077F11C /* CompactConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompactConstraint.h; sourceTree = "<group>"; };
-		C786AB3B19D355810077F11C /* NSLayoutConstraint+CompactConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+CompactConstraint.h"; sourceTree = "<group>"; };
-		C786AB3C19D355810077F11C /* NSLayoutConstraint+CompactConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+CompactConstraint.m"; sourceTree = "<group>"; };
-		C786AB3D19D355810077F11C /* UIView+CompactConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+CompactConstraint.h"; sourceTree = "<group>"; };
-		C786AB3E19D355810077F11C /* UIView+CompactConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+CompactConstraint.m"; sourceTree = "<group>"; };
 		C786AB4319D358DF0077F11C /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "Launch Screen.xib"; path = "Resources/Launch Screen.xib"; sourceTree = "<group>"; };
 		D1027F6518904E8400FF44A4 /* Tackle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tackle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1027F6818904E8400FF44A4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -224,26 +217,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C786AB4119D3558B0077F11C /* Vendor */ = {
-			isa = PBXGroup;
-			children = (
-				C786AB4219D355900077F11C /* CompactConstraint */,
-			);
-			path = Vendor;
-			sourceTree = "<group>";
-		};
-		C786AB4219D355900077F11C /* CompactConstraint */ = {
-			isa = PBXGroup;
-			children = (
-				C786AB3A19D355810077F11C /* CompactConstraint.h */,
-				C786AB3B19D355810077F11C /* NSLayoutConstraint+CompactConstraint.h */,
-				C786AB3C19D355810077F11C /* NSLayoutConstraint+CompactConstraint.m */,
-				C786AB3D19D355810077F11C /* UIView+CompactConstraint.h */,
-				C786AB3E19D355810077F11C /* UIView+CompactConstraint.m */,
-			);
-			path = CompactConstraint;
-			sourceTree = "<group>";
-		};
 		D1027F5C18904E8400FF44A4 = {
 			isa = PBXGroup;
 			children = (
@@ -291,7 +264,6 @@
 				D1AD45BD1A59BDBF001FDAC5 /* Protocols */,
 				D12E8774189454E1008119B8 /* Resources */,
 				D1027F7118904E8400FF44A4 /* Supporting Files */,
-				C786AB4119D3558B0077F11C /* Vendor */,
 				D12E878818957943008119B8 /* Views */,
 			);
 			path = Tackle;
@@ -574,7 +546,6 @@
 			files = (
 				D1CF84871A5639890020DB50 /* MRModalViewController.m in Sources */,
 				D13A96161B7995280045DC04 /* Tackle.xcdatamodeld in Sources */,
-				C786AB4019D355810077F11C /* UIView+CompactConstraint.m in Sources */,
 				D1027FEE1890535700FF44A4 /* Task.m in Sources */,
 				D1A3FDDE1A511B9F00A384FE /* MRMonthDateFormatter.m in Sources */,
 				D1E1410F1A4F7A1E00992B1E /* MRTaskTableViewCell.m in Sources */,
@@ -600,7 +571,6 @@
 				D12E87831894A07B008119B8 /* UIFont+TackleAdditions.m in Sources */,
 				D1E1410C1A4F7A0100992B1E /* MRTaskTableViewController.m in Sources */,
 				D1E1412C1A4FE77F00992B1E /* MRWeekdayDateFormatter.m in Sources */,
-				C786AB3F19D355810077F11C /* NSLayoutConstraint+CompactConstraint.m in Sources */,
 				D17BCFB3189F3D05001996C1 /* UIView+TackleAdditions.m in Sources */,
 				D1E1411D1A4FDA1A00992B1E /* MRTaskEditTableViewController.m in Sources */,
 				D1E1411A1A4FD37500992B1E /* MRTaskEditNavigationController.m in Sources */,

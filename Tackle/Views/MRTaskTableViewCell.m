@@ -40,25 +40,20 @@
     self.textLabel.translatesAutoresizingMaskIntoConstraints = NO;
     self.detailTextLabel.translatesAutoresizingMaskIntoConstraints = NO;
 
-    [self.contentView addCompactConstraints:@[
-                                              @"text.leading = view.leading + horizontalPadding",
-                                              @"text.trailing = view.trailing - horizontalPadding",
-                                              @"detail.leading = view.leading + horizontalPadding",
-                                              @"detail.trailing = view.trailing - horizontalPadding",
-                                              @"text.top = view.top + verticalPadding",
-                                              @"detail.top = text.bottom + spacing",
-                                              @"detail.bottom = view.bottom - verticalPadding",
-                                              ]
-                                    metrics:@{
-                                              @"horizontalPadding": @(20),
-                                              @"verticalPadding": @(14),
-                                              @"spacing": @(2)
-                                              }
-                                      views:@{
-                                              @"text": self.textLabel,
-                                              @"detail": self.detailTextLabel,
-                                              @"view": self.contentView
-                                              }];
+    [self.textLabel leadingConstraintMatchesView:self.contentView withConstant:20.0];
+    [self.textLabel trailingConstraintMatchesView:self.contentView withConstant:-20.0];
+    [self.detailTextLabel leadingConstraintMatchesView:self.contentView withConstant:20.0];
+    [self.detailTextLabel trailingConstraintMatchesView:self.contentView withConstant:-20.0];
+    [self.textLabel topConstraintMatchesView:self.contentView withConstant:14.0];
+
+    [self.detailTextLabel addConstraintEqualToView:self.textLabel
+                                       inContainer:self.contentView
+                                     withAttribute:NSLayoutAttributeTop
+                                  relatedAttribute:NSLayoutAttributeBottom
+                                        multiplier:1.0
+                                          constant:2.0];
+
+    [self.detailTextLabel bottomConstraintMatchesView:self.contentView withConstant:-14.0];
 }
 
 @end

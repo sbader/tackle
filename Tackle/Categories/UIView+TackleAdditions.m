@@ -105,8 +105,16 @@
     [self addConstraintEqualToView:view inContainer:self.superview withAttribute:NSLayoutAttributeBottom multiplier:1.0 constant:constant];
 }
 
+- (void)leadingConstraintMatchesView:(UIView *)view {
+    [self leadingConstraintMatchesView:view withConstant:0.0];
+}
+
 - (void)leadingConstraintMatchesView:(UIView *)view withConstant:(CGFloat)constant {
     [self addConstraintEqualToView:view inContainer:self.superview withAttribute:NSLayoutAttributeLeading multiplier:1.0 constant:constant];
+}
+
+- (void)trailingConstraintMatchesView:(UIView *)view {
+    [self trailingConstraintMatchesView:view withConstant:0.0];
 }
 
 - (void)trailingConstraintMatchesView:(UIView *)view withConstant:(CGFloat)constant {
@@ -133,14 +141,27 @@
     [container addConstraint:[self constraintEqualToView:view withAttribute:attribute multiplier:multiplier constant:constant]];
 }
 
+- (void)addConstraintEqualToView:(UIView *)view inContainer:(UIView *)container withAttribute:(NSLayoutAttribute)attribute relatedAttribute:(NSLayoutAttribute)relatedAttribute multiplier:(CGFloat)multiplier constant:(CGFloat)constant {
+    [container addConstraint:[self constraintEqualToView:view withAttribute:attribute relatedAttribute:relatedAttribute multiplier:multiplier constant:constant]];
+}
+
 - (NSLayoutConstraint *)constraintEqualToView:(UIView *)view withAttribute:(NSLayoutAttribute)attribute multiplier:(CGFloat)multiplier constant:(CGFloat)constant {
+    return [self constraintEqualToView:view
+                         withAttribute:attribute
+                      relatedAttribute:attribute
+                            multiplier:multiplier
+                              constant:constant];
+}
+
+- (NSLayoutConstraint *)constraintEqualToView:(UIView *)view withAttribute:(NSLayoutAttribute)attribute relatedAttribute:(NSLayoutAttribute)relatedAttribute multiplier:(CGFloat)multiplier constant:(CGFloat)constant {
     return [NSLayoutConstraint constraintWithItem:self
                                         attribute:attribute
                                         relatedBy:NSLayoutRelationEqual
                                            toItem:view
-                                        attribute:attribute
+                                        attribute:relatedAttribute
                                        multiplier:multiplier
                                          constant:constant];
 }
+
 
 @end

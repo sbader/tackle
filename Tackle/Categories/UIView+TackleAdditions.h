@@ -24,7 +24,9 @@
 - (void)trailingConstraintMatchesSuperviewWithConstant:(CGFloat)constant;
 - (void)topConstraintMatchesView:(UIView *)view withConstant:(CGFloat)constant;
 - (void)bottomConstraintMatchesView:(UIView *)view withConstant:(CGFloat)constant;
+- (void)leadingConstraintMatchesView:(UIView *)view;
 - (void)leadingConstraintMatchesView:(UIView *)view withConstant:(CGFloat)constant;
+- (void)trailingConstraintMatchesView:(UIView *)view;
 - (void)trailingConstraintMatchesView:(UIView *)view withConstant:(CGFloat)constant;
 - (void)staticHeightConstraint:(CGFloat)height;
 - (void)staticWidthConstraint:(CGFloat)width;
@@ -35,5 +37,7 @@
 - (void)horizontalCenterConstraintMatchesView:(UIView *)view withMultiplier:(CGFloat)multiplier constant:(CGFloat)constant;
 - (void)verticalCenterConstraintMatchesView:(UIView *)view withMultiplier:(CGFloat)multiplier constant:(CGFloat)constant;
 - (void)addConstraintEqualToView:(UIView *)view inContainer:(UIView *)container withAttribute:(NSLayoutAttribute)attribute multiplier:(CGFloat)multiplier constant:(CGFloat)constant;
+- (void)addConstraintEqualToView:(UIView *)view inContainer:(UIView *)container withAttribute:(NSLayoutAttribute)attribute relatedAttribute:(NSLayoutAttribute)relatedAttribute multiplier:(CGFloat)multiplier constant:(CGFloat)constant;
 - (NSLayoutConstraint *)constraintEqualToView:(UIView *)view withAttribute:(NSLayoutAttribute)attribute multiplier:(CGFloat)mutliplier constant:(CGFloat)constant;
+- (NSLayoutConstraint *)constraintEqualToView:(UIView *)view withAttribute:(NSLayoutAttribute)attribute relatedAttribute:(NSLayoutAttribute)relatedAttribute multiplier:(CGFloat)multiplier constant:(CGFloat)constant;
 @end
