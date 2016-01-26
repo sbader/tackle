@@ -29,20 +29,10 @@
     self.textLabel.translatesAutoresizingMaskIntoConstraints = NO;
     self.detailTextLabel.translatesAutoresizingMaskIntoConstraints = NO;
 
-    [self.contentView addCompactConstraints:@[
-                                              @"text.leading = view.leading + horizontalPadding",
-                                              @"text.trailing = view.trailing - horizontalPadding",
-                                              @"text.top = view.top + verticalPadding",
-                                              @"text.bottom = view.bottom - verticalPadding",
-                                              ]
-                                    metrics:@{
-                                              @"horizontalPadding": @(20),
-                                              @"verticalPadding": @(10),
-                                              }
-                                      views:@{
-                                              @"text": self.textLabel,
-                                              @"view": self.contentView
-                                              }];
+    [self.textLabel leadingConstraintMatchesView:self.contentView withConstant:20.0];
+    [self.textLabel trailingConstraintMatchesView:self.contentView withConstant:-20.0];
+    [self.textLabel topConstraintMatchesView:self.contentView withConstant:10.0];
+    [self.textLabel bottomConstraintMatchesView:self.contentView withConstant:-10.0];
 }
 
 @end

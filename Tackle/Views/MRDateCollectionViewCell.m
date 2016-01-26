@@ -89,21 +89,11 @@
 }
 
 - (void)setupConstrants {
-    [self.contentView addCompactConstraints:@[
-                                              @"month.top = view.top + 7",
-                                              @"weekday.bottom = view.bottom - 7",
-                                              @"dayOfMonth.centerY = view.centerY",
-                                              @"separator.trailing = view.trailing",
-                                              @"separator.width = 1",
-                                              ]
-                                    metrics:@{}
-                                      views:@{
-                                              @"weekday": self.weekdayLabel,
-                                              @"month": self.monthLabel,
-                                              @"dayOfMonth": self.dayOfMonthLabel,
-                                              @"separator": self.separator,
-                                              @"view": self.contentView
-                                              }];
+    [self.monthLabel topConstraintMatchesView:self.contentView withConstant:7];
+    [self.weekdayLabel bottomConstraintMatchesView:self.contentView withConstant:-7];
+    [self.dayOfMonthLabel verticalCenterConstraintMatchesView:self.contentView];
+    [self.separator trailingConstraintMatchesView:self.contentView];
+    [self.separator staticWidthConstraint:1.0];
 }
 
 - (void)setDate:(NSDate *)date {

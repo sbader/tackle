@@ -202,15 +202,8 @@
     [self.titleView horizontalConstraintsMatchSuperview];
     [self.titleField horizontalConstraintsMatchSuperview];
 
-    [self.titleView addCompactConstraints:@[
-                                            @"title.top = view.top",
-                                            @"title.bottom = view.bottom",
-                                            ]
-                                  metrics:@{}
-                                    views:@{
-                                            @"view": self.titleView,
-                                            @"title": self.titleField
-                                            }];
+    [self.titleField topConstraintMatchesSuperview];
+    [self.titleField bottomConstraintMatchesSuperview];
 }
 
 - (void)setupDateView {
@@ -227,17 +220,12 @@
     [self.dateView addSubview:self.dateButton];
 
     [self.dateView horizontalConstraintsMatchSuperview];
-    [self.dateView addCompactConstraints:@[
-                                           @"button.leading = view.leading",
-                                           @"button.trailing = view.trailing",
-                                           @"button.top = view.top + 10",
-                                           @"button.bottom = view.bottom - 7",
-                                           ]
-                                 metrics:@{}
-                                   views:@{
-                                           @"button": self.dateButton,
-                                           @"view": self.dateView
-                                           }];
+
+    [self.dateButton leadingConstraintMatchesSuperview];
+    [self.dateButton trailingConstraintMatchesSuperview];
+
+    [self.dateButton topConstraintMatchesSuperviewWithConstant:10.0];
+    [self.dateButton bottomConstraintMatchesSuperviewWithConstant:-7.0];
 }
 
 - (void)setupPossibleDateButton {
@@ -255,18 +243,10 @@
     [self.possibleDateContainer setBackgroundColor:[UIColor plumTintColor]];
 
     [self.possibleDateContainer horizontalConstraintsMatchSuperview];
-    [self.possibleDateContainer addCompactConstraints:@[
-                                           @"button.leading = view.leading",
-                                           @"button.trailing = view.trailing",
-                                           @"button.centerY = view.centerY",
-//                                           @"button.top = view.top + 10",
-//                                           @"button.bottom = view.bottom - 7",
-                                           ]
-                                 metrics:@{}
-                                   views:@{
-                                           @"button": self.possibleDateButton,
-                                           @"view": self.possibleDateContainer
-                                           }];
+
+    [self.possibleDateButton leadingConstraintMatchesSuperview];
+    [self.possibleDateButton trailingConstraintMatchesSuperview];
+    [self.possibleDateButton verticalCenterConstraintMatchesSuperview];
 
     self.possibleDateViewHeightConstraint = [NSLayoutConstraint constraintWithItem:self.possibleDateContainer
                                                                          attribute:NSLayoutAttributeHeight
@@ -275,6 +255,7 @@
                                                                          attribute:NSLayoutAttributeNotAnAttribute
                                                                         multiplier:1.0
                                                                           constant:0];
+
     [self.possibleDateContainer addConstraint:self.possibleDateViewHeightConstraint];
 
 }
@@ -318,18 +299,10 @@
     [borderTop horizontalConstraintsMatchSuperview];
     [borderBottom horizontalConstraintsMatchSuperview];
 
-    [self.calendarView addCompactConstraints:@[
-                                               @"borderTop.height = 1",
-                                               @"borderTop.top = view.top",
-                                               @"borderBottom.height = 1",
-                                               @"borderBottom.bottom = view.bottom",
-                                               ]
-                                     metrics:@{}
-                                       views:@{
-                                               @"view": self.calendarView,
-                                               @"borderTop": borderTop,
-                                               @"borderBottom": borderBottom
-                                               }];
+    [borderTop staticHeightConstraint:1.0];
+    [borderTop topConstraintMatchesSuperview];
+    [borderBottom staticHeightConstraint:1.0];
+    [borderBottom bottomConstraintMatchesSuperview];
 }
 
 - (void)setupDoneView {
@@ -355,35 +328,28 @@
 }
 
 - (void)setupConstraints {
-    [self.scrollView addCompactConstraints:@[
-                                             @"topView.bottom = titleView.top",
-                                             @"topView.height = 400",
-                                             @"topView.width = view.width",
-                                             @"titleView.top = view.top",
-                                             @"titleView.height = 75",
-                                             @"possibleDateView.top = titleView.bottom",
-                                             @"dateView.top = possibleDateView.bottom",
-                                             @"calendarView.top = dateView.bottom",
-                                             @"calendarView.height = 74",
-                                             @"tableViewContainer.top = calendarView.bottom + 0",
-                                             @"tableViewContainer.height = tableView.height",
-                                             @"titleView.width = view.width",
-                                             @"dateView.width = view.width",
-                                             @"calendarView.width = view.width",
-                                             @"tableViewContainer.width = view.width",
-                                             @"tableViewContainer.bottom = view.bottom"
-                                             ]
-                                   metrics:@{}
-                                     views:@{
-                                             @"topView": self.topView,
-                                             @"titleView": self.titleView,
-                                             @"dateView": self.dateView,
-                                             @"possibleDateView": self.possibleDateContainer,
-                                             @"calendarView": self.calendarView,
-                                             @"tableViewContainer": self.addTimeView,
-                                             @"tableView": self.addTimeController.tableView,
-                                             @"view": self.scrollView
-                                             }];
+    [self.topView addConstraintEqualToView:self.titleView inContainer:self.scrollView withAttribute:NSLayoutAttributeBottom relatedAttribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0];
+    [self.topView staticHeightConstraint:400.0];
+    [self.topView addConstraintEqualToView:self.scrollView inContainer:self.scrollView withAttribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0];
+
+    [self.titleView topConstraintMatchesView:self.scrollView withConstant:0.0];
+    [self.titleView staticHeightConstraint:75.0];
+
+    [self.possibleDateContainer addConstraintEqualToView:self.titleView inContainer:self.scrollView withAttribute:NSLayoutAttributeTop relatedAttribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+
+    [self.dateView addConstraintEqualToView:self.possibleDateContainer inContainer:self.scrollView withAttribute:NSLayoutAttributeTop relatedAttribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+    [self.calendarView addConstraintEqualToView:self.dateView inContainer:self.scrollView withAttribute:NSLayoutAttributeTop relatedAttribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+    [self.calendarView staticHeightConstraint:74.0];
+
+    [self.addTimeView addConstraintEqualToView:self.calendarView inContainer:self.scrollView withAttribute:NSLayoutAttributeTop relatedAttribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+    [self.addTimeView addConstraintEqualToView:self.addTimeController.tableView inContainer:self.scrollView withAttribute:NSLayoutAttributeHeight relatedAttribute:NSLayoutAttributeHeight multiplier:1.0 constant:0.0];
+
+
+    [self.titleView addConstraintEqualToView:self.scrollView inContainer:self.scrollView withAttribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0];
+    [self.dateView addConstraintEqualToView:self.scrollView inContainer:self.scrollView withAttribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0];
+    [self.calendarView addConstraintEqualToView:self.scrollView inContainer:self.scrollView withAttribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0];
+    [self.addTimeView addConstraintEqualToView:self.scrollView inContainer:self.scrollView withAttribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0];
+    [self.addTimeView bottomConstraintMatchesView:self.scrollView withConstant:0.0];
 }
 
 - (void)handleCancelButton:(id)sender {

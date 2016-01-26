@@ -19,7 +19,6 @@
     #import "UIView+TackleAdditions.h"
     #import "UIViewController+MRAdditions.h"
     #import "NSDate+TackleAdditions.h"
-    #import "CompactConstraint.h"
 #endif
 
 #define IS_OS_7_OR_LATER    ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
