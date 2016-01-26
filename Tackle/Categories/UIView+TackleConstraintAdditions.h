@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIView (TackleAdditions)
+@interface UIView (TackleConstraintAdditions)
 
-- (CGFloat)angleOfView;
 - (void)constraintsMatchSuperview;
 - (void)horizontalConstraintsMatchSuperview;
 - (void)verticalConstraintsMatchSuperview;

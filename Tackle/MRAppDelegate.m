@@ -11,7 +11,6 @@
 #import "Task.h"
 #import "MRRootViewController.h"
 #import "MRNotificationProvider.h"
-#import "MRTackleDataConstants.h"
 #import "MRPersistenceController.h"
 
 @interface MRAppDelegate ()
