@@ -147,7 +147,6 @@
         MRTimeDateFormatter *timeFormatter = [MRTimeDateFormatter sharedInstance];
         NSString *time = [timeFormatter stringFromDate:self];
 
-//        formattedString = [NSString stringWithFormat:@"%@", time];
         firstComponent = @"Today";
         secondComponent = time;
     }
@@ -158,7 +157,6 @@
         MRTimeDateFormatter *timeFormatter = [MRTimeDateFormatter sharedInstance];
         NSString *time = [timeFormatter stringFromDate:self];
 
-//        formattedString = [NSString stringWithFormat:@"%@ at %@", relativeDay, time];
         firstComponent = relativeDay;
         secondComponent = time;
     }
@@ -169,7 +167,6 @@
         MRTimeDateFormatter *timeFormatter = [MRTimeDateFormatter sharedInstance];
         NSString *time = [timeFormatter stringFromDate:self];
 
-//        formattedString = [NSString stringWithFormat:@"%@ at %@", weekday, time];
         firstComponent = weekday;
         secondComponent = time;
     }
@@ -180,7 +177,6 @@
         MRTimeDateFormatter *timeFormatter = [MRTimeDateFormatter sharedInstance];
         NSString *time = [timeFormatter stringFromDate:self];
 
-//        formattedString = [NSString stringWithFormat:@"%@ at %@", date, time];
         firstComponent = date;
         secondComponent = time;
     }
@@ -204,56 +200,47 @@
 
     if (timeInterval > -86400 && timeInterval < 0) {
         timeInterval = ABS(timeInterval);
-        NSNumber *hours = [[NSNumber alloc] initWithInt:timeInterval/3600];
-        NSNumber *minutes = [[NSNumber alloc] initWithInt:(timeInterval - ([hours integerValue] * 3600)) / 60];
-        NSNumber *seconds = [[NSNumber alloc] initWithInt:timeInterval - 60 * [minutes integerValue] - 3600 * [hours integerValue]];
-
+        NSInteger hours = timeInterval/3600;
+        NSInteger minutes = (timeInterval - (hours * 3600)) / 60;
+        NSInteger seconds = timeInterval - 60 * minutes - 3600 * hours;
         NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
 
-        if ([hours integerValue] > 0) {
-            formattedString = [NSString stringWithFormat:@"%@ hours ago", [numberFormatter stringFromNumber:hours]];
+        if (hours > 0) {
+            formattedString = [NSString stringWithFormat:@"%@ Hours Ago", [numberFormatter stringFromNumber:@(hours)]];
         }
-        else if ([minutes integerValue] > 0 && [seconds integerValue] > 0) {
-            formattedString = [NSString stringWithFormat:@"%@ minutes %@ seconds ago", [numberFormatter stringFromNumber:minutes], [numberFormatter stringFromNumber:seconds]];
+        else if (minutes > 0 && seconds > 0) {
+            formattedString = [NSString stringWithFormat:@"%@ Minutes %@ Seconds Ago", [numberFormatter stringFromNumber:@(minutes)], [numberFormatter stringFromNumber:@(seconds)]];
         }
-        else if ([minutes integerValue] > 0) {
-            formattedString = [NSString stringWithFormat:@"%@ minutes ago", [numberFormatter stringFromNumber:minutes]];
+        else if (minutes > 0) {
+            formattedString = [NSString stringWithFormat:@"%@ Minutes Ago", [numberFormatter stringFromNumber:@(minutes)]];
         }
         else {
-            formattedString = [NSString stringWithFormat:@"%@ seconds ago", [numberFormatter stringFromNumber:seconds]];
+            formattedString = [NSString stringWithFormat:@"%@ Seconds Ago", [numberFormatter stringFromNumber:@(seconds)]];
         }
     }
     else if (timeInterval < 3600) {
-        NSNumber *hours = [[NSNumber alloc] initWithInteger:timeInterval/3600];
+        NSInteger hours = timeInterval/3600;
         NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
 
-        NSNumber *minutes;
-        NSNumber *seconds;
+        NSInteger minutes = 0;
+        NSInteger seconds = 0;
 
         if (timeInterval < 60) {
-            minutes = @(0);
-            seconds = [[NSNumber alloc] initWithInteger:timeInterval - 60 * [minutes integerValue] - 3600 * [hours integerValue]];
+            seconds = timeInterval;
         }
         else {
-            NSInteger minutesInt = (timeInterval - ([hours integerValue] * 3600)) / 60;
-            seconds = @(0);
-            NSInteger sec = timeInterval - 60 * [minutes integerValue] - 3600 * [hours integerValue];
-
-            if (sec > 0) {
-                minutesInt = minutesInt + 1;
-            }
-
-            minutes = [[NSNumber alloc] initWithInteger:minutesInt];
+            minutes = (timeInterval - (hours * 3600)) / 60;
+            seconds = timeInterval - 60 * minutes - 3600 * hours;
         }
 
-        if ([minutes integerValue] > 0 && [seconds integerValue] > 0) {
-            formattedString = [NSString stringWithFormat:@"In %@ Minutes %@ Seconds", [numberFormatter stringFromNumber:minutes], [numberFormatter stringFromNumber:seconds]];
+        if (minutes > 0 && seconds > 0) {
+            formattedString = [NSString stringWithFormat:@"In %@ Minutes %@ Seconds", [numberFormatter stringFromNumber:@(minutes)], [numberFormatter stringFromNumber:@(seconds)]];
         }
-        else if ([minutes integerValue] > 0) {
-            formattedString = [NSString stringWithFormat:@"In %@ Minutes", [numberFormatter stringFromNumber:minutes]];
+        else if (minutes > 0) {
+            formattedString = [NSString stringWithFormat:@"In %@ Minutes", [numberFormatter stringFromNumber:@(minutes)]];
         }
         else {
-            formattedString = [NSString stringWithFormat:@"In %@ Seconds", [numberFormatter stringFromNumber:seconds]];
+            formattedString = [NSString stringWithFormat:@"In %@ Seconds", [numberFormatter stringFromNumber:@(seconds)]];
         }
     }
     else if ([self isSameDayAsDate:date]) {
