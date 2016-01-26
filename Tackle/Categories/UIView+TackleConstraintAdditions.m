@@ -6,13 +6,9 @@
 //  Copyright (c) 2014 Melody Road. All rights reserved.
 //
 
-#import "UIView+TackleAdditions.h"
+#import "UIView+TackleConstraintAdditions.h"
 
-@implementation UIView (TackleAdditions)
-
-- (CGFloat)angleOfView {
-    return atan2(self.transform.b, self.transform.a);
-}
+@implementation UIView (TackleConstraintAdditions)
 
 - (void)horizontalConstraintsMatchSuperview {
     [self.superview addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|"
