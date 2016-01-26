@@ -122,7 +122,6 @@
 		D139E57318959F41007163AD /* MRLongDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRLongDateFormatter.m; sourceTree = "<group>"; };
 		D13A96151B7995280045DC04 /* Tackle.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tackle.xcdatamodel; sourceTree = "<group>"; };
 		D15054091A5F54AA000CA868 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
-		D150541A1A5F56EB000CA868 /* Tackle.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Tackle.entitlements; sourceTree = "<group>"; };
 		D150541F1A5F5B41000CA868 /* MRNotificationProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRNotificationProvider.h; sourceTree = "<group>"; };
 		D15054201A5F5B41000CA868 /* MRNotificationProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRNotificationProvider.m; sourceTree = "<group>"; };
 		D16285691A55AB770006929E /* MRScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRScrollView.h; sourceTree = "<group>"; };
@@ -250,7 +249,6 @@
 		D1027F7018904E8400FF44A4 /* Tackle */ = {
 			isa = PBXGroup;
 			children = (
-				D150541A1A5F56EB000CA868 /* Tackle.entitlements */,
 				D1027F7918904E8400FF44A4 /* MRAppDelegate.h */,
 				D1027F7A18904E8400FF44A4 /* MRAppDelegate.m */,
 				D12E877A18949FFD008119B8 /* Categories */,
@@ -485,7 +483,7 @@
 						DevelopmentTeam = 42UWJ9W9ZX;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
