@@ -55,8 +55,8 @@
         UIMutableUserNotificationCategory *category = [[UIMutableUserNotificationCategory alloc] init];
         category.identifier = kMRTaskNotificationCategoryIdentifier;
 
-        [category setActions:@[tenMinutesAction, destroyAction] forContext:UIUserNotificationActionContextMinimal];
-        [category setActions:@[tenMinutesAction, destroyAction] forContext:UIUserNotificationActionContextDefault];
+        [category setActions:@[destroyAction, tenMinutesAction] forContext:UIUserNotificationActionContextMinimal];
+        [category setActions:@[destroyAction, tenMinutesAction] forContext:UIUserNotificationActionContextDefault];
 
         NSSet *categories = [[NSSet alloc] initWithObjects:category, nil];
 
