@@ -16,6 +16,7 @@
 #import "MRTaskEditViewController.h"
 #import "MRTaskTableViewController.h"
 #import "MRTaskEditNavigationController.h"
+#import "MRCreditsViewController.h"
 
 @interface MRTaskListViewController () <MRTaskTableViewDelegate, MRTaskEditingDelegate>
 
@@ -175,6 +176,9 @@
 }
 
 - (void)handleLogoButton:(id)sender {
+    MRCreditsViewController *vc = [[MRCreditsViewController alloc] init];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:navController animated:YES completion:nil];
 }
 
 #pragma mark - Task Selection Delegate

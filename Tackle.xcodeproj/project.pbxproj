@@ -56,6 +56,7 @@
 		D1E1412C1A4FE77F00992B1E /* MRWeekdayDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E1412B1A4FE77F00992B1E /* MRWeekdayDateFormatter.m */; };
 		D1E1412F1A4FE82000992B1E /* MRDayOfMonthDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E1412E1A4FE82000992B1E /* MRDayOfMonthDateFormatter.m */; };
 		D1E141321A4FEC8700992B1E /* MRCalendarCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E141311A4FEC8700992B1E /* MRCalendarCollectionViewFlowLayout.m */; };
+		D1EF530B1C582B2300C71997 /* MRCreditsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1EF530A1C582B2300C71997 /* MRCreditsViewController.m */; };
 		D1F652921AF1317500085D88 /* MRPersistenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1F652911AF1317500085D88 /* MRPersistenceController.m */; };
 		D1F968901A565338009813C0 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1F9688F1A565338009813C0 /* Accelerate.framework */; };
 /* End PBXBuildFile section */
@@ -181,6 +182,8 @@
 		D1E1412E1A4FE82000992B1E /* MRDayOfMonthDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRDayOfMonthDateFormatter.m; sourceTree = "<group>"; };
 		D1E141301A4FEC8700992B1E /* MRCalendarCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRCalendarCollectionViewFlowLayout.h; sourceTree = "<group>"; };
 		D1E141311A4FEC8700992B1E /* MRCalendarCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRCalendarCollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		D1EF53091C582B2300C71997 /* MRCreditsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRCreditsViewController.h; sourceTree = "<group>"; };
+		D1EF530A1C582B2300C71997 /* MRCreditsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRCreditsViewController.m; sourceTree = "<group>"; };
 		D1F652901AF1317500085D88 /* MRPersistenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRPersistenceController.h; sourceTree = "<group>"; };
 		D1F652911AF1317500085D88 /* MRPersistenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRPersistenceController.m; sourceTree = "<group>"; };
 		D1F9688F1A565338009813C0 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
@@ -362,6 +365,8 @@
 				D1BC012C1A539A4B00F87D06 /* MRDatePickerViewController.m */,
 				D1CF84851A5639890020DB50 /* MRModalViewController.h */,
 				D1CF84861A5639890020DB50 /* MRModalViewController.m */,
+				D1EF53091C582B2300C71997 /* MRCreditsViewController.h */,
+				D1EF530A1C582B2300C71997 /* MRCreditsViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -476,6 +481,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = MR;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Melody Road";
 				TargetAttributes = {
@@ -551,6 +557,7 @@
 				D1E141201A4FDD2D00992B1E /* MRAddTimeTableViewCell.m in Sources */,
 				D1027F7718904E8400FF44A4 /* main.m in Sources */,
 				D19C952E18A29368009082F3 /* MRShortDateFormatter.m in Sources */,
+				D1EF530B1C582B2300C71997 /* MRCreditsViewController.m in Sources */,
 				D1E141121A4F7A4300992B1E /* MRRootViewController.m in Sources */,
 				D15054211A5F5B41000CA868 /* MRNotificationProvider.m in Sources */,
 				D162856B1A55AB770006929E /* MRScrollView.m in Sources */,
@@ -695,7 +702,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = Tackle/Tackle.entitlements;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -705,10 +713,12 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "Tackle/Supporting Files/Tackle-Prefix.pch";
 				INFOPLIST_FILE = "Tackle/Supporting Files/Tackle-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				"OTHER_LDFLAGS[arch=*]" = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.melodyroad.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -718,7 +728,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = Tackle/Tackle.entitlements;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -728,6 +739,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "Tackle/Supporting Files/Tackle-Prefix.pch";
 				INFOPLIST_FILE = "Tackle/Supporting Files/Tackle-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.melodyroad.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
