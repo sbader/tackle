@@ -25,5 +25,9 @@
 + (UIFont *)fontForTableViewTextLabel;
 + (UIFont *)fontForTableViewDetailLabel;
 + (UIFont *)fontForTableViewSectionHeader;
++ (UIFont *)fontForCreditsTextLabel;
++ (UIFont *)fontForCreditsLinks;
++ (UIFont *)fontForCreditsBottomText;
++ (UIFont *)fontForCreditsVersionText;
 
 @end

@@ -1,5 +1,5 @@
 //
-//  MRAddTimeTableViewController.m
+//  MRTaskEditTableViewController.m
 //  Tackle
 //
 //  Created by Scott Bader on 12/28/14.
@@ -46,9 +46,9 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
     [super viewDidLoad];
 
     self.timeIntervals = @[
-                           [MRTimeInterval timeIntervalWithName:@"Ten Minutes" icon:[PaintCodeStyleKit imageOfStopwatchColored] unit:NSCalendarUnitMinute interval:10],
-                           [MRTimeInterval timeIntervalWithName:@"an Hour" icon:[PaintCodeStyleKit imageOfHourglassColored]  unit:NSCalendarUnitHour interval:1],
-                           [MRTimeInterval timeIntervalWithName:@"a Day" icon:[PaintCodeStyleKit imageOfCalanderColored]  unit:NSCalendarUnitDay interval:1],
+                           [MRTimeInterval timeIntervalWithName:NSLocalizedString(@"Ten Minutes", nil) icon:[PaintCodeStyleKit imageOfStopwatchColored] unit:NSCalendarUnitMinute interval:10],
+                           [MRTimeInterval timeIntervalWithName:NSLocalizedString(@"an Hour", nil) icon:[PaintCodeStyleKit imageOfHourglassColored]  unit:NSCalendarUnitHour interval:1],
+                           [MRTimeInterval timeIntervalWithName:NSLocalizedString(@"a Day", nil) icon:[PaintCodeStyleKit imageOfCalanderColored]  unit:NSCalendarUnitDay interval:1],
                            ];
 
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
@@ -59,6 +59,7 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
     self.tableView.scrollEnabled = NO;
     self.tableView.separatorColor = [UIColor grayBorderColor];
     self.tableView.allowsMultipleSelectionDuringEditing = NO;
+    self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.tableView registerClass:[MRAddTimeTableViewCell class] forCellReuseIdentifier:addTimeCellReuseIdentifier];
     [self.tableView registerClass:[MRPreviousTaskTableViewCell class] forCellReuseIdentifier:previousTaskCellReuseIdentifier];
@@ -155,7 +156,7 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
     }
     else if ([self isDoneButtonSection:indexPath.section]) {
         MRAddTimeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:addTimeCellReuseIdentifier forIndexPath:indexPath];
-        cell.textLabel.text = @"Done";
+        cell.textLabel.text = NSLocalizedString(@"Task Done Button Title", nil);
         cell.imageView.image = [PaintCodeStyleKit imageOfCheckmark];
         return cell;
 
@@ -163,8 +164,9 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
     else {
         MRAddTimeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:addTimeCellReuseIdentifier forIndexPath:indexPath];
         MRTimeInterval *timeInterval = self.timeIntervals[indexPath.row];
-        cell.textLabel.text = [NSString stringWithFormat:@"Add %@", timeInterval.name];
+        cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Task Add Time Format", nil), timeInterval.name];
         cell.imageView.image = timeInterval.icon;
+
         return cell;
     }
 }
@@ -215,7 +217,7 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
 
         UILabel *label = [[UILabel alloc] init];
         label.translatesAutoresizingMaskIntoConstraints = NO;
-        label.text = @"Use Previous Task";
+        label.text = NSLocalizedString(@"Use Previous Task", nil);
         label.font = [UIFont fontForTableViewSectionHeader];
         [labelContainer addSubview:label];
 

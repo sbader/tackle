@@ -85,6 +85,22 @@
     [self trailingConstraintMatchesView:self.superview withConstant:constant];
 }
 
+- (void)topConstraintBelowView:(UIView *)view {
+    [self topConstraintBelowView:view withConstant:0.0];
+}
+
+- (void)topConstraintBelowView:(UIView *)view withConstant:(CGFloat)constant {
+    [self addConstraintEqualToView:view inContainer:self.superview withAttribute:NSLayoutAttributeTop relatedAttribute:NSLayoutAttributeBottom multiplier:1.0 constant:constant];
+}
+
+- (void)bottomConstraintAboveView:(UIView *)view {
+    [self bottomConstraintAboveView:view withConstant:0.0];
+}
+
+- (void)bottomConstraintAboveView:(UIView *)view withConstant:(CGFloat)constant {
+    [self addConstraintEqualToView:view inContainer:self.superview withAttribute:NSLayoutAttributeBottom relatedAttribute:NSLayoutAttributeTop multiplier:1.0 constant:constant];
+}
+
 - (void)horizontalCenterConstraintMatchesSuperview {
     [self addConstraintEqualToView:self.superview inContainer:self.superview withAttribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0];
 }

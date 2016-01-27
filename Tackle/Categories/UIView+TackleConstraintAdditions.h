@@ -23,6 +23,10 @@
 - (void)trailingConstraintMatchesSuperviewWithConstant:(CGFloat)constant;
 - (void)topConstraintMatchesView:(UIView *)view withConstant:(CGFloat)constant;
 - (void)bottomConstraintMatchesView:(UIView *)view withConstant:(CGFloat)constant;
+- (void)topConstraintBelowView:(UIView *)view;
+- (void)topConstraintBelowView:(UIView *)view withConstant:(CGFloat)constant;
+- (void)bottomConstraintAboveView:(UIView *)view;
+- (void)bottomConstraintAboveView:(UIView *)view withConstant:(CGFloat)constant;
 - (void)leadingConstraintMatchesView:(UIView *)view;
 - (void)leadingConstraintMatchesView:(UIView *)view withConstant:(CGFloat)constant;
 - (void)trailingConstraintMatchesView:(UIView *)view;
