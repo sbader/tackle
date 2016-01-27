@@ -8,6 +8,8 @@
 
 #import "MRDatePickerViewController.h"
 
+NSString * const kMRDatePickerIntervalKey = @"MRDatePickerInterval";
+
 @interface MRDatePickerViewController ()
 
 @property (nonatomic) UIDatePicker *datePicker;
@@ -50,7 +52,7 @@
     self.label = [[UILabel alloc] init];
     self.label.translatesAutoresizingMaskIntoConstraints = NO;
     self.label.font = [UIFont fontForFormLabel];
-    self.label.text = @"Select Due Date";
+    self.label.text = NSLocalizedString(@"Select Due Date", nil);
 
     [self.view addSubview:self.label];
     [self.label topConstraintMatchesSuperviewWithConstant:17.0];
@@ -76,9 +78,16 @@
     self.datePicker.translatesAutoresizingMaskIntoConstraints = NO;
     self.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
     self.datePicker.minimumDate = [NSDate date];
-    self.datePicker.minuteInterval = 1;
+
+    NSNumber *interval = [[NSUserDefaults standardUserDefaults] objectForKey:kMRDatePickerIntervalKey];
+
+    self.datePicker.minuteInterval = interval.integerValue;
     [self.datePicker setDate:self.date animated:NO];
     [self.datePickerContainer addSubview:self.datePicker];
+
+    UITapGestureRecognizer *intervalTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(intervalTapGestureWasTapped:)];
+    intervalTapGestureRecognizer.numberOfTapsRequired = 2;
+    [self.datePicker addGestureRecognizer:intervalTapGestureRecognizer];
 
     [self.datePicker constraintsMatchSuperview];
 }
@@ -107,7 +116,7 @@
     closeButton.titleLabel.font = [UIFont fontForFormButtons];
     closeButton.tintColor = [UIColor destructiveColor];
     closeButton.contentEdgeInsets = UIEdgeInsetsMake(20.0, 0, 20.0, 0);
-    [closeButton setTitle:@"Cancel" forState:UIControlStateNormal];
+    [closeButton setTitle:NSLocalizedString(@"Date Picker Close Title", nil) forState:UIControlStateNormal]; //Cancel
     [closeButton addTarget:self action:@selector(handleCloseButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.buttonContainer addSubview:closeButton];
 
@@ -119,7 +128,7 @@
     saveButton.translatesAutoresizingMaskIntoConstraints = NO;
     saveButton.titleLabel.font = [UIFont fontForFormButtons];
     saveButton.contentEdgeInsets = UIEdgeInsetsMake(20.0, 0, 20.0, 0);
-    [saveButton setTitle:@"Save" forState:UIControlStateNormal];
+    [saveButton setTitle:NSLocalizedString(@"Date Picker Save Title", nil) forState:UIControlStateNormal]; //Save
     [saveButton addTarget:self action:@selector(handleSaveButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.buttonContainer addSubview:saveButton];
 
@@ -141,6 +150,13 @@
 - (void)handleSaveButton:(id)sender {
     [self.delegate didSelectDate:self.datePicker.date];
     [self dismiss];
+}
+
+- (void)intervalTapGestureWasTapped:(id)sender {
+    NSInteger newDefaultInterval = (self.datePicker.minuteInterval == 5) ? 1 : 5;
+
+    self.datePicker.minuteInterval = newDefaultInterval;
+    [[NSUserDefaults standardUserDefaults] setObject:@(newDefaultInterval) forKey:kMRDatePickerIntervalKey];
 }
 
 @end

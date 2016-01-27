@@ -82,4 +82,21 @@
     return [self systemFontOfSize:12.0 weight:UIFontWeightMedium];
 }
 
++ (UIFont *)fontForCreditsTextLabel {
+    return [self systemFontOfSize:18.0 weight:UIFontWeightRegular];
+}
+
++ (UIFont *)fontForCreditsLinks {
+    return [self systemFontOfSize:18.0 weight:UIFontWeightRegular];
+}
+
+
++ (UIFont *)fontForCreditsBottomText {
+    return [self systemFontOfSize:18.0 weight:UIFontWeightRegular];
+}
+
++ (UIFont *)fontForCreditsVersionText {
+    return [self systemFontOfSize:18.0 weight:UIFontWeightMedium];
+}
+
 @end

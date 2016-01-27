@@ -12,6 +12,7 @@
 #import "MRRootViewController.h"
 #import "MRNotificationProvider.h"
 #import "MRPersistenceController.h"
+#import "MRDatePickerViewController.h"
 
 @interface MRAppDelegate ()
 
@@ -64,6 +65,10 @@
         [[UIApplication sharedApplication] cancelAllLocalNotifications];
         [self addSampleData];
     }
+
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{
+                                                              kMRDatePickerIntervalKey: @(5)
+                                                              }];
 
     [self setupAppearance];
     [self setupWindow];

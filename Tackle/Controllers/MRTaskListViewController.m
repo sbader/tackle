@@ -33,7 +33,7 @@
     self = [super init];
 
     if (self) {
-        self.title = @"Tasks";
+        self.title = NSLocalizedString(@"Tasks List Title", nil); //@"Tasks";
         _persistenceController = persistenceController;
     }
     
@@ -105,7 +105,7 @@
 
     UILabel *infoLabel = [[UILabel alloc] init];
     infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    infoLabel.text = @"You have nothing to tackle right now. You can add a task by hitting the plus sign above.";
+    infoLabel.text = NSLocalizedString(@"You have nothing to tackle right now. You can add a task by hitting the plus sign above.", nil);
     infoLabel.textAlignment = NSTextAlignmentLeft;
     infoLabel.font = [UIFont fontForInfoLabel];
     infoLabel.numberOfLines = 0;

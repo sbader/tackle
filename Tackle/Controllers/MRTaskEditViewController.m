@@ -86,12 +86,12 @@
 
     [self setupConstraints];
 
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Task Edit Cancel", nil) //Cancel
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
                                                                             action:@selector(handleCancelButton:)];
 
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save"
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Task Edit Save", nil) //Save
                                                                               style:UIBarButtonItemStyleDone
                                                                              target:self
                                                                              action:@selector(handleSaveButton:)];
@@ -103,7 +103,7 @@
     [self.navigationItem.rightBarButtonItem setTitleTextAttributes:barButtonTitleTextAttributes forState:UIControlStateNormal];
 
     if (!self.taskDueDate) {
-        self.title = @"New Task";
+        self.title = NSLocalizedString(@"New Task", nil);
 
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDateComponents *components = [calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear|NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitTimeZone
@@ -114,7 +114,7 @@
         self.taskDueDate = [[NSCalendar currentCalendar] dateByAddingUnit:NSCalendarUnitMinute value:minutes toDate:currentDate options:0];
     }
     else {
-        self.title = @"Edit Task";
+        self.title = NSLocalizedString(@"Edit Task", nil);
     }
 
     [self updateTitleField];
@@ -179,7 +179,7 @@
     self.titleField = [[UITextField alloc] init];
     self.titleField.translatesAutoresizingMaskIntoConstraints = NO;
     self.titleField.textAlignment = NSTextAlignmentCenter;
-    self.titleField.placeholder = @"What do you want to tackle?";
+    self.titleField.placeholder = NSLocalizedString(@"What do you want to tackle?", nil);
     self.titleField.textColor = [UIColor grayTextColor];
     self.titleField.font = [UIFont fontForFormTextField];
     self.titleField.returnKeyType = UIReturnKeyDone;
@@ -445,7 +445,7 @@
         NSString *leftoverText = [self.titleField.text stringByReplacingCharactersInRange:result.range withString:@""];
         self.leftoverTitleText = [leftoverText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         [self displayPossibleDateButton];
-        NSString *buttonText = [NSString stringWithFormat:@"Set to %@", result.date.tackleString];
+        NSString *buttonText = [NSString stringWithFormat:NSLocalizedString(@"Set to %@", nil), result.date.tackleString];
         [self.possibleDateButton setTitle:buttonText forState:UIControlStateNormal];
         self.possibleDate = result.date;
 

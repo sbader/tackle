@@ -42,4 +42,8 @@
     return UIColorFromRGB(0x9F4545);
 }
 
++ (UIColor *)darkGrayBackgroundColor {
+    return UIColorFromRGB(0x1A1A1A);
+}
+
 @end

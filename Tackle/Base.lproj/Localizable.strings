@@ -1,0 +1,83 @@
+/* Created with Localizable Strings Merge, the swiss-army knife for iOS and OS X localization. */
+
+/* No comment provided by engineer. */
+"a Day" = "a Day";
+
+/* No comment provided by engineer. */
+"an Hour" = "an Hour";
+
+/* No comment provided by engineer. */
+"Credits Done" = "Done";
+
+/* No comment provided by engineer. */
+"Credits Title" = "Tackle";
+
+/* No comment provided by engineer. */
+"Date Picker Close Title" = "Close";
+
+/* No comment provided by engineer. */
+"Date Picker Save Title" = "Save";
+
+/* No comment provided by engineer. */
+"Designed and Developed by Scott Bader" = "Designed and Developed by Scott Bader";
+
+/* No comment provided by engineer. */
+"Edit Task" = "Edit Task";
+
+/* No comment provided by engineer. */
+"Email Not Configured" = "Email Not Configured";
+
+/* No comment provided by engineer. */
+"New Task" = "New Task";
+
+/* No comment provided by engineer. */
+"Rate in the App Store" = "Rate in the App Store";
+
+/* No comment provided by engineer. */
+"Select Due Date" = "Select Due Date";
+
+/* No comment provided by engineer. */
+"Send Feedback" = "Send Feedback";
+
+/* No comment provided by engineer. */
+"Set to %@" = "Set to %@";
+
+/* No comment provided by engineer. */
+"Tackle %@ (%@)" = "Tackle %1$@ (%2$@)";
+
+/* No comment provided by engineer. */
+"Tackle Feedback" = "Tackle Feedback";
+
+/* No comment provided by engineer. */
+"Task Add Time Format" = "Add %@";
+
+/* No comment provided by engineer. */
+"Task Done Button Title" = "Done";
+
+/* No comment provided by engineer. */
+"Task Edit Cancel" = "Cancel";
+
+/* No comment provided by engineer. */
+"Task Edit Save" = "Save";
+
+/* No comment provided by engineer. */
+"Tasks List Title" = "Tasks";
+
+/* No comment provided by engineer. */
+"Ten Minutes" = "Ten Minutes";
+
+/* No comment provided by engineer. */
+"Use Previous Task" = "Use Previous Task";
+
+/* No comment provided by engineer. */
+"What do you want to tackle?" = "What do you want to tackle?";
+
+/* No comment provided by engineer. */
+"You have nothing to tackle right now. You can add a task by hitting the plus sign above." = "You have nothing to tackle right now. You can add a task by hitting the plus sign above.";
+
+/* No comment provided by engineer. */
+"Your device is not configured to send email. You can configure an email address in settings or send an email directly to tackle@melodyroad.com." = "Your device is not configured to send email. You can configure an email address in settings or send an email directly to tackle@melodyroad.com.";
+
+/* No comment provided by engineer. */
+"© 2016 Melody Road, LLC" = "© 2016 Melody Road, LLC";
+
