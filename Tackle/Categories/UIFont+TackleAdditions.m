@@ -23,63 +23,63 @@
 }
 
 + (UIFont *)fontForFormTableViewCellTextLabel {
-    return [self avenirNextRegularWithSize:20.0];
+    return [self systemFontOfSize:20.0 weight:UIFontWeightRegular];
 }
 
 + (UIFont *)fontForFormLabel {
-    return [self avenirNextRegularWithSize:16.0];
+    return [self systemFontOfSize:16.0 weight:UIFontWeightRegular];
 }
 
 + (UIFont *)fontForBarTitle {
-    return [self avenirNextDemiBoldWithSize:18.0];
+    return [self systemFontOfSize:18.0 weight:UIFontWeightSemibold];
 }
 
 + (UIFont *)fontForBarButtonItemStandardStyle {
-    return [self avenirNextRegularWithSize:18.0];
+    return [self systemFontOfSize:18.0 weight:UIFontWeightRegular];
 }
 
 + (UIFont *)fontForBarButtonItemDoneStyle {
-    return [self avenirNextMediumWithSize:18.0];
+    return [self systemFontOfSize:18.0 weight:UIFontWeightMedium];
 }
 
 + (UIFont *)fontForCalendarWeekday {
-    return [self avenirNextRegularWithSize:11.0];
+    return [self systemFontOfSize:11.0 weight:UIFontWeightRegular];
 }
 
 + (UIFont *)fontForCalendarDayOfMonth {
-    return [self avenirNextMediumWithSize:22.0];
+    return [self systemFontOfSize:22.0 weight:UIFontWeightMedium];
 }
 
 + (UIFont *)fontForCalendarMonth {
-    return [self avenirNextRegularWithSize:13.0];
+    return [self systemFontOfSize:13.0 weight:UIFontWeightRegular];
 }
 
 + (UIFont *)fontForFormButtons {
-    return [self avenirNextMediumWithSize:19.0];
+    return [self systemFontOfSize:19.0 weight:UIFontWeightMedium];
 }
 
 + (UIFont *)fontForFormTextField {
-    return [self avenirNextRegularWithSize:20.0];
+    return [self systemFontOfSize:20.0 weight:UIFontWeightRegular];
 }
 
 + (UIFont *)fontForLargeFormButtons {
-    return [self avenirNextRegularWithSize:22.0];
+    return [self systemFontOfSize:22.0 weight:UIFontWeightRegular];
 }
 
 + (UIFont *)fontForInfoLabel {
-    return [self avenirNextMediumWithSize:18.0];
+    return [self systemFontOfSize:18.0 weight:UIFontWeightMedium];
 }
 
 + (UIFont *)fontForTableViewTextLabel {
-    return [self avenirNextMediumWithSize:20.0];
+    return [self systemFontOfSize:20.0 weight:UIFontWeightMedium];
 }
 
 + (UIFont *)fontForTableViewDetailLabel {
-    return [self avenirNextRegularWithSize:14.0];
+    return [self systemFontOfSize:14.0 weight:UIFontWeightRegular];
 }
 
 + (UIFont *)fontForTableViewSectionHeader {
-    return [self avenirNextMediumWithSize:12.0];
+    return [self systemFontOfSize:12.0 weight:UIFontWeightMedium];
 }
 
 @end
