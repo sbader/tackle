@@ -50,7 +50,9 @@
     options[NSInferMappingModelAutomaticallyOption] = @YES;
     options[NSSQLitePragmasOption] = @{ @"journal_mode":@"DELETE" };
 
-    NSURL *directory = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.TackleDataGroup"];
+
+    NSArray *paths = [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
+    NSURL *directory = [paths lastObject];
     NSURL *storeURL = [directory URLByAppendingPathComponent:@"Tackle.sqlite"];
 
     NSError *error = nil;
