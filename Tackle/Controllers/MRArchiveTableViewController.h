@@ -1,8 +1,8 @@
 //
-//  MRCreditsViewController.h
+//  MRArchiveTableViewController.h
 //  Tackle
 //
-//  Created by Scott Bader on 1/26/16.
+//  Created by Scott Bader on 1/27/16.
 //  Copyright © 2016 Melody Road. All rights reserved.
 //
 
@@ -11,7 +11,7 @@
 @class MRPersistenceController;
 @protocol MRArchiveTaskTableViewDelegate;
 
-@interface MRCreditsViewController : UIViewController
+@interface MRArchiveTableViewController : UITableViewController
 
 - (instancetype)initWithPersistenceController:(MRPersistenceController *)persistenceController;
 

@@ -45,6 +45,8 @@
 		D1CF84871A5639890020DB50 /* MRModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1CF84861A5639890020DB50 /* MRModalViewController.m */; };
 		D1CF848D1A563D4B0020DB50 /* UIViewController+MRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D1CF848C1A563D4B0020DB50 /* UIViewController+MRAdditions.m */; };
 		D1CFD4EE1A51F455004489AC /* MRTimeInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = D1CFD4ED1A51F455004489AC /* MRTimeInterval.m */; };
+		D1D4EB821C59CD6400E15254 /* MRArchiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D4EB811C59CD6400E15254 /* MRArchiveViewController.m */; };
+		D1D4EB851C59CE3600E15254 /* MRArchiveTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D4EB841C59CE3600E15254 /* MRArchiveTableViewController.m */; };
 		D1E141061A4F79D500992B1E /* MRTaskEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E141051A4F79D500992B1E /* MRTaskEditViewController.m */; };
 		D1E141091A4F79E600992B1E /* MRTaskListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E141081A4F79E600992B1E /* MRTaskListViewController.m */; };
 		D1E1410C1A4F7A0100992B1E /* MRTaskTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E1410B1A4F7A0100992B1E /* MRTaskTableViewController.m */; };
@@ -131,6 +133,7 @@
 		D12E8785189573FC008119B8 /* UIColor+TackleAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+TackleAdditions.m"; sourceTree = "<group>"; };
 		D130A1041C593BD700394EDF /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		D130A1091C59495800394EDF /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D1345D6C1C59D7C9008A2652 /* MRArchiveTaskTableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRArchiveTaskTableViewDelegate.h; sourceTree = "<group>"; };
 		D139E57218959F41007163AD /* MRLongDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRLongDateFormatter.h; sourceTree = "<group>"; };
 		D139E57318959F41007163AD /* MRLongDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRLongDateFormatter.m; sourceTree = "<group>"; };
 		D13A96151B7995280045DC04 /* Tackle.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tackle.xcdatamodel; sourceTree = "<group>"; };
@@ -169,6 +172,10 @@
 		D1CF848C1A563D4B0020DB50 /* UIViewController+MRAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MRAdditions.m"; sourceTree = "<group>"; };
 		D1CFD4EC1A51F455004489AC /* MRTimeInterval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRTimeInterval.h; sourceTree = "<group>"; };
 		D1CFD4ED1A51F455004489AC /* MRTimeInterval.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRTimeInterval.m; sourceTree = "<group>"; };
+		D1D4EB801C59CD6400E15254 /* MRArchiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRArchiveViewController.h; sourceTree = "<group>"; };
+		D1D4EB811C59CD6400E15254 /* MRArchiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRArchiveViewController.m; sourceTree = "<group>"; };
+		D1D4EB831C59CE3600E15254 /* MRArchiveTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRArchiveTableViewController.h; sourceTree = "<group>"; };
+		D1D4EB841C59CE3600E15254 /* MRArchiveTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRArchiveTableViewController.m; sourceTree = "<group>"; };
 		D1E141041A4F79D500992B1E /* MRTaskEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRTaskEditViewController.h; sourceTree = "<group>"; };
 		D1E141051A4F79D500992B1E /* MRTaskEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRTaskEditViewController.m; sourceTree = "<group>"; };
 		D1E141071A4F79E600992B1E /* MRTaskListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRTaskListViewController.h; sourceTree = "<group>"; };
@@ -394,6 +401,10 @@
 				D1CF84861A5639890020DB50 /* MRModalViewController.m */,
 				D1EF53091C582B2300C71997 /* MRCreditsViewController.h */,
 				D1EF530A1C582B2300C71997 /* MRCreditsViewController.m */,
+				D1D4EB801C59CD6400E15254 /* MRArchiveViewController.h */,
+				D1D4EB811C59CD6400E15254 /* MRArchiveViewController.m */,
+				D1D4EB831C59CE3600E15254 /* MRArchiveTableViewController.h */,
+				D1D4EB841C59CE3600E15254 /* MRArchiveTableViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -466,6 +477,7 @@
 			isa = PBXGroup;
 			children = (
 				D1AD45BE1A59BDE3001FDAC5 /* MRTaskTableViewDelegate.h */,
+				D1345D6C1C59D7C9008A2652 /* MRArchiveTaskTableViewDelegate.h */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -611,6 +623,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1CF84871A5639890020DB50 /* MRModalViewController.m in Sources */,
+				D1D4EB851C59CE3600E15254 /* MRArchiveTableViewController.m in Sources */,
 				D13A96161B7995280045DC04 /* Tackle.xcdatamodeld in Sources */,
 				D1027FEE1890535700FF44A4 /* Task.m in Sources */,
 				D1A3FDDE1A511B9F00A384FE /* MRMonthDateFormatter.m in Sources */,
@@ -648,6 +661,7 @@
 				D1CFD4EE1A51F455004489AC /* MRTimeInterval.m in Sources */,
 				D1A36E5A18A2B2070020EAEB /* MRTimeDateFormatter.m in Sources */,
 				D1CF848D1A563D4B0020DB50 /* UIViewController+MRAdditions.m in Sources */,
+				D1D4EB821C59CD6400E15254 /* MRArchiveViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

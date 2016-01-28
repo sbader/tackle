@@ -7,6 +7,18 @@
 "an Hour" = "an Hour";
 
 /* No comment provided by engineer. */
+"Archive Action Delete" = "Delete";
+
+/* No comment provided by engineer. */
+"Archive Action Recycle" = "Recycle";
+
+/* No comment provided by engineer. */
+"Archive List Title" = "Archive";
+
+/* No comment provided by engineer. */
+"Credits Archive" = "Archive";
+
+/* No comment provided by engineer. */
 "Credits Done" = "Done";
 
 /* No comment provided by engineer. */
@@ -17,6 +29,9 @@
 
 /* No comment provided by engineer. */
 "Date Picker Save Title" = "Save";
+
+/* No comment provided by engineer. */
+"Delete All" = "Delete All";
 
 /* No comment provided by engineer. */
 "Designed and Developed by Scott Bader" = "Designed and Developed by Scott Bader";
