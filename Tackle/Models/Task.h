@@ -13,6 +13,7 @@ extern NSString * const kMRAddTenMinutesActionIdentifier;
 extern NSString * const kMRDestroyTaskActionIdentifier;
 extern NSString * const kMRTaskNotificationCategoryIdentifier;
 
+extern NSString * const kMRAddOneHourActionIdentifier;
 @interface Task : NSManagedObject
 
 @property (nonatomic, retain) NSString *title;
@@ -23,6 +24,7 @@ extern NSString * const kMRTaskNotificationCategoryIdentifier;
 @property (nonatomic) BOOL isDone;
 
 + (Task *)firstOpenTaskInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
++ (Task *)firstPassedTaskInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 + (Task *)insertItemWithTitle:(NSString*)title dueDate:(NSDate *)dueDate identifier:(NSString *)identifier inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 + (Task *)findTaskWithUniqueId:(NSString *)uniqueId inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 + (Task *)findTaskWithIdentifier:(NSString *)identifier inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;

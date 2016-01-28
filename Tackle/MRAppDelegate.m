@@ -41,6 +41,13 @@
         tenMinutesAction.activationMode = UIUserNotificationActivationModeBackground;
         tenMinutesAction.authenticationRequired = NO;
 
+        UIMutableUserNotificationAction *oneHourAction = [[UIMutableUserNotificationAction alloc] init];
+        oneHourAction.identifier = kMRAddOneHourActionIdentifier;
+        oneHourAction.destructive = NO;
+        oneHourAction.title = @"Add 1 Hour";
+        oneHourAction.activationMode = UIUserNotificationActivationModeBackground;
+        oneHourAction.authenticationRequired = NO;
+
         UIMutableUserNotificationAction *destroyAction = [[UIMutableUserNotificationAction alloc] init];
         destroyAction.identifier = kMRDestroyTaskActionIdentifier;
         destroyAction.destructive = YES;
@@ -52,7 +59,7 @@
         category.identifier = kMRTaskNotificationCategoryIdentifier;
 
         [category setActions:@[destroyAction, tenMinutesAction] forContext:UIUserNotificationActionContextMinimal];
-        [category setActions:@[destroyAction, tenMinutesAction] forContext:UIUserNotificationActionContextDefault];
+        [category setActions:@[destroyAction, tenMinutesAction, oneHourAction] forContext:UIUserNotificationActionContextDefault];
 
         NSSet *categories = [[NSSet alloc] initWithObjects:category, nil];
 
@@ -80,6 +87,21 @@
     UILocalNotification *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
     if (notification) {
         [self handleLocalNotification:notification];
+    }
+    else {
+        [self handlePassedTask];
+    }
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
+    [self handlePassedTask];
+}
+
+- (void)handlePassedTask {
+    Task *task = [Task firstPassedTaskInManagedObjectContext:self.persistenceController.managedObjectContext];
+    if (task) {
+        [self.rootController handleNotificationForTask:task];
     }
 }
 
@@ -134,7 +156,22 @@
     NSLog(@"handleActionWithIdentifier:%@ uniqueId:%@ task:%@", identifier, taskIdentifier, task.title);
 
     if ([identifier isEqualToString:kMRAddTenMinutesActionIdentifier]) {
-        task.dueDate = [NSDate dateWithTimeIntervalSinceNow:600];
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        NSDate *date = [calendar dateByAddingUnit:NSCalendarUnitMinute value:10 toDate:[NSDate date] options:0];
+        task.dueDate = date;
+
+        [self.persistenceController save];
+        [[MRNotificationProvider sharedProvider] rescheduleNotificationForTask:task];
+
+        NSLog(@"addTenMinutes");
+
+        completionHandler();
+    }
+    else if ([identifier isEqualToString:kMRAddOneHourActionIdentifier]) {
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        NSDate *date = [calendar dateByAddingUnit:NSCalendarUnitHour value:1 toDate:[NSDate date] options:0];
+        task.dueDate = date;
+
 
         [self.persistenceController save];
         [[MRNotificationProvider sharedProvider] rescheduleNotificationForTask:task];
