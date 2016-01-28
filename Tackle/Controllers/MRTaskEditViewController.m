@@ -61,7 +61,7 @@
         self.taskDueDate = dueDate;
         self.managedObjectContext = managedObjectContext;
         self.shouldDisplayPreviousTasks = (title == nil);
-        self.shouldDisplayDoneButton= (title != nil);
+        self.shouldDisplayDoneButton = (dueDate != nil);
     }
 
     return self;

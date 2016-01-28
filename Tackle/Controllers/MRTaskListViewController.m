@@ -17,8 +17,9 @@
 #import "MRTaskTableViewController.h"
 #import "MRTaskEditNavigationController.h"
 #import "MRCreditsViewController.h"
+#import "MRArchiveTaskTableViewDelegate.h"
 
-@interface MRTaskListViewController () <MRTaskTableViewDelegate, MRTaskEditingDelegate>
+@interface MRTaskListViewController () <MRTaskTableViewDelegate, MRTaskEditingDelegate, MRArchiveTaskTableViewDelegate>
 
 @property (nonatomic) MRPersistenceController *persistenceController;
 @property (nonatomic) Task *editingTask;
@@ -52,6 +53,8 @@
     [self addChildViewController:self.tableViewController];
     [self.view addSubview:self.tableViewController.view];
     [self.tableViewController.view constraintsMatchSuperview];
+
+    self.view.backgroundColor = [UIColor grayBackgroundColor];
 
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[PaintCodeStyleKit imageOfLetterTIcon]
                                                                              style:UIBarButtonItemStylePlain
@@ -129,11 +132,16 @@
     [self.infoView addConstraint:[NSLayoutConstraint constraintWithItem:infoLabel attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:arrowImageView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:-22.0]];
 }
 
-- (void)displayEditViewWithTitle:(NSString *)title dueDate:(NSDate *)dueDate {
+- (void)displayEditViewWithTitle:(NSString *)title dueDate:(NSDate *)dueDate animated:(BOOL)animated {
     MRTaskEditViewController *editController = [[MRTaskEditViewController alloc] initWithTitle:title dueDate:dueDate managedObjectContext:self.persistenceController.managedObjectContext];
     editController.delegate = self;
     MRTaskEditNavigationController *navigationController = [[MRTaskEditNavigationController alloc] initWithRootViewController:editController];
-    [self presentViewController:navigationController animated:YES completion:nil];
+    [self presentViewController:navigationController animated:animated completion:nil];
+
+}
+
+- (void)displayEditViewWithTitle:(NSString *)title dueDate:(NSDate *)dueDate {
+    [self displayEditViewWithTitle:title dueDate:dueDate animated:YES];
 }
 
 - (void)saveEditingTaskWithTitle:(NSString *)title dueDate:(NSDate *)dueDate {
@@ -176,7 +184,8 @@
 }
 
 - (void)handleLogoButton:(id)sender {
-    MRCreditsViewController *vc = [[MRCreditsViewController alloc] init];
+    MRCreditsViewController *vc = [[MRCreditsViewController alloc] initWithPersistenceController:self.persistenceController];
+    vc.archiveTaskDelegate = self;
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:navController animated:YES completion:nil];
 }
@@ -221,6 +230,14 @@
 
 - (void)editedTaskTitle:(NSString *)title dueDate:(NSDate *)dueDate {
     [self saveEditingTaskWithTitle:title dueDate:dueDate];
+}
+
+#pragma mark - Archive Task Delegate
+
+- (void)selectedRecycledTitle:(NSString *)title {
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self displayEditViewWithTitle:title dueDate:nil];
+    }];
 }
 
 #pragma mark - Core Data Observer

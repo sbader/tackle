@@ -7,7 +7,11 @@
 //
 
 #import "MRCreditsViewController.h"
+
 #import "PaintCodeStyleKit.h"
+#import "MRPersistenceController.h"
+#import "MRArchiveViewController.h"
+
 #import <MessageUI/MFMailComposeViewController.h>
 
 @interface MRCreditsViewController () <MFMailComposeViewControllerDelegate>
@@ -15,22 +19,40 @@
 @property (nonatomic) UIView *topContainerView;
 @property (nonatomic) UIView *linksView;
 @property (nonatomic) UIView *bottomTextView;
+@property (nonatomic) MRPersistenceController *persistenceController;
 
 @end
 
 @implementation MRCreditsViewController
 
+- (instancetype)initWithPersistenceController:(MRPersistenceController *)persistenceController {
+    self = [super init];
+
+    if (self) {
+        _persistenceController = persistenceController;
+    }
+
+    return self;
+
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.title = NSLocalizedString(@"Credits Title", nil); // Tackle
+    self.title = NSLocalizedString(@"Credits Title", nil);
     self.view.backgroundColor = [UIColor darkGrayBackgroundColor];
 
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Credits Done", nil) // Credits
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Credits Done", nil)
                                                                              style:UIBarButtonItemStyleDone
                                                                             target:self
                                                                             action:@selector(handleDoneButton:)];
+
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Credits Archive", nil)
+                                                                             style:UIBarButtonItemStyleDone
+                                                                            target:self
+                                                                            action:@selector(handleViewArchiveButton:)];
+
 
     [self setupTopSection];
     [self setupLinks];
@@ -190,6 +212,12 @@
 - (void)handleRateButton:(id)sender {
     NSURL *rateURL = [NSURL URLWithString:[NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", @"1079040532"]];
     [[UIApplication sharedApplication] openURL:rateURL];
+}
+
+- (void)handleViewArchiveButton:(id)sender {
+    MRArchiveViewController *vc = [[MRArchiveViewController alloc] initWithPersistenceController:self.persistenceController];
+    vc.archiveTaskDelegate = self.archiveTaskDelegate;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - Mail Compose Delegate

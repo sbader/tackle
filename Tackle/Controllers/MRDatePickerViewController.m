@@ -116,7 +116,7 @@ NSString * const kMRDatePickerIntervalKey = @"MRDatePickerInterval";
     closeButton.titleLabel.font = [UIFont fontForFormButtons];
     closeButton.tintColor = [UIColor destructiveColor];
     closeButton.contentEdgeInsets = UIEdgeInsetsMake(20.0, 0, 20.0, 0);
-    [closeButton setTitle:NSLocalizedString(@"Date Picker Close Title", nil) forState:UIControlStateNormal]; //Cancel
+    [closeButton setTitle:NSLocalizedString(@"Date Picker Close Title", nil) forState:UIControlStateNormal];
     [closeButton addTarget:self action:@selector(handleCloseButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.buttonContainer addSubview:closeButton];
 
@@ -128,7 +128,7 @@ NSString * const kMRDatePickerIntervalKey = @"MRDatePickerInterval";
     saveButton.translatesAutoresizingMaskIntoConstraints = NO;
     saveButton.titleLabel.font = [UIFont fontForFormButtons];
     saveButton.contentEdgeInsets = UIEdgeInsetsMake(20.0, 0, 20.0, 0);
-    [saveButton setTitle:NSLocalizedString(@"Date Picker Save Title", nil) forState:UIControlStateNormal]; //Save
+    [saveButton setTitle:NSLocalizedString(@"Date Picker Save Title", nil) forState:UIControlStateNormal];
     [saveButton addTarget:self action:@selector(handleSaveButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.buttonContainer addSubview:saveButton];
 
