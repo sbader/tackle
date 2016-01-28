@@ -56,7 +56,7 @@
     NSURL *storeURL = [directory URLByAppendingPathComponent:@"Tackle.sqlite"];
 
     NSError *error = nil;
-    NSPersistentStore *store = [psc addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error];
+    NSPersistentStore *store __attribute__((unused)) = [psc addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error];
     NSAssert(store, @"Could not add persistent store");
 }
 
@@ -66,7 +66,7 @@
     }
 
     [[self managedObjectContext] performBlockAndWait:^{
-        NSError *error = nil;
+        NSError *error __attribute__((unused)) = nil;
         NSAssert([[self managedObjectContext] save:&error], @"Error saving main managed object context");
     }];
 }
