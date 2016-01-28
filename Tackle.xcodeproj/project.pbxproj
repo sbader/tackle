@@ -33,6 +33,7 @@
 		D162856B1A55AB770006929E /* MRScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = D162856A1A55AB770006929E /* MRScrollView.m */; };
 		D17BCFB3189F3D05001996C1 /* UIView+TackleConstraintAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D17BCFB2189F3D05001996C1 /* UIView+TackleConstraintAdditions.m */; };
 		D194BEBB18A1CCC600E5E4DA /* MRHeartbeat.m in Sources */ = {isa = PBXBuildFile; fileRef = D194BEBA18A1CCC600E5E4DA /* MRHeartbeat.m */; };
+		D1974FFE1C599AB700894DD3 /* TackleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D1974FFD1C599AB700894DD3 /* TackleUITests.m */; };
 		D19C952718A28ACF009082F3 /* NSDate+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D19C952618A28ACF009082F3 /* NSDate+TackleAdditions.m */; };
 		D19C952B18A29297009082F3 /* MRMediumDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D19C952A18A29297009082F3 /* MRMediumDateFormatter.m */; };
 		D19C952E18A29368009082F3 /* MRShortDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D19C952D18A29368009082F3 /* MRShortDateFormatter.m */; };
@@ -65,6 +66,13 @@
 
 /* Begin PBXContainerItemProxy section */
 		D1027F8B18904E8400FF44A4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D1027F5D18904E8400FF44A4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D1027F6418904E8400FF44A4;
+			remoteInfo = Tackle;
+		};
+		D19750001C599AB700894DD3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D1027F5D18904E8400FF44A4 /* Project object */;
 			proxyType = 1;
@@ -135,6 +143,9 @@
 		D17BCFB2189F3D05001996C1 /* UIView+TackleConstraintAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TackleConstraintAdditions.m"; sourceTree = "<group>"; };
 		D194BEB918A1CCC600E5E4DA /* MRHeartbeat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRHeartbeat.h; sourceTree = "<group>"; };
 		D194BEBA18A1CCC600E5E4DA /* MRHeartbeat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRHeartbeat.m; sourceTree = "<group>"; };
+		D1974FFB1C599AB700894DD3 /* TackleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TackleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1974FFD1C599AB700894DD3 /* TackleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TackleUITests.m; sourceTree = "<group>"; };
+		D1974FFF1C599AB700894DD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D19C952518A28ACF009082F3 /* NSDate+TackleAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+TackleAdditions.h"; sourceTree = "<group>"; };
 		D19C952618A28ACF009082F3 /* NSDate+TackleAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+TackleAdditions.m"; sourceTree = "<group>"; };
 		D19C952918A29297009082F3 /* MRMediumDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRMediumDateFormatter.h; sourceTree = "<group>"; };
@@ -218,6 +229,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D1974FF81C599AB700894DD3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -226,6 +244,7 @@
 			children = (
 				D1027F7018904E8400FF44A4 /* Tackle */,
 				D1027F8D18904E8400FF44A4 /* TackleTests */,
+				D1974FFC1C599AB700894DD3 /* TackleUITests */,
 				D1027F6718904E8400FF44A4 /* Frameworks */,
 				D1027F6618904E8400FF44A4 /* Products */,
 			);
@@ -236,6 +255,7 @@
 			children = (
 				D1027F6518904E8400FF44A4 /* Tackle.app */,
 				D1027F8518904E8400FF44A4 /* TackleTests.xctest */,
+				D1974FFB1C599AB700894DD3 /* TackleUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -412,6 +432,15 @@
 			path = Lib;
 			sourceTree = "<group>";
 		};
+		D1974FFC1C599AB700894DD3 /* TackleUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D1974FFD1C599AB700894DD3 /* TackleUITests.m */,
+				D1974FFF1C599AB700894DD3 /* Info.plist */,
+			);
+			path = TackleUITests;
+			sourceTree = "<group>";
+		};
 		D19C952818A28DBF009082F3 /* Formatters */ = {
 			isa = PBXGroup;
 			children = (
@@ -481,6 +510,24 @@
 			productReference = D1027F8518904E8400FF44A4 /* TackleTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		D1974FFA1C599AB700894DD3 /* TackleUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D19750041C599AB700894DD3 /* Build configuration list for PBXNativeTarget "TackleUITests" */;
+			buildPhases = (
+				D1974FF71C599AB700894DD3 /* Sources */,
+				D1974FF81C599AB700894DD3 /* Frameworks */,
+				D1974FF91C599AB700894DD3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D19750011C599AB700894DD3 /* PBXTargetDependency */,
+			);
+			name = TackleUITests;
+			productName = TackleUITests;
+			productReference = D1974FFB1C599AB700894DD3 /* TackleUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -503,6 +550,10 @@
 					D1027F8418904E8400FF44A4 = {
 						TestTargetID = D1027F6418904E8400FF44A4;
 					};
+					D1974FFA1C599AB700894DD3 = {
+						CreatedOnToolsVersion = 7.3;
+						TestTargetID = D1027F6418904E8400FF44A4;
+					};
 				};
 			};
 			buildConfigurationList = D1027F6018904E8400FF44A4 /* Build configuration list for PBXProject "Tackle" */;
@@ -520,6 +571,7 @@
 			targets = (
 				D1027F6418904E8400FF44A4 /* Tackle */,
 				D1027F8418904E8400FF44A4 /* TackleTests */,
+				D1974FFA1C599AB700894DD3 /* TackleUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -541,6 +593,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1027F9218904E8400FF44A4 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D1974FF91C599AB700894DD3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -600,6 +659,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D1974FF71C599AB700894DD3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1974FFE1C599AB700894DD3 /* TackleUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -607,6 +674,11 @@
 			isa = PBXTargetDependency;
 			target = D1027F6418904E8400FF44A4 /* Tackle */;
 			targetProxy = D1027F8B18904E8400FF44A4 /* PBXContainerItemProxy */;
+		};
+		D19750011C599AB700894DD3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D1027F6418904E8400FF44A4 /* Tackle */;
+			targetProxy = D19750001C599AB700894DD3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -813,6 +885,43 @@
 			};
 			name = Release;
 		};
+		D19750021C599AB700894DD3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = TackleUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.melodyroad.TackleUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Tackle;
+			};
+			name = Debug;
+		};
+		D19750031C599AB700894DD3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = TackleUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.melodyroad.TackleUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Tackle;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -842,6 +951,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		D19750041C599AB700894DD3 /* Build configuration list for PBXNativeTarget "TackleUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D19750021C599AB700894DD3 /* Debug */,
+				D19750031C599AB700894DD3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 
