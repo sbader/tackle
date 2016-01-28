@@ -66,7 +66,7 @@
 
     [self.view addSubview:self.topContainerView];
 
-    [self.topContainerView horizontalCenterConstraintMatchesSuperview];
+    [self.topContainerView horizontalConstraintsMatchSuperview];
 
 
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[PaintCodeStyleKit imageOfCreditsTIcon]];
@@ -75,17 +75,31 @@
 
     imageView.tintColor = [UIColor whiteColor];
     [imageView topConstraintMatchesSuperview];
-    [imageView leadingConstraintMatchesSuperview];
-    [imageView trailingConstraintMatchesSuperview];
-    [imageView staticWidthConstraint:212.0];
-    [imageView staticHeightConstraint:68.0];
+    [imageView horizontalCenterConstraintMatchesSuperview];
+
+    [imageView addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+                                                          attribute:NSLayoutAttributeHeight
+                                                          relatedBy:NSLayoutRelationLessThanOrEqual
+                                                             toItem:nil
+                                                          attribute:NSLayoutAttributeNotAnAttribute
+                                                         multiplier:1.0
+                                                           constant:212.0]];
+
+    [imageView addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+                                                          attribute:NSLayoutAttributeWidth
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:imageView
+                                                          attribute:NSLayoutAttributeHeight
+                                                         multiplier:212.0/68.0 constant:0.0]];
 
     UILabel *textLabel = [[UILabel alloc] init];
     textLabel.translatesAutoresizingMaskIntoConstraints = NO;
     textLabel.text = NSLocalizedString(@"Designed and Developed by Scott Bader", nil);
     textLabel.textColor = [UIColor whiteColor];
-    textLabel.numberOfLines = 2;
+    textLabel.numberOfLines = 0;
     textLabel.textAlignment = NSTextAlignmentCenter;
+    textLabel.adjustsFontSizeToFitWidth = YES;
+    textLabel.minimumScaleFactor = 0.85;
     textLabel.font = [UIFont fontForCreditsTextLabel];
 
     [self.topContainerView addSubview:textLabel];
@@ -106,10 +120,12 @@
     [self.topContainerView addSubview:versionLabel];
 
     [versionLabel horizontalConstraintsMatchSuperview];
-    [versionLabel topConstraintBelowView:imageView withConstant:32.0];
+    [versionLabel topConstraintBelowView:imageView withConstant:20.0];
+    [versionLabel staticHeightConstraint:22.0];
 
-    [textLabel staticWidthConstraint:212.0];
-    [textLabel horizontalCenterConstraintMatchesView:imageView];
+    [textLabel leadingConstraintMatchesSuperviewWithConstant:80.0];
+    [textLabel trailingConstraintMatchesSuperviewWithConstant:-80.0];
+    [textLabel addConstraint:[textLabel.heightAnchor constraintGreaterThanOrEqualToConstant:22.0]];
 
     [textLabel topConstraintBelowView:versionLabel withConstant:18.0];
     [textLabel bottomConstraintMatchesSuperview];
@@ -151,10 +167,12 @@
 
     [feedbackButton horizontalCenterConstraintMatchesSuperview];
     [feedbackButton topConstraintMatchesSuperview];
+    [feedbackButton staticHeightConstraint:22.0];
 
     [rateButton horizontalCenterConstraintMatchesSuperview];
     [rateButton topConstraintBelowView:feedbackButton withConstant:0.0];
     [rateButton bottomConstraintMatchesSuperview];
+    [rateButton staticHeightConstraint:22.0];
 }
 
 - (void)setupBottomText {
@@ -176,10 +194,15 @@
     [copyrightLabel topConstraintMatchesSuperview];
     [copyrightLabel horizontalCenterConstraintMatchesSuperview];
     [copyrightLabel bottomConstraintMatchesSuperview];
+    [copyrightLabel staticHeightConstraint:22.0];
 }
 
 - (void)setupConstraints {
-    [self.topContainerView topConstraintMatchesSuperviewWithConstant:50.0];
+    [self.view addConstraint:[self.topContainerView.topAnchor constraintGreaterThanOrEqualToAnchor:self.view.topAnchor constant:10.0]];
+    [self.view addConstraint:[self.topContainerView.topAnchor constraintLessThanOrEqualToAnchor:self.view.topAnchor constant:80.0]];
+
+    [self.view addConstraint:[self.topContainerView.bottomAnchor constraintLessThanOrEqualToAnchor:self.linksView.topAnchor constant:-20.0]];
+
     [self.linksView bottomConstraintAboveView:self.bottomTextView withConstant:-35.0];
     [self.bottomTextView bottomConstraintMatchesSuperviewWithConstant:-35.0];
 }
