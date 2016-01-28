@@ -123,6 +123,7 @@
 
     UINavigationBar *navigationBar = [UINavigationBar appearance];
     navigationBar.backgroundColor = [UIColor grayNavigationBarBackgroundColor];
+    navigationBar.barTintColor = [UIColor grayNavigationBarBackgroundColor];
     navigationBar.translucent = NO;
     navigationBar.titleTextAttributes = barTitleTextAttributes;
 
