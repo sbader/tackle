@@ -109,6 +109,8 @@
     UILabel *infoLabel = [[UILabel alloc] init];
     infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
     infoLabel.text = NSLocalizedString(@"You have nothing to tackle right now. You can add a task by hitting the plus sign above.", nil);
+    infoLabel.adjustsFontSizeToFitWidth = YES;
+    infoLabel.minimumScaleFactor = 0.75;
     infoLabel.textAlignment = NSTextAlignmentLeft;
     infoLabel.font = [UIFont fontForInfoLabel];
     infoLabel.numberOfLines = 0;
