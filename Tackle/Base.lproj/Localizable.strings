@@ -37,13 +37,13 @@
 "Designed and Developed by Scott Bader" = "Designed and Developed by Scott Bader";
 
 /* No comment provided by engineer. */
-"Edit Task" = "Edit Task";
+"Edit Task" = "Edit Reminder";
 
 /* No comment provided by engineer. */
 "Email Not Configured" = "Email Not Configured";
 
 /* No comment provided by engineer. */
-"New Task" = "New Task";
+"New Task" = "New Reminder";
 
 /* No comment provided by engineer. */
 "Rate in the App Store" = "Rate in the App Store";
@@ -76,13 +76,13 @@
 "Task Edit Save" = "Save";
 
 /* No comment provided by engineer. */
-"Tasks List Title" = "Tasks";
+"Tasks List Title" = "Reminders";
 
 /* No comment provided by engineer. */
 "Ten Minutes" = "Ten Minutes";
 
 /* No comment provided by engineer. */
-"Use Previous Task" = "Use Previous Task";
+"Use Previous Task" = "Use Previous Reminder";
 
 /* No comment provided by engineer. */
 "What do you want to tackle?" = "What do you want to tackle?";
