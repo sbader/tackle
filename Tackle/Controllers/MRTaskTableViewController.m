@@ -67,7 +67,7 @@ static NSString * const taskCellReuseIdentifier = @"TaskCell";
 }
 
 - (void)detachObservers {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:[MRHeartbeat heartbeatId] object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:[MRHeartbeat slowHeartbeatId] object:nil];
 }
 
 - (void)heartDidBeat:(NSNotification *)notification {

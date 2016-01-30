@@ -50,7 +50,7 @@
     [notification setAlertBody:task.title];
     [notification setRepeatInterval:NSCalendarUnitMinute];
     [notification setAlertAction:@"Tackle"];
-    [notification setSoundName:UILocalNotificationDefaultSoundName];
+    [notification setSoundName:@"tacklespiel.aif"];
     [notification setUserInfo:@{@"identifier": task.identifier}];
     [notification setCategory:@"taskNotificationCategory"];
 
