@@ -8,8 +8,6 @@
 
 #import "MRDatePickerViewController.h"
 
-NSString * const kMRDatePickerIntervalKey = @"MRDatePickerInterval";
-
 @interface MRDatePickerViewController ()
 
 @property (nonatomic) UIDatePicker *datePicker;
@@ -20,7 +18,7 @@ NSString * const kMRDatePickerIntervalKey = @"MRDatePickerInterval";
 
 @end
 
-@implementation MRDatePickerViewController\
+@implementation MRDatePickerViewController
 
 - (instancetype)initWithDate:(NSDate *)date {
     self = [super init];
@@ -79,9 +77,7 @@ NSString * const kMRDatePickerIntervalKey = @"MRDatePickerInterval";
     self.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
     self.datePicker.minimumDate = [NSDate date];
 
-    NSNumber *interval = [[NSUserDefaults standardUserDefaults] objectForKey:kMRDatePickerIntervalKey];
-
-    self.datePicker.minuteInterval = interval.integerValue;
+    self.datePicker.minuteInterval = 5;
     [self.datePicker setDate:self.date animated:NO];
     [self.datePickerContainer addSubview:self.datePicker];
 
@@ -153,10 +149,7 @@ NSString * const kMRDatePickerIntervalKey = @"MRDatePickerInterval";
 }
 
 - (void)intervalTapGestureWasTapped:(id)sender {
-    NSInteger newDefaultInterval = (self.datePicker.minuteInterval == 5) ? 1 : 5;
-
-    self.datePicker.minuteInterval = newDefaultInterval;
-    [[NSUserDefaults standardUserDefaults] setObject:@(newDefaultInterval) forKey:kMRDatePickerIntervalKey];
+    self.datePicker.minuteInterval = (self.datePicker.minuteInterval == 5) ? 1 : 5;
 }
 
 @end

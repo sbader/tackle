@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-extern NSString * const kMRDatePickerIntervalKey;
-
 @protocol MRDatePickerViewControllerDelegate;
 
 @interface MRDatePickerViewController : UIViewController

@@ -73,10 +73,6 @@
         [self addSampleData];
     }
 
-    [[NSUserDefaults standardUserDefaults] registerDefaults:@{
-                                                              kMRDatePickerIntervalKey: @(5)
-                                                              }];
-
     [self setupAppearance];
     [self setupWindow];
     [self setupRootViewController];
