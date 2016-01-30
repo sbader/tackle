@@ -13,7 +13,7 @@
 #import "MRNotificationProvider.h"
 #import "MRPersistenceController.h"
 
-const BOOL kMRTesting = YES;
+const BOOL kMRTesting = NO;
 
 @interface MRAppDelegate ()
 
