@@ -41,6 +41,7 @@
 		D1A3FDDB1A505EE400A384FE /* PaintCodeStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A3FDDA1A505EE400A384FE /* PaintCodeStyleKit.m */; };
 		D1A3FDDE1A511B9F00A384FE /* MRMonthDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A3FDDD1A511B9F00A384FE /* MRMonthDateFormatter.m */; };
 		D1AD45BC1A59BBBB001FDAC5 /* MRPreviousTaskTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1AD45BB1A59BBBB001FDAC5 /* MRPreviousTaskTableViewCell.m */; };
+		D1AEABC21C5BBD05000CAAA9 /* tacklespiel.aif in Resources */ = {isa = PBXBuildFile; fileRef = D1AEABC11C5BBD05000CAAA9 /* tacklespiel.aif */; };
 		D1BC012D1A539A4B00F87D06 /* MRDatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1BC012C1A539A4B00F87D06 /* MRDatePickerViewController.m */; };
 		D1CF84871A5639890020DB50 /* MRModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1CF84861A5639890020DB50 /* MRModalViewController.m */; };
 		D1CF848D1A563D4B0020DB50 /* UIViewController+MRAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D1CF848C1A563D4B0020DB50 /* UIViewController+MRAdditions.m */; };
@@ -164,6 +165,7 @@
 		D1AD45BA1A59BBBB001FDAC5 /* MRPreviousTaskTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRPreviousTaskTableViewCell.h; sourceTree = "<group>"; };
 		D1AD45BB1A59BBBB001FDAC5 /* MRPreviousTaskTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRPreviousTaskTableViewCell.m; sourceTree = "<group>"; };
 		D1AD45BE1A59BDE3001FDAC5 /* MRTaskTableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRTaskTableViewDelegate.h; sourceTree = "<group>"; };
+		D1AEABC11C5BBD05000CAAA9 /* tacklespiel.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = tacklespiel.aif; sourceTree = "<group>"; };
 		D1BC012B1A539A4B00F87D06 /* MRDatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRDatePickerViewController.h; sourceTree = "<group>"; };
 		D1BC012C1A539A4B00F87D06 /* MRDatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRDatePickerViewController.m; sourceTree = "<group>"; };
 		D1CF84851A5639890020DB50 /* MRModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRModalViewController.h; sourceTree = "<group>"; };
@@ -357,6 +359,7 @@
 				D1027F7F18904E8400FF44A4 /* Images.xcassets */,
 				C786AB4319D358DF0077F11C /* Launch Screen.xib */,
 				D130A10A1C59495800394EDF /* Localizable.strings */,
+				D1AEABC11C5BBD05000CAAA9 /* tacklespiel.aif */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -593,6 +596,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1AEABC21C5BBD05000CAAA9 /* tacklespiel.aif in Resources */,
 				D1027F7518904E8400FF44A4 /* InfoPlist.strings in Resources */,
 				D130A1081C59495800394EDF /* Localizable.strings in Resources */,
 				D1027F8018904E8400FF44A4 /* Images.xcassets in Resources */,
