@@ -7,6 +7,7 @@
 //
 
 #import "MRHeartbeat.h"
+#import "MRAppDelegate.h"
 
 const CGFloat kHeartbeatInterval = 0.05;
 NSString * const kHeartbeatId = @"kHeartbeatId";
@@ -28,8 +29,11 @@ NSString * const kSlowHeartbeatId = @"kSlowHeartbeatId";
     dispatch_once(&onceToken, ^{
         heartbeat = [[self alloc] init];
         heartbeat.tick = 0;
-        heartbeat.timerThread = [[NSThread alloc] initWithTarget:heartbeat selector:@selector(startTimerThread) object:nil];
-        [heartbeat.timerThread start];
+
+        if (!kMRTesting) {
+            heartbeat.timerThread = [[NSThread alloc] initWithTarget:heartbeat selector:@selector(startTimerThread) object:nil];
+            [heartbeat.timerThread start];
+        }
     });
 
     return heartbeat;
