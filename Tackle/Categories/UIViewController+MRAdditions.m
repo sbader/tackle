@@ -43,10 +43,24 @@ static const char* MRModalPresentingViewControllerAssociatedKey = "MRModalPresen
 
 - (void)mr_dismissViewControllerModallyAnimated:(BOOL)animated completion:(void (^)(void))completion {
     if (!self.modalPresentingViewController) {
-        [self.modalPresentedViewController dismissModallyAnimated:animated completion:completion];
+        [self.modalPresentedViewController dismissModallyAnimated:animated completion:^{
+            self.modalPresentedViewController.modalPresentingViewController = nil;
+            self.modalPresentedViewController = nil;
+
+            if (completion) {
+                completion();
+            }
+        }];
     }
     else {
-        [self.modalPresentingViewController.modalPresentedViewController dismissModallyAnimated:YES completion:completion];
+        [self.modalPresentingViewController.modalPresentedViewController dismissModallyAnimated:YES completion:^{
+            self.modalPresentingViewController.modalPresentedViewController = nil;
+            self.modalPresentingViewController = nil;
+
+            if (completion) {
+                completion();
+            }
+        }];
     }
 }
 

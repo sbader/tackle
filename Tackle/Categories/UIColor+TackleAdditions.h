@@ -33,5 +33,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:a]
 + (UIColor *)lightGrayFormBackgroundColor;
 + (UIColor *)destructiveColor;
 + (UIColor *)darkGrayBackgroundColor;
++ (UIColor *)modalOverlayColor;
++ (UIColor *)darkenedOffWhiteBackgroundColor;
 
 @end

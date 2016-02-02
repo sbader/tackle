@@ -14,6 +14,10 @@
     return UIColorFromRGB(0xEBEBEB);
 }
 
++ (UIColor *)darkenedOffWhiteBackgroundColor {
+    return UIColorFromRGB(0xA8A8A8);
+}
+
 + (UIColor *)plumTintColor {
     return UIColorFromRGB(0x786292);
 }
@@ -44,6 +48,10 @@
 
 + (UIColor *)darkGrayBackgroundColor {
     return UIColorFromRGB(0x1A1A1A);
+}
+
++ (UIColor *)modalOverlayColor {
+    return [UIColor colorWithRed:0.149 green:0.129 blue:0.169 alpha:1.0];
 }
 
 @end

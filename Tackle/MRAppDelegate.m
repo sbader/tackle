@@ -38,21 +38,21 @@ const BOOL kMRTesting = NO;
         UIMutableUserNotificationAction *tenMinutesAction = [[UIMutableUserNotificationAction alloc] init];
         tenMinutesAction.identifier = kMRAddTenMinutesActionIdentifier;
         tenMinutesAction.destructive = NO;
-        tenMinutesAction.title = @"Add 10 Minutes";
+        tenMinutesAction.title = NSLocalizedString(@"Notification Action Add 10 Minutes", nil);
         tenMinutesAction.activationMode = UIUserNotificationActivationModeBackground;
         tenMinutesAction.authenticationRequired = NO;
 
         UIMutableUserNotificationAction *oneHourAction = [[UIMutableUserNotificationAction alloc] init];
         oneHourAction.identifier = kMRAddOneHourActionIdentifier;
         oneHourAction.destructive = NO;
-        oneHourAction.title = @"Add 1 Hour";
+        oneHourAction.title = NSLocalizedString(@"Notification Action Add 1 Hour", nil);
         oneHourAction.activationMode = UIUserNotificationActivationModeBackground;
         oneHourAction.authenticationRequired = NO;
 
         UIMutableUserNotificationAction *destroyAction = [[UIMutableUserNotificationAction alloc] init];
         destroyAction.identifier = kMRDestroyTaskActionIdentifier;
         destroyAction.destructive = YES;
-        destroyAction.title = @"Done";
+        destroyAction.title = NSLocalizedString(@"Notification Action Done", nil);
         destroyAction.activationMode = UIUserNotificationActivationModeBackground;
         destroyAction.authenticationRequired = NO;
 
@@ -84,14 +84,10 @@ const BOOL kMRTesting = NO;
     if (notification) {
         [self handleLocalNotification:notification];
     }
-    else {
-        [self handlePassedTask];
-    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
-    [self handlePassedTask];
 }
 
 - (void)handlePassedTask {

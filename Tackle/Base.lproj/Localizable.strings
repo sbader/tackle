@@ -1,7 +1,19 @@
 /* Created with Localizable Strings Merge, the swiss-army knife for iOS and OS X localization. */
 
 /* No comment provided by engineer. */
+"+ 1 Day" = "+ 1 Day";
+
+/* No comment provided by engineer. */
+"+ 1 Hour" = "+ 1 Hour";
+
+/* No comment provided by engineer. */
+"+ 10 Minutes" = "+ 10 Minutes";
+
+/* No comment provided by engineer. */
 "a Day" = "a Day";
+
+/* No comment provided by engineer. */
+"Alerts" = "Alerts"; /* NEW */
 
 /* No comment provided by engineer. */
 "an Hour" = "an Hour";
@@ -46,6 +58,18 @@
 "New Task" = "New Reminder";
 
 /* No comment provided by engineer. */
+"Notification Action Add 1 Hour" = "Add 1 Hour";
+
+/* No comment provided by engineer. */
+"Notification Action Add 10 Minutes" = "Add 10 Minutes";
+
+/* No comment provided by engineer. */
+"Notification Action Done" = "Completed";
+
+/* No comment provided by engineer. */
+"Notification Task Done" = "Completed";
+
+/* No comment provided by engineer. */
 "Rate in the App Store" = "Rate in the App Store";
 
 /* No comment provided by engineer. */
@@ -67,7 +91,7 @@
 "Task Add Time Format" = "Add %@";
 
 /* No comment provided by engineer. */
-"Task Done Button Title" = "Done";
+"Task Done Button Title" = "Completed";
 
 /* No comment provided by engineer. */
 "Task Edit Cancel" = "Cancel";
@@ -80,6 +104,9 @@
 
 /* No comment provided by engineer. */
 "Ten Minutes" = "Ten Minutes";
+
+/* No comment provided by engineer. */
+"Time’s Up" = "Time’s Up"; /* NEW */
 
 /* No comment provided by engineer. */
 "Use Previous Task" = "Use Previous Reminder";
@@ -96,3 +123,4 @@
 /* No comment provided by engineer. */
 "© 2016 Melody Road, LLC" = "© 2016 Melody Road, LLC";
 
+"Notification Done Button" = "Close";
