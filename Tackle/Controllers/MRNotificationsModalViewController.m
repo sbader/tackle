@@ -9,13 +9,13 @@
 #import "MRNotificationsModalViewController.h"
 
 #import "Task.h"
-#import "MRNotificationTasksTableViewController.h"
+#import "MRNotificationsTaskListViewController.h"
 #import "MRPersistenceController.h"
 
-@interface MRNotificationsModalViewController () <MRNotificationTasksTableViewDelegate>
+@interface MRNotificationsModalViewController () <MRNotificationsTaskListDelegate>
 
 @property (nonatomic) MRPersistenceController *persistenceController;
-@property (nonatomic) MRNotificationTasksTableViewController *tasksTableViewController;
+@property (nonatomic) MRNotificationsTaskListViewController *taskListViewController;
 @property (nonatomic) UIView *contentView;
 
 @end
@@ -44,10 +44,8 @@
     self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.contentView];
 
-    NSLayoutConstraint *widthConstraint = [self.contentView.widthAnchor constraintLessThanOrEqualToConstant:355.0];
-//    widthConstraint.priority = UILayoutPriorityDefaultHigh;
-
-    [self.contentView addConstraint:widthConstraint];
+    [self.contentView addConstraint:[self.contentView.widthAnchor constraintLessThanOrEqualToConstant:355.0]];
+    [self.contentView addConstraint:[self.contentView.widthAnchor constraintGreaterThanOrEqualToConstant:320.0]];
     [self.view addConstraint:[self.contentView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor]];
 
     NSLayoutConstraint *leadingConstraint = [self.contentView.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.leadingAnchor constant:10.0];
@@ -59,18 +57,7 @@
     [self.contentView topConstraintMatchesSuperviewWithConstant:0.0];
     [self.contentView bottomConstraintMatchesSuperviewWithConstant:-10.0];
 
-
-//    UILabel *titleLabel = [[UILabel alloc] init];
-//    titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-//    titleLabel.text = NSLocalizedString(@"Time’s Up", nil);
-//    titleLabel.font = [UIFont fontForModalTitleLabel];
-//    titleLabel.textColor = [UIColor grayTextColor];
-//    titleLabel.textAlignment = NSTextAlignmentLeft;
-//    [self.contentView addSubview:titleLabel];
-//
-//    [titleLabel leadingConstraintMatchesSuperviewWithConstant:20.0];
-//    [titleLabel topConstraintMatchesSuperviewWithConstant:20.0];
-//    [titleLabel trailingConstraintMatchesSuperviewWithConstant:-20.0];
+    [self.contentView needsUpdateConstraints];
 
     UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeSystem];
     doneButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -84,26 +71,21 @@
 
     [self.contentView addSubview:doneButton];
 
-//    [doneButton topConstraintMatchesSuperviewWithConstant:20.0];
-//    [doneButton bottomConstraintMatchesView:titleLabel withConstant:0.0];
-//    [self.contentView addConstraint:[titleLabel.trailingAnchor constraintEqualToAnchor:doneButton.leadingAnchor constant:-20.0]];
-//    [self.contentView addConstraint:[doneButton.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor constant:-20.0]];
+    self.taskListViewController = [[MRNotificationsTaskListViewController alloc] initWithPersistenceController:self.persistenceController];
+    self.taskListViewController.notificationsTaskListDelegate = self;
+    [self.contentView addSubview:self.taskListViewController.view];
 
-    self.tasksTableViewController = [[MRNotificationTasksTableViewController alloc] initWithPersistenceController:self.persistenceController];
-    self.tasksTableViewController.notificationTasksTableViewDelegate = self;
-    [self.contentView addSubview:self.tasksTableViewController.view];
+    [self.taskListViewController.view topConstraintMatchesSuperviewWithConstant:10.0];
+    [self.taskListViewController.view leadingConstraintMatchesSuperviewWithConstant:0.0];
+    [self.taskListViewController.view trailingConstraintMatchesSuperviewWithConstant:0.0];
+    [doneButton topConstraintBelowView:self.taskListViewController.view];
 
-    [self.tasksTableViewController.view topConstraintMatchesSuperviewWithConstant:10.0];
-    [self.tasksTableViewController.view leadingConstraintMatchesSuperviewWithConstant:0.0];
-    [self.tasksTableViewController.view trailingConstraintMatchesSuperviewWithConstant:0.0];
-
-    [doneButton topConstraintBelowView:self.tasksTableViewController.view];
     [doneButton horizontalConstraintsMatchSuperview];
     [doneButton bottomConstraintMatchesSuperview];
 }
 
 - (void)displayTask:(Task *)task {
-    [self.tasksTableViewController displayTask:task];
+    [self.taskListViewController displayTask:task];
 }
 
 - (void)doneButtonWasTapped:(id)sender {

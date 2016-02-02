@@ -347,7 +347,7 @@
 }
 
 - (void)handleNotificationKeyCommand:(id)sender {
-    Task *task = [Task firstPassedTaskInManagedObjectContext:self.persistenceController.managedObjectContext];
+    Task *task = [Task firstOpenTaskInManagedObjectContext:self.persistenceController.managedObjectContext];
     [self handleNotificationForTask:task];
 }
 

@@ -42,6 +42,10 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
     return self;
 }
 
+- (void)dealloc {
+    [self removeObservers];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -77,6 +81,15 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
 
     [self.view addConstraint:self.heightConstraint];
     [self updateTableContentSize];
+    [self attachObservers];
+}
+
+- (void)attachObservers {
+    [self addObserver:self.tableView forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+- (void)removeObservers {
+    [self removeObserver:self.tableView forKeyPath:@"contentSize"];
 }
 
 - (void)updateTableContentSize {
