@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		C786AB4419D358DF0077F11C /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C786AB4319D358DF0077F11C /* Launch Screen.xib */; };
+		D102344F1C5D611800A3FF74 /* MRNotificationsModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D102344E1C5D611700A3FF74 /* MRNotificationsModalViewController.m */; };
+		D10234521C5D73F600A3FF74 /* MRNotificationTasksTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D10234511C5D73F600A3FF74 /* MRNotificationTasksTableViewController.m */; };
+		D10234551C5D74D600A3FF74 /* MRNotificationTaskTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D10234541C5D74D600A3FF74 /* MRNotificationTaskTableViewCell.m */; };
 		D1027F6918904E8400FF44A4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1027F6818904E8400FF44A4 /* Foundation.framework */; };
 		D1027F6B18904E8400FF44A4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1027F6A18904E8400FF44A4 /* CoreGraphics.framework */; };
 		D1027F6D18904E8400FF44A4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1027F6C18904E8400FF44A4 /* UIKit.framework */; };
@@ -23,6 +26,7 @@
 		D1027F9218904E8400FF44A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D1027F9018904E8400FF44A4 /* InfoPlist.strings */; };
 		D1027FEE1890535700FF44A4 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = D1027FED1890535700FF44A4 /* Task.m */; };
 		D1224AC618A679AE001FC205 /* NSDate+TackleAdditionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D1224AC518A679AE001FC205 /* NSDate+TackleAdditionsTest.m */; };
+		D1224E721C601CBD002AF215 /* UIImage+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D1224E711C601CBD002AF215 /* UIImage+TackleAdditions.m */; };
 		D12E87831894A07B008119B8 /* UIFont+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D12E87821894A07B008119B8 /* UIFont+TackleAdditions.m */; };
 		D12E8786189573FC008119B8 /* UIColor+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D12E8785189573FC008119B8 /* UIColor+TackleAdditions.m */; };
 		D130A1051C593BD700394EDF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D130A1041C593BD700394EDF /* MessageUI.framework */; };
@@ -109,6 +113,12 @@
 
 /* Begin PBXFileReference section */
 		C786AB4319D358DF0077F11C /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "Launch Screen.xib"; path = "Resources/Launch Screen.xib"; sourceTree = "<group>"; };
+		D102344D1C5D611700A3FF74 /* MRNotificationsModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRNotificationsModalViewController.h; sourceTree = "<group>"; };
+		D102344E1C5D611700A3FF74 /* MRNotificationsModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRNotificationsModalViewController.m; sourceTree = "<group>"; };
+		D10234501C5D73F600A3FF74 /* MRNotificationTasksTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRNotificationTasksTableViewController.h; sourceTree = "<group>"; };
+		D10234511C5D73F600A3FF74 /* MRNotificationTasksTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRNotificationTasksTableViewController.m; sourceTree = "<group>"; };
+		D10234531C5D74D600A3FF74 /* MRNotificationTaskTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRNotificationTaskTableViewCell.h; sourceTree = "<group>"; };
+		D10234541C5D74D600A3FF74 /* MRNotificationTaskTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRNotificationTaskTableViewCell.m; sourceTree = "<group>"; };
 		D1027F6518904E8400FF44A4 /* Tackle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tackle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1027F6818904E8400FF44A4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D1027F6A18904E8400FF44A4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -128,6 +138,9 @@
 		D1027FEC1890535700FF44A4 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
 		D1027FED1890535700FF44A4 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
 		D1224AC518A679AE001FC205 /* NSDate+TackleAdditionsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+TackleAdditionsTest.m"; sourceTree = "<group>"; };
+		D1224E701C601CBD002AF215 /* UIImage+TackleAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+TackleAdditions.h"; sourceTree = "<group>"; };
+		D1224E711C601CBD002AF215 /* UIImage+TackleAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+TackleAdditions.m"; sourceTree = "<group>"; };
+		D1224E731C6064BB002AF215 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reveal.framework; path = "../../../../Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/Reveal.framework"; sourceTree = "<group>"; };
 		D12E87811894A07B008119B8 /* UIFont+TackleAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+TackleAdditions.h"; sourceTree = "<group>"; };
 		D12E87821894A07B008119B8 /* UIFont+TackleAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+TackleAdditions.m"; sourceTree = "<group>"; };
 		D12E8784189573FC008119B8 /* UIColor+TackleAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+TackleAdditions.h"; sourceTree = "<group>"; };
@@ -272,6 +285,7 @@
 		D1027F6718904E8400FF44A4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D1224E731C6064BB002AF215 /* Reveal.framework */,
 				D130A1041C593BD700394EDF /* MessageUI.framework */,
 				D1F9688F1A565338009813C0 /* Accelerate.framework */,
 				D1027F6818904E8400FF44A4 /* Foundation.framework */,
@@ -377,6 +391,8 @@
 				D17BCFB2189F3D05001996C1 /* UIView+TackleConstraintAdditions.m */,
 				D1CF848B1A563D4B0020DB50 /* UIViewController+MRAdditions.h */,
 				D1CF848C1A563D4B0020DB50 /* UIViewController+MRAdditions.m */,
+				D1224E701C601CBD002AF215 /* UIImage+TackleAdditions.h */,
+				D1224E711C601CBD002AF215 /* UIImage+TackleAdditions.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -408,6 +424,10 @@
 				D1D4EB811C59CD6400E15254 /* MRArchiveViewController.m */,
 				D1D4EB831C59CE3600E15254 /* MRArchiveTableViewController.h */,
 				D1D4EB841C59CE3600E15254 /* MRArchiveTableViewController.m */,
+				D102344D1C5D611700A3FF74 /* MRNotificationsModalViewController.h */,
+				D102344E1C5D611700A3FF74 /* MRNotificationsModalViewController.m */,
+				D10234501C5D73F600A3FF74 /* MRNotificationTasksTableViewController.h */,
+				D10234511C5D73F600A3FF74 /* MRNotificationTasksTableViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -427,6 +447,8 @@
 				D162856A1A55AB770006929E /* MRScrollView.m */,
 				D1AD45BA1A59BBBB001FDAC5 /* MRPreviousTaskTableViewCell.h */,
 				D1AD45BB1A59BBBB001FDAC5 /* MRPreviousTaskTableViewCell.m */,
+				D10234531C5D74D600A3FF74 /* MRNotificationTaskTableViewCell.h */,
+				D10234541C5D74D600A3FF74 /* MRNotificationTaskTableViewCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -633,6 +655,7 @@
 				D1A3FDDE1A511B9F00A384FE /* MRMonthDateFormatter.m in Sources */,
 				D1E1410F1A4F7A1E00992B1E /* MRTaskTableViewCell.m in Sources */,
 				D1E141091A4F79E600992B1E /* MRTaskListViewController.m in Sources */,
+				D10234551C5D74D600A3FF74 /* MRNotificationTaskTableViewCell.m in Sources */,
 				D139E57418959F41007163AD /* MRLongDateFormatter.m in Sources */,
 				D19C952718A28ACF009082F3 /* NSDate+TackleAdditions.m in Sources */,
 				D19C952B18A29297009082F3 /* MRMediumDateFormatter.m in Sources */,
@@ -652,16 +675,19 @@
 				D1A3FDDB1A505EE400A384FE /* PaintCodeStyleKit.m in Sources */,
 				D1BC012D1A539A4B00F87D06 /* MRDatePickerViewController.m in Sources */,
 				D12E87831894A07B008119B8 /* UIFont+TackleAdditions.m in Sources */,
+				D10234521C5D73F600A3FF74 /* MRNotificationTasksTableViewController.m in Sources */,
 				D1E1410C1A4F7A0100992B1E /* MRTaskTableViewController.m in Sources */,
 				D1E1412C1A4FE77F00992B1E /* MRWeekdayDateFormatter.m in Sources */,
 				D17BCFB3189F3D05001996C1 /* UIView+TackleConstraintAdditions.m in Sources */,
 				D1E1411D1A4FDA1A00992B1E /* MRTaskEditTableViewController.m in Sources */,
 				D1E1411A1A4FD37500992B1E /* MRTaskEditNavigationController.m in Sources */,
 				D1E141261A4FE22200992B1E /* MRDateCollectionViewCell.m in Sources */,
+				D102344F1C5D611800A3FF74 /* MRNotificationsModalViewController.m in Sources */,
 				D1027F7B18904E8400FF44A4 /* MRAppDelegate.m in Sources */,
 				D1E141231A4FE09C00992B1E /* MRHorizontalButton.m in Sources */,
 				D194BEBB18A1CCC600E5E4DA /* MRHeartbeat.m in Sources */,
 				D1AD45BC1A59BBBB001FDAC5 /* MRPreviousTaskTableViewCell.m in Sources */,
+				D1224E721C601CBD002AF215 /* UIImage+TackleAdditions.m in Sources */,
 				D1CFD4EE1A51F455004489AC /* MRTimeInterval.m in Sources */,
 				D1A36E5A18A2B2070020EAEB /* MRTimeDateFormatter.m in Sources */,
 				D1CF848D1A563D4B0020DB50 /* UIViewController+MRAdditions.m in Sources */,
@@ -816,13 +842,19 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "Tackle/Supporting Files/Tackle-Prefix.pch";
 				INFOPLIST_FILE = "Tackle/Supporting Files/Tackle-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				"OTHER_LDFLAGS[arch=*]" = "";
+				"OTHER_LDFLAGS[arch=*]" = (
+					"-ObjC",
+					"-lz",
+					"-framework",
+					Reveal,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.melodyroad.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -846,6 +878,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "Tackle/Supporting Files/Tackle-Prefix.pch";
