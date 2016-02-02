@@ -1,28 +1,26 @@
 //
-//  MRNotificationTasksTableViewController.h
+//  MRNotificationsTaskListViewController.h
 //  Tackle
 //
-//  Created by Scott Bader on 1/30/16.
+//  Created by Scott Bader on 2/2/16.
 //  Copyright © 2016 Melody Road. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-#import "Task.h"
-
 @class MRPersistenceController;
-@protocol MRNotificationTasksTableViewDelegate;
+@class Task;
+@protocol MRNotificationsTaskListDelegate;
 
-@interface MRNotificationTasksTableViewController : UITableViewController
+@interface MRNotificationsTaskListViewController : UIViewController
 
-@property (weak) id<MRNotificationTasksTableViewDelegate> notificationTasksTableViewDelegate;
-
+@property (weak) id<MRNotificationsTaskListDelegate> notificationsTaskListDelegate;
 - (instancetype)initWithPersistenceController:(MRPersistenceController *)persistenceController;
 - (void)displayTask:(Task *)task;
 
 @end
 
-@protocol MRNotificationTasksTableViewDelegate <NSObject>
+@protocol MRNotificationsTaskListDelegate <NSObject>
 
 - (void)addTenMinutesForTask:(Task *)task;
 - (void)addOneHourForTask:(Task *)task;
