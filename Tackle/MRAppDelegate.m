@@ -90,6 +90,14 @@ const BOOL kMRTesting = NO;
     [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
 }
 
+- (void)applicationWillTerminate:(UIApplication *)application {
+    [self.persistenceController save];
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    [self.persistenceController save];
+}
+
 - (void)handlePassedTask {
     Task *task = [Task firstPassedTaskInManagedObjectContext:self.persistenceController.managedObjectContext];
     if (task) {
@@ -146,8 +154,6 @@ const BOOL kMRTesting = NO;
 
     Task *task = [Task findTaskWithIdentifier:taskIdentifier inManagedObjectContext:self.persistenceController.managedObjectContext];
 
-    NSLog(@"handleActionWithIdentifier:%@ uniqueId:%@ task:%@", identifier, taskIdentifier, task.title);
-
     if ([identifier isEqualToString:kMRAddTenMinutesActionIdentifier]) {
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDate *date = [calendar dateByAddingUnit:NSCalendarUnitMinute value:10 toDate:[NSDate date] options:0];
@@ -155,8 +161,6 @@ const BOOL kMRTesting = NO;
 
         [self.persistenceController save];
         [[MRNotificationProvider sharedProvider] rescheduleNotificationForTask:task];
-
-        NSLog(@"addTenMinutes");
 
         completionHandler();
     }
@@ -169,8 +173,6 @@ const BOOL kMRTesting = NO;
         [self.persistenceController save];
         [[MRNotificationProvider sharedProvider] rescheduleNotificationForTask:task];
 
-        NSLog(@"addTenMinutes");
-
         completionHandler();
     }
     else if([identifier isEqualToString:kMRDestroyTaskActionIdentifier]) {
@@ -179,8 +181,6 @@ const BOOL kMRTesting = NO;
         [[MRNotificationProvider sharedProvider] cancelNotificationForTask:task];
 
         [self.persistenceController save];
-
-        NSLog(@"destroyTask");
 
         completionHandler();
     }
