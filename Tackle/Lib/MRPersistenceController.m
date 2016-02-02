@@ -42,6 +42,7 @@
     NSAssert(coordinator, @"Persistent Store Coordinator could not be initialized");
 
     [self setManagedObjectContext:[[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType]];
+    self.managedObjectContext.undoManager = [[NSUndoManager alloc] init];
     [self.managedObjectContext setPersistentStoreCoordinator:coordinator];
 
     NSPersistentStoreCoordinator *psc = self.managedObjectContext.persistentStoreCoordinator;
