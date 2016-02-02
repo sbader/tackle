@@ -56,15 +56,21 @@
     NSError *requestError = nil;
     NSArray *tasks = [self.persistenceController.managedObjectContext executeFetchRequest:fetchRequest error:&requestError];
 
-    [self.tableViewController.tableView beginUpdates];
-
     for (Task *task in tasks) {
         [self.persistenceController.managedObjectContext deleteObject:task];
     }
 
-    [self.persistenceController save];
+    [[self undoManager] setActionName:@"Clear Tasks"];
 
-    [self.tableViewController.tableView endUpdates];
+    [self.persistenceController save];
+}
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+- (NSUndoManager *)undoManager {
+    return self.persistenceController.managedObjectContext.undoManager;
 }
 
 @end

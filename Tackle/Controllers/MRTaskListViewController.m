@@ -137,6 +137,21 @@
                                              selector:@selector(managedObjectContextDidChange:)
                                                  name:NSManagedObjectContextObjectsDidChangeNotification
                                                object:self.persistenceController.managedObjectContext];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(managedObjectContextDidSave:)
+                                                 name:NSManagedObjectContextDidSaveNotification
+                                               object:self.persistenceController.managedObjectContext];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(undoManagerDidUndoChange:)
+                                                 name:NSUndoManagerDidUndoChangeNotification
+                                               object:self.persistenceController.managedObjectContext.undoManager];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(undoManagerDidRedoChange:)
+                                                 name:NSUndoManagerDidRedoChangeNotification
+                                               object:self.persistenceController.managedObjectContext.undoManager];
 }
 
 - (void)removeObservers {
@@ -263,23 +278,15 @@
     [self displayEditViewWithTitle:task.title dueDate:task.dueDate];
 }
 
+- (NSUndoManager *)undoManager {
+    return self.persistenceController.managedObjectContext.undoManager;
+}
+
 - (void)completedTask:(Task *)task {
     task.isDone = YES;
     task.completedDate = [NSDate date];
 
-    [self.undoManager registerUndoWithTarget:self selector:@selector(undoCompleted:) object:task];
-    [self.undoManager setActionName:@"Completed Task"];
-
-    [self.persistenceController save];
-    [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
-}
-
-- (void)undoCompleted:(Task *)task {
-    task.isDone = NO;
-    task.completedDate = nil;
-
-    [self.undoManager registerUndoWithTarget:self selector:@selector(completedTask:) object:task];
-    [self.undoManager setActionName:@"Completed Task"];
+    [[self undoManager] setActionName:@"Completed Task"];
 
     [self.persistenceController save];
     [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
@@ -336,6 +343,17 @@
 - (void)managedObjectContextDidChange:(id)sender {
     [self countAndDisplayIconForPassedTasks];
     [self displayInfoViewWithOpenTasks];
+}
+
+- (void)managedObjectContextDidSave:(id)sender {
+}
+
+- (void)undoManagerDidUndoChange:(id)sender {
+    [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
+}
+
+- (void)undoManagerDidRedoChange:(id)sender {
+    [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
 }
 
 #pragma mark - Key Commands
