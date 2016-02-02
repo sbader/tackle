@@ -61,8 +61,6 @@
     }
 
     [[self undoManager] setActionName:@"Clear Tasks"];
-
-    [self.persistenceController save];
 }
 
 - (BOOL)canBecomeFirstResponder {
