@@ -63,22 +63,16 @@
 }
 
 - (void)updateTasks {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task"
-                                              inManagedObjectContext:self.persistenceController.managedObjectContext];
-    [fetchRequest setEntity:entity];
-
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"dueDate" ascending:YES];
-    NSArray *sortDescriptors = @[sortDescriptor];
-
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    //    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO AND dueDate < %@", [NSDate date]]];
+    NSFetchRequest *fetchRequest = [Task passedOpenTasksFetchRequestWithManagedObjectContext:self.persistenceController.managedObjectContext];
     [fetchRequest setFetchLimit:5];
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO", [NSDate date]]];
 
-    NSError *requestError = nil;
+    [fetchRequest setSortDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"dueDate" ascending:YES]]];
 
-    self.tasks = [[self.persistenceController.managedObjectContext executeFetchRequest:fetchRequest error:&requestError] mutableCopy];
+    NSError *error = nil;
+    NSArray *fetchResults = [self.persistenceController.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    NSAssert(fetchResults != nil, @"Failed to execute fetch %@", error);
+
+    self.tasks = [fetchResults mutableCopy];
 }
 
 - (void)updateViews {

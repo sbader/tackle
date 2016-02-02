@@ -98,13 +98,6 @@ const BOOL kMRTesting = NO;
     [self.persistenceController save];
 }
 
-- (void)handlePassedTask {
-    Task *task = [Task firstPassedTaskInManagedObjectContext:self.persistenceController.managedObjectContext];
-    if (task) {
-        [self.rootController handleNotificationForTask:task];
-    }
-}
-
 - (void)setupWindow {
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor grayBackgroundColor];
@@ -203,64 +196,20 @@ const BOOL kMRTesting = NO;
     [Task insertItemWithTitle:@"Baseball game" dueDate:[[NSCalendar currentCalendar] dateWithEra:1 year:2016 month:4 day:3 hour:20 minute:37 second:0 nanosecond:0] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
     [Task insertItemWithTitle:@"File your taxes" dueDate:[[NSCalendar currentCalendar] dateWithEra:1 year:2016 month:4 day:18 hour:9 minute:0 second:0 nanosecond:0] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
 
-
-//    [Task insertItemWithTitle:@"Mets" dueDate:[NSDate dateWithTimeIntervalSinceNow:14400] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
-//    [Task insertItemWithTitle:@"Renew Apple developer program membership" dueDate:[NSDate dateWithTimeIntervalSinceNow:72000] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
-//    [Task insertItemWithTitle:@"Pay Cobra" dueDate:[NSDate dateWithTimeIntervalSinceNow:86400] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
-//    [Task insertItemWithTitle:@"Go to party" dueDate:[NSDate dateWithTimeIntervalSinceNow:172800] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
-//    [Task insertItemWithTitle:@"Work on presentation for developer event" dueDate:[NSDate dateWithTimeIntervalSinceNow:171000] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
-//    [Task insertItemWithTitle:@"Developer event" dueDate:[NSDate dateWithTimeIntervalSinceNow:220000] inManagedObjectContext:self.persistenceController.managedObjectContext];
-//    [Task insertItemWithTitle:@"Read about Objective-C and learn how to work with the Responder Chain" dueDate:[NSDate dateWithTimeIntervalSinceNow:240000] inManagedObjectContext:self.persistenceController.managedObjectContext];
-//    [Task insertItemWithTitle:@"Leave for the Islanders game" dueDate:[NSDate dateWithTimeIntervalSinceNow:280000] inManagedObjectContext:self.persistenceController.managedObjectContext];
-//    [Task insertItemWithTitle:@"Go to office party" dueDate:[NSDate dateWithTimeIntervalSinceNow:290000] inManagedObjectContext:self.persistenceController.managedObjectContext];
-
-    [self.persistenceController save];
     return YES;
 }
 
 - (void)removeAllTasks {
-    NSFetchRequest *allTasks = [[NSFetchRequest alloc] init];
-    [allTasks setEntity:[NSEntityDescription entityForName:@"Task" inManagedObjectContext:self.persistenceController.managedObjectContext]];
-    [allTasks setIncludesPropertyValues:NO]; //only fetch the managedObjectID
+    NSFetchRequest *fetchRequest = [Task allTasksFetchRequestWithManagedObjectContext:self.persistenceController.managedObjectContext];
+    [fetchRequest setIncludesPropertyValues:NO];
 
-    NSError *requestError = nil;
-    NSArray *tasks = [self.persistenceController.managedObjectContext executeFetchRequest:allTasks error:&requestError];
+    NSError *error = nil;
+    NSArray *tasks = [self.persistenceController.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    NSAssert(tasks != nil, @"Failed to execute fetch %@", error);
 
-    [tasks enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [self.persistenceController.managedObjectContext deleteObject:obj];
-    }];
-}
-
-- (void)listAllTaskIDS {
-    NSFetchRequest *allTasks = [[NSFetchRequest alloc] init];
-    [allTasks setEntity:[NSEntityDescription entityForName:@"Task" inManagedObjectContext:self.persistenceController.managedObjectContext]];
-    [allTasks setIncludesPropertyValues:NO]; //only fetch the managedObjectID
-
-    NSError *requestError = nil;
-    NSArray *tasks = [self.persistenceController.managedObjectContext executeFetchRequest:allTasks error:&requestError];
-
-    [tasks enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        Task *task = (Task *)obj;
-        NSLog(@"app: %@", task.objectID.URIRepresentation.absoluteString);
-    }];
-}
-
-- (void)loadTaskWithObjectIDString:(NSString *)objectIDString {
-    Task *task = [Task findTaskWithUniqueId:objectIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
-    if (task) {
-        [self.rootController handleNotificationForTask:task];
+    for (Task *task in tasks) {
+        [self.persistenceController.managedObjectContext deleteObject:task];
     }
-}
-
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    NSString *base64URLString = [url lastPathComponent];
-    NSData *data = [[NSData alloc] initWithBase64EncodedString:base64URLString options:0];
-    NSString *urlString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-
-    [self loadTaskWithObjectIDString:urlString];
-    
-
-    return YES;
 }
 
 #pragma mark - Utilities

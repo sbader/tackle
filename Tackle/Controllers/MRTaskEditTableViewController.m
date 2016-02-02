@@ -11,6 +11,7 @@
 #import "MRPreviousTaskTableViewCell.h"
 #import "MRAddTimeTableViewCell.h"
 #import "PaintCodeStyleKit.h"
+#import "Task.h"
 
 static NSString *addTimeCellReuseIdentifier = @"AddTimeCell";
 static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
@@ -102,34 +103,27 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
         return _fetchedResultsController;
     }
 
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:self.managedObjectContext];
-    fetchRequest.entity = entity;
-    fetchRequest.propertiesToFetch = @[
-                                       [[entity propertiesByName] objectForKey:@"title"]
-                                       ];
-    fetchRequest.returnsDistinctResults = YES;
-    fetchRequest.resultType = NSDictionaryResultType;
-    fetchRequest.fetchLimit = 5;
-
+    NSFetchRequest *fetchRequest = [Task archivedTasksFetchRequestWithManagedObjectContext:self.managedObjectContext];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"completedDate" ascending:NO];
     NSArray *sortDescriptors = @[sortDescriptor];
-
     [fetchRequest setSortDescriptors:sortDescriptors];
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == YES"]];
+    fetchRequest.propertiesToFetch = @[
+                                       [[fetchRequest.entity propertiesByName] objectForKey:@"title"]
+                                       ];
 
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+    fetchRequest.returnsDistinctResults = YES;
+
+    NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                                                 managedObjectContext:self.managedObjectContext
                                                                                                   sectionNameKeyPath:nil
                                                                                                            cacheName:nil];
 
-    aFetchedResultsController.delegate = self;
-    self.fetchedResultsController = aFetchedResultsController;
+    fetchedResultsController.delegate = self;
+    self.fetchedResultsController = fetchedResultsController;
 
     NSError *error = nil;
-    if (![self.fetchedResultsController performFetch:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-    }
+    [self.fetchedResultsController performFetch:&error];
+    NSAssert(error == nil, @"Failed to execute fetch %@", error);
 
     return _fetchedResultsController;
 }
@@ -163,8 +157,8 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
     if ([self isPreviousTasksSection:indexPath.section]) {
         MRPreviousTaskTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:previousTaskCellReuseIdentifier forIndexPath:indexPath];
         NSIndexPath *path = [NSIndexPath indexPathForRow:indexPath.row inSection:0];
-        NSDictionary *dict = [self.fetchedResultsController objectAtIndexPath:path];
-        cell.textLabel.text = dict[@"title"];
+        Task *task = [self.fetchedResultsController objectAtIndexPath:path];
+        cell.textLabel.text = task.title;
         return cell;
     }
     else if ([self isDoneButtonSection:indexPath.section]) {

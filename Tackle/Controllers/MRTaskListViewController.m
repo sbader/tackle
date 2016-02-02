@@ -295,15 +295,13 @@
     [self completedTask:task];
 
     if (self.modalPresentedViewController) {
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:self.persistenceController.managedObjectContext];
-        [fetchRequest setEntity:entity];
+        NSFetchRequest *fetchRequest = [Task passedOpenTasksFetchRequestWithManagedObjectContext:self.persistenceController.managedObjectContext];
         [fetchRequest setFetchLimit:5];
-        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO", [NSDate date]]];
-        //    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO AND dueDate < %@", [NSDate date]]];
 
         NSError *error = nil;
         NSInteger count = [self.persistenceController.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+        NSAssert(error == nil, @"Could not get count for fetch request: %@", error);
+
         if (count == 0) {
             [self mr_dismissViewControllerModallyAnimated:YES completion:nil];
         }
@@ -354,20 +352,15 @@
 }
 
 - (void)handleNotificationKeyCommand:(id)sender {
-    Task *task = [Task firstOpenTaskInManagedObjectContext:self.persistenceController.managedObjectContext];
-    [self handleNotificationForTask:task];
 }
 
 - (void)countAndDisplayIconForPassedTasks {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:self.persistenceController.managedObjectContext];
-    [fetchRequest setEntity:entity];
+    NSFetchRequest *fetchRequest = [Task passedOpenTasksFetchRequestWithManagedObjectContext:self.persistenceController.managedObjectContext];
     [fetchRequest setFetchLimit:5];
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO", [NSDate date]]];
-//    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO AND dueDate < %@", [NSDate date]]];
 
     NSError *error = nil;
     NSInteger count = [self.persistenceController.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+    NSAssert(error == nil, @"Could not get count for fetch request: %@", error);
 
     if (count > 0) {
         [self.navigationItem setRightBarButtonItems:@[[self addBarButtonItem], [self alertsBarButtonItemForCount:count]] animated:YES];

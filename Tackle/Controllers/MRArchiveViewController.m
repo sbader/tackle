@@ -49,12 +49,12 @@
 }
 
 - (void)handleClearButton:(id)sender {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Task"];
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == YES"]];
+    NSFetchRequest *fetchRequest = [Task archivedTasksFetchRequestWithManagedObjectContext:self.persistenceController.managedObjectContext];
     [fetchRequest setIncludesPropertyValues:NO];
 
-    NSError *requestError = nil;
-    NSArray *tasks = [self.persistenceController.managedObjectContext executeFetchRequest:fetchRequest error:&requestError];
+    NSError *error = nil;
+    NSArray *tasks = [self.persistenceController.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    NSAssert(tasks != nil, @"Failed to execute fetch %@", error);
 
     for (Task *task in tasks) {
         [self.persistenceController.managedObjectContext deleteObject:task];
