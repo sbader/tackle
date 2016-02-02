@@ -27,7 +27,7 @@ NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCateg
     self.createdDate = [NSDate date];
 }
 
-+ (Task *)insertItemWithTitle:(NSString*)title dueDate:(NSDate *)dueDate identifier:(NSString *)identifier inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
++ (Task *)insertItemWithTitle:(NSString *)title dueDate:(NSDate *)dueDate identifier:(NSString *)identifier inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
     Task *task = [NSEntityDescription insertNewObjectForEntityForName:@"Task"
                                                inManagedObjectContext:managedObjectContext];
 
@@ -36,56 +36,6 @@ NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCateg
     task.identifier = identifier;
 
     return task;
-}
-
-+ (Task *)firstOpenTaskInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:managedObjectContext];
-    [fetchRequest setEntity:entity];
-    [fetchRequest setFetchLimit:1];
-
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"dueDate" ascending:YES];
-    NSArray *sortDescriptors = @[sortDescriptor];
-
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO"]];
-
-    NSError *error;
-    NSArray *tasks = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
-
-    if (tasks.count > 0) {
-        return tasks[0];
-    }
-
-    return nil;
-}
-
-+ (Task *)firstPassedTaskInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:managedObjectContext];
-    [fetchRequest setEntity:entity];
-    [fetchRequest setFetchLimit:1];
-
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"dueDate" ascending:YES];
-    NSArray *sortDescriptors = @[sortDescriptor];
-
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO AND dueDate < %@", [NSDate date]]];
-
-    NSError *error;
-    NSArray *tasks = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
-
-    if (tasks.count > 0) {
-        return tasks[0];
-    }
-
-    return nil;
-}
-
-+ (Task *)findTaskWithUniqueId:(NSString *)uniqueId inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
-    NSManagedObjectID *managedObjectId = [[managedObjectContext persistentStoreCoordinator] managedObjectIDForURIRepresentation:[NSURL URLWithString:uniqueId]];
-    NSError *error;
-    return (Task *)[managedObjectContext existingObjectWithID:managedObjectId error:&error];
 }
 
 + (Task *)findTaskWithIdentifier:(NSString *)identifier inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext  {
@@ -98,6 +48,7 @@ NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCateg
 
     NSError *error;
     NSArray *tasks = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    NSAssert(tasks != nil, @"Failed to execute fetch %@", error);
 
     if (tasks.count > 0) {
         return tasks[0];
@@ -113,40 +64,55 @@ NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCateg
     fetchRequest.includesPropertyValues = NO;
     fetchRequest.predicate = [NSPredicate predicateWithFormat:@"isDone == NO"];
 
-    return [managedObjectContext countForFetchRequest:fetchRequest error:nil];
+    NSError *error = nil;
+    NSInteger count = [managedObjectContext countForFetchRequest:fetchRequest error:&error];
+    NSAssert(error == nil, @"Failed to execute fetch %@", error);
+    
+    return count;
 }
 
-+ (NSInteger)numberOfCompletedTasksInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
++ (NSFetchRequest *)allTasksFetchRequestWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:managedObjectContext];
-    fetchRequest.entity = entity;
-    fetchRequest.includesPropertyValues = NO;
-    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"isDone == YES"];
+    [fetchRequest setEntity:entity];
 
-    return [managedObjectContext countForFetchRequest:fetchRequest error:nil];
+    return fetchRequest;
 }
 
-+ (NSArray *)allOpenTasksWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext error:(NSError **)error {
++ (NSFetchRequest *)openTasksFetchRequestWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task"
+                                              inManagedObjectContext:managedObjectContext];
+    [fetchRequest setEntity:entity];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO", [NSDate date]]];
+
+    return fetchRequest;
+}
+
++ (NSFetchRequest *)passedOpenTasksFetchRequestWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task"
+                                              inManagedObjectContext:managedObjectContext];
+    [fetchRequest setEntity:entity];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO", [NSDate date]]];
+//    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO AND dueDate < %@", [NSDate date]]];
+
+    return fetchRequest;
+}
+
++ (NSFetchRequest *)archivedTasksFetchRequestWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:managedObjectContext];
     [fetchRequest setEntity:entity];
     [fetchRequest setFetchBatchSize:20];
 
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"dueDate" ascending:YES];
-    NSArray *sortDescriptors = @[sortDescriptor];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == YES"]];
 
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO"]];
-
-    return [managedObjectContext executeFetchRequest:fetchRequest error:error];
-}
-
-- (void)markAsDone {
-    [self setIsDone:YES];
+    return fetchRequest;
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@ %@", self.title, self.dueDate];
+    return [NSString stringWithFormat:@"<Task: title:%@, dueDate:%@>", self.title, self.dueDate];
 }
 
 @end

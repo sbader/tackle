@@ -87,16 +87,11 @@ static NSString * const taskCellReuseIdentifier = @"TaskCell";
         return _fetchedResultsController;
     }
 
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:self.persistenceController.managedObjectContext];
-    [fetchRequest setEntity:entity];
+    NSFetchRequest *fetchRequest = [Task openTasksFetchRequestWithManagedObjectContext:self.persistenceController.managedObjectContext];
     [fetchRequest setFetchBatchSize:20];
-
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"dueDate" ascending:YES];
     NSArray *sortDescriptors = @[sortDescriptor];
-
     [fetchRequest setSortDescriptors:sortDescriptors];
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO"]];
 
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                          managedObjectContext:self.persistenceController.managedObjectContext
@@ -107,9 +102,8 @@ static NSString * const taskCellReuseIdentifier = @"TaskCell";
     self.fetchedResultsController = frc;
 
     NSError *error = nil;
-    if (![self.fetchedResultsController performFetch:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-    }
+    [self.fetchedResultsController performFetch:&error];
+    NSAssert(error == nil, @"Failed to execute fetch %@", error);
 
     return _fetchedResultsController;
 }

@@ -25,17 +25,14 @@
 - (void)rescheduleAllNotificationsWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
 
-    NSError *error;
-    NSArray *tasks = [Task allOpenTasksWithManagedObjectContext:managedObjectContext error:&error];
+    NSFetchRequest *fetchRequest = [Task openTasksFetchRequestWithManagedObjectContext:managedObjectContext];
+    NSError *error = nil;
+    NSArray *tasks = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    NSAssert(tasks != nil, @"Failed to execute fetch %@", error);
 
-    if (error) {
-        NSLog(@"error getting tasks: %@", error);
-        return;
-    }
-
-    [tasks enumerateObjectsUsingBlock:^(Task *task, NSUInteger idx, BOOL *stop) {
+    for (Task *task in tasks) {
         [self scheduleNotificationForTask:task];
-    }];
+    }
 }
 
 - (void)rescheduleNotificationForTask:(Task *)task {

@@ -23,15 +23,12 @@ extern NSString * const kMRAddOneHourActionIdentifier;
 @property (nonatomic, retain) NSDate *completedDate;
 @property (nonatomic) BOOL isDone;
 
-+ (Task *)firstOpenTaskInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
-+ (Task *)firstPassedTaskInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 + (Task *)insertItemWithTitle:(NSString*)title dueDate:(NSDate *)dueDate identifier:(NSString *)identifier inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
-+ (Task *)findTaskWithUniqueId:(NSString *)uniqueId inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 + (Task *)findTaskWithIdentifier:(NSString *)identifier inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
-+ (NSArray *)allOpenTasksWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext error:(NSError **)error
-;
 + (NSInteger)numberOfOpenTasksInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
-+ (NSInteger)numberOfCompletedTasksInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
-- (void)markAsDone;
++ (NSFetchRequest *)allTasksFetchRequestWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
++ (NSFetchRequest *)openTasksFetchRequestWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
++ (NSFetchRequest *)passedOpenTasksFetchRequestWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
++ (NSFetchRequest *)archivedTasksFetchRequestWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 
 @end
