@@ -10,7 +10,6 @@
 
 @interface MRModalViewController ()
 
-@property (nonatomic) UIImageView *snapshotView;
 @property (nonatomic) UIViewController *contentViewController;
 @property (nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
 @property (nonatomic) NSLayoutConstraint *contentViewBottomConstraint;
@@ -27,8 +26,7 @@
     if (self) {
         self.contentViewController = viewController;
         self.view.translatesAutoresizingMaskIntoConstraints = NO;
-        self.view.backgroundColor = [UIColor whiteColor];
-        [self setupSnapshotView];
+        self.view.backgroundColor = [UIColor clearColor];
         [self setupOverlayView];
         [self setupContentView];
 
@@ -43,26 +41,12 @@
     self.overlayView = [[UIView alloc] init];
     self.overlayView.translatesAutoresizingMaskIntoConstraints = NO;
 
-    self.overlayView.backgroundColor = [UIColor colorWithRed:0.149 green:0.129 blue:0.169 alpha:0.650];
+    self.overlayView.backgroundColor = [UIColor modalOverlayColor];
+    self.overlayView.alpha = 0.0;
 
     [self.view addSubview:self.overlayView];
 
     [self.overlayView constraintsMatchSuperview];
-}
-
-- (void)setupSnapshotView {
-    self.snapshotView = [[UIImageView alloc] init];
-    self.snapshotView.translatesAutoresizingMaskIntoConstraints = NO;
-
-    CALayer *layer = self.snapshotView.layer;
-    layer.masksToBounds = NO;
-    layer.shadowColor = [UIColor blackColor].CGColor;
-    layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-    layer.shadowOpacity = 0.5f;
-
-    [self.view addSubview:self.snapshotView];
-
-    [self.snapshotView constraintsMatchSuperview];
 }
 
 - (void)setupContentView {
@@ -89,23 +73,16 @@
     id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
     UIWindow *window = appDelegate.window;
 
-    UIGraphicsBeginImageContextWithOptions(window.bounds.size, NO, 0);
-    [window drawViewHierarchyInRect:window.bounds afterScreenUpdates:YES];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    self.snapshotView.image = image;
-
     [window addSubview:self.view];
     [self.view constraintsMatchSuperview];
     [self.view layoutIfNeeded];
 
-    self.snapshotView.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.snapshotView.bounds].CGPath;
-
     [self.view removeConstraint:self.contentViewTopConstraint];
     [self.view addConstraint:self.contentViewBottomConstraint];
 
-    [UIView animateWithDuration:0.2 animations:^{
-        self.snapshotView.transform = CGAffineTransformMakeScale(0.925, 0.925);
+    [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        window.subviews.firstObject.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
+        self.overlayView.alpha = 0.65;
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         if (completion) {
@@ -118,8 +95,12 @@
     [self.view removeConstraint:self.contentViewBottomConstraint];
     [self.view addConstraint:self.contentViewTopConstraint];
 
-    [UIView animateWithDuration:0.2 animations:^{
-        self.snapshotView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+    id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
+    UIWindow *window = appDelegate.window;
+
+    [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        window.subviews.firstObject.tintAdjustmentMode = UIViewTintAdjustmentModeNormal;
+        self.overlayView.alpha = 0.0;
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         [self.view removeFromSuperview];
@@ -133,7 +114,7 @@
 
 - (void)handleTapGesture:(id)sender {
     if (self.contentViewController.modalPresentingViewController) {
-        [self.contentViewController mr_dismissViewControllerModallyAnimated:YES completion:nil];\
+        [self.contentViewController mr_dismissViewControllerModallyAnimated:YES completion:nil];
     }
 }
 

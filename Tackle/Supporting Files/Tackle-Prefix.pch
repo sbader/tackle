@@ -18,6 +18,7 @@
     #import "UIColor+TackleAdditions.h"
     #import "UIView+TackleConstraintAdditions.h"
     #import "UIViewController+MRAdditions.h"
+    #import "UIImage+TackleAdditions.h"
     #import "NSDate+TackleAdditions.h"
 #endif
 

@@ -18,8 +18,9 @@
 #import "MRTaskEditNavigationController.h"
 #import "MRCreditsViewController.h"
 #import "MRArchiveTaskTableViewDelegate.h"
+#import "MRNotificationsModalViewController.h"
 
-@interface MRTaskListViewController () <MRTaskTableViewDelegate, MRTaskEditingDelegate, MRArchiveTaskTableViewDelegate>
+@interface MRTaskListViewController () <MRTaskTableViewDelegate, MRTaskEditingDelegate, MRArchiveTaskTableViewDelegate, MRTaskAlertingDelegate>
 
 @property (nonatomic) MRPersistenceController *persistenceController;
 @property (nonatomic) Task *editingTask;
@@ -61,13 +62,60 @@
                                                                             target:self
                                                                             action:@selector(handleLogoButton:)];
 
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-                                                                                           target:self
-                                                                                           action:@selector(handleAddButton:)];
-
     [self setupInfoView];
     [self addObservers];
     [self displayInfoViewWithOpenTasks];
+}
+
+- (UIBarButtonItem *)addBarButtonItem {
+    return [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                         target:self
+                                                         action:@selector(handleAddButton:)];
+}
+
+- (UIBarButtonItem *)alertsBarButtonItemForCount:(NSInteger)count {
+    UIImage *image;
+
+    switch (count) {
+        case 1:
+            image = [PaintCodeStyleKit imageOfAlertIconOne];
+            break;
+        case 2:
+            image = [PaintCodeStyleKit imageOfAlertIconTwo];
+            break;
+        case 3:
+            image = [PaintCodeStyleKit imageOfAlertIconThree];
+            break;
+        case 4:
+            image = [PaintCodeStyleKit imageOfAlertIconFour];
+            break;
+        case 5:
+            image = [PaintCodeStyleKit imageOfAlertIconFive];
+            break;
+        case 6:
+            image = [PaintCodeStyleKit imageOfAlertIconSix];
+            break;
+        case 7:
+            image = [PaintCodeStyleKit imageOfAlertIconSeven];
+            break;
+        case 8:
+            image = [PaintCodeStyleKit imageOfAlertIconEight];
+            break;
+        default:
+            image = [PaintCodeStyleKit imageOfAlertIconNinePlus];
+            break;
+    }
+
+    return [[UIBarButtonItem alloc] initWithImage:image
+                                            style:UIBarButtonItemStylePlain
+                                           target:self
+                                           action:@selector(handleAlertsButton:)];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    [self countAndDisplayIconForPassedTasks];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -166,7 +214,7 @@
 }
 
 - (void)handleNotificationForTask:(Task *)task {
-    [self selectedTask:task];
+    [self displayNotificationModalWithTask:task];
 }
 
 - (void)refreshTasks {
@@ -190,6 +238,22 @@
     vc.archiveTaskDelegate = self;
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:navController animated:YES completion:nil];
+}
+
+- (void)handleAlertsButton:(id)sender {
+    [self displayNotificationModalWithTask:nil];
+}
+
+- (void)displayNotificationModalWithTask:(Task *)task {
+    if (!self.modalPresentedViewController) {
+        MRNotificationsModalViewController *vc = [[MRNotificationsModalViewController alloc] initWithPersistenceController:self.persistenceController];
+        vc.taskAlertingDelegate = self;
+        [self mr_presentViewControllerModally:vc animated:YES completion:^{
+            if (task) {
+                [vc displayTask:task];
+            }
+        }];
+    }
 }
 
 #pragma mark - Task Selection Delegate
@@ -221,8 +285,33 @@
     [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
 }
 
-#pragma mark - Task Editing Delegate
+#pragma mark - Task Alerting Delegate
 
+- (void)editedAlertedTask:(Task *)task {
+    [self.persistenceController save];
+    [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
+}
+
+- (void)completedAlertedTask:(Task *)task {
+    [self completedTask:task];
+
+    if (self.modalPresentedViewController) {
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:self.persistenceController.managedObjectContext];
+        [fetchRequest setEntity:entity];
+        [fetchRequest setFetchLimit:5];
+        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO", [NSDate date]]];
+        //    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO AND dueDate < %@", [NSDate date]]];
+
+        NSError *error = nil;
+        NSInteger count = [self.persistenceController.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+        if (count == 0) {
+            [self mr_dismissViewControllerModallyAnimated:YES completion:nil];
+        }
+    }
+}
+
+#pragma mark - Task Editing Delegate
 
 - (void)completedTask {
     if (self.editingTask) {
@@ -245,7 +334,47 @@
 #pragma mark - Core Data Observer
 
 - (void)managedObjectContextDidChange:(id)sender {
+    [self countAndDisplayIconForPassedTasks];
     [self displayInfoViewWithOpenTasks];
+}
+
+#pragma mark - Key Commands
+
+- (NSArray<UIKeyCommand *>*)keyCommands {
+    return @[
+             [UIKeyCommand keyCommandWithInput:@"q" modifierFlags:UIKeyModifierControl action:@selector(handleNotificationKeyCommand:) discoverabilityTitle:@"Fire First Notification"],
+             ];
+}
+
+- (void)handleNotificationKeyCommand:(id)sender {
+    Task *task = [Task firstPassedTaskInManagedObjectContext:self.persistenceController.managedObjectContext];
+    [self handleNotificationForTask:task];
+}
+
+- (void)countAndDisplayIconForPassedTasks {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:self.persistenceController.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    [fetchRequest setFetchLimit:5];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO", [NSDate date]]];
+//    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO AND dueDate < %@", [NSDate date]]];
+
+    NSError *error = nil;
+    NSInteger count = [self.persistenceController.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+
+    if (count > 0) {
+        [self.navigationItem setRightBarButtonItems:@[[self addBarButtonItem], [self alertsBarButtonItemForCount:count]] animated:YES];
+    }
+    else {
+        if (self.navigationItem.rightBarButtonItems) {
+            if (self.navigationItem.rightBarButtonItems.count > 1) {
+                [self.navigationItem setRightBarButtonItems:@[[self addBarButtonItem]] animated:YES];
+            }
+        }
+        else {
+            [self.navigationItem setRightBarButtonItems:@[[self addBarButtonItem]] animated:YES];
+        }
+    }
 }
 
 @end

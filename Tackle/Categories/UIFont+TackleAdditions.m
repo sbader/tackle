@@ -99,4 +99,24 @@
     return [self systemFontOfSize:18.0 weight:UIFontWeightMedium];
 }
 
++ (UIFont *)fontForModalTitleLabel {
+    return [self systemFontOfSize:20.0 weight:UIFontWeightMedium];
+}
+
++ (UIFont *)fontForModalCloseButton {
+    return [self systemFontOfSize:18.0 weight:UIFontWeightLight];
+}
+
++ (UIFont *)fontForModalDoneButton {
+    return [self systemFontOfSize:20.0 weight:UIFontWeightSemibold];
+}
+
++ (UIFont *)fontForModalTaskDoneButton {
+    return [self systemFontOfSize:14.0 weight:UIFontWeightSemibold];
+}
+
++ (UIFont *)fontForModalTaskTimeButtons {
+    return [self systemFontOfSize:14.0 weight:UIFontWeightRegular];
+}
+
 @end

@@ -18,5 +18,4 @@
 - (void)mr_presentViewControllerModally:(UIViewController *)viewControllerToPresent animated:(BOOL)animated completion:(void (^)(void))completion;
 - (void)mr_dismissViewControllerModallyAnimated:(BOOL)animated completion:(void (^)(void))completion;
 
-
 @end

@@ -29,5 +29,10 @@
 + (UIFont *)fontForCreditsLinks;
 + (UIFont *)fontForCreditsBottomText;
 + (UIFont *)fontForCreditsVersionText;
++ (UIFont *)fontForModalTitleLabel;
++ (UIFont *)fontForModalCloseButton;
++ (UIFont *)fontForModalDoneButton;
++ (UIFont *)fontForModalTaskDoneButton;
++ (UIFont *)fontForModalTaskTimeButtons;
 
 @end
