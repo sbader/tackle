@@ -68,7 +68,7 @@ static NSString *dateCellReuseIdentifier = @"CalendarDateCell";
 #pragma mark - Collection View Flow Layout Delegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(67, 74);
+    return CGSizeMake(74, 74);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
