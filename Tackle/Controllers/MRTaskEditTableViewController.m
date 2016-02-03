@@ -113,6 +113,7 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
 
     fetchRequest.returnsDistinctResults = YES;
     fetchRequest.fetchLimit = 5;
+    fetchRequest.resultType = NSDictionaryResultType;
 
     NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                                                 managedObjectContext:self.managedObjectContext
@@ -158,8 +159,8 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
     if ([self isPreviousTasksSection:indexPath.section]) {
         MRPreviousTaskTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:previousTaskCellReuseIdentifier forIndexPath:indexPath];
         NSIndexPath *path = [NSIndexPath indexPathForRow:indexPath.row inSection:0];
-        Task *task = [self.fetchedResultsController objectAtIndexPath:path];
-        cell.textLabel.text = task.title;
+        NSDictionary *taskDictionary = [self.fetchedResultsController objectAtIndexPath:path];
+        cell.textLabel.text = taskDictionary[@"title"];
         return cell;
     }
     else if ([self isDoneButtonSection:indexPath.section]) {
@@ -190,8 +191,8 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
     }
     else if ([self isPreviousTasksSection:indexPath.section]) {
         NSIndexPath *path = [NSIndexPath indexPathForRow:indexPath.row inSection:0];
-        Task *task = [self.fetchedResultsController objectAtIndexPath:path];
-        [self.delegate selectedPreviousTaskTitle:task.title];
+        NSDictionary *taskDictionary = [self.fetchedResultsController objectAtIndexPath:path];
+        [self.delegate selectedPreviousTaskTitle:taskDictionary[@"title"]];
     }
 
     return nil;
