@@ -41,7 +41,7 @@
     [super viewDidLoad];
 
     self.title = NSLocalizedString(@"Credits Title", nil);
-    self.view.backgroundColor = [UIColor darkGrayBackgroundColor];
+    self.view.backgroundColor = [UIColor grayBackgroundColor];
 
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Credits Done", nil)
                                                                              style:UIBarButtonItemStyleDone
@@ -73,7 +73,7 @@
     imageView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.topContainerView addSubview:imageView];
 
-    imageView.tintColor = [UIColor whiteColor];
+    imageView.tintColor = [UIColor offWhiteBackgroundColor];
     [imageView topConstraintMatchesSuperview];
     [imageView horizontalCenterConstraintMatchesSuperview];
 
@@ -95,7 +95,7 @@
     UILabel *textLabel = [[UILabel alloc] init];
     textLabel.translatesAutoresizingMaskIntoConstraints = NO;
     textLabel.text = NSLocalizedString(@"Designed and Developed by Scott Bader", nil);
-    textLabel.textColor = [UIColor whiteColor];
+    textLabel.textColor = [UIColor offWhiteBackgroundColor];
     textLabel.numberOfLines = 0;
     textLabel.textAlignment = NSTextAlignmentCenter;
     textLabel.adjustsFontSizeToFitWidth = YES;
@@ -115,7 +115,7 @@
     versionLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Tackle %@ (%@)", nil), version, build];
     versionLabel.font = [UIFont fontForCreditsVersionText];
     versionLabel.textAlignment = NSTextAlignmentCenter;
-    versionLabel.textColor = [UIColor whiteColor];
+    versionLabel.textColor = [UIColor offWhiteBackgroundColor];
 
     [self.topContainerView addSubview:versionLabel];
 
@@ -139,7 +139,7 @@
     [self.linksView horizontalConstraintsMatchSuperview];
 
     UIButton *feedbackButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    feedbackButton.tintColor = [UIColor whiteColor];
+    feedbackButton.tintColor = [UIColor offWhiteBackgroundColor];
 
     NSMutableAttributedString *feedbackAttributedTitle = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"Send Feedback", nil)];
     [feedbackAttributedTitle addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(0, feedbackAttributedTitle.length)];
@@ -153,7 +153,7 @@
     [self.linksView addSubview:feedbackButton];
 
     UIButton *rateButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    rateButton.tintColor = [UIColor whiteColor];
+    rateButton.tintColor = [UIColor offWhiteBackgroundColor];
 
     NSMutableAttributedString *rateAttributedTitle = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"Rate in the App Store", nil)];
     [rateAttributedTitle addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(0, rateAttributedTitle.length)];
@@ -187,7 +187,7 @@
     copyrightLabel.text = NSLocalizedString(@"© 2016 Melody Road, LLC", nil);
     copyrightLabel.font = [UIFont fontForCreditsBottomText];
     copyrightLabel.textAlignment = NSTextAlignmentCenter;
-    copyrightLabel.textColor = [UIColor whiteColor];
+    copyrightLabel.textColor = [UIColor offWhiteBackgroundColor];
 
     [self.bottomTextView addSubview:copyrightLabel];
 
