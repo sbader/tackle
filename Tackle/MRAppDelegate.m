@@ -12,6 +12,9 @@
 #import "MRRootViewController.h"
 #import "MRNotificationProvider.h"
 #import "MRPersistenceController.h"
+#import "MRDatePickerProvider.h"
+
+#import <mach/mach.h>
 
 const BOOL kMRTesting = NO;
 
@@ -72,6 +75,8 @@ const BOOL kMRTesting = NO;
         [[UIApplication sharedApplication] cancelAllLocalNotifications];
         [self addSampleData];
     }
+
+    [MRDatePickerProvider sharedInstance];
 
     [self setupAppearance];
     [self setupWindow];

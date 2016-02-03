@@ -104,11 +104,15 @@
 }
 
 + (UIFont *)fontForModalCloseButton {
-    return [self systemFontOfSize:18.0 weight:UIFontWeightLight];
+    return [self systemFontOfSize:22.0 weight:UIFontWeightLight];
+}
+
++ (UIFont *)fontForModalButton {
+    return [self systemFontOfSize:22.0 weight:UIFontWeightSemibold];
 }
 
 + (UIFont *)fontForModalDoneButton {
-    return [self systemFontOfSize:20.0 weight:UIFontWeightSemibold];
+    return [self systemFontOfSize:22.0 weight:UIFontWeightSemibold];
 }
 
 + (UIFont *)fontForModalTaskDoneButton {

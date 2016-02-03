@@ -219,6 +219,7 @@
     task.title = title;
     task.dueDate = dueDate;
 
+    [self.persistenceController save];
     [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
 }
 
@@ -282,12 +283,14 @@
 
     [[self undoManager] setActionName:@"Completed Task"];
 
+    [self.persistenceController save];
     [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
 }
 
 #pragma mark - Task Alerting Delegate
 
 - (void)editedAlertedTask:(Task *)task {
+    [self.persistenceController save];
     [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
 }
 
