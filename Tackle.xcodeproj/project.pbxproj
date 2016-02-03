@@ -151,7 +151,6 @@
 		D139E57218959F41007163AD /* MRLongDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRLongDateFormatter.h; sourceTree = "<group>"; };
 		D139E57318959F41007163AD /* MRLongDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRLongDateFormatter.m; sourceTree = "<group>"; };
 		D13A96151B7995280045DC04 /* Tackle.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tackle.xcdatamodel; sourceTree = "<group>"; };
-		D15054091A5F54AA000CA868 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		D150541F1A5F5B41000CA868 /* MRNotificationProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRNotificationProvider.h; sourceTree = "<group>"; };
 		D15054201A5F5B41000CA868 /* MRNotificationProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRNotificationProvider.m; sourceTree = "<group>"; };
 		D16285691A55AB770006929E /* MRScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRScrollView.h; sourceTree = "<group>"; };
@@ -285,15 +284,14 @@
 		D1027F6718904E8400FF44A4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D1224E731C6064BB002AF215 /* Reveal.framework */,
-				D130A1041C593BD700394EDF /* MessageUI.framework */,
 				D1F9688F1A565338009813C0 /* Accelerate.framework */,
-				D1027F6818904E8400FF44A4 /* Foundation.framework */,
-				D1027F6A18904E8400FF44A4 /* CoreGraphics.framework */,
-				D1027F6C18904E8400FF44A4 /* UIKit.framework */,
 				D1027F6E18904E8400FF44A4 /* CoreData.framework */,
+				D1027F6A18904E8400FF44A4 /* CoreGraphics.framework */,
+				D1027F6818904E8400FF44A4 /* Foundation.framework */,
+				D130A1041C593BD700394EDF /* MessageUI.framework */,
+				D1224E731C6064BB002AF215 /* Reveal.framework */,
+				D1027F6C18904E8400FF44A4 /* UIKit.framework */,
 				D1027F8618904E8400FF44A4 /* XCTest.framework */,
-				D15054091A5F54AA000CA868 /* NotificationCenter.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
