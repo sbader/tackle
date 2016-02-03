@@ -45,6 +45,7 @@
     self.viewsByTaskMap = [NSMapTable weakToWeakObjectsMapTable];
 
     self.containerView = [[UIStackView alloc] init];
+    self.containerView.spacing = 8.0;
     self.containerView.translatesAutoresizingMaskIntoConstraints = NO;
     self.containerView.axis = UILayoutConstraintAxisVertical;
     self.containerView.distribution = UIStackViewDistributionEqualCentering;

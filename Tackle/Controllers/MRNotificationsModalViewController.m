@@ -43,15 +43,8 @@
 
     self.contentView = [[UIView alloc] init];
 
-    self.contentView.backgroundColor = [UIColor offWhiteBackgroundColor];
+    self.contentView.backgroundColor = [UIColor clearColor];
     self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
-
-    self.contentView.layer.cornerRadius = 10.0;
-    self.contentView.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.contentView.layer.shadowOpacity = 0.85;
-    self.contentView.layer.shadowRadius = 3.0;
-    self.contentView.layer.shadowOffset = CGSizeMake(-2.0, 2.0);
-    self.contentView.clipsToBounds = YES;
 
     [self.view addSubview:self.contentView];
 
@@ -68,8 +61,6 @@
     [self.contentView topConstraintMatchesSuperviewWithConstant:0.0];
     [self.contentView bottomConstraintMatchesSuperviewWithConstant:-10.0];
 
-    [self.contentView needsUpdateConstraints];
-
     UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeSystem];
     doneButton.translatesAutoresizingMaskIntoConstraints = NO;
     [doneButton setTitle:NSLocalizedString(@"Notification Done Button", nil) forState:UIControlStateNormal];
@@ -80,16 +71,24 @@
     [doneButton setBackgroundImage:[UIImage imageWithColor:[UIColor offWhiteBackgroundColor]] forState:UIControlStateNormal];
     [doneButton setBackgroundImage:[UIImage imageWithColor:[UIColor darkenedOffWhiteBackgroundColor]] forState:UIControlStateHighlighted];
 
+    doneButton.layer.cornerRadius = 10.0;
+    doneButton.layer.shadowColor = [UIColor blackColor].CGColor;
+    doneButton.layer.shadowOpacity = 0.85;
+    doneButton.layer.shadowRadius = 3.0;
+    doneButton.layer.shadowOffset = CGSizeMake(-2.0, 2.0);
+    doneButton.clipsToBounds = YES;
+
+
     [self.contentView addSubview:doneButton];
 
     self.taskListViewController = [[MRNotificationsTaskListViewController alloc] initWithPersistenceController:self.persistenceController];
     self.taskListViewController.notificationsTaskListDelegate = self;
     [self.contentView addSubview:self.taskListViewController.view];
 
-    [self.taskListViewController.view topConstraintMatchesSuperviewWithConstant:10.0];
+    [self.taskListViewController.view topConstraintMatchesSuperviewWithConstant:8.0];
     [self.taskListViewController.view leadingConstraintMatchesSuperviewWithConstant:0.0];
     [self.taskListViewController.view trailingConstraintMatchesSuperviewWithConstant:0.0];
-    [doneButton topConstraintBelowView:self.taskListViewController.view];
+    [doneButton topConstraintBelowView:self.taskListViewController.view withConstant:8.0];
 
     [doneButton horizontalConstraintsMatchSuperview];
     [doneButton bottomConstraintMatchesSuperview];

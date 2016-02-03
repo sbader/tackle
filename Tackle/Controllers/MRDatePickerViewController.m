@@ -8,6 +8,8 @@
 
 #import "MRDatePickerViewController.h"
 
+#import "MRDatePickerProvider.h"
+
 @interface MRDatePickerViewController ()
 
 @property (nonatomic) UIDatePicker *datePicker;
@@ -15,6 +17,7 @@
 @property (nonatomic) UILabel *label;
 @property (nonatomic) UIView *buttonContainer;
 @property (nonatomic) NSDate *date;
+@property (nonatomic) UIView *contentView;
 
 @end
 
@@ -33,51 +36,88 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.view.backgroundColor = [UIColor offWhiteBackgroundColor];
+    self.contentView = [[UIView alloc] init];
+    self.contentView.backgroundColor = [UIColor clearColor];
+    self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
 
-    [self setupLabel];
-    [self setupButtons];
-    [self setupDatePickerContainer];
-}
+    [self.view addSubview:self.contentView];
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+    [self.contentView addConstraint:[self.contentView.widthAnchor constraintLessThanOrEqualToConstant:355.0]];
+    [self.contentView addConstraint:[self.contentView.widthAnchor constraintGreaterThanOrEqualToConstant:320.0]];
+    [self.view addConstraint:[self.contentView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor]];
+
+    NSLayoutConstraint *leadingConstraint = [self.contentView.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.leadingAnchor constant:10.0];
+    leadingConstraint.priority = UILayoutPriorityDefaultHigh;
+    NSLayoutConstraint *trailingConstraint = [self.contentView.trailingAnchor constraintGreaterThanOrEqualToAnchor:self.view.trailingAnchor constant:-10.0];
+    trailingConstraint.priority = UILayoutPriorityDefaultHigh;
+    [self.view addConstraint:leadingConstraint];
+    [self.view addConstraint:trailingConstraint];
+    [self.contentView topConstraintMatchesSuperviewWithConstant:0.0];
+    [self.contentView bottomConstraintMatchesSuperviewWithConstant:-10.0];
+
+    self.datePickerContainer = [[UIView alloc] init];
+    self.datePickerContainer.backgroundColor = [UIColor offWhiteBackgroundColor];
+    self.datePickerContainer.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addSubview:self.datePickerContainer];
+
+    [self.datePickerContainer leadingConstraintMatchesSuperview];
+    [self.datePickerContainer trailingConstraintMatchesSuperview];
+
+    [self.datePickerContainer applyTackleLayerDisplay];
+
+    [self.datePickerContainer topConstraintMatchesSuperview];
+
+    [self.datePickerContainer staticHeightConstraint:180.0];
 
     [self setupDatePicker];
-}
 
-- (void)setupLabel {
-    self.label = [[UILabel alloc] init];
-    self.label.translatesAutoresizingMaskIntoConstraints = NO;
-    self.label.font = [UIFont fontForFormLabel];
-    self.label.text = NSLocalizedString(@"Select Due Date", nil);
+    UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    closeButton.translatesAutoresizingMaskIntoConstraints = NO;
+    closeButton.titleLabel.font = [UIFont fontForModalButton];
+    closeButton.tintColor = [UIColor destructiveColor];
+    closeButton.contentEdgeInsets = UIEdgeInsetsMake(15.0, 0.0, 15.0, 0.0);
+    closeButton.backgroundColor = [UIColor offWhiteBackgroundColor];
+    [closeButton setTitle:NSLocalizedString(@"Date Picker Close Title", nil) forState:UIControlStateNormal];
+    [closeButton addTarget:self action:@selector(handleCloseButton:) forControlEvents:UIControlEventTouchUpInside];
+    [closeButton setBackgroundImage:[UIImage imageWithColor:[UIColor offWhiteBackgroundColor]] forState:UIControlStateNormal];
+    [closeButton setBackgroundImage:[UIImage imageWithColor:[UIColor darkenedOffWhiteBackgroundColor]] forState:UIControlStateHighlighted];
+    [closeButton applyTackleLayerDisplay];
+    [self.contentView addSubview:closeButton];
 
-    [self.view addSubview:self.label];
-    [self.label topConstraintMatchesSuperviewWithConstant:17.0];
-    [self.label leadingConstraintMatchesSuperviewWithConstant:20.0];
-    [self.label trailingConstraintMatchesSuperviewWithConstant:-20.0];
-}
+    UIButton *saveButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    saveButton.translatesAutoresizingMaskIntoConstraints = NO;
+    saveButton.titleLabel.font = [UIFont fontForModalButton];
+    saveButton.contentEdgeInsets = UIEdgeInsetsMake(15.0, 0.0, 15.0, 0.0);
+    saveButton.backgroundColor = [UIColor offWhiteBackgroundColor];
+    [saveButton setTitle:NSLocalizedString(@"Date Picker Save Title", nil) forState:UIControlStateNormal];
+    [saveButton addTarget:self action:@selector(handleSaveButton:) forControlEvents:UIControlEventTouchUpInside];
+    [saveButton setBackgroundImage:[UIImage imageWithColor:[UIColor offWhiteBackgroundColor]] forState:UIControlStateNormal];
+    [saveButton setBackgroundImage:[UIImage imageWithColor:[UIColor darkenedOffWhiteBackgroundColor]] forState:UIControlStateHighlighted];
+    [saveButton applyTackleLayerDisplay];
 
-- (void)setupDatePickerContainer {
-    self.datePickerContainer = [[UIView alloc] init];
-    self.datePickerContainer.backgroundColor = [UIColor whiteColor];
-    self.datePickerContainer.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:self.datePickerContainer];
-    [self.datePickerContainer horizontalConstraintsMatchSuperview];
+    [self.contentView addSubview:saveButton];
 
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.datePickerContainer attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.label attribute:NSLayoutAttributeBottom multiplier:1.0 constant:17.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.buttonContainer attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.datePickerContainer attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
+    [saveButton topConstraintBelowView:self.datePickerContainer withConstant:8.0];
+    [saveButton leadingConstraintMatchesSuperview];
+    [saveButton trailingConstraintMatchesSuperview];
+//    [saveButton bottomConstraintMatchesSuperview];
 
-    [self.datePickerContainer addConstraint:[NSLayoutConstraint constraintWithItem:self.datePickerContainer attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:215]];
+    [closeButton leadingConstraintMatchesSuperview];
+    [closeButton trailingConstraintMatchesSuperview];
+    [closeButton topConstraintBelowView:saveButton withConstant:8.0];
+    [closeButton bottomConstraintMatchesSuperview];
 }
 
 - (void)setupDatePicker {
-    self.datePicker = [[UIDatePicker alloc] init];
-    self.datePicker.translatesAutoresizingMaskIntoConstraints = NO;
-    self.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
-    self.datePicker.minimumDate = [NSDate date];
+//    self.datePicker = [[UIDatePicker alloc] init];
+//    self.datePicker.translatesAutoresizingMaskIntoConstraints = NO;
+//    self.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+//    self.datePicker.minimumDate = [NSDate date];
+//
+//    self.datePicker.minuteInterval = 5;
+//    [self.datePicker setDate:self.date animated:NO];
 
-    self.datePicker.minuteInterval = 5;
+    self.datePicker = [[MRDatePickerProvider sharedInstance] datePicker];
     [self.datePicker setDate:self.date animated:NO];
     [self.datePickerContainer addSubview:self.datePicker];
 
@@ -85,52 +125,9 @@
     intervalTapGestureRecognizer.numberOfTapsRequired = 2;
     [self.datePicker addGestureRecognizer:intervalTapGestureRecognizer];
 
-    [self.datePicker constraintsMatchSuperview];
-}
-
-- (void)setupButtons {
-    self.buttonContainer = [[UIView alloc] init];
-    self.buttonContainer.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:self.buttonContainer];
-
-    [self.buttonContainer staticHeightConstraint:59.0];
-    [self.buttonContainer bottomConstraintMatchesSuperview];
-    [self.buttonContainer horizontalConstraintsMatchSuperview];
-
-    UIView *separator = [[UIView alloc] init];
-    separator.translatesAutoresizingMaskIntoConstraints = NO;
-    separator.backgroundColor = [UIColor grayBorderColor];
-    [self.buttonContainer addSubview:separator];
-
-    [separator horizontalCenterConstraintMatchesSuperview];
-    [separator staticWidthConstraint:1.0];
-    [separator topConstraintMatchesSuperviewWithConstant:5.0];
-    [separator bottomConstraintMatchesSuperviewWithConstant:-5.0];
-
-    UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    closeButton.translatesAutoresizingMaskIntoConstraints = NO;
-    closeButton.titleLabel.font = [UIFont fontForFormButtons];
-    closeButton.tintColor = [UIColor destructiveColor];
-    closeButton.contentEdgeInsets = UIEdgeInsetsMake(20.0, 0, 20.0, 0);
-    [closeButton setTitle:NSLocalizedString(@"Date Picker Close Title", nil) forState:UIControlStateNormal];
-    [closeButton addTarget:self action:@selector(handleCloseButton:) forControlEvents:UIControlEventTouchUpInside];
-    [self.buttonContainer addSubview:closeButton];
-
-    [closeButton verticalCenterConstraintMatchesSuperview];
-    [closeButton leadingConstraintMatchesSuperview];
-    [self.buttonContainer addConstraint:[NSLayoutConstraint constraintWithItem:closeButton attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:separator attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0]];
-
-    UIButton *saveButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    saveButton.translatesAutoresizingMaskIntoConstraints = NO;
-    saveButton.titleLabel.font = [UIFont fontForFormButtons];
-    saveButton.contentEdgeInsets = UIEdgeInsetsMake(20.0, 0, 20.0, 0);
-    [saveButton setTitle:NSLocalizedString(@"Date Picker Save Title", nil) forState:UIControlStateNormal];
-    [saveButton addTarget:self action:@selector(handleSaveButton:) forControlEvents:UIControlEventTouchUpInside];
-    [self.buttonContainer addSubview:saveButton];
-
-    [saveButton verticalCenterConstraintMatchesSuperview];
-    [self.buttonContainer addConstraint:[NSLayoutConstraint constraintWithItem:saveButton attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:separator attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0]];
-    [saveButton trailingConstraintMatchesSuperview];
+    [self.datePicker horizontalCenterConstraintMatchesSuperview];
+    [self.datePicker topConstraintMatchesSuperview];
+    [self.datePicker bottomConstraintMatchesSuperview];
 }
 
 - (void)dismiss {

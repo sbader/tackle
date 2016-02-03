@@ -31,6 +31,7 @@
 + (UIFont *)fontForCreditsVersionText;
 + (UIFont *)fontForModalTitleLabel;
 + (UIFont *)fontForModalCloseButton;
++ (UIFont *)fontForModalButton;
 + (UIFont *)fontForModalDoneButton;
 + (UIFont *)fontForModalTaskDoneButton;
 + (UIFont *)fontForModalTaskTimeButtons;
