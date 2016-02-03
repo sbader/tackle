@@ -35,7 +35,6 @@
         selectedView.backgroundColor = [UIColor grayBorderColor];
         self.selectedBackgroundView = selectedView;
 
-//        self.contentView.backgroundColor = [UIColor offWhiteBackgroundColor];
         [self setupDayOfMonthLabel];
         [self setupWeekdayLabel];
         [self setupMonthLabel];
