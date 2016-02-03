@@ -129,8 +129,8 @@
     [self addConstraint:[self.detailLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:20.0]];
     [self addConstraint:[self.detailLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-20.0]];
 
-    [self addConstraint:[self.buttonsContainer.topAnchor constraintEqualToAnchor:self.detailLabel.bottomAnchor constant:8.0]];
-    [self addConstraint:[self.buttonsContainer.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-10.0]];
+    [self addConstraint:[self.buttonsContainer.topAnchor constraintEqualToAnchor:self.detailLabel.bottomAnchor constant:4.0]];
+    [self addConstraint:[self.buttonsContainer.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-6.0]];
 
     [self addConstraint:[self.buttonsContainer.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:20.0]];
     [self addConstraint:[self.buttonsContainer.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-20.0]];

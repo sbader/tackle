@@ -12,6 +12,8 @@
 #import "MRNotificationsTaskListViewController.h"
 #import "MRPersistenceController.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 @interface MRNotificationsModalViewController () <MRNotificationsTaskListDelegate>
 
 @property (nonatomic) MRPersistenceController *persistenceController;
@@ -40,8 +42,17 @@
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
 
     self.contentView = [[UIView alloc] init];
+
     self.contentView.backgroundColor = [UIColor offWhiteBackgroundColor];
     self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
+
+    self.contentView.layer.cornerRadius = 10.0;
+    self.contentView.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.contentView.layer.shadowOpacity = 0.85;
+    self.contentView.layer.shadowRadius = 3.0;
+    self.contentView.layer.shadowOffset = CGSizeMake(-2.0, 2.0);
+    self.contentView.clipsToBounds = YES;
+
     [self.view addSubview:self.contentView];
 
     [self.contentView addConstraint:[self.contentView.widthAnchor constraintLessThanOrEqualToConstant:355.0]];
@@ -65,7 +76,7 @@
     doneButton.titleLabel.font = [UIFont fontForModalDoneButton];
     [doneButton addTarget:self action:@selector(doneButtonWasTapped:) forControlEvents:UIControlEventTouchUpInside];
     doneButton.backgroundColor = [UIColor offWhiteBackgroundColor];
-    doneButton.contentEdgeInsets = UIEdgeInsetsMake(10.0, 0.0, 10.0, 0.0);
+    doneButton.contentEdgeInsets = UIEdgeInsetsMake(15.0, 0.0, 15.0, 0.0);
     [doneButton setBackgroundImage:[UIImage imageWithColor:[UIColor offWhiteBackgroundColor]] forState:UIControlStateNormal];
     [doneButton setBackgroundImage:[UIImage imageWithColor:[UIColor darkenedOffWhiteBackgroundColor]] forState:UIControlStateHighlighted];
 
