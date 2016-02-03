@@ -93,14 +93,25 @@ const BOOL kMRTesting = NO;
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
+    [self reportMemory];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     [self.persistenceController save];
+    [self reportMemory];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     [self.persistenceController save];
+    [self reportMemory];
+}
+
+- (void)applicationSignificantTimeChange:(UIApplication *)application {
+    [self reportMemory];
+}
+
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
+    [self reportMemory];
 }
 
 - (void)setupWindow {
@@ -226,6 +237,24 @@ const BOOL kMRTesting = NO;
         for (NSString* name in [UIFont fontNamesForFamilyName: family]) {
             NSLog(@"  %@", name);
         }
+    }
+}
+
+- (void)reportMemory {
+    struct mach_task_basic_info info;
+    mach_msg_type_number_t size = MACH_TASK_BASIC_INFO_COUNT;
+    kern_return_t kerr = task_info(mach_task_self(),
+                                   MACH_TASK_BASIC_INFO,
+                                   (task_info_t)&info,
+                                   &size);
+
+    if (kerr == KERN_SUCCESS) {
+        double bytes = info.resident_size;
+        double megabytes = bytes/(1024.0 * 1024.0);
+        NSLog(@"Memory in use %llu bytes (%f MB)", info.resident_size, megabytes);
+    }
+    else {
+        NSLog(@"Error with task_info(): %s", mach_error_string(kerr));
     }
 }
 
