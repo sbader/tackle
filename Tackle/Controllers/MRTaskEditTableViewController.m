@@ -112,6 +112,7 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
                                        ];
 
     fetchRequest.returnsDistinctResults = YES;
+    fetchRequest.fetchLimit = 5;
 
     NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                                                 managedObjectContext:self.managedObjectContext
@@ -189,8 +190,8 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
     }
     else if ([self isPreviousTasksSection:indexPath.section]) {
         NSIndexPath *path = [NSIndexPath indexPathForRow:indexPath.row inSection:0];
-        NSDictionary *taskDict = [self.fetchedResultsController objectAtIndexPath:path];
-        [self.delegate selectedPreviousTaskTitle:taskDict[@"title"]];
+        Task *task = [self.fetchedResultsController objectAtIndexPath:path];
+        [self.delegate selectedPreviousTaskTitle:task.title];
     }
 
     return nil;
