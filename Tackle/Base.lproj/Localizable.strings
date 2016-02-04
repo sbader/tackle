@@ -124,3 +124,5 @@
 "© 2016 Melody Road, LLC" = "© 2016 Melody Road, LLC";
 
 "Notification Done Button" = "Close";
+
+"Archive Task Completed Format" = "Completed: %@";

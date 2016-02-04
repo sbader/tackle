@@ -10,9 +10,10 @@
 
 #import "Task.h"
 #import "MRTaskTableViewCell.h"
+#import "MRTaskArchiveTableViewCell.h"
 #import "MRPersistenceController.h"
 #import "MRArchiveTaskTableViewDelegate.h"
-
+#import "MRFullDateFormatter.h"
 
 @interface MRArchiveTableViewController () <NSFetchedResultsControllerDelegate>
 
@@ -30,7 +31,7 @@ static NSString * const archiveTaskCellReuseIdentifier = @"ArchiveTaskCell";
 
     if (self) {
         _persistenceController = persistenceController;
-        [self.tableView registerClass:[MRTaskTableViewCell class] forCellReuseIdentifier:archiveTaskCellReuseIdentifier];
+        [self.tableView registerClass:[MRTaskArchiveTableViewCell class] forCellReuseIdentifier:archiveTaskCellReuseIdentifier];
         self.view.translatesAutoresizingMaskIntoConstraints = NO;
         self.tableView.backgroundColor = [UIColor clearColor];
         self.tableView.dataSource = self;
@@ -50,10 +51,25 @@ static NSString * const archiveTaskCellReuseIdentifier = @"ArchiveTaskCell";
     [super viewDidLoad];
 }
 
-- (void)updateCell:(MRTaskTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)updateCell:(MRTaskArchiveTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textLabel.text = task.title;
-    cell.detailTextLabel.text = task.dueDate.tackleString;
+
+    MRFullDateFormatter *formatter = [MRFullDateFormatter sharedFormatter];
+    [formatter setLocalizedDateFormatFromTemplate:@"jjmmMMMMdy"];
+
+    NSString *dateString = [NSString stringWithFormat:NSLocalizedString(@"Archive Task Completed Format", nil), [formatter stringFromDate:task.completedDate]];
+
+    NSMutableAttributedString *attributedDateString = [[NSMutableAttributedString alloc] initWithString:dateString
+                                                                                             attributes:@{
+                                                                                                          NSFontAttributeName:[UIFont fontForArchivedTaskDate]
+                                                                                                          }];
+
+    [attributedDateString addAttribute:NSFontAttributeName
+                                 value:[UIFont fontForArchivedTaskDateDescription]
+                                 range:NSMakeRange(0, 10)];
+
+    cell.detailTextLabel.attributedText = attributedDateString;
 }
 
 #pragma mark - Fetched results controller
@@ -105,12 +121,12 @@ static NSString * const archiveTaskCellReuseIdentifier = @"ArchiveTaskCell";
             break;
 
         case NSFetchedResultsChangeUpdate:
-            [self updateCell:(MRTaskTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            [self updateCell:(MRTaskArchiveTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
             break;
 
         case NSFetchedResultsChangeMove:
             [self.tableView moveRowAtIndexPath:indexPath toIndexPath:newIndexPath];
-            [self updateCell:(MRTaskTableViewCell *)[self.tableView cellForRowAtIndexPath:newIndexPath] atIndexPath:newIndexPath];
+            [self updateCell:(MRTaskArchiveTableViewCell *)[self.tableView cellForRowAtIndexPath:newIndexPath] atIndexPath:newIndexPath];
             break;
     }
 }
@@ -123,7 +139,7 @@ static NSString * const archiveTaskCellReuseIdentifier = @"ArchiveTaskCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MRTaskTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:archiveTaskCellReuseIdentifier forIndexPath:indexPath];
+    MRTaskArchiveTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:archiveTaskCellReuseIdentifier forIndexPath:indexPath];
     [self updateCell:cell atIndexPath:indexPath];
 
     return cell;

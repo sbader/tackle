@@ -218,7 +218,7 @@
             formattedString = [NSString stringWithFormat:@"%@ Seconds Ago", [numberFormatter stringFromNumber:@(seconds)]];
         }
     }
-    else if (timeInterval < 3600) {
+    else if (timeInterval >= 0 && timeInterval < 3600) {
         NSInteger hours = timeInterval/3600;
         NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
 
