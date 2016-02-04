@@ -94,8 +94,7 @@ NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCateg
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task"
                                               inManagedObjectContext:managedObjectContext];
     [fetchRequest setEntity:entity];
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO", [NSDate date]]];
-//    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO AND dueDate < %@", [NSDate date]]];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isDone == NO AND dueDate < %@", [NSDate date]]];
 
     return fetchRequest;
 }
