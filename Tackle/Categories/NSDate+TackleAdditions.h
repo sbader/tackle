@@ -10,17 +10,22 @@
 
 @interface NSDate (TackleAdditions)
 
-- (NSString *)tackleString;
-- (NSString *)tackleStringSinceDate:(NSDate *)date;
-- (NSArray *)tackleStringComponentsSinceDate:(NSDate *)date;
-- (NSDate *)beginningOfDay;
-
 - (BOOL)isDayBeforeDate:(NSDate *)date;
 - (BOOL)isDayAfterDate:(NSDate *)date;
 - (BOOL)isDayBeforeOrAfterDate:(NSDate *)date;
 - (BOOL)isSameDayAsDate:(NSDate *)date;
 - (BOOL)isToday;
+- (BOOL)isTodayToDate:(NSDate *)date;
 - (BOOL)isWithinAWeek;
+- (BOOL)isWithinAWeekOfDate:(NSDate *)date;
 - (BOOL)isTomorrow;
+- (BOOL)isTomorrowToDate:(NSDate *)date;
+- (BOOL)isCurrentYear;
+- (BOOL)isSameYearAsDate:(NSDate *)date;
+- (NSDate *)beginningOfDay;
+- (NSDate *)beginningOfYear;
+- (NSString *)tackleStringSinceDate:(NSDate *)date;
+- (NSString *)tackleString;
 
 @end
+

@@ -13,9 +13,6 @@
 "a Day" = "a Day";
 
 /* No comment provided by engineer. */
-"Alerts" = "Alerts"; /* NEW */
-
-/* No comment provided by engineer. */
 "an Hour" = "an Hour";
 
 /* No comment provided by engineer. */
@@ -26,6 +23,9 @@
 
 /* No comment provided by engineer. */
 "Archive List Title" = "Archive";
+
+/* No comment provided by engineer. */
+"Archive Task Completed Format" = "Completed: %@";
 
 /* No comment provided by engineer. */
 "Credits Archive" = "Archive";
@@ -55,6 +55,24 @@
 "Email Not Configured" = "Email Not Configured";
 
 /* No comment provided by engineer. */
+"Full Time And Date Format" = "%@ at %@";
+
+/* No comment provided by engineer. */
+"Hours Ago Format" = "%@ Hours Ago";
+
+/* No comment provided by engineer. */
+"Minutes Ago Format" = "%@ Minutes Ago";
+
+/* No comment provided by engineer. */
+"Minutes And Seconds Ago Format" = "%@ Minutes %@ Seconds Ago";
+
+/* No comment provided by engineer. */
+"Minutes And Seconds In Future Format" = "In %@ Minutes %@ Seconds";
+
+/* No comment provided by engineer. */
+"Minutes In Future Format" = "In %@ Minutes";
+
+/* No comment provided by engineer. */
 "New Task" = "New Reminder";
 
 /* No comment provided by engineer. */
@@ -67,13 +85,19 @@
 "Notification Action Done" = "Completed";
 
 /* No comment provided by engineer. */
+"Notification Done Button" = "Close";
+
+/* No comment provided by engineer. */
 "Notification Task Done" = "Completed";
 
 /* No comment provided by engineer. */
 "Rate in the App Store" = "Rate in the App Store";
 
 /* No comment provided by engineer. */
-"Select Due Date" = "Select Due Date";
+"Seconds Ago Format" = "%@ Seconds Ago";
+
+/* No comment provided by engineer. */
+"Seconds In Future Format" = "In %@ Seconds";
 
 /* No comment provided by engineer. */
 "Send Feedback" = "Send Feedback";
@@ -100,13 +124,13 @@
 "Task Edit Save" = "Save";
 
 /* No comment provided by engineer. */
+"Task Row Done Action" = "Done";
+
+/* No comment provided by engineer. */
 "Tasks List Title" = "Reminders";
 
 /* No comment provided by engineer. */
 "Ten Minutes" = "Ten Minutes";
-
-/* No comment provided by engineer. */
-"Time’s Up" = "Time’s Up"; /* NEW */
 
 /* No comment provided by engineer. */
 "Use Previous Task" = "Use Previous Reminder";
@@ -118,11 +142,8 @@
 "You have nothing to tackle right now. You can add a task by hitting the plus sign above." = "You have nothing to tackle right now. You can add a task by hitting the plus sign above.";
 
 /* No comment provided by engineer. */
-"Your device is not configured to send email. You can configure an email address in settings or send an email directly to tackle@melodyroad.com." = "Your device is not configured to send email. You can configure an email address in settings or send an email directly to tackle@melodyroad.com.";
+"Your device is not configured to send email." = "Your device is not configured to send email. You can configure an email address in settings or send an email directly to tackle@melodyroad.com.";
 
 /* No comment provided by engineer. */
 "© 2016 Melody Road, LLC" = "© 2016 Melody Road, LLC";
 
-"Notification Done Button" = "Close";
-
-"Archive Task Completed Format" = "Completed: %@";

@@ -222,7 +222,7 @@
     }
     else {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Email Not Configured", nil)
-                                                                                 message:NSLocalizedString(@"Your device is not configured to send email. You can configure an email address in settings or send an email directly to tackle@melodyroad.com.", nil)
+                                                                                 message:NSLocalizedString(@"Your device is not configured to send email.", nil)
                                                                           preferredStyle:UIAlertControllerStyleAlert];
 
         UIAlertAction *closeAction = [UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:nil];

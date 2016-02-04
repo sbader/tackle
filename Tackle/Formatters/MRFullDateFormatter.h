@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MRFullDateFormatter : NSDateFormatter
+@interface MRFullDateFormatter : NSObject
 
 + (instancetype)sharedFormatter;
+- (NSString *)stringFromDate:(NSDate *)date;
 
 @end
