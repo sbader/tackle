@@ -33,6 +33,8 @@
 		D130A1081C59495800394EDF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D130A10A1C59495800394EDF /* Localizable.strings */; };
 		D139E57418959F41007163AD /* MRLongDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D139E57318959F41007163AD /* MRLongDateFormatter.m */; };
 		D13A96161B7995280045DC04 /* Tackle.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D13A96141B7995280045DC04 /* Tackle.xcdatamodeld */; };
+		D14BEC581C633A91009DF800 /* MRTaskArchiveTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D14BEC571C633A91009DF800 /* MRTaskArchiveTableViewCell.m */; };
+		D14BEC5B1C6340C7009DF800 /* MRFullDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D14BEC5A1C6340C7009DF800 /* MRFullDateFormatter.m */; };
 		D15054211A5F5B41000CA868 /* MRNotificationProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = D15054201A5F5B41000CA868 /* MRNotificationProvider.m */; };
 		D162856B1A55AB770006929E /* MRScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = D162856A1A55AB770006929E /* MRScrollView.m */; };
 		D17BCFB3189F3D05001996C1 /* UIView+TackleConstraintAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D17BCFB2189F3D05001996C1 /* UIView+TackleConstraintAdditions.m */; };
@@ -153,6 +155,10 @@
 		D139E57218959F41007163AD /* MRLongDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRLongDateFormatter.h; sourceTree = "<group>"; };
 		D139E57318959F41007163AD /* MRLongDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRLongDateFormatter.m; sourceTree = "<group>"; };
 		D13A96151B7995280045DC04 /* Tackle.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tackle.xcdatamodel; sourceTree = "<group>"; };
+		D14BEC561C633A91009DF800 /* MRTaskArchiveTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRTaskArchiveTableViewCell.h; sourceTree = "<group>"; };
+		D14BEC571C633A91009DF800 /* MRTaskArchiveTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRTaskArchiveTableViewCell.m; sourceTree = "<group>"; };
+		D14BEC591C6340C7009DF800 /* MRFullDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRFullDateFormatter.h; sourceTree = "<group>"; };
+		D14BEC5A1C6340C7009DF800 /* MRFullDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRFullDateFormatter.m; sourceTree = "<group>"; };
 		D150541F1A5F5B41000CA868 /* MRNotificationProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRNotificationProvider.h; sourceTree = "<group>"; };
 		D15054201A5F5B41000CA868 /* MRNotificationProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRNotificationProvider.m; sourceTree = "<group>"; };
 		D16285691A55AB770006929E /* MRScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRScrollView.h; sourceTree = "<group>"; };
@@ -455,6 +461,8 @@
 				D1AD45BB1A59BBBB001FDAC5 /* MRPreviousTaskTableViewCell.m */,
 				D1224E7B1C610040002AF215 /* MRNotificationTaskView.h */,
 				D1224E7C1C610040002AF215 /* MRNotificationTaskView.m */,
+				D14BEC561C633A91009DF800 /* MRTaskArchiveTableViewCell.h */,
+				D14BEC571C633A91009DF800 /* MRTaskArchiveTableViewCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -502,6 +510,8 @@
 				D1E1412E1A4FE82000992B1E /* MRDayOfMonthDateFormatter.m */,
 				D1A3FDDC1A511B9F00A384FE /* MRMonthDateFormatter.h */,
 				D1A3FDDD1A511B9F00A384FE /* MRMonthDateFormatter.m */,
+				D14BEC591C6340C7009DF800 /* MRFullDateFormatter.h */,
+				D14BEC5A1C6340C7009DF800 /* MRFullDateFormatter.m */,
 			);
 			path = Formatters;
 			sourceTree = "<group>";
@@ -676,6 +686,7 @@
 				D1E141121A4F7A4300992B1E /* MRRootViewController.m in Sources */,
 				D15054211A5F5B41000CA868 /* MRNotificationProvider.m in Sources */,
 				D162856B1A55AB770006929E /* MRScrollView.m in Sources */,
+				D14BEC5B1C6340C7009DF800 /* MRFullDateFormatter.m in Sources */,
 				D1E141061A4F79D500992B1E /* MRTaskEditViewController.m in Sources */,
 				D12E8786189573FC008119B8 /* UIColor+TackleAdditions.m in Sources */,
 				D1F652921AF1317500085D88 /* MRPersistenceController.m in Sources */,
@@ -684,6 +695,7 @@
 				D1BC012D1A539A4B00F87D06 /* MRDatePickerViewController.m in Sources */,
 				D12E87831894A07B008119B8 /* UIFont+TackleAdditions.m in Sources */,
 				D1C6CF771C6293F500E7DA00 /* MRDatePickerProvider.m in Sources */,
+				D14BEC581C633A91009DF800 /* MRTaskArchiveTableViewCell.m in Sources */,
 				D1224E771C6090BB002AF215 /* MRNotificationsTaskListViewController.m in Sources */,
 				D1E1410C1A4F7A0100992B1E /* MRTaskTableViewController.m in Sources */,
 				D1E1412C1A4FE77F00992B1E /* MRWeekdayDateFormatter.m in Sources */,

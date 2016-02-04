@@ -90,7 +90,6 @@
     return [self systemFontOfSize:18.0 weight:UIFontWeightRegular];
 }
 
-
 + (UIFont *)fontForCreditsBottomText {
     return [self systemFontOfSize:18.0 weight:UIFontWeightRegular];
 }
@@ -120,6 +119,14 @@
 }
 
 + (UIFont *)fontForModalTaskTimeButtons {
+    return [self systemFontOfSize:14.0 weight:UIFontWeightRegular];
+}
+
++ (UIFont *)fontForArchivedTaskDateDescription {
+    return [self systemFontOfSize:14.0 weight:UIFontWeightSemibold];
+}
+
++ (UIFont *)fontForArchivedTaskDate {
     return [self systemFontOfSize:14.0 weight:UIFontWeightRegular];
 }
 

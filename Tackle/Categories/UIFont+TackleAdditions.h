@@ -35,5 +35,7 @@
 + (UIFont *)fontForModalDoneButton;
 + (UIFont *)fontForModalTaskDoneButton;
 + (UIFont *)fontForModalTaskTimeButtons;
++ (UIFont *)fontForArchivedTaskDateDescription;
++ (UIFont *)fontForArchivedTaskDate;
 
 @end
