@@ -76,8 +76,6 @@ const BOOL kMRTesting = NO;
         [self addSampleData];
     }
 
-    [MRDatePickerProvider sharedInstance];
-
     [self setupAppearance];
     [self setupWindow];
     [self setupRootViewController];

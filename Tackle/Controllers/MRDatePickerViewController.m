@@ -109,16 +109,14 @@
 }
 
 - (void)setupDatePicker {
-//    self.datePicker = [[UIDatePicker alloc] init];
-//    self.datePicker.translatesAutoresizingMaskIntoConstraints = NO;
-//    self.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
-//    self.datePicker.minimumDate = [NSDate date];
-//
-//    self.datePicker.minuteInterval = 5;
-//    [self.datePicker setDate:self.date animated:NO];
+    self.datePicker = [[UIDatePicker alloc] init];
+    self.datePicker.translatesAutoresizingMaskIntoConstraints = NO;
+    self.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+    self.datePicker.minimumDate = [NSDate date];
 
-    self.datePicker = [[MRDatePickerProvider sharedInstance] datePicker];
+    self.datePicker.minuteInterval = 5;
     [self.datePicker setDate:self.date animated:NO];
+
     [self.datePickerContainer addSubview:self.datePicker];
 
     UITapGestureRecognizer *intervalTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(intervalTapGestureWasTapped:)];
