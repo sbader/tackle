@@ -14,6 +14,9 @@
 #import "MRPersistenceController.h"
 #import "MRArchiveTaskTableViewDelegate.h"
 #import "MRFullDateFormatter.h"
+#import "MRLongDateFormatter.h"
+#import "MRTimeDateFormatter.h"
+
 
 @interface MRArchiveTableViewController () <NSFetchedResultsControllerDelegate>
 
@@ -55,16 +58,12 @@ static NSString * const archiveTaskCellReuseIdentifier = @"ArchiveTaskCell";
     Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textLabel.text = task.title;
 
-    MRFullDateFormatter *formatter = [MRFullDateFormatter sharedFormatter];
-    [formatter setLocalizedDateFormatFromTemplate:@"jjmmMMMMdy"];
-
-    NSString *dateString = [NSString stringWithFormat:NSLocalizedString(@"Archive Task Completed Format", nil), [formatter stringFromDate:task.completedDate]];
+    NSString *dateString = [NSString stringWithFormat:NSLocalizedString(@"Archive Task Completed Format", nil), task.completedDate.tackleString];
 
     NSMutableAttributedString *attributedDateString = [[NSMutableAttributedString alloc] initWithString:dateString
                                                                                              attributes:@{
                                                                                                           NSFontAttributeName:[UIFont fontForArchivedTaskDate]
                                                                                                           }];
-
     [attributedDateString addAttribute:NSFontAttributeName
                                  value:[UIFont fontForArchivedTaskDateDescription]
                                  range:NSMakeRange(0, 10)];
@@ -81,7 +80,7 @@ static NSString * const archiveTaskCellReuseIdentifier = @"ArchiveTaskCell";
 
     NSFetchRequest *fetchRequest = [Task archivedTasksFetchRequestWithManagedObjectContext:self.persistenceController.managedObjectContext];
 
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"dueDate" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"completedDate" ascending:NO];
     NSArray *sortDescriptors = @[sortDescriptor];
     [fetchRequest setSortDescriptors:sortDescriptors];
 

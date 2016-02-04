@@ -158,7 +158,7 @@ static NSString * const taskCellReuseIdentifier = @"TaskCell";
 }
 
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewRowAction *action = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Done" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+    UITableViewRowAction *action = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:NSLocalizedString(@"Task Row Done Action", nil) handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
         Task *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
 
         if ([self.taskDelegate respondsToSelector:@selector(completedTask:)]) {

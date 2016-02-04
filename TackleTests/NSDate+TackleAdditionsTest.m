@@ -40,6 +40,49 @@
     }];
 }
 
+- (void)testDateLaterInDayAfterHourShouldShowFullTime {
+    NSDate *startDate = [[NSCalendar currentCalendar] dateBySettingHour:0 minute:1 second:0 ofDate:[NSDate date] options:0];
+    NSDate *date = [[NSCalendar currentCalendar] dateBySettingHour:23 minute:1 second:0 ofDate:startDate options:0];
+    XCTAssertEqualObjects([date tackleStringSinceDate:startDate], @"11:01 PM");
+}
+
+- (void)testDateAfterCurrentDateShouldShowFullTimeAndDate {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    NSDate *startDate = [formatter dateFromString:@"2016-01-02 1:22"];
+    NSDate *futureDate = [formatter dateFromString:@"2016-02-03 12:22"];
+    
+    XCTAssertEqualObjects([futureDate tackleStringSinceDate:startDate], @"February 3 at 12:22 PM");
+}
+
+- (void)testDateAfterCurrentDateDifferentYearShouldShowFullTimeAndDateWithYear {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    NSDate *startDate = [formatter dateFromString:@"2016-01-02 1:22"];
+    NSDate *futureDate = [formatter dateFromString:@"2018-11-04 12:27"];
+
+    XCTAssertEqualObjects([futureDate tackleStringSinceDate:startDate], @"November 4, 2018 at 12:27 PM");
+}
+
+- (void)testDateBeforeCurrentDateSameYearShouldShowFullTimeAndDate {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    NSDate *startDate = [formatter dateFromString:@"2016-03-12 1:22"];
+    NSDate *earlierDate = [formatter dateFromString:@"2016-01-03 12:27"];
+
+    XCTAssertEqualObjects([earlierDate tackleStringSinceDate:startDate], @"January 3 at 12:27 PM");
+}
+
+
+- (void)testDateBeforeCurrentDateDifferentYearShouldShowFullTimeAndDateWithYear {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    NSDate *startDate = [formatter dateFromString:@"2016-01-02 1:22"];
+    NSDate *earlierDate = [formatter dateFromString:@"2014-10-04 12:27"];
+
+    XCTAssertEqualObjects([earlierDate tackleStringSinceDate:startDate], @"October 4, 2014 at 12:27 PM");
+}
+
 - (void)testDateWithinPastHourShouldShowMinutesAndSeconds {
     NSDate *startDate = [NSDate date];
 
