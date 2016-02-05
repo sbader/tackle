@@ -439,13 +439,15 @@
 }
 
 - (void)titleFieldDidChange:(id)sender {
-    NSTextCheckingResult *result = [self.dateDetector firstMatchInString:self.titleField.text options:kNilOptions range:NSMakeRange(0, self.titleField.text.length)];
+    NSTextCheckingResult *result = [self.dateDetector firstMatchInString:self.titleField.text
+                                                                 options:kNilOptions
+                                                                   range:NSMakeRange(0, self.titleField.text.length)];
 
     if (result && [result.date compare:[NSDate date]] == NSOrderedDescending) {
         NSString *leftoverText = [self.titleField.text stringByReplacingCharactersInRange:result.range withString:@""];
         self.leftoverTitleText = [leftoverText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         [self displayPossibleDateButton];
-        NSString *buttonText = [NSString stringWithFormat:NSLocalizedString(@"Set to %@", nil), result.date.tackleString];
+        NSString *buttonText = [NSString stringWithFormat:NSLocalizedString(@"Date Detector Format", nil), result.date.tackleString];
         [self.possibleDateButton setTitle:buttonText forState:UIControlStateNormal];
         self.possibleDate = result.date;
 
