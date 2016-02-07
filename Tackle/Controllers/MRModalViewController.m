@@ -51,13 +51,23 @@
 
 - (void)setupContentView {
     self.contentViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:self.contentViewController.view];
 
-    [self.contentViewController.view horizontalConstraintsMatchSuperview];
+    UIView *contentView = self.contentViewController.view;
+
+    [self.view addSubview:contentView];
+
+    [self.view addConstraint:[contentView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor]];
+
+    [self.view addConstraint:[contentView.widthAnchor constraintLessThanOrEqualToConstant:400.0]];
+    NSLayoutConstraint *screenWidthConstraint = [contentView.widthAnchor constraintEqualToConstant:[UIScreen mainScreen].bounds.size.width - 20.0];
+    screenWidthConstraint.priority = UILayoutPriorityDefaultHigh;
+    [self.view addConstraint:screenWidthConstraint];
+
+
     self.contentViewBottomConstraint = [self.contentViewController.view constraintEqualToView:self.view
                                                                                 withAttribute:NSLayoutAttributeBottom
                                                                                    multiplier:1.0
-                                                                                     constant:0];
+                                                                                     constant:-10.0];
 
     self.contentViewTopConstraint = [NSLayoutConstraint constraintWithItem:self.contentViewController.view
                                                                  attribute:NSLayoutAttributeTop

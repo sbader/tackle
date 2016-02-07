@@ -68,7 +68,6 @@
 
     [self.topContainerView horizontalConstraintsMatchSuperview];
 
-
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[PaintCodeStyleKit imageOfCreditsTIcon]];
     imageView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.topContainerView addSubview:imageView];
@@ -199,6 +198,9 @@
 
 - (void)setupConstraints {
     [self.view addConstraint:[self.topContainerView.topAnchor constraintGreaterThanOrEqualToAnchor:self.view.topAnchor constant:10.0]];
+    NSLayoutConstraint *topLowPriorityConstraint = [self.topContainerView.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:80.0];
+    topLowPriorityConstraint.priority = UILayoutPriorityDefaultLow;
+    [self.view addConstraint:topLowPriorityConstraint];
     [self.view addConstraint:[self.topContainerView.topAnchor constraintLessThanOrEqualToAnchor:self.view.topAnchor constant:80.0]];
 
     [self.view addConstraint:[self.topContainerView.bottomAnchor constraintLessThanOrEqualToAnchor:self.linksView.topAnchor constant:-20.0]];

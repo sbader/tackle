@@ -41,26 +41,6 @@
 
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
 
-    self.contentView = [[UIView alloc] init];
-
-    self.contentView.backgroundColor = [UIColor clearColor];
-    self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
-
-    [self.view addSubview:self.contentView];
-
-    [self.contentView addConstraint:[self.contentView.widthAnchor constraintLessThanOrEqualToConstant:355.0]];
-    [self.contentView addConstraint:[self.contentView.widthAnchor constraintGreaterThanOrEqualToConstant:320.0]];
-    [self.view addConstraint:[self.contentView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor]];
-
-    NSLayoutConstraint *leadingConstraint = [self.contentView.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.leadingAnchor constant:10.0];
-    leadingConstraint.priority = UILayoutPriorityDefaultHigh;
-    NSLayoutConstraint *trailingConstraint = [self.contentView.trailingAnchor constraintGreaterThanOrEqualToAnchor:self.view.trailingAnchor constant:-10.0];
-    trailingConstraint.priority = UILayoutPriorityDefaultHigh;
-    [self.view addConstraint:leadingConstraint];
-    [self.view addConstraint:trailingConstraint];
-    [self.contentView topConstraintMatchesSuperviewWithConstant:0.0];
-    [self.contentView bottomConstraintMatchesSuperviewWithConstant:-10.0];
-
     UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeSystem];
     doneButton.translatesAutoresizingMaskIntoConstraints = NO;
     [doneButton setTitle:NSLocalizedString(@"Notification Done Button", nil) forState:UIControlStateNormal];
@@ -70,20 +50,13 @@
     doneButton.contentEdgeInsets = UIEdgeInsetsMake(15.0, 0.0, 15.0, 0.0);
     [doneButton setBackgroundImage:[UIImage imageWithColor:[UIColor offWhiteBackgroundColor]] forState:UIControlStateNormal];
     [doneButton setBackgroundImage:[UIImage imageWithColor:[UIColor darkenedOffWhiteBackgroundColor]] forState:UIControlStateHighlighted];
+    [doneButton applyTackleLayerDisplay];
 
-    doneButton.layer.cornerRadius = 10.0;
-    doneButton.layer.shadowColor = [UIColor blackColor].CGColor;
-    doneButton.layer.shadowOpacity = 0.85;
-    doneButton.layer.shadowRadius = 3.0;
-    doneButton.layer.shadowOffset = CGSizeMake(-2.0, 2.0);
-    doneButton.clipsToBounds = YES;
-
-
-    [self.contentView addSubview:doneButton];
+    [self.view addSubview:doneButton];
 
     self.taskListViewController = [[MRNotificationsTaskListViewController alloc] initWithPersistenceController:self.persistenceController];
     self.taskListViewController.notificationsTaskListDelegate = self;
-    [self.contentView addSubview:self.taskListViewController.view];
+    [self.view addSubview:self.taskListViewController.view];
 
     [self.taskListViewController.view topConstraintMatchesSuperviewWithConstant:8.0];
     [self.taskListViewController.view leadingConstraintMatchesSuperviewWithConstant:0.0];
