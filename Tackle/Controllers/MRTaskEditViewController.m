@@ -214,6 +214,8 @@
     self.dateButton = [MRHorizontalButton buttonWithType:UIButtonTypeSystem];
     self.dateButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.dateButton.titleLabel.font = [UIFont fontForLargeFormButtons];
+    self.dateButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.dateButton.titleLabel.minimumScaleFactor = 0.45;
     [self.dateButton setImage:[PaintCodeStyleKit imageOfClock] forState:UIControlStateNormal];
     [self.dateButton addTarget:self action:@selector(handleDateButton:) forControlEvents:UIControlEventTouchUpInside];
     self.dateButton.contentEdgeInsets = UIEdgeInsetsMake(10, 0, 10, 0);
@@ -237,6 +239,8 @@
     self.possibleDateButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.possibleDateButton.titleLabel.font = [UIFont fontForLargeFormButtons];
     [self.possibleDateButton addTarget:self action:@selector(handlePossibleDateButton:) forControlEvents:UIControlEventTouchUpInside];
+    self.possibleDateButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.possibleDateButton.titleLabel.minimumScaleFactor = 0.65;
     self.possibleDateButton.contentEdgeInsets = UIEdgeInsetsMake(10, 0, 10, 0);
     [self.possibleDateContainer addSubview:self.possibleDateButton];
     [self.possibleDateButton setTintColor:[UIColor whiteColor]];
