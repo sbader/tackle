@@ -82,13 +82,13 @@
 "Notification Action Add 10 Minutes" = "Add 10 Minutes";
 
 /* No comment provided by engineer. */
-"Notification Action Done" = "Completed";
+"Notification Action Done" = "Complete";
 
 /* No comment provided by engineer. */
 "Notification Done Button" = "Close";
 
 /* No comment provided by engineer. */
-"Notification Task Done" = "Completed";
+"Notification Task Done" = "Complete";
 
 /* No comment provided by engineer. */
 "Rate in the App Store" = "Rate in the App Store";
@@ -115,7 +115,7 @@
 "Task Add Time Format" = "Add %@";
 
 /* No comment provided by engineer. */
-"Task Done Button Title" = "Completed";
+"Task Done Button Title" = "Complete";
 
 /* No comment provided by engineer. */
 "Task Edit Cancel" = "Cancel";
@@ -124,7 +124,7 @@
 "Task Edit Save" = "Save";
 
 /* No comment provided by engineer. */
-"Task Row Done Action" = "Completed";
+"Task Row Done Action" = "Complete";
 
 /* No comment provided by engineer. */
 "Tasks List Title" = "Reminders";
