@@ -12,8 +12,8 @@
 
 @property (nonatomic) UIViewController *contentViewController;
 @property (nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
-@property (nonatomic) NSLayoutConstraint *contentViewBottomConstraint;
-@property (nonatomic) NSLayoutConstraint *contentViewTopConstraint;
+@property (nonatomic) NSArray<NSLayoutConstraint *> *hiddenConstraints;
+@property (nonatomic) NSArray<NSLayoutConstraint *> *displayedConstraints;
 @property (nonatomic) UIView *overlayView;
 
 @end
@@ -63,20 +63,16 @@
     screenWidthConstraint.priority = UILayoutPriorityDefaultHigh;
     [self.view addConstraint:screenWidthConstraint];
 
+    self.displayedConstraints = @[
+                                  [self.contentViewController.view.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant:-10.0],
+                                  [self.contentViewController.view.topAnchor constraintGreaterThanOrEqualToAnchor:self.view.topAnchor constant:10.0]
+                                  ];
 
-    self.contentViewBottomConstraint = [self.contentViewController.view constraintEqualToView:self.view
-                                                                                withAttribute:NSLayoutAttributeBottom
-                                                                                   multiplier:1.0
-                                                                                     constant:-10.0];
+    self.hiddenConstraints = @[
+                               [self.contentViewController.view.topAnchor constraintEqualToAnchor:self.view.bottomAnchor]
+                               ];
 
-    self.contentViewTopConstraint = [NSLayoutConstraint constraintWithItem:self.contentViewController.view
-                                                                 attribute:NSLayoutAttributeTop
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:self.view
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                multiplier:1.0
-                                                                  constant:0];
-    [self.view addConstraint:self.contentViewTopConstraint];
+    [self.view addConstraints:self.hiddenConstraints];
 }
 
 - (void)presentModallyAnimated:(BOOL)animated completion:(void (^)(void))completion {
@@ -87,8 +83,8 @@
     [self.view constraintsMatchSuperview];
     [self.view layoutIfNeeded];
 
-    [self.view removeConstraint:self.contentViewTopConstraint];
-    [self.view addConstraint:self.contentViewBottomConstraint];
+    [self.view removeConstraints:self.hiddenConstraints];
+    [self.view addConstraints:self.displayedConstraints];
 
     [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         window.subviews.firstObject.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
@@ -102,8 +98,8 @@
 }
 
 - (void)dismissModallyAnimated:(BOOL)animated completion:(void (^)(void))completion {
-    [self.view removeConstraint:self.contentViewBottomConstraint];
-    [self.view addConstraint:self.contentViewTopConstraint];
+    [self.view removeConstraints:self.displayedConstraints];
+    [self.view addConstraints:self.hiddenConstraints];
 
     id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
     UIWindow *window = appDelegate.window;
