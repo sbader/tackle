@@ -127,8 +127,6 @@ static NSString * const notificationTasksCellReuseIdentifier = @"NotificationTas
 
 
     NSFetchRequest *fetchRequest = [Task passedOpenTasksFetchRequestWithManagedObjectContext:self.persistenceController.managedObjectContext];
-    [fetchRequest setFetchLimit:5];
-
     [fetchRequest setSortDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"dueDate" ascending:YES]]];
 
     NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
@@ -226,6 +224,9 @@ static NSString * const notificationTasksCellReuseIdentifier = @"NotificationTas
 - (void)displayTask:(Task *)task {
     NSIndexPath *indexPath = [self.fetchedResultsController indexPathForObject:task];
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+
     if (cell) {
         UIColor *initialColor = cell.contentView.backgroundColor;
 
