@@ -9,15 +9,15 @@
 #import "MRNotificationsModalViewController.h"
 
 #import "Task.h"
-#import "MRNotificationsTaskListViewController.h"
 #import "MRPersistenceController.h"
+#import "MRTaskNotificationsTableViewController.h"
 
 #import <QuartzCore/QuartzCore.h>
 
-@interface MRNotificationsModalViewController () <MRNotificationsTaskListDelegate>
+@interface MRNotificationsModalViewController () <MRTaskNotificationsTableViewControllerDelegate>
 
 @property (nonatomic) MRPersistenceController *persistenceController;
-@property (nonatomic) MRNotificationsTaskListViewController *taskListViewController;
+@property (nonatomic) MRTaskNotificationsTableViewController *tasksTableViewController;
 @property (nonatomic) UIView *contentView;
 
 @end
@@ -54,21 +54,22 @@
 
     [self.view addSubview:doneButton];
 
-    self.taskListViewController = [[MRNotificationsTaskListViewController alloc] initWithPersistenceController:self.persistenceController];
-    self.taskListViewController.notificationsTaskListDelegate = self;
-    [self.view addSubview:self.taskListViewController.view];
+    self.tasksTableViewController = [[MRTaskNotificationsTableViewController alloc] initWithPersistenceController:self.persistenceController];
+    self.tasksTableViewController.taskNotificationTableViewControllerDelegate = self;
+    [self.view addSubview:self.tasksTableViewController.view];
 
-    [self.taskListViewController.view topConstraintMatchesSuperviewWithConstant:8.0];
-    [self.taskListViewController.view leadingConstraintMatchesSuperviewWithConstant:0.0];
-    [self.taskListViewController.view trailingConstraintMatchesSuperviewWithConstant:0.0];
-    [doneButton topConstraintBelowView:self.taskListViewController.view withConstant:8.0];
+    [self.tasksTableViewController.view topConstraintMatchesSuperviewWithConstant:8.0];
+    [self.tasksTableViewController.view leadingConstraintMatchesSuperviewWithConstant:0.0];
+    [self.tasksTableViewController.view trailingConstraintMatchesSuperviewWithConstant:0.0];
+
+    [doneButton topConstraintBelowView:self.tasksTableViewController.view withConstant:8.0];
 
     [doneButton horizontalConstraintsMatchSuperview];
     [doneButton bottomConstraintMatchesSuperview];
 }
 
 - (void)displayTask:(Task *)task {
-    [self.taskListViewController displayTask:task];
+    [self.tasksTableViewController displayTask:task];
 }
 
 - (void)doneButtonWasTapped:(id)sender {

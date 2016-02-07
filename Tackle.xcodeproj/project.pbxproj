@@ -23,10 +23,10 @@
 		D1027F8A18904E8400FF44A4 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1027F6E18904E8400FF44A4 /* CoreData.framework */; };
 		D1027F9218904E8400FF44A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D1027F9018904E8400FF44A4 /* InfoPlist.strings */; };
 		D1027FEE1890535700FF44A4 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = D1027FED1890535700FF44A4 /* Task.m */; };
+		D1049C2B1C66E83C00928504 /* MRTaskNotificationsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1049C2A1C66E83C00928504 /* MRTaskNotificationsTableViewController.m */; };
+		D1049C2E1C66E8A100928504 /* MRTaskNotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1049C2D1C66E8A100928504 /* MRTaskNotificationTableViewCell.m */; };
 		D1224AC618A679AE001FC205 /* NSDate+TackleAdditionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D1224AC518A679AE001FC205 /* NSDate+TackleAdditionsTest.m */; };
 		D1224E721C601CBD002AF215 /* UIImage+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D1224E711C601CBD002AF215 /* UIImage+TackleAdditions.m */; };
-		D1224E771C6090BB002AF215 /* MRNotificationsTaskListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1224E761C6090BB002AF215 /* MRNotificationsTaskListViewController.m */; };
-		D1224E7D1C610040002AF215 /* MRNotificationTaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = D1224E7C1C610040002AF215 /* MRNotificationTaskView.m */; };
 		D12E87831894A07B008119B8 /* UIFont+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D12E87821894A07B008119B8 /* UIFont+TackleAdditions.m */; };
 		D12E8786189573FC008119B8 /* UIColor+TackleAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D12E8785189573FC008119B8 /* UIColor+TackleAdditions.m */; };
 		D130A1051C593BD700394EDF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D130A1041C593BD700394EDF /* MessageUI.framework */; };
@@ -137,14 +137,14 @@
 		D1027F9118904E8400FF44A4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D1027FEC1890535700FF44A4 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
 		D1027FED1890535700FF44A4 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
+		D1049C291C66E83C00928504 /* MRTaskNotificationsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRTaskNotificationsTableViewController.h; sourceTree = "<group>"; };
+		D1049C2A1C66E83C00928504 /* MRTaskNotificationsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRTaskNotificationsTableViewController.m; sourceTree = "<group>"; };
+		D1049C2C1C66E8A100928504 /* MRTaskNotificationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRTaskNotificationTableViewCell.h; sourceTree = "<group>"; };
+		D1049C2D1C66E8A100928504 /* MRTaskNotificationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRTaskNotificationTableViewCell.m; sourceTree = "<group>"; };
 		D1224AC518A679AE001FC205 /* NSDate+TackleAdditionsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+TackleAdditionsTest.m"; sourceTree = "<group>"; };
 		D1224E701C601CBD002AF215 /* UIImage+TackleAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+TackleAdditions.h"; sourceTree = "<group>"; };
 		D1224E711C601CBD002AF215 /* UIImage+TackleAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+TackleAdditions.m"; sourceTree = "<group>"; };
 		D1224E731C6064BB002AF215 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reveal.framework; path = "../../../../Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/Reveal.framework"; sourceTree = "<group>"; };
-		D1224E751C6090BB002AF215 /* MRNotificationsTaskListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRNotificationsTaskListViewController.h; sourceTree = "<group>"; };
-		D1224E761C6090BB002AF215 /* MRNotificationsTaskListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRNotificationsTaskListViewController.m; sourceTree = "<group>"; };
-		D1224E7B1C610040002AF215 /* MRNotificationTaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRNotificationTaskView.h; sourceTree = "<group>"; };
-		D1224E7C1C610040002AF215 /* MRNotificationTaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRNotificationTaskView.m; sourceTree = "<group>"; };
 		D12E87811894A07B008119B8 /* UIFont+TackleAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+TackleAdditions.h"; sourceTree = "<group>"; };
 		D12E87821894A07B008119B8 /* UIFont+TackleAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+TackleAdditions.m"; sourceTree = "<group>"; };
 		D12E8784189573FC008119B8 /* UIColor+TackleAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+TackleAdditions.h"; sourceTree = "<group>"; };
@@ -412,34 +412,34 @@
 		D12E878718957938008119B8 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				D1E141101A4F7A4300992B1E /* MRRootViewController.h */,
-				D1E141111A4F7A4300992B1E /* MRRootViewController.m */,
-				D1E141071A4F79E600992B1E /* MRTaskListViewController.h */,
-				D1E141081A4F79E600992B1E /* MRTaskListViewController.m */,
-				D1E1410A1A4F7A0100992B1E /* MRTaskTableViewController.h */,
-				D1E1410B1A4F7A0100992B1E /* MRTaskTableViewController.m */,
-				D1E141181A4FD37500992B1E /* MRTaskEditNavigationController.h */,
-				D1E141191A4FD37500992B1E /* MRTaskEditNavigationController.m */,
-				D1E141041A4F79D500992B1E /* MRTaskEditViewController.h */,
-				D1E141051A4F79D500992B1E /* MRTaskEditViewController.m */,
-				D1E1411B1A4FDA1A00992B1E /* MRTaskEditTableViewController.h */,
-				D1E1411C1A4FDA1A00992B1E /* MRTaskEditTableViewController.m */,
+				D1D4EB831C59CE3600E15254 /* MRArchiveTableViewController.h */,
+				D1D4EB841C59CE3600E15254 /* MRArchiveTableViewController.m */,
+				D1D4EB801C59CD6400E15254 /* MRArchiveViewController.h */,
+				D1D4EB811C59CD6400E15254 /* MRArchiveViewController.m */,
 				D1E141271A4FE23E00992B1E /* MRCalendarCollectionViewController.h */,
 				D1E141281A4FE23E00992B1E /* MRCalendarCollectionViewController.m */,
+				D1EF53091C582B2300C71997 /* MRCreditsViewController.h */,
+				D1EF530A1C582B2300C71997 /* MRCreditsViewController.m */,
 				D1BC012B1A539A4B00F87D06 /* MRDatePickerViewController.h */,
 				D1BC012C1A539A4B00F87D06 /* MRDatePickerViewController.m */,
 				D1CF84851A5639890020DB50 /* MRModalViewController.h */,
 				D1CF84861A5639890020DB50 /* MRModalViewController.m */,
-				D1EF53091C582B2300C71997 /* MRCreditsViewController.h */,
-				D1EF530A1C582B2300C71997 /* MRCreditsViewController.m */,
-				D1D4EB801C59CD6400E15254 /* MRArchiveViewController.h */,
-				D1D4EB811C59CD6400E15254 /* MRArchiveViewController.m */,
-				D1D4EB831C59CE3600E15254 /* MRArchiveTableViewController.h */,
-				D1D4EB841C59CE3600E15254 /* MRArchiveTableViewController.m */,
 				D102344D1C5D611700A3FF74 /* MRNotificationsModalViewController.h */,
 				D102344E1C5D611700A3FF74 /* MRNotificationsModalViewController.m */,
-				D1224E751C6090BB002AF215 /* MRNotificationsTaskListViewController.h */,
-				D1224E761C6090BB002AF215 /* MRNotificationsTaskListViewController.m */,
+				D1E141101A4F7A4300992B1E /* MRRootViewController.h */,
+				D1E141111A4F7A4300992B1E /* MRRootViewController.m */,
+				D1E141181A4FD37500992B1E /* MRTaskEditNavigationController.h */,
+				D1E141191A4FD37500992B1E /* MRTaskEditNavigationController.m */,
+				D1E1411B1A4FDA1A00992B1E /* MRTaskEditTableViewController.h */,
+				D1E1411C1A4FDA1A00992B1E /* MRTaskEditTableViewController.m */,
+				D1E141041A4F79D500992B1E /* MRTaskEditViewController.h */,
+				D1E141051A4F79D500992B1E /* MRTaskEditViewController.m */,
+				D1E141071A4F79E600992B1E /* MRTaskListViewController.h */,
+				D1E141081A4F79E600992B1E /* MRTaskListViewController.m */,
+				D1049C291C66E83C00928504 /* MRTaskNotificationsTableViewController.h */,
+				D1049C2A1C66E83C00928504 /* MRTaskNotificationsTableViewController.m */,
+				D1E1410A1A4F7A0100992B1E /* MRTaskTableViewController.h */,
+				D1E1410B1A4F7A0100992B1E /* MRTaskTableViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -447,22 +447,22 @@
 		D12E878818957943008119B8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D1E1410D1A4F7A1E00992B1E /* MRTaskTableViewCell.h */,
-				D1E1410E1A4F7A1E00992B1E /* MRTaskTableViewCell.m */,
 				D1E1411E1A4FDD2D00992B1E /* MRAddTimeTableViewCell.h */,
 				D1E1411F1A4FDD2D00992B1E /* MRAddTimeTableViewCell.m */,
-				D1E141211A4FE09C00992B1E /* MRHorizontalButton.h */,
-				D1E141221A4FE09C00992B1E /* MRHorizontalButton.m */,
 				D1E141241A4FE22200992B1E /* MRDateCollectionViewCell.h */,
 				D1E141251A4FE22200992B1E /* MRDateCollectionViewCell.m */,
-				D16285691A55AB770006929E /* MRScrollView.h */,
-				D162856A1A55AB770006929E /* MRScrollView.m */,
+				D1E141211A4FE09C00992B1E /* MRHorizontalButton.h */,
+				D1E141221A4FE09C00992B1E /* MRHorizontalButton.m */,
 				D1AD45BA1A59BBBB001FDAC5 /* MRPreviousTaskTableViewCell.h */,
 				D1AD45BB1A59BBBB001FDAC5 /* MRPreviousTaskTableViewCell.m */,
-				D1224E7B1C610040002AF215 /* MRNotificationTaskView.h */,
-				D1224E7C1C610040002AF215 /* MRNotificationTaskView.m */,
+				D16285691A55AB770006929E /* MRScrollView.h */,
+				D162856A1A55AB770006929E /* MRScrollView.m */,
 				D14BEC561C633A91009DF800 /* MRTaskArchiveTableViewCell.h */,
 				D14BEC571C633A91009DF800 /* MRTaskArchiveTableViewCell.m */,
+				D1049C2C1C66E8A100928504 /* MRTaskNotificationTableViewCell.h */,
+				D1049C2D1C66E8A100928504 /* MRTaskNotificationTableViewCell.m */,
+				D1E1410D1A4F7A1E00992B1E /* MRTaskTableViewCell.h */,
+				D1E1410E1A4F7A1E00992B1E /* MRTaskTableViewCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -695,8 +695,8 @@
 				D1BC012D1A539A4B00F87D06 /* MRDatePickerViewController.m in Sources */,
 				D12E87831894A07B008119B8 /* UIFont+TackleAdditions.m in Sources */,
 				D1C6CF771C6293F500E7DA00 /* MRDatePickerProvider.m in Sources */,
+				D1049C2B1C66E83C00928504 /* MRTaskNotificationsTableViewController.m in Sources */,
 				D14BEC581C633A91009DF800 /* MRTaskArchiveTableViewCell.m in Sources */,
-				D1224E771C6090BB002AF215 /* MRNotificationsTaskListViewController.m in Sources */,
 				D1E1410C1A4F7A0100992B1E /* MRTaskTableViewController.m in Sources */,
 				D1E1412C1A4FE77F00992B1E /* MRWeekdayDateFormatter.m in Sources */,
 				D17BCFB3189F3D05001996C1 /* UIView+TackleConstraintAdditions.m in Sources */,
@@ -709,7 +709,7 @@
 				D194BEBB18A1CCC600E5E4DA /* MRHeartbeat.m in Sources */,
 				D1AD45BC1A59BBBB001FDAC5 /* MRPreviousTaskTableViewCell.m in Sources */,
 				D1224E721C601CBD002AF215 /* UIImage+TackleAdditions.m in Sources */,
-				D1224E7D1C610040002AF215 /* MRNotificationTaskView.m in Sources */,
+				D1049C2E1C66E8A100928504 /* MRTaskNotificationTableViewCell.m in Sources */,
 				D1CFD4EE1A51F455004489AC /* MRTimeInterval.m in Sources */,
 				D1A36E5A18A2B2070020EAEB /* MRTimeDateFormatter.m in Sources */,
 				D1CF848D1A563D4B0020DB50 /* UIViewController+MRAdditions.m in Sources */,
