@@ -36,38 +36,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.contentView = [[UIView alloc] init];
-    self.contentView.backgroundColor = [UIColor clearColor];
-    self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
-
-    [self.view addSubview:self.contentView];
-
-    [self.contentView addConstraint:[self.contentView.widthAnchor constraintLessThanOrEqualToConstant:355.0]];
-    [self.contentView addConstraint:[self.contentView.widthAnchor constraintGreaterThanOrEqualToConstant:320.0]];
-    [self.view addConstraint:[self.contentView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor]];
-
-    NSLayoutConstraint *leadingConstraint = [self.contentView.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.view.leadingAnchor constant:10.0];
-    leadingConstraint.priority = UILayoutPriorityDefaultHigh;
-    NSLayoutConstraint *trailingConstraint = [self.contentView.trailingAnchor constraintGreaterThanOrEqualToAnchor:self.view.trailingAnchor constant:-10.0];
-    trailingConstraint.priority = UILayoutPriorityDefaultHigh;
-    [self.view addConstraint:leadingConstraint];
-    [self.view addConstraint:trailingConstraint];
-    [self.contentView topConstraintMatchesSuperviewWithConstant:0.0];
-    [self.contentView bottomConstraintMatchesSuperviewWithConstant:-10.0];
-
     self.datePickerContainer = [[UIView alloc] init];
     self.datePickerContainer.backgroundColor = [UIColor offWhiteBackgroundColor];
     self.datePickerContainer.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.contentView addSubview:self.datePickerContainer];
+    [self.view addSubview:self.datePickerContainer];
 
     [self.datePickerContainer leadingConstraintMatchesSuperview];
     [self.datePickerContainer trailingConstraintMatchesSuperview];
 
     [self.datePickerContainer applyTackleLayerDisplay];
 
-    [self.datePickerContainer topConstraintMatchesSuperview];
+    [self.view addConstraint:[self.datePickerContainer.topAnchor
+                              constraintLessThanOrEqualToAnchor:self.view.topAnchor
+                              constant:10.0]];
 
-    [self.datePickerContainer staticHeightConstraint:180.0];
+    [self.datePickerContainer addConstraint:[self.datePickerContainer.heightAnchor constraintGreaterThanOrEqualToConstant:120.0]];
+    [self.datePickerContainer addConstraint:[self.datePickerContainer.heightAnchor constraintLessThanOrEqualToConstant:180.0]];
 
     [self setupDatePicker];
 
@@ -82,7 +66,7 @@
     [closeButton setBackgroundImage:[UIImage imageWithColor:[UIColor offWhiteBackgroundColor]] forState:UIControlStateNormal];
     [closeButton setBackgroundImage:[UIImage imageWithColor:[UIColor darkenedOffWhiteBackgroundColor]] forState:UIControlStateHighlighted];
     [closeButton applyTackleLayerDisplay];
-    [self.contentView addSubview:closeButton];
+    [self.view addSubview:closeButton];
 
     UIButton *saveButton = [UIButton buttonWithType:UIButtonTypeSystem];
     saveButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -95,12 +79,11 @@
     [saveButton setBackgroundImage:[UIImage imageWithColor:[UIColor darkenedOffWhiteBackgroundColor]] forState:UIControlStateHighlighted];
     [saveButton applyTackleLayerDisplay];
 
-    [self.contentView addSubview:saveButton];
+    [self.view addSubview:saveButton];
 
     [saveButton topConstraintBelowView:self.datePickerContainer withConstant:8.0];
     [saveButton leadingConstraintMatchesSuperview];
     [saveButton trailingConstraintMatchesSuperview];
-//    [saveButton bottomConstraintMatchesSuperview];
 
     [closeButton leadingConstraintMatchesSuperview];
     [closeButton trailingConstraintMatchesSuperview];
