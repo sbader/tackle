@@ -21,6 +21,7 @@
 
     labelFrame.origin.x = 0 + 20;
     imageFrame.origin.x = self.frame.size.width - imageFrame.size.width - 20;
+    labelFrame.size.width = imageFrame.origin.x - 20 - 20;
 
     imageView.frame = imageFrame;
     label.frame = labelFrame;
