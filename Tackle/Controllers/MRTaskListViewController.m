@@ -35,7 +35,7 @@
     self = [super init];
 
     if (self) {
-        self.title = NSLocalizedString(@"Tasks List Title", nil); //@"Tasks";
+        self.title = NSLocalizedString(@"Tasks List Title", nil);
         _persistenceController = persistenceController;
     }
     
@@ -197,7 +197,6 @@
     editController.delegate = self;
     MRTaskEditNavigationController *navigationController = [[MRTaskEditNavigationController alloc] initWithRootViewController:editController];
     [self presentViewController:navigationController animated:animated completion:nil];
-
 }
 
 - (void)displayEditViewWithTitle:(NSString *)title dueDate:(NSDate *)dueDate {
