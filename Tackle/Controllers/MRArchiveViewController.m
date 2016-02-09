@@ -37,15 +37,19 @@
     self.title = NSLocalizedString(@"Archive List Title", nil);
     self.view.backgroundColor = [UIColor grayBackgroundColor];
 
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Delete All", nil)
-                                                                              style:UIBarButtonItemStylePlain
-                                                                             target:self action:@selector(handleClearButton:)];
-
     self.tableViewController = [[MRArchiveTableViewController alloc] initWithPersistenceController:self.persistenceController];
     self.tableViewController.archiveTaskDelegate = self.archiveTaskDelegate;
     [self addChildViewController:self.tableViewController];
     [self.view addSubview:self.tableViewController.view];
     [self.tableViewController.view constraintsMatchSuperview];
+
+    [self countAndDisplayBarButtonItemForArchivedTasksAnimated:NO];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    [self countAndDisplayBarButtonItemForArchivedTasksAnimated:NO];
 }
 
 - (void)handleClearButton:(id)sender {
@@ -61,6 +65,30 @@
     }
 
     [[self undoManager] setActionName:@"Clear Tasks"];
+    [self.persistenceController save];
+    [self countAndDisplayBarButtonItemForArchivedTasksAnimated:YES];
+}
+
+- (UIBarButtonItem *)deleteAllBarButtonItem {
+    return [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Delete All", nil)
+                                            style:UIBarButtonItemStylePlain
+                                           target:self action:@selector(handleClearButton:)];
+}
+
+- (void)countAndDisplayBarButtonItemForArchivedTasksAnimated:(BOOL)animated {
+    NSFetchRequest *fetchRequest = [Task archivedTasksFetchRequestWithManagedObjectContext:self.persistenceController.managedObjectContext];
+    [fetchRequest setFetchLimit:5];
+
+    NSError *error = nil;
+    NSInteger count = [self.persistenceController.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+    NSAssert(error == nil, @"Could not get count for fetch request: %@", error);
+
+    if (count > 0) {
+        [self.navigationItem setRightBarButtonItems:@[[self deleteAllBarButtonItem]] animated:animated];
+    }
+    else {
+        [self.navigationItem setRightBarButtonItems:@[] animated:animated];
+    }
 }
 
 - (BOOL)canBecomeFirstResponder {
