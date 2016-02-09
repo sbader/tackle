@@ -43,13 +43,28 @@
     [self.view addSubview:self.tableViewController.view];
     [self.tableViewController.view constraintsMatchSuperview];
 
-    [self countAndDisplayBarButtonItemForArchivedTasksAnimated:NO];
+    [self addObservers];
+}
+
+- (void)dealloc {
+    [self removeObservers];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
     [self countAndDisplayBarButtonItemForArchivedTasksAnimated:NO];
+}
+
+- (void)addObservers {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(managedObjectContextDidChange:)
+                                                 name:NSManagedObjectContextObjectsDidChangeNotification
+                                               object:self.persistenceController.managedObjectContext];
+}
+
+- (void)removeObservers {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)handleClearButton:(id)sender {
@@ -97,6 +112,10 @@
 
 - (NSUndoManager *)undoManager {
     return self.persistenceController.managedObjectContext.undoManager;
+}
+
+- (void)managedObjectContextDidChange:(id)sender {
+    [self countAndDisplayBarButtonItemForArchivedTasksAnimated:YES];
 }
 
 @end

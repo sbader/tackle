@@ -157,6 +157,7 @@ static NSString * const archiveTaskCellReuseIdentifier = @"ArchiveTaskCell";
         [self.tableView beginUpdates];
 
         [self.persistenceController.managedObjectContext deleteObject:task];
+        [self.persistenceController save];
 
         [self.tableView endUpdates];
     }];
