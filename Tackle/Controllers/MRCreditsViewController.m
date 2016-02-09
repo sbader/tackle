@@ -12,6 +12,8 @@
 #import "MRPersistenceController.h"
 #import "MRArchiveViewController.h"
 
+#import "Task.h"
+
 #import <MessageUI/MFMailComposeViewController.h>
 
 @interface MRCreditsViewController () <MFMailComposeViewControllerDelegate>
@@ -48,16 +50,40 @@
                                                                             target:self
                                                                             action:@selector(handleDoneButton:)];
 
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Credits Archive", nil)
-                                                                             style:UIBarButtonItemStyleDone
-                                                                            target:self
-                                                                            action:@selector(handleViewArchiveButton:)];
-
-
     [self setupTopSection];
     [self setupLinks];
     [self setupBottomText];
     [self setupConstraints];
+
+    [self addObservers];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    [self countAndDisplayBarButtonItemForArchivedTasksAnimated:NO];
+}
+
+- (void)dealloc {
+    [self removeObservers];
+}
+
+- (void)addObservers {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(managedObjectContextDidChange:)
+                                                 name:NSManagedObjectContextObjectsDidChangeNotification
+                                               object:self.persistenceController.managedObjectContext];
+}
+
+- (void)removeObservers {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (UIBarButtonItem *)archiveBarButtonItem {
+    return [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Credits Archive", nil)
+                                            style:UIBarButtonItemStyleDone
+                                           target:self
+                                           action:@selector(handleViewArchiveButton:)];
 }
 
 - (void)setupTopSection {
@@ -243,6 +269,26 @@
     MRArchiveViewController *vc = [[MRArchiveViewController alloc] initWithPersistenceController:self.persistenceController];
     vc.archiveTaskDelegate = self.archiveTaskDelegate;
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)countAndDisplayBarButtonItemForArchivedTasksAnimated:(BOOL)animated {
+    NSFetchRequest *fetchRequest = [Task archivedTasksFetchRequestWithManagedObjectContext:self.persistenceController.managedObjectContext];
+    [fetchRequest setFetchLimit:5];
+
+    NSError *error = nil;
+    NSInteger count = [self.persistenceController.managedObjectContext countForFetchRequest:fetchRequest error:&error];
+    NSAssert(error == nil, @"Could not get count for fetch request: %@", error);
+
+    if (count > 0) {
+        [self.navigationItem setRightBarButtonItems:@[[self archiveBarButtonItem]] animated:animated];
+    }
+    else {
+        [self.navigationItem setRightBarButtonItems:@[] animated:animated];
+    }
+}
+
+- (void)managedObjectContextDidChange:(id)sender {
+    [self countAndDisplayBarButtonItemForArchivedTasksAnimated:YES];
 }
 
 #pragma mark - Mail Compose Delegate
