@@ -157,6 +157,8 @@ const BOOL kMRTesting = NO;
     }
 }
 
+#pragma mark - Utilities
+
 - (BOOL)addSampleData {
     [self removeAllTasks];
 
@@ -185,8 +187,6 @@ const BOOL kMRTesting = NO;
         [self.persistenceController.managedObjectContext deleteObject:task];
     }
 }
-
-#pragma mark - Utilities
 
 - (void)displayFonts {
     for (NSString* family in [UIFont familyNames]) {
