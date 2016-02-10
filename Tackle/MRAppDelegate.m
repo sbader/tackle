@@ -13,6 +13,7 @@
 #import "MRNotificationProvider.h"
 #import "MRPersistenceController.h"
 #import "MRDatePickerProvider.h"
+#import "MRTimer.h"
 #import "MRNotificationPermissionsProvider.h"
 
 #import <mach/mach.h>
@@ -23,6 +24,7 @@ const BOOL kMRTesting = NO;
 
 @property (nonatomic) MRRootViewController *rootController;
 @property (strong) MRPersistenceController *persistenceController;
+@property (strong) MRTimer *timer;
 
 @end
 
@@ -62,6 +64,10 @@ const BOOL kMRTesting = NO;
     [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
 
     [self.rootController checkNotificationPermissions];
+
+    if (application.applicationState != UIApplicationStateBackground) {
+        [self startNotificationsTimer];
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -70,6 +76,49 @@ const BOOL kMRTesting = NO;
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     [self.persistenceController save];
+}
+
+- (void)applicationWillResignActive:(UIApplication *)application {
+    [self stopNotificationsTimer];
+}
+
+- (void)startNotificationsTimer {
+    MRNotificationPermissionsProvider *permissionsProvider = [MRNotificationPermissionsProvider sharedInstance];
+    if ([permissionsProvider notificationPermissionsAlreadyRequested] && ![permissionsProvider userNotificationsEnabled]) {
+        self.timer = [[MRTimer alloc] init];
+
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        NSDateComponents *components = [calendar components:(NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitHour|NSCalendarUnitMinute) fromDate:[NSDate date]];
+        components.minute += 1;
+
+        __block id blockSelf = self;
+
+        self.timer = [[MRTimer alloc] initWithStartDate:[calendar dateFromComponents:components] interval:60 repeatedBlock:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [blockSelf checkPassedTasks];
+            });
+        }];
+
+        [self.timer startTimer];
+    }
+}
+
+- (void)stopNotificationsTimer {
+    if (self.timer) {
+        [self.timer cancel];
+        self.timer = nil;
+    }
+}
+
+- (void)checkPassedTasks {
+    NSFetchRequest *fetchRequest = [Task passedOpenTasksFetchRequestWithManagedObjectContext:self.persistenceController.managedObjectContext];
+    [fetchRequest setSortDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"dueDate" ascending:YES]]];
+    [fetchRequest setFetchLimit:1];
+    NSError *error;
+    NSArray *tasks = [self.persistenceController.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (tasks.count > 0) {
+        [self.rootController handleNotificationForTask:tasks[0]];
+    }
 }
 
 - (void)setupWindow {

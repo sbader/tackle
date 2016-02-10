@@ -45,7 +45,7 @@
 }
 
 - (void)displayNotificationPermissionsRequestPriming {
-    [[MRNotificationPermissionsProvider sharedInstance] permissionsRequested];
+    [[MRNotificationPermissionsProvider sharedInstance] setPermissionsRequested:YES];
 
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Notifications Priming Title", nil)
                                                                              message:NSLocalizedString(@"Notifications Priming Text", nil)
