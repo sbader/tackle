@@ -38,15 +38,10 @@
     return self;
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-
+- (void)checkNotificationPermissions {
     if ([[MRNotificationPermissionsProvider sharedInstance] shouldRequestPermissions]) {
         [self displayNotificationPermissionsRequestPriming];
     }
-//    else if (![[MRNotificationPermissionsProvider sharedInstance] userNotificationsEnabled]) {
-//        [self displayNotificationPermissionsNeededMessage];
-//    }
 }
 
 - (void)displayNotificationPermissionsRequestPriming {
@@ -74,36 +69,8 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
-- (void)displayNotificationPermissionsNeededMessage {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Notifications Needed Title", nil)
-                                                                             message:NSLocalizedString(@"Notifications Needed Text", nil)
-                                                                      preferredStyle:UIAlertControllerStyleAlert];
-
-    UIAlertAction *disallowAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil)
-                                                             style:UIAlertActionStyleCancel
-                                                           handler:nil];
-
-    __block id blockSelf = self;
-
-    UIAlertAction *allowAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Open Settings", nil)
-                                                          style:UIAlertActionStyleDefault
-                                                        handler:^(UIAlertAction *action) {
-                                                            [blockSelf openSettingsApp];
-                                                        }];
-
-    [alertController addAction:disallowAction];
-    [alertController addAction:allowAction];
-
-    [self presentViewController:alertController animated:YES completion:nil];
-
-}
-
 - (void)requestNotificationPermissions {
     [[MRNotificationPermissionsProvider sharedInstance] registerNotificationPermissions];
-}
-
-- (void)openSettingsApp {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
 }
 
 - (void)handleNotificationForTask:(Task *)task {
