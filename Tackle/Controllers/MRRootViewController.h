@@ -17,5 +17,6 @@
 - (instancetype)initWithPersistenceController:(MRPersistenceController *)persistenceController;
 - (void)handleNotificationForTask:(Task *)task;
 - (void)refreshTasks;
+- (void)checkNotificationPermissions;
 
 @end

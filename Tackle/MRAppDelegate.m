@@ -60,6 +60,8 @@ const BOOL kMRTesting = NO;
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
+
+    [self.rootController checkNotificationPermissions];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
