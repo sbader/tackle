@@ -14,8 +14,9 @@ extern NSString * const kMRNotificationPermissionsRequestedKey;
 
 + (instancetype)sharedInstance;
 - (BOOL)shouldRequestPermissions;
-- (void)permissionsRequested;
-- (void)registerNotificationPermissions;
 - (BOOL)userNotificationsEnabled;
+- (BOOL)notificationPermissionsAlreadyRequested;
+- (void)setPermissionsRequested:(BOOL)requested;
+- (void)registerNotificationPermissions;
 
 @end

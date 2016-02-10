@@ -25,17 +25,12 @@ NSString * const kMRNotificationPermissionsRequestedKey = @"NotificationPermissi
     return instance;
 }
 
-- (instancetype)init {
-    self = [super init];
-
-    if (self) {
-    }
-
-    return self;
+- (BOOL)shouldRequestPermissions {
+    return ![self userNotificationsEnabled] && ![self notificationPermissionsAlreadyRequested];
 }
 
-- (BOOL)shouldRequestPermissions {
-    return ![self userNotificationsEnabled] && ![[NSUserDefaults standardUserDefaults] boolForKey:kMRNotificationPermissionsRequestedKey];
+- (BOOL)notificationPermissionsAlreadyRequested {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kMRNotificationPermissionsRequestedKey];
 }
 
 - (BOOL)userNotificationsEnabled {
@@ -43,8 +38,8 @@ NSString * const kMRNotificationPermissionsRequestedKey = @"NotificationPermissi
     return settings.types & (UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound);
 }
 
-- (void)permissionsRequested {
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kMRNotificationPermissionsRequestedKey];
+- (void)setPermissionsRequested:(BOOL)requested {
+    [[NSUserDefaults standardUserDefaults] setBool:requested forKey:kMRNotificationPermissionsRequestedKey];
 }
 
 - (void)registerNotificationPermissions {

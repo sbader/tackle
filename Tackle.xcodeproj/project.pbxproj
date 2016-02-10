@@ -55,6 +55,7 @@
 		D1CFD4EE1A51F455004489AC /* MRTimeInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = D1CFD4ED1A51F455004489AC /* MRTimeInterval.m */; };
 		D1D4EB821C59CD6400E15254 /* MRArchiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D4EB811C59CD6400E15254 /* MRArchiveViewController.m */; };
 		D1D4EB851C59CE3600E15254 /* MRArchiveTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D4EB841C59CE3600E15254 /* MRArchiveTableViewController.m */; };
+		D1DCB1631C6B9A0700E85F30 /* MRTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = D1DCB1621C6B9A0700E85F30 /* MRTimer.m */; };
 		D1E141061A4F79D500992B1E /* MRTaskEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E141051A4F79D500992B1E /* MRTaskEditViewController.m */; };
 		D1E141091A4F79E600992B1E /* MRTaskListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E141081A4F79E600992B1E /* MRTaskListViewController.m */; };
 		D1E1410C1A4F7A0100992B1E /* MRTaskTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E1410B1A4F7A0100992B1E /* MRTaskTableViewController.m */; };
@@ -201,6 +202,8 @@
 		D1D4EB811C59CD6400E15254 /* MRArchiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRArchiveViewController.m; sourceTree = "<group>"; };
 		D1D4EB831C59CE3600E15254 /* MRArchiveTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRArchiveTableViewController.h; sourceTree = "<group>"; };
 		D1D4EB841C59CE3600E15254 /* MRArchiveTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRArchiveTableViewController.m; sourceTree = "<group>"; };
+		D1DCB1611C6B9A0700E85F30 /* MRTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRTimer.h; sourceTree = "<group>"; };
+		D1DCB1621C6B9A0700E85F30 /* MRTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRTimer.m; sourceTree = "<group>"; };
 		D1E141041A4F79D500992B1E /* MRTaskEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRTaskEditViewController.h; sourceTree = "<group>"; };
 		D1E141051A4F79D500992B1E /* MRTaskEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRTaskEditViewController.m; sourceTree = "<group>"; };
 		D1E141071A4F79E600992B1E /* MRTaskListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRTaskListViewController.h; sourceTree = "<group>"; };
@@ -485,6 +488,8 @@
 				D1C6CF761C6293F500E7DA00 /* MRDatePickerProvider.m */,
 				D1EEDFEB1C6AE1820020B083 /* MRNotificationPermissionsProvider.h */,
 				D1EEDFEC1C6AE1820020B083 /* MRNotificationPermissionsProvider.m */,
+				D1DCB1611C6B9A0700E85F30 /* MRTimer.h */,
+				D1DCB1621C6B9A0700E85F30 /* MRTimer.m */,
 			);
 			path = Lib;
 			sourceTree = "<group>";
@@ -687,6 +692,7 @@
 				D1E141201A4FDD2D00992B1E /* MRAddTimeTableViewCell.m in Sources */,
 				D1027F7718904E8400FF44A4 /* main.m in Sources */,
 				D19C952E18A29368009082F3 /* MRShortDateFormatter.m in Sources */,
+				D1DCB1631C6B9A0700E85F30 /* MRTimer.m in Sources */,
 				D1EF530B1C582B2300C71997 /* MRCreditsViewController.m in Sources */,
 				D1E141121A4F7A4300992B1E /* MRRootViewController.m in Sources */,
 				D15054211A5F5B41000CA868 /* MRNotificationProvider.m in Sources */,
