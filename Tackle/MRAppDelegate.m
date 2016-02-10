@@ -13,6 +13,7 @@
 #import "MRNotificationProvider.h"
 #import "MRPersistenceController.h"
 #import "MRDatePickerProvider.h"
+#import "MRNotificationPermissionsProvider.h"
 
 #import <mach/mach.h>
 
@@ -35,41 +36,9 @@ const BOOL kMRTesting = NO;
 }
 
 - (void)completeUserInterfaceWithApplication:(UIApplication *)application launchOptions:(NSDictionary *)launchOptions {
-    if (IS_OS_8_OR_LATER) {
-        UIUserNotificationType types = UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound;
-
-        UIMutableUserNotificationAction *tenMinutesAction = [[UIMutableUserNotificationAction alloc] init];
-        tenMinutesAction.identifier = kMRAddTenMinutesActionIdentifier;
-        tenMinutesAction.destructive = NO;
-        tenMinutesAction.title = NSLocalizedString(@"Notification Action Add 10 Minutes", nil);
-        tenMinutesAction.activationMode = UIUserNotificationActivationModeBackground;
-        tenMinutesAction.authenticationRequired = NO;
-
-        UIMutableUserNotificationAction *oneHourAction = [[UIMutableUserNotificationAction alloc] init];
-        oneHourAction.identifier = kMRAddOneHourActionIdentifier;
-        oneHourAction.destructive = NO;
-        oneHourAction.title = NSLocalizedString(@"Notification Action Add 1 Hour", nil);
-        oneHourAction.activationMode = UIUserNotificationActivationModeBackground;
-        oneHourAction.authenticationRequired = NO;
-
-        UIMutableUserNotificationAction *destroyAction = [[UIMutableUserNotificationAction alloc] init];
-        destroyAction.identifier = kMRDestroyTaskActionIdentifier;
-        destroyAction.destructive = YES;
-        destroyAction.title = NSLocalizedString(@"Notification Action Done", nil);
-        destroyAction.activationMode = UIUserNotificationActivationModeBackground;
-        destroyAction.authenticationRequired = NO;
-
-        UIMutableUserNotificationCategory *category = [[UIMutableUserNotificationCategory alloc] init];
-        category.identifier = kMRTaskNotificationCategoryIdentifier;
-
-        [category setActions:@[destroyAction, tenMinutesAction] forContext:UIUserNotificationActionContextMinimal];
-        [category setActions:@[destroyAction, tenMinutesAction, oneHourAction] forContext:UIUserNotificationActionContextDefault];
-
-        NSSet *categories = [[NSSet alloc] initWithObjects:category, nil];
-
-        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:types
-                                                                                        categories:categories]];
-    }
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{
+                                                              kMRNotificationPermissionsRequestedKey: @NO
+                                                              }];
 
     if (kMRTesting) {
         [[UIApplication sharedApplication] cancelAllLocalNotifications];
