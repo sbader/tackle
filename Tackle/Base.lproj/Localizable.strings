@@ -13,6 +13,9 @@
 "a Day" = "a Day";
 
 /* No comment provided by engineer. */
+"Allow" = "Allow"; /* NEW */
+
+/* No comment provided by engineer. */
 "an Hour" = "an Hour";
 
 /* No comment provided by engineer. */
@@ -37,6 +40,9 @@
 "Credits Title" = "Tackle";
 
 /* No comment provided by engineer. */
+"Date Detector Format" = "Set to “%@”";
+
+/* No comment provided by engineer. */
 "Date Picker Close Title" = "Cancel";
 
 /* No comment provided by engineer. */
@@ -47,6 +53,9 @@
 
 /* No comment provided by engineer. */
 "Designed and Developed by Scott Bader" = "Designed and Developed by Scott Bader";
+
+/* No comment provided by engineer. */
+"Dont’t Allow" = "Dont’t Allow"; /* NEW */
 
 /* No comment provided by engineer. */
 "Edit Task" = "Edit Reminder";
@@ -91,6 +100,9 @@
 "Notification Task Done" = "Complete";
 
 /* No comment provided by engineer. */
+"Notifications Priming Title" = "Notifications";
+
+/* No comment provided by engineer. */
 "Rate in the App Store" = "Rate in the App Store";
 
 /* No comment provided by engineer. */
@@ -101,9 +113,6 @@
 
 /* No comment provided by engineer. */
 "Send Feedback" = "Send Feedback";
-
-/* No comment provided by engineer. */
-"Date Detector Format" = "Set to “%@”";
 
 /* No comment provided by engineer. */
 "Tackle %@ (%@)" = "Tackle %1$@ (%2$@)";
@@ -133,6 +142,9 @@
 "Ten Minutes" = "Ten Minutes";
 
 /* No comment provided by engineer. */
+"Notifications Priming Text" = "Turn on notifications to receive alerts when a reminder reaches its due date.";
+
+/* No comment provided by engineer. */
 "Use Previous Task" = "Use Previous Reminder";
 
 /* No comment provided by engineer. */
@@ -147,3 +159,6 @@
 /* No comment provided by engineer. */
 "© 2016 Melody Road, LLC" = "© 2016 Melody Road, LLC";
 
+"Notifications Needed Title" = "Notifications";
+
+"Notifications Needed Text" = "To receive notifications at the due date, notifications must be enabled. You can enable them in Settings.";
