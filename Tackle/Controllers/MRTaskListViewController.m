@@ -223,6 +223,7 @@
 }
 
 - (void)handleNotificationForTask:(Task *)task {
+    [self countAndDisplayIconForPassedTasks];
     [self displayNotificationModalWithTask:task];
 }
 
