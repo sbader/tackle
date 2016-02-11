@@ -16,8 +16,6 @@
 #import "MRTimer.h"
 #import "MRNotificationPermissionsProvider.h"
 
-#import <mach/mach.h>
-
 const BOOL kMRTesting = NO;
 
 @interface MRAppDelegate ()
@@ -212,12 +210,12 @@ const BOOL kMRTesting = NO;
     [self removeAllTasks];
 
     [Task insertItemWithTitle:@"Leave for hockey game" dueDate:[NSDate dateWithTimeIntervalSinceNow:1800] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
-    [Task insertItemWithTitle:@"Go for a walk" dueDate:[[NSCalendar currentCalendar] dateWithEra:1 year:2016 month:1 day:30 hour:11 minute:0 second:0 nanosecond:0] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
-    [Task insertItemWithTitle:@"Work on designs for app" dueDate:[[NSCalendar currentCalendar] dateWithEra:1 year:2016 month:2 day:1 hour:11 minute:0 second:0 nanosecond:0] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
-    [Task insertItemWithTitle:@"Pick up dry cleaning" dueDate:[[NSCalendar currentCalendar] dateWithEra:1 year:2016 month:1 day:30 hour:15 minute:0 second:0 nanosecond:0] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
-    [Task insertItemWithTitle:@"Get to the gym" dueDate:[[NSCalendar currentCalendar] dateWithEra:1 year:2016 month:2 day:2 hour:14 minute:0 second:0 nanosecond:0] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
-    [Task insertItemWithTitle:@"Pay the electricity bill" dueDate:[[NSCalendar currentCalendar] dateWithEra:1 year:2016 month:2 day:16 hour:10 minute:0 second:0 nanosecond:0] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
-    [Task insertItemWithTitle:@"Go to the airport" dueDate:[[NSCalendar currentCalendar] dateWithEra:1 year:2016 month:3 day:2 hour:10 minute:0 second:0 nanosecond:0] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
+    [Task insertItemWithTitle:@"Go for a walk" dueDate:[[NSCalendar currentCalendar] dateWithEra:1 year:2016 month:2 day:12 hour:11 minute:0 second:0 nanosecond:0] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
+    [Task insertItemWithTitle:@"Work on designs for app" dueDate:[[NSCalendar currentCalendar] dateWithEra:1 year:2016 month:2 day:14 hour:11 minute:0 second:0 nanosecond:0] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
+    [Task insertItemWithTitle:@"Pick up dry cleaning" dueDate:[[NSCalendar currentCalendar] dateWithEra:1 year:2016 month:2 day:30 hour:15 minute:0 second:0 nanosecond:0] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
+    [Task insertItemWithTitle:@"Get to the gym" dueDate:[[NSCalendar currentCalendar] dateWithEra:1 year:2016 month:3 day:2 hour:14 minute:0 second:0 nanosecond:0] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
+    [Task insertItemWithTitle:@"Pay the electricity bill" dueDate:[[NSCalendar currentCalendar] dateWithEra:1 year:2016 month:3 day:16 hour:10 minute:0 second:0 nanosecond:0] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
+    [Task insertItemWithTitle:@"Go to the airport" dueDate:[[NSCalendar currentCalendar] dateWithEra:1 year:2016 month:4 day:2 hour:10 minute:0 second:0 nanosecond:0] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
     [Task insertItemWithTitle:@"Baseball game" dueDate:[[NSCalendar currentCalendar] dateWithEra:1 year:2016 month:4 day:3 hour:20 minute:37 second:0 nanosecond:0] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
     [Task insertItemWithTitle:@"File your taxes" dueDate:[[NSCalendar currentCalendar] dateWithEra:1 year:2016 month:4 day:18 hour:9 minute:0 second:0 nanosecond:0] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
 
