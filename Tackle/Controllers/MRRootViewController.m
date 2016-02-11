@@ -52,7 +52,7 @@
                                                                       preferredStyle:UIAlertControllerStyleAlert];
 
     UIAlertAction *disallowAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Don’t Allow", nil)
-                                                             style:UIAlertActionStyleCancel
+                                                             style:UIAlertActionStyleDefault
                                                            handler:nil];
 
     __block id blockSelf = self;
