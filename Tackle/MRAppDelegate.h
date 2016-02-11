@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-extern const BOOL kMRTesting;
-
 @interface MRAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

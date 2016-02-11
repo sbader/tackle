@@ -29,11 +29,8 @@ NSString * const kSlowHeartbeatId = @"kSlowHeartbeatId";
     dispatch_once(&onceToken, ^{
         heartbeat = [[self alloc] init];
         heartbeat.tick = 0;
-
-        if (!kMRTesting) {
-            heartbeat.timerThread = [[NSThread alloc] initWithTarget:heartbeat selector:@selector(startTimerThread) object:nil];
-            [heartbeat.timerThread start];
-        }
+        heartbeat.timerThread = [[NSThread alloc] initWithTarget:heartbeat selector:@selector(startTimerThread) object:nil];
+        [heartbeat.timerThread start];
     });
 
     return heartbeat;
