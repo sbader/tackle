@@ -289,17 +289,9 @@
 
 #pragma mark - Task Alerting Delegate
 
-- (void)editedAlertedTask:(Task *)task {
-    [self.persistenceController save];
-    [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
-}
-
-- (void)completedAlertedTask:(Task *)task {
-    [self completedTask:task];
-
+- (void)checkTaskCount {
     if (self.modalPresentedViewController) {
         NSFetchRequest *fetchRequest = [Task passedOpenTasksFetchRequestWithManagedObjectContext:self.persistenceController.managedObjectContext];
-        [fetchRequest setFetchLimit:5];
 
         NSError *error = nil;
         NSInteger count = [self.persistenceController.managedObjectContext countForFetchRequest:fetchRequest error:&error];
@@ -309,6 +301,17 @@
             [self mr_dismissViewControllerModallyAnimated:YES completion:nil];
         }
     }
+}
+
+- (void)editedAlertedTask:(Task *)task {
+    [self.persistenceController save];
+    [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
+    [self checkTaskCount];
+}
+
+- (void)completedAlertedTask:(Task *)task {
+    [self completedTask:task];
+    [self checkTaskCount];
 }
 
 #pragma mark - Task Editing Delegate
