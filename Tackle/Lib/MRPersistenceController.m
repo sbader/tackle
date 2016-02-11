@@ -47,9 +47,11 @@
 
     NSPersistentStoreCoordinator *psc = self.managedObjectContext.persistentStoreCoordinator;
     NSMutableDictionary *options = [NSMutableDictionary dictionary];
-//    options[NSMigratePersistentStoresAutomaticallyOption] = @YES;
-//    options[NSInferMappingModelAutomaticallyOption] = @YES;
-    options[NSSQLitePragmasOption] = @{ @"journal_mode":@"DELETE" };
+    options[NSMigratePersistentStoresAutomaticallyOption] = @YES;
+    options[NSInferMappingModelAutomaticallyOption] = @YES;
+    options[NSSQLitePragmasOption] = @{
+                                       @"journal_mode": @"WAL"
+                                       };
 
     NSURL *directory = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory
                                                               inDomain:NSUserDomainMask
