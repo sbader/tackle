@@ -47,17 +47,25 @@
 
     NSPersistentStoreCoordinator *psc = self.managedObjectContext.persistentStoreCoordinator;
     NSMutableDictionary *options = [NSMutableDictionary dictionary];
-    options[NSMigratePersistentStoresAutomaticallyOption] = @YES;
-    options[NSInferMappingModelAutomaticallyOption] = @YES;
+//    options[NSMigratePersistentStoresAutomaticallyOption] = @YES;
+//    options[NSInferMappingModelAutomaticallyOption] = @YES;
     options[NSSQLitePragmasOption] = @{ @"journal_mode":@"DELETE" };
 
+    NSURL *directory = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory
+                                                              inDomain:NSUserDomainMask
+                                                     appropriateForURL:nil
+                                                                create:YES
+                                                                 error:NULL];
 
-    NSArray *paths = [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
-    NSURL *directory = [paths lastObject];
     NSURL *storeURL = [directory URLByAppendingPathComponent:@"Tackle.sqlite"];
 
     NSError *error = nil;
-    NSPersistentStore *store __attribute__((unused)) = [psc addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error];
+    NSPersistentStore *store __attribute__((unused)) = [psc addPersistentStoreWithType:NSSQLiteStoreType
+                                                                         configuration:nil
+                                                                                   URL:storeURL
+                                                                               options:options
+                                                                                 error:&error];
+
     NSAssert(store, @"Could not add persistent store");
 }
 
