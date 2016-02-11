@@ -16,8 +16,6 @@
 #import "MRTimer.h"
 #import "MRNotificationPermissionsProvider.h"
 
-const BOOL kMRTesting = NO;
-
 @interface MRAppDelegate ()
 
 @property (nonatomic) MRRootViewController *rootController;
@@ -39,11 +37,6 @@ const BOOL kMRTesting = NO;
     [[NSUserDefaults standardUserDefaults] registerDefaults:@{
                                                               kMRNotificationPermissionsRequestedKey: @NO
                                                               }];
-
-    if (kMRTesting) {
-        [[UIApplication sharedApplication] cancelAllLocalNotifications];
-        [self addSampleData];
-    }
 
     [self setupAppearance];
     [self setupWindow];
@@ -201,47 +194,6 @@ const BOOL kMRTesting = NO;
     else {
         NSLog(@"Cannot handle action with identifier %@", identifier);
         completionHandler();
-    }
-}
-
-#pragma mark - Utilities
-
-- (BOOL)addSampleData {
-    [self removeAllTasks];
-
-    [Task insertItemWithTitle:@"Leave for hockey game" dueDate:[NSDate dateWithTimeIntervalSinceNow:1800] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
-    [Task insertItemWithTitle:@"Go for a walk" dueDate:[[NSCalendar currentCalendar] dateWithEra:1 year:2016 month:2 day:12 hour:11 minute:0 second:0 nanosecond:0] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
-    [Task insertItemWithTitle:@"Work on designs for app" dueDate:[[NSCalendar currentCalendar] dateWithEra:1 year:2016 month:2 day:14 hour:11 minute:0 second:0 nanosecond:0] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
-    [Task insertItemWithTitle:@"Pick up dry cleaning" dueDate:[[NSCalendar currentCalendar] dateWithEra:1 year:2016 month:2 day:30 hour:15 minute:0 second:0 nanosecond:0] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
-    [Task insertItemWithTitle:@"Get to the gym" dueDate:[[NSCalendar currentCalendar] dateWithEra:1 year:2016 month:3 day:2 hour:14 minute:0 second:0 nanosecond:0] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
-    [Task insertItemWithTitle:@"Pay the electricity bill" dueDate:[[NSCalendar currentCalendar] dateWithEra:1 year:2016 month:3 day:16 hour:10 minute:0 second:0 nanosecond:0] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
-    [Task insertItemWithTitle:@"Go to the airport" dueDate:[[NSCalendar currentCalendar] dateWithEra:1 year:2016 month:4 day:2 hour:10 minute:0 second:0 nanosecond:0] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
-    [Task insertItemWithTitle:@"Baseball game" dueDate:[[NSCalendar currentCalendar] dateWithEra:1 year:2016 month:4 day:3 hour:20 minute:37 second:0 nanosecond:0] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
-    [Task insertItemWithTitle:@"File your taxes" dueDate:[[NSCalendar currentCalendar] dateWithEra:1 year:2016 month:4 day:18 hour:9 minute:0 second:0 nanosecond:0] identifier:[NSUUID UUID].UUIDString inManagedObjectContext:self.persistenceController.managedObjectContext];
-
-    return YES;
-}
-
-- (void)removeAllTasks {
-    NSFetchRequest *fetchRequest = [Task allTasksFetchRequestWithManagedObjectContext:self.persistenceController.managedObjectContext];
-    [fetchRequest setIncludesPropertyValues:NO];
-
-    NSError *error = nil;
-    NSArray *tasks = [self.persistenceController.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    NSAssert(tasks != nil, @"Failed to execute fetch %@", error);
-
-    for (Task *task in tasks) {
-        [self.persistenceController.managedObjectContext deleteObject:task];
-    }
-}
-
-- (void)displayFonts {
-    for (NSString* family in [UIFont familyNames]) {
-        NSLog(@"%@", family);
-
-        for (NSString* name in [UIFont fontNamesForFamilyName: family]) {
-            NSLog(@"  %@", name);
-        }
     }
 }
 
