@@ -13,7 +13,7 @@
 "a Day" = "a Day";
 
 /* No comment provided by engineer. */
-"Allow" = "Allow"; /* NEW */
+"Allow" = "Allow";
 
 /* No comment provided by engineer. */
 "an Hour" = "an Hour";
@@ -55,7 +55,7 @@
 "Designed and Developed by Scott Bader" = "Designed and Developed by Scott Bader";
 
 /* No comment provided by engineer. */
-"Dont’t Allow" = "Dont’t Allow"; /* NEW */
+"Don’t Allow" = "Don’t Allow";
 
 /* No comment provided by engineer. */
 "Edit Task" = "Edit Reminder";

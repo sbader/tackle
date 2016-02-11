@@ -51,7 +51,7 @@
                                                                              message:NSLocalizedString(@"Notifications Priming Text", nil)
                                                                       preferredStyle:UIAlertControllerStyleAlert];
 
-    UIAlertAction *disallowAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Dont’t Allow", nil)
+    UIAlertAction *disallowAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Don’t", nil)
                                                              style:UIAlertActionStyleCancel
                                                            handler:nil];
 
