@@ -36,17 +36,10 @@
 
     NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Tackle" withExtension:@"momd"];
     NSManagedObjectModel *mom = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-
-    if (!modelURL) {
-        NSLog(@"Managed object model could not be initialized");
-        return;
-    }
+    NSAssert(mom, @"Managed object model could not be initialized");
 
     NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mom];
-    if (!coordinator) {
-         NSLog(@"Persistent Store Coordinator could not be initialized");
-        return;
-    }
+    NSAssert(coordinator, @"Persistent Store Coordinator could not be initialized");
 
     [self setManagedObjectContext:[[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType]];
     self.managedObjectContext.undoManager = [[NSUndoManager alloc] init];
@@ -69,15 +62,13 @@
     NSURL *storeURL = [directory URLByAppendingPathComponent:@"Tackle.sqlite"];
 
     NSError *error = nil;
-    NSPersistentStore *store = [psc addPersistentStoreWithType:NSSQLiteStoreType
+    NSPersistentStore *store __attribute__((unused)) = [psc addPersistentStoreWithType:NSSQLiteStoreType
                                                                          configuration:nil
                                                                                    URL:storeURL
                                                                                options:options
                                                                                  error:&error];
 
-    if (!store) {
-        NSLog(@"Could not add persistent store");
-    }
+    NSAssert(store, @"Could not add persistent store");
 }
 
 - (void)save {
@@ -86,12 +77,9 @@
     }
 
     [[self managedObjectContext] performBlockAndWait:^{
-        NSError *error __attribute__((unused)) = nil;
+        NSError *error = nil;
         [[self managedObjectContext] save:&error];
-
-        if (error) {
-            NSLog(@"Error saving main managed object context %@", error.localizedDescription);
-        }
+        NSAssert(error == nil, @"Error saving main managed object context");
     }];
 }
 
