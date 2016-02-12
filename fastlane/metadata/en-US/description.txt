@@ -1,0 +1,7 @@
+Set reminders for the things you need to get done, and get notified — relentlessly.
+
+Tackle does one simple thing: it makes it easy for you to set reminders, and then it notifies you continually, until they're completed. The relentless notifications make sure you never forget what you need to get done.
+
+• Get notifications for reminders at the due date and every minute after until they're snoozed or completed
+• Mark reminders as completed or snooze them straight from the notification
+• View and recycle completed reminders from the Archive
