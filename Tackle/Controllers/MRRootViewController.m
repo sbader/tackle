@@ -39,9 +39,13 @@
 }
 
 - (void)checkNotificationPermissions {
-    if ([[MRNotificationPermissionsProvider sharedInstance] shouldRequestPermissions]) {
-        [self displayNotificationPermissionsRequestPriming];
-    }
+    [[MRNotificationPermissionsProvider sharedInstance] shouldRequestPermissionsWithCompletion:^(BOOL shouldRequestPermissions) {
+        if (shouldRequestPermissions) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self displayNotificationPermissionsRequestPriming];
+            });
+        }
+    }];
 }
 
 - (void)displayNotificationPermissionsRequestPriming {

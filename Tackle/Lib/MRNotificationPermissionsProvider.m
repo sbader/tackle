@@ -10,6 +10,8 @@
 
 #import "Task.h"
 
+@import UserNotifications;
+
 NSString * const kMRNotificationPermissionsRequestedKey = @"NotificationPermissionsRequested";
 
 @implementation MRNotificationPermissionsProvider
@@ -25,58 +27,64 @@ NSString * const kMRNotificationPermissionsRequestedKey = @"NotificationPermissi
     return instance;
 }
 
-- (BOOL)shouldRequestPermissions {
-    return ![self userNotificationsEnabled] && ![self notificationPermissionsAlreadyRequested];
+- (void)shouldRequestPermissionsWithCompletion:(void (^)(BOOL requestPermissions))completionHandler {
+    if (self.notificationPermissionsAlreadyRequested) {
+        return;
+    }
+
+    [self checkUserNotificationsEnabled:^(BOOL enabled) {
+        completionHandler(!enabled);
+    }];
 }
 
 - (BOOL)notificationPermissionsAlreadyRequested {
     return [[NSUserDefaults standardUserDefaults] boolForKey:kMRNotificationPermissionsRequestedKey];
 }
 
-- (BOOL)userNotificationsEnabled {
-    UIUserNotificationSettings *settings = [[UIApplication sharedApplication] currentUserNotificationSettings];
-    return settings.types & (UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound);
+- (void)checkUserNotificationsEnabled:(void (^)(BOOL enabled))completionHandler {
+    [[UNUserNotificationCenter currentNotificationCenter] getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
+        BOOL isEnabled = settings.soundSetting == UNNotificationSettingEnabled ||
+                         settings.alertSetting == UNNotificationSettingEnabled ||
+                         settings.badgeSetting;
+
+        completionHandler(isEnabled);
+    }];
 }
 
 - (void)setPermissionsRequested:(BOOL)requested {
     [[NSUserDefaults standardUserDefaults] setBool:requested forKey:kMRNotificationPermissionsRequestedKey];
 }
 
-- (void)registerNotificationPermissions {
-    UIUserNotificationType types = UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound;
+- (void)setupCategories {
+    UNNotificationAction *tenMinuteAction = [UNNotificationAction actionWithIdentifier:kMRAddTenMinutesActionIdentifier
+                                                                                 title:NSLocalizedString(@"Notification Action Add 10 Minutes", nil)
+                                                                               options:UNNotificationActionOptionNone];
 
-    UIMutableUserNotificationAction *tenMinutesAction = [[UIMutableUserNotificationAction alloc] init];
-    tenMinutesAction.identifier = kMRAddTenMinutesActionIdentifier;
-    tenMinutesAction.destructive = NO;
-    tenMinutesAction.title = NSLocalizedString(@"Notification Action Add 10 Minutes", nil);
-    tenMinutesAction.activationMode = UIUserNotificationActivationModeBackground;
-    tenMinutesAction.authenticationRequired = NO;
+    UNNotificationAction *oneHourAction = [UNNotificationAction actionWithIdentifier:kMRAddOneHourActionIdentifier
+                                                                               title:NSLocalizedString(@"Notification Action Add 1 Hour", nil)
+                                                                             options:UNNotificationActionOptionNone];
 
-    UIMutableUserNotificationAction *oneHourAction = [[UIMutableUserNotificationAction alloc] init];
-    oneHourAction.identifier = kMRAddOneHourActionIdentifier;
-    oneHourAction.destructive = NO;
-    oneHourAction.title = NSLocalizedString(@"Notification Action Add 1 Hour", nil);
-    oneHourAction.activationMode = UIUserNotificationActivationModeBackground;
-    oneHourAction.authenticationRequired = NO;
+    UNNotificationAction *destroyAction = [UNNotificationAction actionWithIdentifier:kMRDestroyTaskActionIdentifier
+                                                                               title:NSLocalizedString(@"Notification Action Done", nil)
+                                                                             options:UNNotificationActionOptionDestructive];
 
-    UIMutableUserNotificationAction *destroyAction = [[UIMutableUserNotificationAction alloc] init];
-    destroyAction.identifier = kMRDestroyTaskActionIdentifier;
-    destroyAction.destructive = YES;
-    destroyAction.title = NSLocalizedString(@"Notification Action Done", nil);
-    destroyAction.activationMode = UIUserNotificationActivationModeBackground;
-    destroyAction.authenticationRequired = NO;
-
-    UIMutableUserNotificationCategory *category = [[UIMutableUserNotificationCategory alloc] init];
-    category.identifier = kMRTaskNotificationCategoryIdentifier;
-
-    [category setActions:@[destroyAction, tenMinutesAction] forContext:UIUserNotificationActionContextMinimal];
-    [category setActions:@[destroyAction, tenMinutesAction, oneHourAction] forContext:UIUserNotificationActionContextDefault];
+    UNNotificationCategory *category = [UNNotificationCategory categoryWithIdentifier:kMRTaskNotificationCategoryIdentifier
+                                                                              actions:@[destroyAction, tenMinuteAction, oneHourAction]
+                                                                    intentIdentifiers:@[]
+                                                                              options:UNNotificationCategoryOptionCustomDismissAction];
 
     NSSet *categories = [[NSSet alloc] initWithObjects:category, nil];
+    [[UNUserNotificationCenter currentNotificationCenter] setNotificationCategories:categories];
+    os_log(OS_LOG_DEFAULT, "Setup categories");
+}
 
-    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:types
-                                                                                    categories:categories]];
-
+- (void)registerNotificationPermissions {
+    UNAuthorizationOptions options = UNAuthorizationOptionAlert|UNAuthorizationOptionBadge|UNAuthorizationOptionSound;
+    [[UNUserNotificationCenter currentNotificationCenter] requestAuthorizationWithOptions:options completionHandler:^(BOOL granted, NSError * _Nullable error) {
+        if (granted) {
+            os_log(OS_LOG_DEFAULT, "Granted");
+        }
+    }];
 }
 
 

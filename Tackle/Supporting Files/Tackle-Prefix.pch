@@ -21,6 +21,7 @@
     #import "UIViewController+MRAdditions.h"
     #import "UIImage+TackleAdditions.h"
     #import "NSDate+TackleAdditions.h"
+    #import <os/log.h>
 #endif
 
 #define IS_OS_7_OR_LATER    ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)

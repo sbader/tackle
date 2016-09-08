@@ -72,6 +72,7 @@
 		D1E141321A4FEC8700992B1E /* MRCalendarCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E141311A4FEC8700992B1E /* MRCalendarCollectionViewFlowLayout.m */; };
 		D1EEDFED1C6AE1820020B083 /* MRNotificationPermissionsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = D1EEDFEC1C6AE1820020B083 /* MRNotificationPermissionsProvider.m */; };
 		D1EF530B1C582B2300C71997 /* MRCreditsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1EF530A1C582B2300C71997 /* MRCreditsViewController.m */; };
+		D1F0E8791D0F5C3B00C14C28 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1F0E8781D0F5C3B00C14C28 /* UserNotifications.framework */; };
 		D1F0EA1F1C626EFF00E0795E /* UIView+TackleDisplayAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D1F0EA1E1C626EFF00E0795E /* UIView+TackleDisplayAdditions.m */; };
 		D1F652921AF1317500085D88 /* MRPersistenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1F652911AF1317500085D88 /* MRPersistenceController.m */; };
 		D1F968901A565338009813C0 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1F9688F1A565338009813C0 /* Accelerate.framework */; };
@@ -236,6 +237,7 @@
 		D1EEDFEC1C6AE1820020B083 /* MRNotificationPermissionsProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRNotificationPermissionsProvider.m; sourceTree = "<group>"; };
 		D1EF53091C582B2300C71997 /* MRCreditsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRCreditsViewController.h; sourceTree = "<group>"; };
 		D1EF530A1C582B2300C71997 /* MRCreditsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRCreditsViewController.m; sourceTree = "<group>"; };
+		D1F0E8781D0F5C3B00C14C28 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		D1F0EA1D1C626EFF00E0795E /* UIView+TackleDisplayAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TackleDisplayAdditions.h"; sourceTree = "<group>"; };
 		D1F0EA1E1C626EFF00E0795E /* UIView+TackleDisplayAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TackleDisplayAdditions.m"; sourceTree = "<group>"; };
 		D1F652901AF1317500085D88 /* MRPersistenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRPersistenceController.h; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1F0E8791D0F5C3B00C14C28 /* UserNotifications.framework in Frameworks */,
 				D130A1051C593BD700394EDF /* MessageUI.framework in Frameworks */,
 				D1F968901A565338009813C0 /* Accelerate.framework in Frameworks */,
 				D1027F6B18904E8400FF44A4 /* CoreGraphics.framework in Frameworks */,
@@ -302,6 +305,7 @@
 		D1027F6718904E8400FF44A4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D1F0E8781D0F5C3B00C14C28 /* UserNotifications.framework */,
 				D1F9688F1A565338009813C0 /* Accelerate.framework */,
 				D1027F6E18904E8400FF44A4 /* CoreData.framework */,
 				D1027F6A18904E8400FF44A4 /* CoreGraphics.framework */,
@@ -601,7 +605,7 @@
 			attributes = {
 				CLASSPREFIX = MR;
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Melody Road";
 				TargetAttributes = {
 					D1027F6418904E8400FF44A4 = {
@@ -803,12 +807,15 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -844,11 +851,14 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -872,7 +882,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 71;
+				CURRENT_PROJECT_VERSION = 72;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -881,7 +891,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "Tackle/Supporting Files/Tackle-Prefix.pch";
 				INFOPLIST_FILE = "Tackle/Supporting Files/Tackle-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				"OTHER_LDFLAGS[arch=*]" = (
 					"-ObjC",
@@ -908,7 +918,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 71;
+				CURRENT_PROJECT_VERSION = 72;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -917,7 +927,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "Tackle/Supporting Files/Tackle-Prefix.pch";
 				INFOPLIST_FILE = "Tackle/Supporting Files/Tackle-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.melodyroad.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
