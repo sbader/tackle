@@ -23,7 +23,7 @@
 
 
 - (void)rescheduleAllNotificationsWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
-    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    [[UNUserNotificationCenter currentNotificationCenter] removeAllPendingNotificationRequests];
 
     NSFetchRequest *fetchRequest = [Task openTasksFetchRequestWithManagedObjectContext:managedObjectContext];
     NSError *error = nil;
@@ -41,33 +41,28 @@
 }
 
 - (void)scheduleNotificationForTask:(Task *)task {
-    UILocalNotification *notification = [[UILocalNotification alloc] init];
+    UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
+    content.title = @"Time To Tackle";
+    content.body = task.title;
+    content.sound = [UNNotificationSound soundNamed:@"tacklespiel.aif"];
+    content.categoryIdentifier = kMRTaskNotificationCategoryIdentifier;
 
-    [notification setFireDate:task.dueDate];
-    [notification setAlertBody:task.title];
-    [notification setRepeatInterval:NSCalendarUnitMinute];
-    [notification setAlertAction:@"Tackle"];
-    [notification setSoundName:@"tacklespiel.aif"];
-    [notification setUserInfo:@{@"identifier": task.identifier}];
-    [notification setCategory:@"taskNotificationCategory"];
+    UNCalendarNotificationTrigger *trigger = [UNCalendarNotificationTrigger triggerWithDateMatchingComponents:task.dueDateComponents
+                                                                                                      repeats:NO];
 
-    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+
+    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:task.identifier
+                                                                          content:content
+                                                                          trigger:trigger];
+
+    //TODO: Add a way to do repeated notifications. May need to just created a bunch of requests
+
+    [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:nil];
+    os_log(OS_LOG_DEFAULT, "Scheduled notification for task %@", task.title);
 }
 
 - (void)cancelNotificationForTask:(Task *)task {
-    NSArray *localNotifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
-
-    NSUInteger index = [localNotifications indexOfObjectPassingTest:^BOOL(UILocalNotification *notification, NSUInteger idx, BOOL *stop) {
-        NSString *taskIdentifier = (NSString *)[notification.userInfo objectForKey:@"identifier"];
-        return [taskIdentifier isEqualToString:task.identifier];
-    }];
-
-    if (index == NSNotFound) {
-        return;
-    }
-
-    UILocalNotification *notification = [localNotifications objectAtIndex:index];
-    [[UIApplication sharedApplication] cancelLocalNotification:notification];
+    [[UNUserNotificationCenter currentNotificationCenter] removePendingNotificationRequestsWithIdentifiers:@[task.identifier]];
 }
 
 @end

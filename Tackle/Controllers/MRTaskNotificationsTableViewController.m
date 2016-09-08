@@ -14,12 +14,14 @@
 #import "MRPersistenceController.h"
 #import "MRNotificationProvider.h"
 #import "MRHeartbeat.h"
+#import "MRTimer.h"
 
 @interface MRTaskNotificationsTableViewController () <NSFetchedResultsControllerDelegate, MRTaskNotificationTableViewCellDelegate>
 
 @property (nonatomic) MRPersistenceController *persistenceController;
 @property (nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic) NSLayoutConstraint *heightConstraint;
+@property (nonatomic) MRTimer *timer;
 
 @end
 
@@ -38,11 +40,19 @@ static NSString * const notificationTasksCellReuseIdentifier = @"NotificationTas
 }
 
 - (void)attachObservers {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(heartDidBeat:) name:[MRHeartbeat slowHeartbeatId] object:nil];
+    self.timer = [[MRTimer alloc] initWithStartDate:[NSDate date] interval:1 repeatedBlock:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self heartDidBeat];
+        });
+    }];
+    [self.timer startTimer];
 }
 
 - (void)detachObservers {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:[MRHeartbeat slowHeartbeatId] object:nil];
+    if (self.timer) {
+        [self.timer cancel];
+        self.timer = nil;
+    }
 }
 
 - (void)dealloc {
@@ -211,7 +221,7 @@ static NSString * const notificationTasksCellReuseIdentifier = @"NotificationTas
     [self.taskNotificationTableViewControllerDelegate completedTask:task];
 }
 
-- (void)heartDidBeat:(NSNotification *)notification {
+- (void)heartDidBeat {
     dispatch_async(dispatch_get_main_queue(), ^{
         [[self.tableView visibleCells] enumerateObjectsUsingBlock:^(MRTaskNotificationTableViewCell *cell, NSUInteger idx, BOOL *stop) {
             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];

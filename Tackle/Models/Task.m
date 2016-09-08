@@ -114,4 +114,11 @@ NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCateg
     return [NSString stringWithFormat:@"<Task: title:%@, dueDate:%@>", self.title, self.dueDate];
 }
 
+- (NSDateComponents *)dueDateComponents {
+    NSCalendarUnit components = NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitHour|NSCalendarUnitMinute;
+
+    return [[NSCalendar currentCalendar] components:components
+                                           fromDate:self.dueDate];
+}
+
 @end

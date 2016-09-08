@@ -31,4 +31,6 @@ extern NSString * const kMRAddOneHourActionIdentifier;
 + (NSFetchRequest *)passedOpenTasksFetchRequestWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 + (NSFetchRequest *)archivedTasksFetchRequestWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 
+- (NSDateComponents *)dueDateComponents;
+
 @end

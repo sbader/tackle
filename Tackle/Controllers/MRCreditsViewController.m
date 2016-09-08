@@ -262,7 +262,9 @@
 
 - (void)handleRateButton:(id)sender {
     NSURL *rateURL = [NSURL URLWithString:[NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", @"1079040532"]];
-    [[UIApplication sharedApplication] openURL:rateURL];
+//    [[UIApplication sharedApplication] openURL:rateURL];
+
+    [[UIApplication sharedApplication] openURL:rateURL options:@{} completionHandler:nil];
 }
 
 - (void)handleViewArchiveButton:(id)sender {

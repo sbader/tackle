@@ -16,7 +16,7 @@
 #import "MRTimer.h"
 #import "MRNotificationPermissionsProvider.h"
 
-@interface MRAppDelegate ()
+@interface MRAppDelegate () <UNUserNotificationCenterDelegate>
 
 @property (nonatomic) MRRootViewController *rootController;
 @property (strong) MRPersistenceController *persistenceController;
@@ -43,12 +43,12 @@
     [self setupRootViewController];
     [self.window makeKeyAndVisible];
 
+    [[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
+
+    [[MRNotificationPermissionsProvider sharedInstance] setupCategories];
     [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
 
-    UILocalNotification *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
-    if (notification) {
-        [self handleLocalNotification:notification];
-    }
+    // TODO: - Handle notifications that have been delivered
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -75,22 +75,26 @@
 
 - (void)startNotificationsTimer {
     MRNotificationPermissionsProvider *permissionsProvider = [MRNotificationPermissionsProvider sharedInstance];
-    if ([permissionsProvider notificationPermissionsAlreadyRequested] && ![permissionsProvider userNotificationsEnabled]) {
-        self.timer = [[MRTimer alloc] init];
+    if ([permissionsProvider notificationPermissionsAlreadyRequested]) {
+        [permissionsProvider checkUserNotificationsEnabled:^(BOOL enabled) {
+            if (!enabled) {
+                self.timer = [[MRTimer alloc] init];
 
-        NSCalendar *calendar = [NSCalendar currentCalendar];
-        NSDateComponents *components = [calendar components:(NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitHour|NSCalendarUnitMinute) fromDate:[NSDate date]];
-        components.minute += 1;
+                NSCalendar *calendar = [NSCalendar currentCalendar];
+                NSDateComponents *components = [calendar components:(NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitHour|NSCalendarUnitMinute) fromDate:[NSDate date]];
+                components.minute += 1;
 
-        __block id blockSelf = self;
+                __block id blockSelf = self;
 
-        self.timer = [[MRTimer alloc] initWithStartDate:[calendar dateFromComponents:components] interval:60 repeatedBlock:^{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [blockSelf checkPassedTasks];
-            });
+                self.timer = [[MRTimer alloc] initWithStartDate:[calendar dateFromComponents:components] interval:60 repeatedBlock:^{
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [blockSelf checkPassedTasks];
+                    });
+                }];
+                
+                [self.timer startTimer];
+            }
         }];
-
-        [self.timer startTimer];
     }
 }
 
@@ -146,22 +150,26 @@
     view.tintColor = [UIColor plumTintColor];
 }
 
-- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-    [self handleLocalNotification:notification];
-}
+- (void)handleNotificationWithIdentifier:(NSString *)identifier {
+    Task *task = [Task findTaskWithIdentifier:identifier
+                       inManagedObjectContext:self.persistenceController.managedObjectContext];
 
-- (void)handleLocalNotification:(UILocalNotification *)notification {
-    NSString *taskIdentifier = [notification.userInfo objectForKey:@"identifier"];
-    Task *task = [Task findTaskWithIdentifier:taskIdentifier inManagedObjectContext:self.persistenceController.managedObjectContext];
     [self.rootController handleNotificationForTask:task];
 }
 
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void (^)())completionHandler {
-    NSString *taskIdentifier = [notification.userInfo objectForKey:@"identifier"];
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler {
+    [self handleNotificationWithIdentifier:notification.request.identifier];
+    completionHandler(UNNotificationPresentationOptionNone);
+}
 
-    Task *task = [Task findTaskWithIdentifier:taskIdentifier inManagedObjectContext:self.persistenceController.managedObjectContext];
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler {
+    NSString *taskIdentifier = response.notification.request.identifier;
+    NSString *action = response.actionIdentifier;
 
-    if ([identifier isEqualToString:kMRAddTenMinutesActionIdentifier]) {
+    Task *task = [Task findTaskWithIdentifier:taskIdentifier
+                       inManagedObjectContext:self.persistenceController.managedObjectContext];
+
+    if ([action isEqualToString:kMRAddTenMinutesActionIdentifier]) {
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDate *date = [calendar dateByAddingUnit:NSCalendarUnitMinute value:10 toDate:[NSDate date] options:0];
         task.dueDate = date;
@@ -171,7 +179,7 @@
 
         completionHandler();
     }
-    else if ([identifier isEqualToString:kMRAddOneHourActionIdentifier]) {
+    else if ([action isEqualToString:kMRAddOneHourActionIdentifier]) {
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDate *date = [calendar dateByAddingUnit:NSCalendarUnitHour value:1 toDate:[NSDate date] options:0];
         task.dueDate = date;
@@ -182,7 +190,7 @@
 
         completionHandler();
     }
-    else if([identifier isEqualToString:kMRDestroyTaskActionIdentifier]) {
+    else if([action isEqualToString:kMRDestroyTaskActionIdentifier]) {
         task.isDone = YES;
         task.completedDate = [NSDate date];
         [[MRNotificationProvider sharedProvider] cancelNotificationForTask:task];
@@ -192,7 +200,7 @@
         completionHandler();
     }
     else {
-        NSLog(@"Cannot handle action with identifier %@", identifier);
+        NSLog(@"Cannot handle action with identifier %@", action);
         completionHandler();
     }
 }
