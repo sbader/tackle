@@ -211,8 +211,10 @@
     }
     else {
         task = [NSEntityDescription insertNewObjectForEntityForName:@"Task"
-                                                   inManagedObjectContext:self.persistenceController.managedObjectContext];
+                                             inManagedObjectContext:self.persistenceController.managedObjectContext];
+
         task.identifier = [NSUUID UUID].UUIDString;
+        task.originalDueDate = dueDate;
     }
 
     task.title = title;
@@ -282,6 +284,8 @@
     task.completedDate = [NSDate date];
 
     [[self undoManager] setActionName:@"Completed Task"];
+
+    [task createRepeatedTaskInManagedObjectContext:self.persistenceController.managedObjectContext];
 
     [self.persistenceController save];
     [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];

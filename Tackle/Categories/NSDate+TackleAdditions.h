@@ -22,6 +22,8 @@
 - (BOOL)isTomorrowToDate:(NSDate *)date;
 - (BOOL)isCurrentYear;
 - (BOOL)isSameYearAsDate:(NSDate *)date;
+- (BOOL)isWeekday;
+- (NSDate *)followingDay;
 - (NSDate *)beginningOfDay;
 - (NSDate *)beginningOfYear;
 - (NSString *)tackleStringSinceDate:(NSDate *)date;

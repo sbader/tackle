@@ -23,6 +23,7 @@
 @protocol MRTaskEditTableViewDelegate <NSObject>
 
 - (void)selectedDone;
+- (void)selectedRepeat;
 - (void)selectedTimeInterval:(MRTimeInterval *)timeInterval;
 - (void)selectedPreviousTaskTitle:(NSString *)title;
 

@@ -134,17 +134,20 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (self.doneButtonEnabled && self.previousTasksEnabled) {
-        return 3;
+        return 4;
     }
     else if (self.doneButtonEnabled || self.previousTasksEnabled) {
-        return 2;
+        return 3;
     }
 
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if ([self isDoneButtonSection:section]) {
+    if ([self isRepeatSection:section] ) {
+        return 1;
+    }
+    else if ([self isDoneButtonSection:section]) {
         return 1;
     }
     else if ([self isPreviousTasksSection:section]) {
@@ -156,7 +159,13 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self isPreviousTasksSection:indexPath.section]) {
+    if ([self isRepeatSection:indexPath.section]) {
+        MRAddTimeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:addTimeCellReuseIdentifier forIndexPath:indexPath];
+        cell.textLabel.text = NSLocalizedString(@"Task Repeat Button Title", nil);
+        cell.imageView.image = [PaintCodeStyleKit imageOfCheckmark];
+        return cell;
+    }
+    else if ([self isPreviousTasksSection:indexPath.section]) {
         MRPreviousTaskTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:previousTaskCellReuseIdentifier forIndexPath:indexPath];
         NSIndexPath *path = [NSIndexPath indexPathForRow:indexPath.row inSection:0];
         NSDictionary *taskDictionary = [self.fetchedResultsController objectAtIndexPath:path];
@@ -168,7 +177,6 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
         cell.textLabel.text = NSLocalizedString(@"Task Done Button Title", nil);
         cell.imageView.image = [PaintCodeStyleKit imageOfCheckmark];
         return cell;
-
     }
     else {
         MRAddTimeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:addTimeCellReuseIdentifier forIndexPath:indexPath];
@@ -183,7 +191,9 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
 #pragma mark - Table View Delegate
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self isDoneButtonSection:indexPath.section]) {
+    if ([self isRepeatSection:indexPath.section]) {
+    }
+    else if ([self isDoneButtonSection:indexPath.section]) {
         [self.delegate selectedDone];
     }
     else if ([self isTimeIntervalSection:indexPath.section]) {
@@ -257,16 +267,20 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
 
 #pragma mark - Convenience
 
+- (BOOL)isRepeatSection:(NSInteger)section {
+    return section == 0;
+}
+
 - (BOOL)isPreviousTasksSection:(NSInteger)section {
-    return ((self.doneButtonEnabled && self.previousTasksEnabled) && (section == 2)) || ((self.previousTasksEnabled && !self.doneButtonEnabled) && (section == 1));
+    return ((self.doneButtonEnabled && self.previousTasksEnabled) && (section == 3)) || ((self.previousTasksEnabled && !self.doneButtonEnabled) && (section == 2));
 }
 
 - (BOOL)isDoneButtonSection:(NSInteger)section {
-    return self.doneButtonEnabled && section == 0;
+    return self.doneButtonEnabled && section == 1;
 }
 
 - (BOOL)isTimeIntervalSection:(NSInteger)section {
-    return (self.doneButtonEnabled && section == 1) || (self.previousTasksEnabled && section == 0);
+    return (self.doneButtonEnabled && section == 2) || (self.previousTasksEnabled && section == 1);
 }
 
 @end

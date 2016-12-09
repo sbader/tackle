@@ -499,6 +499,16 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)selectedRepeat {
+    if (self.titleField.isFirstResponder) {
+        [self.titleField resignFirstResponder];
+    }
+
+    // MRDatePickerViewController *datePickerController = [[MRDatePickerViewController alloc] initWithDate:self.taskDueDate];
+    // datePickerController.delegate = self;
+    // [self mr_presentViewControllerModally:datePickerController animated:YES completion:nil];
+}
+
 - (void)selectedTimeInterval:(MRTimeInterval *)timeInterval {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     self.taskDueDate = [calendar dateByAddingUnit:timeInterval.unit

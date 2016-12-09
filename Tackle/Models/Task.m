@@ -21,23 +21,66 @@ NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCateg
 @dynamic dueDate;
 @dynamic isDone;
 @dynamic createdDate;
+@dynamic originalDueDate;
 @dynamic completedDate;
 @dynamic identifier;
+@dynamic repeats;
 
 - (void) awakeFromInsert {
     [super awakeFromInsert];
     self.createdDate = [NSDate date];
 }
 
-+ (Task *)insertItemWithTitle:(NSString *)title dueDate:(NSDate *)dueDate identifier:(NSString *)identifier inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
+- (Task *)createRepeatedTaskInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
+    TaskRepeatInterval interval = [self taskRepeatInterval];
+
+    if (interval == TaskRepeatIntervalNone) {
+        return nil;
+    }
+
     Task *task = [NSEntityDescription insertNewObjectForEntityForName:@"Task"
                                                inManagedObjectContext:managedObjectContext];
 
-    task.title = title;
+    task.identifier = [NSUUID UUID].UUIDString;
+    task.title = self.title;
+
+    NSDate *dueDate;
+
+    switch (interval) {
+        case TaskRepeatIntervalAllDays:
+            dueDate = [self.originalDueDate followingDay];
+            break;
+        case TaskRepeatIntervalWeekdays:
+            dueDate = [self.originalDueDate followingDay];
+
+            while (![dueDate isWeekday]) {
+                dueDate = [self.originalDueDate followingDay];
+            }
+            break;
+
+        default:
+            return nil;
+            break;
+    }
+
     task.dueDate = dueDate;
-    task.identifier = identifier;
+    task.originalDueDate = dueDate;
 
     return task;
+}
+
+- (TaskRepeatInterval)taskRepeatInterval {
+    NSInteger repeatValue = self.repeats.integerValue;
+
+    if (repeatValue == TaskRepeatIntervalAllDays) {
+        return TaskRepeatIntervalAllDays;
+    }
+    else if (repeatValue == TaskRepeatIntervalWeekdays) {
+        return TaskRepeatIntervalWeekdays;
+    }
+
+
+    return TaskRepeatIntervalNone;
 }
 
 + (Task *)findTaskWithIdentifier:(NSString *)identifier inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext  {

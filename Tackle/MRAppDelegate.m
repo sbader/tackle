@@ -208,7 +208,11 @@
         task.completedDate = [NSDate date];
         [[MRNotificationProvider sharedProvider] cancelNotificationForTask:task];
 
+        Task *repeatedTask = [task createRepeatedTaskInManagedObjectContext:self.persistenceController.managedObjectContext];
+
         [self.persistenceController save];
+
+        [[MRNotificationProvider sharedProvider] rescheduleNotificationForTask:repeatedTask];
 
         completionHandler();
     }

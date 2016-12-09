@@ -205,4 +205,22 @@
     return [self tackleStringSinceDate:[NSDate date]];
 }
 
+- (BOOL)isWeekday {
+    NSInteger weekday = [[NSCalendar currentCalendar] component:NSCalendarUnitWeekday fromDate:self];
+
+    if (weekday > 1 && weekday < 7) {
+        return true;
+    }
+
+    return false;
+}
+
+- (NSDate *)followingDay {
+    return [[NSCalendar currentCalendar] dateByAddingUnit:NSCalendarUnitDay
+                                                    value:1
+                                                   toDate:self
+                                                  options:0];
+}
+
+
 @end

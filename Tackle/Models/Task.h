@@ -14,18 +14,26 @@
 extern NSString * const kMRAddTenMinutesActionIdentifier;
 extern NSString * const kMRDestroyTaskActionIdentifier;
 extern NSString * const kMRTaskNotificationCategoryIdentifier;
-
 extern NSString * const kMRAddOneHourActionIdentifier;
+
+typedef NS_ENUM(NSInteger, TaskRepeatInterval) {
+    TaskRepeatIntervalNone,
+    TaskRepeatIntervalAllDays,
+    TaskRepeatIntervalWeekdays
+};
+
 @interface Task : NSManagedObject
 
 @property (nonatomic, retain) NSString *title;
 @property (nonatomic, retain) NSDate *dueDate;
+@property (nonatomic, retain) NSDate *originalDueDate;
 @property (nonatomic, retain) NSString *identifier;
 @property (nonatomic, retain) NSDate *createdDate;
 @property (nonatomic, retain) NSDate *completedDate;
+@property (nonatomic, retain) NSNumber *repeats;
 @property (nonatomic) BOOL isDone;
 
-+ (Task *)insertItemWithTitle:(NSString*)title dueDate:(NSDate *)dueDate identifier:(NSString *)identifier inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
+- (Task *)createRepeatedTaskInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 + (Task *)findTaskWithIdentifier:(NSString *)identifier inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 + (Task *)findTaskWithTaskNotificationIdentifier:(NSString *)taskNotificationIdentifier inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 + (NSInteger)numberOfOpenTasksInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
