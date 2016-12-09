@@ -74,7 +74,6 @@
 		D1EF530B1C582B2300C71997 /* MRCreditsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1EF530A1C582B2300C71997 /* MRCreditsViewController.m */; };
 		D1F0EA1F1C626EFF00E0795E /* UIView+TackleDisplayAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D1F0EA1E1C626EFF00E0795E /* UIView+TackleDisplayAdditions.m */; };
 		D1F652921AF1317500085D88 /* MRPersistenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1F652911AF1317500085D88 /* MRPersistenceController.m */; };
-		D1F968901A565338009813C0 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1F9688F1A565338009813C0 /* Accelerate.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,7 +145,6 @@
 		D1224AC518A679AE001FC205 /* NSDate+TackleAdditionsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+TackleAdditionsTest.m"; sourceTree = "<group>"; };
 		D1224E701C601CBD002AF215 /* UIImage+TackleAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+TackleAdditions.h"; sourceTree = "<group>"; };
 		D1224E711C601CBD002AF215 /* UIImage+TackleAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+TackleAdditions.m"; sourceTree = "<group>"; };
-		D1224E731C6064BB002AF215 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reveal.framework; path = "../../../../Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/Reveal.framework"; sourceTree = "<group>"; };
 		D12E87811894A07B008119B8 /* UIFont+TackleAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+TackleAdditions.h"; sourceTree = "<group>"; };
 		D12E87821894A07B008119B8 /* UIFont+TackleAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+TackleAdditions.m"; sourceTree = "<group>"; };
 		D12E8784189573FC008119B8 /* UIColor+TackleAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+TackleAdditions.h"; sourceTree = "<group>"; };
@@ -249,7 +247,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D130A1051C593BD700394EDF /* MessageUI.framework in Frameworks */,
-				D1F968901A565338009813C0 /* Accelerate.framework in Frameworks */,
 				D1027F6B18904E8400FF44A4 /* CoreGraphics.framework in Frameworks */,
 				D1027F6F18904E8400FF44A4 /* CoreData.framework in Frameworks */,
 				D1027F6D18904E8400FF44A4 /* UIKit.framework in Frameworks */,
@@ -307,7 +304,6 @@
 				D1027F6A18904E8400FF44A4 /* CoreGraphics.framework */,
 				D1027F6818904E8400FF44A4 /* Foundation.framework */,
 				D130A1041C593BD700394EDF /* MessageUI.framework */,
-				D1224E731C6064BB002AF215 /* Reveal.framework */,
 				D1027F6C18904E8400FF44A4 /* UIKit.framework */,
 				D1027F8618904E8400FF44A4 /* XCTest.framework */,
 			);
@@ -876,19 +872,12 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "Tackle/Supporting Files/Tackle-Prefix.pch";
 				INFOPLIST_FILE = "Tackle/Supporting Files/Tackle-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				"OTHER_LDFLAGS[arch=*]" = (
-					"-ObjC",
-					"-lz",
-					"-framework",
-					Reveal,
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.melodyroad.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -912,7 +901,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "Tackle/Supporting Files/Tackle-Prefix.pch";
