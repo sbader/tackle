@@ -11,8 +11,10 @@
 #import "Task.h"
 
 @import UserNotifications;
+@import Intents;
 
 NSString * const kMRNotificationPermissionsRequestedKey = @"NotificationPermissionsRequested";
+NSString * const kMRSiriPermissionsRequestedKey = @"SiriPermissionsRequested";
 
 @implementation MRNotificationPermissionsProvider
 
@@ -35,6 +37,14 @@ NSString * const kMRNotificationPermissionsRequestedKey = @"NotificationPermissi
     [self checkUserNotificationsEnabled:^(BOOL enabled) {
         completionHandler(!enabled);
     }];
+}
+
+- (BOOL)shouldRequestSiriPermissions {
+    if (self.siriPermissionsAlreadyRequested) {
+        return false;
+    }
+
+    return [INPreferences siriAuthorizationStatus] == INSiriAuthorizationStatusNotDetermined;
 }
 
 - (BOOL)notificationPermissionsAlreadyRequested {
@@ -87,5 +97,32 @@ NSString * const kMRNotificationPermissionsRequestedKey = @"NotificationPermissi
     }];
 }
 
+
+- (BOOL)siriPermissionsAlreadyRequested {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kMRSiriPermissionsRequestedKey];
+}
+
+- (void)setSiriPermissionsRequested:(BOOL)requested {
+    [[NSUserDefaults standardUserDefaults] setBool:requested forKey:kMRSiriPermissionsRequestedKey];
+}
+
+- (void)registerSiriPermissions {
+    [INPreferences requestSiriAuthorization:^(INSiriAuthorizationStatus status) {
+        switch (status) {
+            case INSiriAuthorizationStatusDenied:
+                os_log(OS_LOG_DEFAULT, "Siri Denied");
+                break;
+            case INSiriAuthorizationStatusAuthorized:
+                os_log(OS_LOG_DEFAULT, "Siri Authorized");
+                break;
+            case INSiriAuthorizationStatusRestricted:
+                os_log(OS_LOG_DEFAULT, "Siri Restricted");
+                break;
+            case INSiriAuthorizationStatusNotDetermined:
+                os_log(OS_LOG_DEFAULT, "Siri Not Determined");
+                break;
+        }
+    }];
+}
 
 @end

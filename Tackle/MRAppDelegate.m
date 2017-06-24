@@ -35,7 +35,8 @@
 
 - (void)completeUserInterfaceWithApplication:(UIApplication *)application launchOptions:(NSDictionary *)launchOptions {
     [[NSUserDefaults standardUserDefaults] registerDefaults:@{
-                                                              kMRNotificationPermissionsRequestedKey: @NO
+                                                              kMRNotificationPermissionsRequestedKey: @NO,
+                                                              kMRSiriPermissionsRequestedKey: @NO
                                                               }];
 
     [self setupAppearance];
@@ -54,7 +55,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
 
-    [self.rootController checkNotificationPermissions];
+    [self.rootController checkPermissions];
 
     if (application.applicationState != UIApplicationStateBackground) {
         [self startNotificationsTimer];
