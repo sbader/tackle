@@ -17,6 +17,7 @@ import Intents
 // "<myApp> John saying hello"
 // "Search for messages in <myApp>"
 
+@available(iOSApplicationExtension 11.0, *)
 class IntentHandler: INExtension, INAddTasksIntentHandling, INSetTaskAttributeIntentHandling {
     
     override func handler(for intent: INIntent) -> Any {
@@ -26,11 +27,11 @@ class IntentHandler: INExtension, INAddTasksIntentHandling, INSetTaskAttributeIn
         return self
     }
 
-    func handle(addTasks intent: INAddTasksIntent, completion: @escaping (INAddTasksIntentResponse) -> Void) {
+    func handle(intent: INAddTasksIntent, completion: @escaping (INAddTasksIntentResponse) -> Void) {
         print("setTasks: intent: \(intent)")
     }
 
-    func handle(setTaskAttribute intent: INSetTaskAttributeIntent, completion: @escaping (INSetTaskAttributeIntentResponse) -> Void) {
+    func handle(intent: INSetTaskAttributeIntent, completion: @escaping (INSetTaskAttributeIntentResponse) -> Void) {
         print("setTaskAttribute: intent: \(intent)")
     }
     
