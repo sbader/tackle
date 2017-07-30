@@ -8,6 +8,8 @@
 
 #import "MRNotificationProvider.h"
 
+#import "MRTaskNotification.h"
+
 @implementation MRNotificationProvider
 
 + (instancetype)sharedProvider {
@@ -47,22 +49,30 @@
     content.sound = [UNNotificationSound soundNamed:@"tacklespiel.aif"];
     content.categoryIdentifier = kMRTaskNotificationCategoryIdentifier;
 
-    UNCalendarNotificationTrigger *trigger = [UNCalendarNotificationTrigger triggerWithDateMatchingComponents:task.dueDateComponents
-                                                                                                      repeats:NO];
+    NSDateComponents *components = task.dueDateComponents;
+
+    for (MRTaskNotification *taskNotification in task.taskNotifications) {
+        NSDateComponents *delayComponents = [components copy];
+        [delayComponents setValue:(delayComponents.minute + taskNotification.delay)
+                     forComponent:NSCalendarUnitMinute];
+
+        UNCalendarNotificationTrigger *trigger = [UNCalendarNotificationTrigger triggerWithDateMatchingComponents:delayComponents
+                                                                                                          repeats:NO];
 
 
-    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:task.identifier
-                                                                          content:content
-                                                                          trigger:trigger];
+        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:taskNotification.identifier
+                                                                              content:content
+                                                                              trigger:trigger];
 
-    //TODO: Add a way to do repeated notifications. May need to just created a bunch of requests
-
-    [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:nil];
-    os_log(OS_LOG_DEFAULT, "Scheduled notification for task %@", task.title);
+        [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:nil];
+        os_log(OS_LOG_DEFAULT, "Scheduled notification for task %@, notificationIdentifier: %@", task.title, taskNotification.identifier);
+    }
 }
 
 - (void)cancelNotificationForTask:(Task *)task {
-    [[UNUserNotificationCenter currentNotificationCenter] removePendingNotificationRequestsWithIdentifiers:@[task.identifier]];
+    NSArray *identifiers = [task.taskNotifications valueForKey:@"identifier"];
+    [[UNUserNotificationCenter currentNotificationCenter] removePendingNotificationRequestsWithIdentifiers:identifiers];
+    os_log(OS_LOG_DEFAULT, "Canceled notifications for task %@, notificationIdentifiers: %@", task.title, identifiers);
 }
 
 @end

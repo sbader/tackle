@@ -163,14 +163,22 @@
     completionHandler(UNNotificationPresentationOptionNone);
 }
 
-- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler {
-    NSString *taskIdentifier = response.notification.request.identifier;
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler {
+    NSString *taskNotificationIdentifier = response.notification.request.identifier;
     NSString *action = response.actionIdentifier;
 
-    Task *task = [Task findTaskWithIdentifier:taskIdentifier
-                       inManagedObjectContext:self.persistenceController.managedObjectContext];
+    Task *task = [Task findTaskWithTaskNotificationIdentifier:taskNotificationIdentifier
+                                       inManagedObjectContext:self.persistenceController.managedObjectContext];
+
+    if (task == nil) {
+        os_log(OS_LOG_DEFAULT, "didReceiveNotificationResponse failed to find task with taskNotificationIdentifier: %@", taskNotificationIdentifier);
+        completionHandler();
+        return;
+    }
 
     if ([action isEqualToString:kMRAddTenMinutesActionIdentifier]) {
+        os_log(OS_LOG_DEFAULT, "didReceiveNotificationResponse task: %@, action: kMRAddTenMinutesActionIdentifier", task.title);
+
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDate *date = [calendar dateByAddingUnit:NSCalendarUnitMinute value:10 toDate:[NSDate date] options:0];
         task.dueDate = date;
@@ -181,6 +189,8 @@
         completionHandler();
     }
     else if ([action isEqualToString:kMRAddOneHourActionIdentifier]) {
+        os_log(OS_LOG_DEFAULT, "didReceiveNotificationResponse task: %@, action: kMRAddOneHourActionIdentifier", task.title);
+
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDate *date = [calendar dateByAddingUnit:NSCalendarUnitHour value:1 toDate:[NSDate date] options:0];
         task.dueDate = date;
@@ -192,6 +202,8 @@
         completionHandler();
     }
     else if([action isEqualToString:kMRDestroyTaskActionIdentifier]) {
+        os_log(OS_LOG_DEFAULT, "didReceiveNotificationResponse task: %@, action: kMRDestroyTaskActionIdentifier", task.title);
+
         task.isDone = YES;
         task.completedDate = [NSDate date];
         [[MRNotificationProvider sharedProvider] cancelNotificationForTask:task];
@@ -201,7 +213,8 @@
         completionHandler();
     }
     else {
-        NSLog(@"Cannot handle action with identifier %@", action);
+        os_log(OS_LOG_DEFAULT, "didReceiveNotificationResponse task: %@, action: unknownAction", task.title);
+
         completionHandler();
     }
 }

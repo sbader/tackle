@@ -42,6 +42,7 @@
 		D14BEC581C633A91009DF800 /* MRTaskArchiveTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D14BEC571C633A91009DF800 /* MRTaskArchiveTableViewCell.m */; };
 		D14BEC5B1C6340C7009DF800 /* MRFullDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D14BEC5A1C6340C7009DF800 /* MRFullDateFormatter.m */; };
 		D15054211A5F5B41000CA868 /* MRNotificationProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = D15054201A5F5B41000CA868 /* MRNotificationProvider.m */; };
+		D15991661F2E4E0F007204BD /* MRTaskNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = D15991651F2E4E0F007204BD /* MRTaskNotification.m */; };
 		D162856B1A55AB770006929E /* MRScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = D162856A1A55AB770006929E /* MRScrollView.m */; };
 		D17BCFB3189F3D05001996C1 /* UIView+TackleConstraintAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D17BCFB2189F3D05001996C1 /* UIView+TackleConstraintAdditions.m */; };
 		D194BEBB18A1CCC600E5E4DA /* MRHeartbeat.m in Sources */ = {isa = PBXBuildFile; fileRef = D194BEBA18A1CCC600E5E4DA /* MRHeartbeat.m */; };
@@ -195,6 +196,8 @@
 		D14BEC5A1C6340C7009DF800 /* MRFullDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRFullDateFormatter.m; sourceTree = "<group>"; };
 		D150541F1A5F5B41000CA868 /* MRNotificationProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRNotificationProvider.h; sourceTree = "<group>"; };
 		D15054201A5F5B41000CA868 /* MRNotificationProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRNotificationProvider.m; sourceTree = "<group>"; };
+		D15991641F2E4E0F007204BD /* MRTaskNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MRTaskNotification.h; sourceTree = "<group>"; };
+		D15991651F2E4E0F007204BD /* MRTaskNotification.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MRTaskNotification.m; sourceTree = "<group>"; };
 		D16285691A55AB770006929E /* MRScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRScrollView.h; sourceTree = "<group>"; };
 		D162856A1A55AB770006929E /* MRScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRScrollView.m; sourceTree = "<group>"; };
 		D17BCFB1189F3D05001996C1 /* UIView+TackleConstraintAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TackleConstraintAdditions.h"; sourceTree = "<group>"; };
@@ -427,6 +430,8 @@
 				D1CFD4ED1A51F455004489AC /* MRTimeInterval.m */,
 				D150541F1A5F5B41000CA868 /* MRNotificationProvider.h */,
 				D15054201A5F5B41000CA868 /* MRNotificationProvider.m */,
+				D15991641F2E4E0F007204BD /* MRTaskNotification.h */,
+				D15991651F2E4E0F007204BD /* MRTaskNotification.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -717,6 +722,7 @@
 				TargetAttributes = {
 					D1027F6418904E8400FF44A4 = {
 						DevelopmentTeam = 42UWJ9W9ZX;
+						LastSwiftMigration = 0900;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 0;
@@ -824,6 +830,7 @@
 				D1E1410F1A4F7A1E00992B1E /* MRTaskTableViewCell.m in Sources */,
 				D1E141091A4F79E600992B1E /* MRTaskListViewController.m in Sources */,
 				D139E57418959F41007163AD /* MRLongDateFormatter.m in Sources */,
+				D15991661F2E4E0F007204BD /* MRTaskNotification.m in Sources */,
 				D19C952718A28ACF009082F3 /* NSDate+TackleAdditions.m in Sources */,
 				D19C952B18A29297009082F3 /* MRMediumDateFormatter.m in Sources */,
 				D1E141321A4FEC8700992B1E /* MRCalendarCollectionViewFlowLayout.m in Sources */,
@@ -998,7 +1005,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				ONLY_ACTIVE_ARCH = YES;
 				RUN_CLANG_STATIC_ANALYZER = NO;
 				SDKROOT = iphoneos;
@@ -1035,7 +1042,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				RUN_CLANG_STATIC_ANALYZER = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -1067,6 +1074,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
@@ -1096,6 +1104,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.melodyroad.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
@@ -1350,6 +1359,7 @@
 				D10B9EC41EE62DF6003D4C49 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D10B9EC51EE62DF6003D4C49 /* Build configuration list for PBXNativeTarget "TasksIntentExtension" */ = {
 			isa = XCConfigurationList;
@@ -1358,6 +1368,7 @@
 				D10B9EC71EE62DF6003D4C49 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D19750041C599AB700894DD3 /* Build configuration list for PBXNativeTarget "TackleUITests" */ = {
 			isa = XCConfigurationList;

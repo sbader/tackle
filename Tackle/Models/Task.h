@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class MRTaskNotification;
+
 extern NSString * const kMRAddTenMinutesActionIdentifier;
 extern NSString * const kMRDestroyTaskActionIdentifier;
 extern NSString * const kMRTaskNotificationCategoryIdentifier;
@@ -25,6 +27,7 @@ extern NSString * const kMRAddOneHourActionIdentifier;
 
 + (Task *)insertItemWithTitle:(NSString*)title dueDate:(NSDate *)dueDate identifier:(NSString *)identifier inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 + (Task *)findTaskWithIdentifier:(NSString *)identifier inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
++ (Task *)findTaskWithTaskNotificationIdentifier:(NSString *)taskNotificationIdentifier inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 + (NSInteger)numberOfOpenTasksInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 + (NSFetchRequest *)allTasksFetchRequestWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 + (NSFetchRequest *)openTasksFetchRequestWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
@@ -32,5 +35,6 @@ extern NSString * const kMRAddOneHourActionIdentifier;
 + (NSFetchRequest *)archivedTasksFetchRequestWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 
 - (NSDateComponents *)dueDateComponents;
+- (NSArray<MRTaskNotification *> *)taskNotifications;
 
 @end
