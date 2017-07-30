@@ -8,6 +8,8 @@
 
 #import "Task.h"
 
+#import "MRTaskNotification.h"
+
 NSString * const kMRAddTenMinutesActionIdentifier = @"addTenMinutesAction";
 NSString * const kMRDestroyTaskActionIdentifier = @"destroyTaskAction";
 NSString * const kMRAddOneHourActionIdentifier = @"addOneHourAction";
@@ -55,6 +57,16 @@ NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCateg
     }
 
     return nil;
+}
+
++ (Task *)findTaskWithTaskNotificationIdentifier:(NSString *)taskNotificationIdentifier inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext  {
+    NSString *identifier = [MRTaskNotification taskIdentifierFromTaskNotificationIdentifier:taskNotificationIdentifier];
+
+    if (identifier == nil) {
+        return nil;
+    }
+
+    return [Task findTaskWithIdentifier:identifier inManagedObjectContext:managedObjectContext];
 }
 
 + (NSInteger)numberOfOpenTasksInManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
@@ -112,6 +124,24 @@ NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCateg
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"<Task: title:%@, dueDate:%@>", self.title, self.dueDate];
+}
+
+- (NSDateComponents *)dueDateComponents {
+    NSCalendarUnit components = NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitHour|NSCalendarUnitMinute;
+
+    return [[NSCalendar currentCalendar] components:components
+                                           fromDate:self.dueDate];
+}
+
+- (NSArray<MRTaskNotification *> *)taskNotifications {
+    return @[
+             [[MRTaskNotification alloc] initWithTaskIdentifier:self.identifier delay:0],
+             [[MRTaskNotification alloc] initWithTaskIdentifier:self.identifier delay:1],
+             [[MRTaskNotification alloc] initWithTaskIdentifier:self.identifier delay:4],
+             [[MRTaskNotification alloc] initWithTaskIdentifier:self.identifier delay:9],
+             [[MRTaskNotification alloc] initWithTaskIdentifier:self.identifier delay:29],
+             [[MRTaskNotification alloc] initWithTaskIdentifier:self.identifier delay:59]
+    ];
 }
 
 @end
