@@ -44,5 +44,6 @@ typedef NS_ENUM(NSInteger, TaskRepeatInterval) {
 
 - (NSDateComponents *)dueDateComponents;
 - (NSArray<MRTaskNotification *> *)taskNotifications;
+- (TaskRepeatInterval)taskRepeatInterval;
 
 @end

@@ -14,11 +14,12 @@
 #import "MRHorizontalButton.h"
 #import "MRTaskTableViewDelegate.h"
 #import "MRDatePickerViewController.h"
+#import "MRRepeatIntervalPickerViewController.h"
 #import "MRTaskEditTableViewController.h"
 #import "MRCalendarCollectionViewFlowLayout.h"
 #import "MRCalendarCollectionViewController.h"
 
-@interface MRTaskEditViewController () <MRDateSelectionDelegate, MRTaskEditTableViewDelegate, MRDatePickerViewControllerDelegate, UITextFieldDelegate, UIScrollViewDelegate>
+@interface MRTaskEditViewController () <MRDateSelectionDelegate, MRTaskEditTableViewDelegate, MRDatePickerViewControllerDelegate, MRRepeatIntervalPickerControllerDelegate, UITextFieldDelegate, UIScrollViewDelegate>
 
 @property (nonatomic) MRScrollView *scrollView;
 @property (nonatomic) UIView *topView;
@@ -37,6 +38,7 @@
 
 @property (nonatomic) NSDate *taskDueDate;
 @property (nonatomic) NSString *taskTitle;
+@property (nonatomic) TaskRepeatInterval repeatInterval;
 @property (nonatomic) BOOL shouldDisplayPreviousTasks;
 @property (nonatomic) BOOL shouldDisplayDoneButton;
 @property (nonatomic) NSDataDetector *dateDetector;
@@ -53,12 +55,16 @@
 
 @implementation MRTaskEditViewController
 
-- (instancetype)initWithTitle:(NSString *)title dueDate:(NSDate *)dueDate managedObjectContext:(NSManagedObjectContext *)managedObjectContext {
+- (instancetype)initWithTitle:(NSString *)title
+                      dueDate:(NSDate *)dueDate
+               repeatInterval:(TaskRepeatInterval)repeatInterval
+         managedObjectContext:(NSManagedObjectContext *)managedObjectContext {
     self = [super init];
 
     if (self) {
         self.taskTitle = title;
         self.taskDueDate = dueDate;
+        self.repeatInterval = repeatInterval;
         self.managedObjectContext = managedObjectContext;
         self.shouldDisplayPreviousTasks = (title == nil);
         self.shouldDisplayDoneButton = (dueDate != nil);
@@ -386,7 +392,7 @@
         [self.titleField resignFirstResponder];
     }
 
-    [self.delegate editedTaskTitle:self.titleField.text dueDate:self.taskDueDate];
+    [self.delegate editedTaskTitle:self.titleField.text dueDate:self.taskDueDate repeatInterval:self.repeatInterval];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -496,7 +502,10 @@
 
 - (void)selectedDone {
     [self.delegate completedTask];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [self dismissViewControllerAnimated:YES completion:nil];
+    });
 }
 
 - (void)selectedRepeat {
@@ -504,9 +513,9 @@
         [self.titleField resignFirstResponder];
     }
 
-    // MRDatePickerViewController *datePickerController = [[MRDatePickerViewController alloc] initWithDate:self.taskDueDate];
-    // datePickerController.delegate = self;
-    // [self mr_presentViewControllerModally:datePickerController animated:YES completion:nil];
+    MRRepeatIntervalPickerViewController *repeatPicker = [[MRRepeatIntervalPickerViewController alloc] initWithRepeatInterval:self.repeatInterval];
+     repeatPicker.delegate = self;
+     [self mr_presentViewControllerModally:repeatPicker animated:YES completion:nil];
 }
 
 - (void)selectedTimeInterval:(MRTimeInterval *)timeInterval {
@@ -546,6 +555,12 @@
 - (void)didSelectDate:(NSDate *)date {
     self.taskDueDate = date;
     [self updateDueDateButton];
+}
+
+#pragma mark - Repeat Interval Picker Delegate
+
+- (void)didSelectRepeatInterval:(TaskRepeatInterval)repeatInterval {
+    self.repeatInterval = repeatInterval;
 }
 
 @end

@@ -106,6 +106,15 @@
 "Rate in the App Store" = "Rate in the App Store";
 
 /* No comment provided by engineer. */
+"Repeat Interval Disabled Title" = "None";
+
+/* No comment provided by engineer. */
+"Repeat Interval Weekdays Title" = "Weekdays";
+
+/* No comment provided by engineer. */
+"Repeat Interval All Days Title" = "All Days";
+
+/* No comment provided by engineer. */
 "Seconds Ago Format" = "%@ Seconds Ago";
 
 /* No comment provided by engineer. */

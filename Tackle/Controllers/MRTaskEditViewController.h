@@ -14,7 +14,7 @@
 
 @interface MRTaskEditViewController : UIViewController
 
-- (instancetype)initWithTitle:(NSString *)title dueDate:(NSDate *)dueDate managedObjectContext:(NSManagedObjectContext *)managedObjectContext;
+- (instancetype)initWithTitle:(NSString *)title dueDate:(NSDate *)dueDate repeatInterval:(TaskRepeatInterval)repeatInterval managedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 
 @property (nonatomic) id<MRTaskEditingDelegate> delegate;
 
@@ -22,7 +22,7 @@
 
 @protocol MRTaskEditingDelegate <NSObject>
 
-- (void)editedTaskTitle:(NSString *)title dueDate:(NSDate *)dueDate;
+- (void)editedTaskTitle:(NSString *)title dueDate:(NSDate *)dueDate repeatInterval:(TaskRepeatInterval)repeatInterval;
 - (void)completedTask;
 
 @end

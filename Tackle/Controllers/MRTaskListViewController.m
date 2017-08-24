@@ -192,18 +192,18 @@
     [self.infoView addConstraint:[NSLayoutConstraint constraintWithItem:infoLabel attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:arrowImageView attribute:NSLayoutAttributeLeading multiplier:1.0 constant:-22.0]];
 }
 
-- (void)displayEditViewWithTitle:(NSString *)title dueDate:(NSDate *)dueDate animated:(BOOL)animated {
-    MRTaskEditViewController *editController = [[MRTaskEditViewController alloc] initWithTitle:title dueDate:dueDate managedObjectContext:self.persistenceController.managedObjectContext];
+- (void)displayEditViewWithTitle:(NSString *)title dueDate:(NSDate *)dueDate repeatInterval:(TaskRepeatInterval)repeatInterval animated:(BOOL)animated {
+    MRTaskEditViewController *editController = [[MRTaskEditViewController alloc] initWithTitle:title dueDate:dueDate repeatInterval:repeatInterval managedObjectContext:self.persistenceController.managedObjectContext];
     editController.delegate = self;
     MRTaskEditNavigationController *navigationController = [[MRTaskEditNavigationController alloc] initWithRootViewController:editController];
     [self presentViewController:navigationController animated:animated completion:nil];
 }
 
-- (void)displayEditViewWithTitle:(NSString *)title dueDate:(NSDate *)dueDate {
-    [self displayEditViewWithTitle:title dueDate:dueDate animated:YES];
+- (void)displayEditViewWithTitle:(NSString *)title dueDate:(NSDate *)dueDate repeatInterval:(TaskRepeatInterval)repeatInterval {
+    [self displayEditViewWithTitle:title dueDate:dueDate repeatInterval:repeatInterval animated:YES];
 }
 
-- (void)saveEditingTaskWithTitle:(NSString *)title dueDate:(NSDate *)dueDate {
+- (void)saveEditingTaskWithTitle:(NSString *)title dueDate:(NSDate *)dueDate repeatInterval:(TaskRepeatInterval)repeatInterval {
     Task *task;
 
     if (self.editingTask) {
@@ -219,6 +219,7 @@
 
     task.title = title;
     task.dueDate = dueDate;
+    task.repeats = @(repeatInterval);
 
     [self.persistenceController save];
     [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
@@ -242,7 +243,7 @@
 
 - (void)handleAddButton:(id)sender {
     self.editingTask = nil;
-    [self displayEditViewWithTitle:nil dueDate:nil];
+    [self displayEditViewWithTitle:nil dueDate:nil repeatInterval:TaskRepeatIntervalNone];
 }
 
 - (void)handleLogoButton:(id)sender {
@@ -272,7 +273,7 @@
 
 - (void)selectedTask:(Task *)task {
     self.editingTask = task;
-    [self displayEditViewWithTitle:task.title dueDate:task.dueDate];
+    [self displayEditViewWithTitle:task.title dueDate:task.dueDate repeatInterval:task.taskRepeatInterval];
 }
 
 - (NSUndoManager *)undoManager {
@@ -326,15 +327,15 @@
     }
 }
 
-- (void)editedTaskTitle:(NSString *)title dueDate:(NSDate *)dueDate {
-    [self saveEditingTaskWithTitle:title dueDate:dueDate];
+- (void)editedTaskTitle:(NSString *)title dueDate:(NSDate *)dueDate repeatInterval:(TaskRepeatInterval)repeatInterval {
+    [self saveEditingTaskWithTitle:title dueDate:dueDate repeatInterval:repeatInterval];
 }
 
 #pragma mark - Archive Task Delegate
 
 - (void)selectedRecycledTitle:(NSString *)title {
     [self dismissViewControllerAnimated:YES completion:^{
-        [self displayEditViewWithTitle:title dueDate:nil];
+        [self displayEditViewWithTitle:title dueDate:nil repeatInterval:TaskRepeatIntervalNone];
     }];
 }
 

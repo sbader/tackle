@@ -192,6 +192,7 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([self isRepeatSection:indexPath.section]) {
+        [self.delegate selectedRepeat];
     }
     else if ([self isDoneButtonSection:indexPath.section]) {
         [self.delegate selectedDone];

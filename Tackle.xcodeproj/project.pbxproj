@@ -44,6 +44,7 @@
 		D15054211A5F5B41000CA868 /* MRNotificationProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = D15054201A5F5B41000CA868 /* MRNotificationProvider.m */; };
 		D15991661F2E4E0F007204BD /* MRTaskNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = D15991651F2E4E0F007204BD /* MRTaskNotification.m */; };
 		D162856B1A55AB770006929E /* MRScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = D162856A1A55AB770006929E /* MRScrollView.m */; };
+		D17222D51F4DBAFF00794328 /* MRRepeatIntervalPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D17222D41F4DBAFF00794328 /* MRRepeatIntervalPickerViewController.m */; };
 		D17BCFB3189F3D05001996C1 /* UIView+TackleConstraintAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D17BCFB2189F3D05001996C1 /* UIView+TackleConstraintAdditions.m */; };
 		D194BEBB18A1CCC600E5E4DA /* MRHeartbeat.m in Sources */ = {isa = PBXBuildFile; fileRef = D194BEBA18A1CCC600E5E4DA /* MRHeartbeat.m */; };
 		D1974FFE1C599AB700894DD3 /* TackleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D1974FFD1C599AB700894DD3 /* TackleUITests.m */; };
@@ -198,6 +199,8 @@
 		D15991651F2E4E0F007204BD /* MRTaskNotification.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MRTaskNotification.m; sourceTree = "<group>"; };
 		D16285691A55AB770006929E /* MRScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRScrollView.h; sourceTree = "<group>"; };
 		D162856A1A55AB770006929E /* MRScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRScrollView.m; sourceTree = "<group>"; };
+		D17222D31F4DBAFF00794328 /* MRRepeatIntervalPickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MRRepeatIntervalPickerViewController.h; sourceTree = "<group>"; };
+		D17222D41F4DBAFF00794328 /* MRRepeatIntervalPickerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MRRepeatIntervalPickerViewController.m; sourceTree = "<group>"; };
 		D17BCFB1189F3D05001996C1 /* UIView+TackleConstraintAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TackleConstraintAdditions.h"; sourceTree = "<group>"; };
 		D17BCFB2189F3D05001996C1 /* UIView+TackleConstraintAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TackleConstraintAdditions.m"; sourceTree = "<group>"; };
 		D194BEB918A1CCC600E5E4DA /* MRHeartbeat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRHeartbeat.h; sourceTree = "<group>"; };
@@ -504,6 +507,8 @@
 				D1EF530A1C582B2300C71997 /* MRCreditsViewController.m */,
 				D1BC012B1A539A4B00F87D06 /* MRDatePickerViewController.h */,
 				D1BC012C1A539A4B00F87D06 /* MRDatePickerViewController.m */,
+				D17222D31F4DBAFF00794328 /* MRRepeatIntervalPickerViewController.h */,
+				D17222D41F4DBAFF00794328 /* MRRepeatIntervalPickerViewController.m */,
 				D1CF84851A5639890020DB50 /* MRModalViewController.h */,
 				D1CF84861A5639890020DB50 /* MRModalViewController.m */,
 				D102344D1C5D611700A3FF74 /* MRNotificationsModalViewController.h */,
@@ -864,6 +869,7 @@
 				D1AD45BC1A59BBBB001FDAC5 /* MRPreviousTaskTableViewCell.m in Sources */,
 				D1224E721C601CBD002AF215 /* UIImage+TackleAdditions.m in Sources */,
 				D1049C2E1C66E8A100928504 /* MRTaskNotificationTableViewCell.m in Sources */,
+				D17222D51F4DBAFF00794328 /* MRRepeatIntervalPickerViewController.m in Sources */,
 				D1CFD4EE1A51F455004489AC /* MRTimeInterval.m in Sources */,
 				D1A36E5A18A2B2070020EAEB /* MRTimeDateFormatter.m in Sources */,
 				D1CF848D1A563D4B0020DB50 /* UIViewController+MRAdditions.m in Sources */,

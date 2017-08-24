@@ -43,6 +43,7 @@ NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCateg
 
     task.identifier = [NSUUID UUID].UUIDString;
     task.title = self.title;
+    task.repeats = self.repeats;
 
     NSDate *dueDate;
 
@@ -54,7 +55,7 @@ NSString * const kMRTaskNotificationCategoryIdentifier = @"taskNotificationCateg
             dueDate = [self.originalDueDate followingDay];
 
             while (![dueDate isWeekday]) {
-                dueDate = [self.originalDueDate followingDay];
+                dueDate = [dueDate followingDay];
             }
             break;
 
