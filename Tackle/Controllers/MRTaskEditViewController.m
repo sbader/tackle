@@ -14,12 +14,11 @@
 #import "MRHorizontalButton.h"
 #import "MRTaskTableViewDelegate.h"
 #import "MRDatePickerViewController.h"
-#import "MRRepeatIntervalPickerViewController.h"
 #import "MRTaskEditTableViewController.h"
 #import "MRCalendarCollectionViewFlowLayout.h"
 #import "MRCalendarCollectionViewController.h"
 
-@interface MRTaskEditViewController () <MRDateSelectionDelegate, MRTaskEditTableViewDelegate, MRDatePickerViewControllerDelegate, MRRepeatIntervalPickerControllerDelegate, UITextFieldDelegate, UIScrollViewDelegate>
+@interface MRTaskEditViewController () <MRDateSelectionDelegate, MRTaskEditTableViewDelegate, MRDatePickerViewControllerDelegate, UITextFieldDelegate, UIScrollViewDelegate>
 
 @property (nonatomic) MRScrollView *scrollView;
 @property (nonatomic) UIView *topView;
@@ -28,6 +27,8 @@
 @property (nonatomic) UIView *doneView;
 @property (nonatomic) UIView *addTimeView;
 @property (nonatomic) UIView *calendarView;
+@property (nonatomic) UIView *repeatView;
+@property (nonatomic) UISegmentedControl *repeatControl;
 @property (nonatomic) UIView *previousTasksView;
 @property (nonatomic) UIButton *dateButton;
 @property (nonatomic) UITextField *titleField;
@@ -88,6 +89,7 @@
     [self setupPossibleDateButton];
     [self setupDateView];
     [self setupCalendarView];
+    [self setupRepeatView];
     [self setupAddTimeView];
 
     [self setupConstraints];
@@ -315,12 +317,35 @@
     [borderBottom bottomConstraintMatchesSuperview];
 }
 
+- (void)setupRepeatView {
+    self.repeatView = [[UIView alloc] init];
+    self.repeatView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.scrollView addSubview:self.repeatView];
+
+    [self.repeatView horizontalConstraintsMatchSuperview];
+
+    NSArray<NSString *> *items = @[
+                                   NSLocalizedString(@"Repeat Interval Disabled Title", nil),
+                                   NSLocalizedString(@"Repeat Interval All Days Title", nil),
+                                   NSLocalizedString(@"Repeat Interval Weekdays Title", nil)
+                                   ];
+
+    self.repeatControl = [[UISegmentedControl alloc] initWithItems:items];
+    self.repeatControl.translatesAutoresizingMaskIntoConstraints = NO;
+    self.repeatControl.selectedSegmentIndex = self.selectedRepeatIndex;
+
+    [self.repeatView addSubview:self.repeatControl];
+    [self.repeatControl topConstraintMatchesSuperviewWithConstant:5.0];
+    [self.repeatControl bottomConstraintMatchesSuperviewWithConstant:-5.0];
+    [self.repeatControl leadingConstraintMatchesSuperviewWithConstant:10.0];
+    [self.repeatControl trailingConstraintMatchesSuperviewWithConstant:-10.0];
+}
+
 - (void)setupDoneView {
     self.doneView = [[UIView alloc] init];
     self.doneView.backgroundColor = [UIColor offWhiteBackgroundColor];
     self.doneView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.scrollView addSubview:self.doneView];
-
 }
 
 - (void)setupAddTimeView {
@@ -351,7 +376,9 @@
     [self.calendarView addConstraintEqualToView:self.dateView inContainer:self.scrollView withAttribute:NSLayoutAttributeTop relatedAttribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
     [self.calendarView staticHeightConstraint:74.0];
 
-    [self.addTimeView addConstraintEqualToView:self.calendarView inContainer:self.scrollView withAttribute:NSLayoutAttributeTop relatedAttribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+    [self.repeatView addConstraintEqualToView:self.calendarView inContainer:self.scrollView withAttribute:NSLayoutAttributeTop relatedAttribute:NSLayoutAttributeBottom multiplier:1.0 constant:19.0];
+
+    [self.addTimeView addConstraintEqualToView:self.repeatView inContainer:self.scrollView withAttribute:NSLayoutAttributeTop relatedAttribute:NSLayoutAttributeBottom multiplier:1.0 constant:2.0];
     [self.addTimeView addConstraintEqualToView:self.addTimeController.tableView inContainer:self.scrollView withAttribute:NSLayoutAttributeHeight relatedAttribute:NSLayoutAttributeHeight multiplier:1.0 constant:0.0];
 
 
@@ -392,7 +419,7 @@
         [self.titleField resignFirstResponder];
     }
 
-    [self.delegate editedTaskTitle:self.titleField.text dueDate:self.taskDueDate repeatInterval:self.repeatInterval];
+    [self.delegate editedTaskTitle:self.titleField.text dueDate:self.taskDueDate repeatInterval:self.selectedRepeatInterval];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -429,6 +456,32 @@
     UIEdgeInsets contentInsets = UIEdgeInsetsZero;
     self.scrollView.contentInset = contentInsets;
     self.scrollView.scrollIndicatorInsets = contentInsets;
+}
+
+- (TaskRepeatInterval)selectedRepeatInterval {
+    switch (self.repeatControl.selectedSegmentIndex) {
+        case 0:
+            return TaskRepeatIntervalNone;
+        case 1:
+            return TaskRepeatIntervalAllDays;
+        case 2:
+            return TaskRepeatIntervalWeekdays;
+        default:
+            return TaskRepeatIntervalNone;
+    }
+}
+
+- (NSInteger)selectedRepeatIndex {
+    switch (self.repeatInterval) {
+        case TaskRepeatIntervalNone:
+            return 0;
+        case TaskRepeatIntervalAllDays:
+            return 1;
+        case TaskRepeatIntervalWeekdays:
+            return 2;
+        default:
+            return 0;
+    }
 }
 
 #pragma mark - Handlers
@@ -508,16 +561,6 @@
     });
 }
 
-- (void)selectedRepeat {
-    if (self.titleField.isFirstResponder) {
-        [self.titleField resignFirstResponder];
-    }
-
-    MRRepeatIntervalPickerViewController *repeatPicker = [[MRRepeatIntervalPickerViewController alloc] initWithRepeatInterval:self.repeatInterval];
-     repeatPicker.delegate = self;
-     [self mr_presentViewControllerModally:repeatPicker animated:YES completion:nil];
-}
-
 - (void)selectedTimeInterval:(MRTimeInterval *)timeInterval {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     self.taskDueDate = [calendar dateByAddingUnit:timeInterval.unit
@@ -555,12 +598,6 @@
 - (void)didSelectDate:(NSDate *)date {
     self.taskDueDate = date;
     [self updateDueDateButton];
-}
-
-#pragma mark - Repeat Interval Picker Delegate
-
-- (void)didSelectRepeatInterval:(TaskRepeatInterval)repeatInterval {
-    self.repeatInterval = repeatInterval;
 }
 
 @end

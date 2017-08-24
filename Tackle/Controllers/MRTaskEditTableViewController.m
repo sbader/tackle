@@ -134,20 +134,17 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (self.doneButtonEnabled && self.previousTasksEnabled) {
-        return 4;
-    }
-    else if (self.doneButtonEnabled || self.previousTasksEnabled) {
         return 3;
     }
+    else if (self.doneButtonEnabled || self.previousTasksEnabled) {
+        return 2;
+    }
 
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if ([self isRepeatSection:section] ) {
-        return 1;
-    }
-    else if ([self isDoneButtonSection:section]) {
+    if ([self isDoneButtonSection:section]) {
         return 1;
     }
     else if ([self isPreviousTasksSection:section]) {
@@ -159,13 +156,7 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self isRepeatSection:indexPath.section]) {
-        MRAddTimeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:addTimeCellReuseIdentifier forIndexPath:indexPath];
-        cell.textLabel.text = NSLocalizedString(@"Task Repeat Button Title", nil);
-        cell.imageView.image = [PaintCodeStyleKit imageOfCheckmark];
-        return cell;
-    }
-    else if ([self isPreviousTasksSection:indexPath.section]) {
+    if ([self isPreviousTasksSection:indexPath.section]) {
         MRPreviousTaskTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:previousTaskCellReuseIdentifier forIndexPath:indexPath];
         NSIndexPath *path = [NSIndexPath indexPathForRow:indexPath.row inSection:0];
         NSDictionary *taskDictionary = [self.fetchedResultsController objectAtIndexPath:path];
@@ -191,10 +182,7 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
 #pragma mark - Table View Delegate
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self isRepeatSection:indexPath.section]) {
-        [self.delegate selectedRepeat];
-    }
-    else if ([self isDoneButtonSection:indexPath.section]) {
+    if ([self isDoneButtonSection:indexPath.section]) {
         [self.delegate selectedDone];
     }
     else if ([self isTimeIntervalSection:indexPath.section]) {
@@ -215,17 +203,19 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if ([self isPreviousTasksSection:section] && [self tableView:tableView numberOfRowsInSection:section] > 0) {
-        return 42.5;
+        return 26.0;
+    }
+    else if (section == 0) {
+        return 18.0;
     }
 
-    return 0;
+    return 1.0;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *view;
-    if ([self isPreviousTasksSection:section] && [self tableView:tableView numberOfRowsInSection:section] > 0) {
-         view = [[UIView alloc] init];
+    UIView *view = [[UIView alloc] init];
 
+    if ([self isPreviousTasksSection:section] && [self tableView:tableView numberOfRowsInSection:section] > 0) {
         UIView *labelContainer = [[UIView alloc] init];
         labelContainer.translatesAutoresizingMaskIntoConstraints = NO;
         labelContainer.backgroundColor = [UIColor offWhiteBackgroundColor];
@@ -257,7 +247,7 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
         return view;
     }
 
-    return nil;
+    return view;
 }
 
 #pragma mark - KVO
@@ -268,20 +258,16 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
 
 #pragma mark - Convenience
 
-- (BOOL)isRepeatSection:(NSInteger)section {
-    return section == 0;
-}
-
 - (BOOL)isPreviousTasksSection:(NSInteger)section {
-    return ((self.doneButtonEnabled && self.previousTasksEnabled) && (section == 3)) || ((self.previousTasksEnabled && !self.doneButtonEnabled) && (section == 2));
+    return ((self.doneButtonEnabled && self.previousTasksEnabled) && (section == 2)) || ((self.previousTasksEnabled && !self.doneButtonEnabled) && (section == 1));
 }
 
 - (BOOL)isDoneButtonSection:(NSInteger)section {
-    return self.doneButtonEnabled && section == 1;
+    return self.doneButtonEnabled && section == 0;
 }
 
 - (BOOL)isTimeIntervalSection:(NSInteger)section {
-    return (self.doneButtonEnabled && section == 2) || (self.previousTasksEnabled && section == 1);
+    return (self.doneButtonEnabled && section == 1) || (self.previousTasksEnabled && section == 0);
 }
 
 @end
