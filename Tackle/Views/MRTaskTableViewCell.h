@@ -10,4 +10,6 @@
 
 @interface MRTaskTableViewCell : UITableViewCell
 
+- (void)updateTitle:(NSString *)title detail:(NSString *)detail;
+
 @end
