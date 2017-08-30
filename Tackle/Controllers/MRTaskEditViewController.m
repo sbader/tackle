@@ -29,7 +29,6 @@
 @property (nonatomic) UIView *calendarView;
 @property (nonatomic) UIView *repeatView;
 @property (nonatomic) UISegmentedControl *repeatControl;
-@property (nonatomic) UIView *previousTasksView;
 @property (nonatomic) UIButton *dateButton;
 @property (nonatomic) UITextField *titleField;
 @property (nonatomic) MRCalendarCollectionViewController *calendarViewController;
@@ -40,7 +39,6 @@
 @property (nonatomic) NSDate *taskDueDate;
 @property (nonatomic) NSString *taskTitle;
 @property (nonatomic) TaskRepeatInterval repeatInterval;
-@property (nonatomic) BOOL shouldDisplayPreviousTasks;
 @property (nonatomic) BOOL shouldDisplayDoneButton;
 @property (nonatomic) NSDataDetector *dateDetector;
 
@@ -67,7 +65,6 @@
         self.taskDueDate = dueDate;
         self.repeatInterval = repeatInterval;
         self.managedObjectContext = managedObjectContext;
-        self.shouldDisplayPreviousTasks = (title == nil);
         self.shouldDisplayDoneButton = (dueDate != nil);
     }
 
@@ -354,7 +351,7 @@
     self.addTimeView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.scrollView addSubview:self.addTimeView];
 
-    self.addTimeController = [[MRTaskEditTableViewController alloc] initWithDoneButtonEnabled:self.shouldDisplayDoneButton previousTasksEnabled:self.shouldDisplayPreviousTasks managedObjectContext:self.managedObjectContext];
+    self.addTimeController = [[MRTaskEditTableViewController alloc] initWithDoneButtonEnabled:self.shouldDisplayDoneButton managedObjectContext:self.managedObjectContext];
     self.addTimeController.delegate = self;
     [self.addTimeView addSubview:self.addTimeController.view];
 
@@ -569,12 +566,6 @@
                                           options:0];
 
     [self updateDueDateButton];
-}
-
-- (void)selectedPreviousTaskTitle:(NSString *)title {
-    self.taskTitle = title;
-    [self updateTitleField];
-    [self.scrollView setContentOffset:CGPointZero animated:YES];
 }
 
 #pragma mark - Text Field Delegate

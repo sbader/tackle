@@ -16,7 +16,7 @@
 
 @property (nonatomic) id<MRTaskEditTableViewDelegate> delegate;
 
-- (instancetype)initWithDoneButtonEnabled:(BOOL)doneButtonEnabled previousTasksEnabled:(BOOL)previousTasksEnabled managedObjectContext:(NSManagedObjectContext *)managedObjectContext;
+- (instancetype)initWithDoneButtonEnabled:(BOOL)doneButtonEnabled managedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 
 @end
 
@@ -24,6 +24,5 @@
 
 - (void)selectedDone;
 - (void)selectedTimeInterval:(MRTimeInterval *)timeInterval;
-- (void)selectedPreviousTaskTitle:(NSString *)title;
 
 @end

@@ -8,19 +8,16 @@
 
 #import "MRTaskEditTableViewController.h"
 
-#import "MRPreviousTaskTableViewCell.h"
 #import "MRAddTimeTableViewCell.h"
 #import "PaintCodeStyleKit.h"
 #import "Task.h"
 
 static NSString *addTimeCellReuseIdentifier = @"AddTimeCell";
-static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
 
 @interface MRTaskEditTableViewController () <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
 
 @property (nonatomic) NSArray *timeIntervals;
 @property (nonatomic) BOOL doneButtonEnabled;
-@property (nonatomic) BOOL previousTasksEnabled;
 @property (nonatomic) NSDictionary *sections;
 @property (nonatomic) NSLayoutConstraint *heightConstraint;
 
@@ -31,13 +28,12 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
 
 @implementation MRTaskEditTableViewController
 
-- (instancetype)initWithDoneButtonEnabled:(BOOL)doneButtonEnabled previousTasksEnabled:(BOOL)previousTasksEnabled managedObjectContext:(NSManagedObjectContext *)managedObjectContext {
+- (instancetype)initWithDoneButtonEnabled:(BOOL)doneButtonEnabled managedObjectContext:(NSManagedObjectContext *)managedObjectContext {
     self = [super initWithStyle:UITableViewStyleGrouped];
 
     if (self) {
         self.managedObjectContext = managedObjectContext;
         self.doneButtonEnabled = doneButtonEnabled;
-        self.previousTasksEnabled = previousTasksEnabled;
     }
 
     return self;
@@ -67,7 +63,6 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
     self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.tableView registerClass:[MRAddTimeTableViewCell class] forCellReuseIdentifier:addTimeCellReuseIdentifier];
-    [self.tableView registerClass:[MRPreviousTaskTableViewCell class] forCellReuseIdentifier:previousTaskCellReuseIdentifier];
 
     [self observeValueForKeyPath:@"contentSize" ofObject:self.tableView change:0 context:nil];
     self.heightConstraint = [NSLayoutConstraint constraintWithItem:self.view
@@ -133,10 +128,7 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
 #pragma mark - Table View Data Source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (self.doneButtonEnabled && self.previousTasksEnabled) {
-        return 3;
-    }
-    else if (self.doneButtonEnabled || self.previousTasksEnabled) {
+    if (self.doneButtonEnabled) {
         return 2;
     }
 
@@ -147,23 +139,12 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
     if ([self isDoneButtonSection:section]) {
         return 1;
     }
-    else if ([self isPreviousTasksSection:section]) {
-        id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][0];
-        return sectionInfo.numberOfObjects;
-    }
 
     return self.timeIntervals.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self isPreviousTasksSection:indexPath.section]) {
-        MRPreviousTaskTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:previousTaskCellReuseIdentifier forIndexPath:indexPath];
-        NSIndexPath *path = [NSIndexPath indexPathForRow:indexPath.row inSection:0];
-        NSDictionary *taskDictionary = [self.fetchedResultsController objectAtIndexPath:path];
-        cell.textLabel.text = taskDictionary[@"title"];
-        return cell;
-    }
-    else if ([self isDoneButtonSection:indexPath.section]) {
+    if ([self isDoneButtonSection:indexPath.section]) {
         MRAddTimeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:addTimeCellReuseIdentifier forIndexPath:indexPath];
         cell.textLabel.text = NSLocalizedString(@"Task Done Button Title", nil);
         cell.imageView.image = [PaintCodeStyleKit imageOfCheckmark];
@@ -188,11 +169,6 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
     else if ([self isTimeIntervalSection:indexPath.section]) {
         [self.delegate selectedTimeInterval:self.timeIntervals[indexPath.row]];
     }
-    else if ([self isPreviousTasksSection:indexPath.section]) {
-        NSIndexPath *path = [NSIndexPath indexPathForRow:indexPath.row inSection:0];
-        NSDictionary *taskDictionary = [self.fetchedResultsController objectAtIndexPath:path];
-        [self.delegate selectedPreviousTaskTitle:taskDictionary[@"title"]];
-    }
 
     return nil;
 }
@@ -202,52 +178,11 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if ([self isPreviousTasksSection:section] && [self tableView:tableView numberOfRowsInSection:section] > 0) {
-        return 26.0;
-    }
-    else if (section == 0) {
+    if (section == 0) {
         return 18.0;
     }
 
     return 1.0;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *view = [[UIView alloc] init];
-
-    if ([self isPreviousTasksSection:section] && [self tableView:tableView numberOfRowsInSection:section] > 0) {
-        UIView *labelContainer = [[UIView alloc] init];
-        labelContainer.translatesAutoresizingMaskIntoConstraints = NO;
-        labelContainer.backgroundColor = [UIColor offWhiteBackgroundColor];
-        [view addSubview:labelContainer];
-
-        [labelContainer horizontalConstraintsMatchSuperview];
-        [labelContainer bottomConstraintMatchesSuperview];
-        [labelContainer staticHeightConstraint:25.0];
-
-        UILabel *label = [[UILabel alloc] init];
-        label.translatesAutoresizingMaskIntoConstraints = NO;
-        label.text = NSLocalizedString(@"Use Previous Task", nil);
-        label.font = [UIFont fontForTableViewSectionHeader];
-        [labelContainer addSubview:label];
-
-        [label leadingConstraintMatchesSuperviewWithConstant:20.0];
-        [label trailingConstraintMatchesSuperview];
-        [label verticalCenterConstraintMatchesSuperview];
-
-        UIView *separator = [[UIView alloc] init];
-        separator.translatesAutoresizingMaskIntoConstraints = NO;
-        separator.backgroundColor = [UIColor grayBorderColor];
-        [labelContainer addSubview:separator];
-
-        [separator topConstraintMatchesSuperview];
-        [separator horizontalConstraintsMatchSuperview];
-        [separator staticHeightConstraint:0.5];
-
-        return view;
-    }
-
-    return view;
 }
 
 #pragma mark - KVO
@@ -258,16 +193,12 @@ static NSString *previousTaskCellReuseIdentifier = @"PreviousTaskCell";
 
 #pragma mark - Convenience
 
-- (BOOL)isPreviousTasksSection:(NSInteger)section {
-    return ((self.doneButtonEnabled && self.previousTasksEnabled) && (section == 2)) || ((self.previousTasksEnabled && !self.doneButtonEnabled) && (section == 1));
-}
-
 - (BOOL)isDoneButtonSection:(NSInteger)section {
     return self.doneButtonEnabled && section == 0;
 }
 
 - (BOOL)isTimeIntervalSection:(NSInteger)section {
-    return (self.doneButtonEnabled && section == 1) || (self.previousTasksEnabled && section == 0);
+    return self.doneButtonEnabled && section == 1;
 }
 
 @end
