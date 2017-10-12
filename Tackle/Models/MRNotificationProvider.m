@@ -25,6 +25,7 @@
 
 
 - (void)rescheduleAllNotificationsWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
+    [[UNUserNotificationCenter currentNotificationCenter] removeAllDeliveredNotifications];
     [[UNUserNotificationCenter currentNotificationCenter] removeAllPendingNotificationRequests];
 
     NSFetchRequest *fetchRequest = [Task openTasksFetchRequestWithManagedObjectContext:managedObjectContext];
@@ -71,6 +72,7 @@
 
 - (void)cancelNotificationForTask:(Task *)task {
     NSArray *identifiers = [task.taskNotifications valueForKey:@"identifier"];
+    [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:identifiers];
     [[UNUserNotificationCenter currentNotificationCenter] removePendingNotificationRequestsWithIdentifiers:identifiers];
     os_log(OS_LOG_DEFAULT, "Canceled notifications for task %@, notificationIdentifiers: %@", task.title, identifiers);
 }
