@@ -64,8 +64,8 @@
     [self.view addConstraint:screenWidthConstraint];
 
     self.displayedConstraints = @[
-                                  [self.contentViewController.view.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant:-10.0],
-                                  [self.contentViewController.view.topAnchor constraintGreaterThanOrEqualToAnchor:self.view.topAnchor constant:10.0]
+                                  [self.contentViewController.view.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor constant:0.0],
+                                  [self.contentViewController.view.topAnchor constraintGreaterThanOrEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant:0.0]
                                   ];
 
     self.hiddenConstraints = @[
