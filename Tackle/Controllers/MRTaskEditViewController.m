@@ -157,7 +157,7 @@
 }
 
 - (void)setupScrollView {
-    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
 
     self.scrollView = [[MRScrollView alloc] init];
     self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
