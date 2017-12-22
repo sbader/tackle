@@ -14,13 +14,13 @@
 
 @property (nonatomic, strong) NSDate *startDate;
 @property (nonatomic) NSTimeInterval interval;
-@property (nonatomic, copy) void (^repeatedBlock)();
+@property (nonatomic, copy) void (^repeatedBlock)(void);
 
 @end
 
 @implementation MRTimer
 
-- (instancetype)initWithStartDate:(NSDate *)startDate interval:(NSTimeInterval)interval repeatedBlock:(void (^)())repeatedBlock {
+- (instancetype)initWithStartDate:(NSDate *)startDate interval:(NSTimeInterval)interval repeatedBlock:(void (^)(void))repeatedBlock {
     self = [super init];
 
     if (self) {

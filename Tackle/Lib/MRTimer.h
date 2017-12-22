@@ -10,7 +10,7 @@
 
 @interface MRTimer : NSObject
 
-- (instancetype)initWithStartDate:(NSDate *)startDate interval:(NSTimeInterval)interval repeatedBlock:(void (^)())repeatedBlock;
+- (instancetype)initWithStartDate:(NSDate *)startDate interval:(NSTimeInterval)interval repeatedBlock:(void (^)(void))repeatedBlock;
 - (void)startTimer;
 - (void)cancel;
 
