@@ -27,8 +27,9 @@
 @implementation MRAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.persistenceController = [[MRPersistenceController alloc] init];
-    [self completeUserInterfaceWithApplication:application launchOptions:launchOptions];
+    self.persistenceController = [[MRPersistenceController alloc] initWithCompletionHandler:^{
+        [self completeUserInterfaceWithApplication:application launchOptions:launchOptions];
+    }];
 
     return YES;
 }

@@ -14,6 +14,7 @@
 
 @property (strong, readonly) NSManagedObjectContext *managedObjectContext;
 
+- (instancetype)initWithCompletionHandler:(void (^)(void))completionHandler;
 - (void)save;
 
 @end
