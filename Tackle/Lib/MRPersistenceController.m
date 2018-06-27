@@ -73,12 +73,14 @@
 
 - (void)save {
     if (![self.managedObjectContext hasChanges]) {
+        NSLog(@"MRPersistenceController save - managedObjectContext - hasChanges:NO");
         return;
     }
 
     [[self managedObjectContext] performBlockAndWait:^{
         NSError *error = nil;
         [[self managedObjectContext] save:&error];
+        NSLog(@"MRPersistenceController save - managedObjectContext - saved");
         NSAssert(error == nil, @"Error saving main managed object context");
     }];
 }
