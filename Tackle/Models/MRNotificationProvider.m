@@ -66,7 +66,7 @@
                                                                               trigger:trigger];
 
         [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:nil];
-        os_log(OS_LOG_DEFAULT, "Scheduled notification for task %@, notificationIdentifier: %@", task.title, taskNotification.identifier);
+        MRLog(@"Scheduled notification for task %@, notificationIdentifier: %@", task.title, taskNotification.identifier);
     }
 }
 
@@ -74,7 +74,7 @@
     NSArray *identifiers = [task.taskNotifications valueForKey:@"identifier"];
     [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:identifiers];
     [[UNUserNotificationCenter currentNotificationCenter] removePendingNotificationRequestsWithIdentifiers:identifiers];
-    os_log(OS_LOG_DEFAULT, "Canceled notifications for task %@, notificationIdentifiers: %@", task.title, identifiers);
+    MRLog(@"Canceled notifications for task %@, notificationIdentifiers: %@", task.title, identifiers);
 }
 
 @end

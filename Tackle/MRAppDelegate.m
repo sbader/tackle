@@ -171,14 +171,16 @@
     Task *task = [Task findTaskWithTaskNotificationIdentifier:taskNotificationIdentifier
                                        inManagedObjectContext:self.persistenceController.managedObjectContext];
 
+    MRLog(@"didReceiveNotificationResponse");
+
     if (task == nil) {
-        os_log(OS_LOG_DEFAULT, "didReceiveNotificationResponse failed to find task with taskNotificationIdentifier: %@", taskNotificationIdentifier);
+        MRLog(@"didReceiveNotificationResponse failed to find task with taskNotificationIdentifier: %@", taskNotificationIdentifier);
         completionHandler();
         return;
     }
 
     if ([action isEqualToString:kMRAddTenMinutesActionIdentifier]) {
-        os_log(OS_LOG_DEFAULT, "didReceiveNotificationResponse task: %@, action: kMRAddTenMinutesActionIdentifier", task.title);
+        MRLog(@"didReceiveNotificationResponse task: %@, action: kMRAddTenMinutesActionIdentifier", task.title);
 
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDate *date = [calendar dateByAddingUnit:NSCalendarUnitMinute value:10 toDate:[NSDate date] options:0];
@@ -190,7 +192,7 @@
         completionHandler();
     }
     else if ([action isEqualToString:kMRAddOneHourActionIdentifier]) {
-        os_log(OS_LOG_DEFAULT, "didReceiveNotificationResponse task: %@, action: kMRAddOneHourActionIdentifier", task.title);
+        MRLog(@"didReceiveNotificationResponse task: %@, action: kMRAddOneHourActionIdentifier", task.title);
 
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDate *date = [calendar dateByAddingUnit:NSCalendarUnitHour value:1 toDate:[NSDate date] options:0];
@@ -203,7 +205,7 @@
         completionHandler();
     }
     else if([action isEqualToString:kMRDestroyTaskActionIdentifier]) {
-        os_log(OS_LOG_DEFAULT, "didReceiveNotificationResponse task: %@, action: kMRDestroyTaskActionIdentifier", task.title);
+        MRLog(@"didReceiveNotificationResponse task: %@, action: kMRDestroyTaskActionIdentifier", task.title);
 
         task.isDone = YES;
         task.completedDate = [NSDate date];
@@ -218,7 +220,7 @@
         completionHandler();
     }
     else {
-        os_log(OS_LOG_DEFAULT, "didReceiveNotificationResponse task: %@, action: unknownAction", task.title);
+        MRLog(@"didReceiveNotificationResponse task: %@, action: unknownAction", task.title);
 
         completionHandler();
     }

@@ -10,6 +10,10 @@
 #warning "This project uses features only available in iOS SDK 3.0 and later."
 #endif
 
+#ifndef MRLog
+#define MRLog(message, ...) NSLog((@"MRLog: %s [Line %d] " message), __PRETTY_FUNCTION__, __LINE__, ## __VA_ARGS__)
+#endif
+
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>

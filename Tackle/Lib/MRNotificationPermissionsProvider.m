@@ -85,14 +85,14 @@ NSString * const kMRSiriPermissionsRequestedKey = @"SiriPermissionsRequested";
 
     NSSet *categories = [[NSSet alloc] initWithObjects:category, nil];
     [[UNUserNotificationCenter currentNotificationCenter] setNotificationCategories:categories];
-    os_log(OS_LOG_DEFAULT, "Setup categories");
+    MRLog(@"Setup categories");
 }
 
 - (void)registerNotificationPermissions {
     UNAuthorizationOptions options = UNAuthorizationOptionAlert|UNAuthorizationOptionBadge|UNAuthorizationOptionSound;
     [[UNUserNotificationCenter currentNotificationCenter] requestAuthorizationWithOptions:options completionHandler:^(BOOL granted, NSError * _Nullable error) {
         if (granted) {
-            os_log(OS_LOG_DEFAULT, "Granted");
+            MRLog(@"Granted");
         }
     }];
 }
@@ -110,16 +110,16 @@ NSString * const kMRSiriPermissionsRequestedKey = @"SiriPermissionsRequested";
     [INPreferences requestSiriAuthorization:^(INSiriAuthorizationStatus status) {
         switch (status) {
             case INSiriAuthorizationStatusDenied:
-                os_log(OS_LOG_DEFAULT, "Siri Denied");
+                MRLog(@"Siri Denied");
                 break;
             case INSiriAuthorizationStatusAuthorized:
-                os_log(OS_LOG_DEFAULT, "Siri Authorized");
+                MRLog(@"Siri Authorized");
                 break;
             case INSiriAuthorizationStatusRestricted:
-                os_log(OS_LOG_DEFAULT, "Siri Restricted");
+                MRLog(@"Siri Restricted");
                 break;
             case INSiriAuthorizationStatusNotDetermined:
-                os_log(OS_LOG_DEFAULT, "Siri Not Determined");
+                MRLog(@"Siri Not Determined");
                 break;
         }
     }];
