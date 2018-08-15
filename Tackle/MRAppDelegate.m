@@ -26,10 +26,13 @@
 
 @implementation MRAppDelegate
 
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.persistenceController = [[MRPersistenceController alloc] initWithCompletionHandler:^{
-        [self completeUserInterfaceWithApplication:application launchOptions:launchOptions];
-    }];
+    [[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
+
+    self.persistenceController = [[MRPersistenceController alloc] init];
+
+    [self completeUserInterfaceWithApplication:application launchOptions:launchOptions];
 
     return YES;
 }
@@ -44,8 +47,6 @@
     [self setupWindow];
     [self setupRootViewController];
     [self.window makeKeyAndVisible];
-
-    [[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
 
     [[MRNotificationPermissionsProvider sharedInstance] setupCategories];
     [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];

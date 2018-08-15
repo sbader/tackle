@@ -17,7 +17,7 @@
 
 @implementation MRPersistenceController
 
-- (instancetype)initWithCompletionHandler:(void (^)(void))completionHandler {
+- (instancetype)init {
     self = [super init];
 
     if (self) {
@@ -31,41 +31,31 @@
         [self setManagedObjectContext:[[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType]];
         self.managedObjectContext.undoManager = [[NSUndoManager alloc] init];
         [self.managedObjectContext setPersistentStoreCoordinator:coordinator];
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            NSPersistentStoreCoordinator *psc = self.managedObjectContext.persistentStoreCoordinator;
-            NSMutableDictionary *options = [NSMutableDictionary dictionary];
-            options[NSMigratePersistentStoresAutomaticallyOption] = @YES;
-            options[NSInferMappingModelAutomaticallyOption] = @YES;
-            options[NSSQLitePragmasOption] = @{
-                                               @"journal_mode": @"WAL"
-                                               };
-            
-            NSURL *directory = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory
-                                                                      inDomain:NSUserDomainMask
-                                                             appropriateForURL:nil
-                                                                        create:YES
-                                                                         error:NULL];
-            
-            NSURL *storeURL = [directory URLByAppendingPathComponent:@"Tackle.sqlite"];
-            
-            NSError *error = nil;
-            NSPersistentStore *store __attribute__((unused)) = [psc addPersistentStoreWithType:NSSQLiteStoreType
-                                                                                 configuration:nil
-                                                                                           URL:storeURL
-                                                                                       options:options
-                                                                                         error:&error];
-            
-            if (!completionHandler) {
-                return;
-            }
-            
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                completionHandler();
-            });
-            
-            NSAssert(store, @"Could not add persistent store");
-        });
+
+        NSPersistentStoreCoordinator *psc = self.managedObjectContext.persistentStoreCoordinator;
+        NSMutableDictionary *options = [NSMutableDictionary dictionary];
+        options[NSMigratePersistentStoresAutomaticallyOption] = @YES;
+        options[NSInferMappingModelAutomaticallyOption] = @YES;
+        options[NSSQLitePragmasOption] = @{
+                                           @"journal_mode": @"WAL"
+                                           };
+
+        NSURL *directory = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory
+                                                                  inDomain:NSUserDomainMask
+                                                         appropriateForURL:nil
+                                                                    create:YES
+                                                                     error:NULL];
+
+        NSURL *storeURL = [directory URLByAppendingPathComponent:@"Tackle.sqlite"];
+
+        NSError *error = nil;
+        NSPersistentStore *store __attribute__((unused)) = [psc addPersistentStoreWithType:NSSQLiteStoreType
+                                                                             configuration:nil
+                                                                                       URL:storeURL
+                                                                                   options:options
+                                                                                     error:&error];
+
+        NSAssert(store, @"Could not add persistent store");
     }
 
     return self;
