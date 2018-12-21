@@ -214,11 +214,11 @@
                                              inManagedObjectContext:self.persistenceController.managedObjectContext];
 
         task.identifier = [NSUUID UUID].UUIDString;
+        task.originalDueDate = dueDate;
     }
 
     task.title = title;
     task.dueDate = dueDate;
-    task.originalDueDate = dueDate;
     task.repeats = @(repeatInterval);
 
     [self.persistenceController save];

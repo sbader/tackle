@@ -17,6 +17,7 @@
 @property (nonatomic) UILabel *label;
 @property (nonatomic) UIView *buttonContainer;
 @property (nonatomic) NSDate *date;
+@property (nonatomic) NSDate *selectedDate;
 @property (nonatomic) UIView *contentView;
 
 @end
@@ -28,6 +29,7 @@
 
     if (self) {
         self.date = date;
+        self.selectedDate = [date copy];
     }
 
     return self;
@@ -99,6 +101,7 @@
 
     self.datePicker.minuteInterval = 5;
     [self.datePicker setDate:self.date animated:NO];
+    [self.datePicker addTarget:self action:@selector(handleDatePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
 
     [self.datePickerContainer addSubview:self.datePicker];
 
@@ -117,12 +120,16 @@
 
 #pragma mark - Handlers
 
+- (IBAction)handleDatePickerValueChanged:(UIDatePicker *)datePicker {
+    self.selectedDate = datePicker.date;
+}
+
 - (void)handleCloseButton:(id)sender {
     [self dismiss];
 }
 
 - (void)handleSaveButton:(id)sender {
-    [self.delegate didSelectDate:self.datePicker.date];
+    [self.delegate didSelectDate:self.selectedDate];
     [self dismiss];
 }
 
