@@ -50,8 +50,6 @@
 
     [[MRNotificationPermissionsProvider sharedInstance] setupCategories];
     [[MRNotificationProvider sharedProvider] rescheduleAllNotificationsWithManagedObjectContext:self.persistenceController.managedObjectContext];
-
-    // TODO: - Handle notifications that have been delivered
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
