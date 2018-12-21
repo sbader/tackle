@@ -198,7 +198,11 @@ static NSString *addTimeCellReuseIdentifier = @"AddTimeCell";
 }
 
 - (BOOL)isTimeIntervalSection:(NSInteger)section {
-    return self.doneButtonEnabled && section == 1;
+    if (self.doneButtonEnabled) {
+        return section == 1;
+    }
+
+    return section == 0;
 }
 
 @end
