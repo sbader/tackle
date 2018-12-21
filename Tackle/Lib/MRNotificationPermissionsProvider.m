@@ -14,7 +14,6 @@
 @import Intents;
 
 NSString * const kMRNotificationPermissionsRequestedKey = @"NotificationPermissionsRequested";
-NSString * const kMRSiriPermissionsRequestedKey = @"SiriPermissionsRequested";
 
 @implementation MRNotificationPermissionsProvider
 
@@ -37,14 +36,6 @@ NSString * const kMRSiriPermissionsRequestedKey = @"SiriPermissionsRequested";
     [self checkUserNotificationsEnabled:^(BOOL enabled) {
         completionHandler(!enabled);
     }];
-}
-
-- (BOOL)shouldRequestSiriPermissions {
-    if (self.siriPermissionsAlreadyRequested) {
-        return false;
-    }
-
-    return [INPreferences siriAuthorizationStatus] == INSiriAuthorizationStatusNotDetermined;
 }
 
 - (BOOL)notificationPermissionsAlreadyRequested {
@@ -93,34 +84,6 @@ NSString * const kMRSiriPermissionsRequestedKey = @"SiriPermissionsRequested";
     [[UNUserNotificationCenter currentNotificationCenter] requestAuthorizationWithOptions:options completionHandler:^(BOOL granted, NSError * _Nullable error) {
         if (granted) {
             MRLog(@"Granted");
-        }
-    }];
-}
-
-
-- (BOOL)siriPermissionsAlreadyRequested {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:kMRSiriPermissionsRequestedKey];
-}
-
-- (void)setSiriPermissionsRequested:(BOOL)requested {
-    [[NSUserDefaults standardUserDefaults] setBool:requested forKey:kMRSiriPermissionsRequestedKey];
-}
-
-- (void)registerSiriPermissions {
-    [INPreferences requestSiriAuthorization:^(INSiriAuthorizationStatus status) {
-        switch (status) {
-            case INSiriAuthorizationStatusDenied:
-                MRLog(@"Siri Denied");
-                break;
-            case INSiriAuthorizationStatusAuthorized:
-                MRLog(@"Siri Authorized");
-                break;
-            case INSiriAuthorizationStatusRestricted:
-                MRLog(@"Siri Restricted");
-                break;
-            case INSiriAuthorizationStatusNotDetermined:
-                MRLog(@"Siri Not Determined");
-                break;
         }
     }];
 }

@@ -9,13 +9,11 @@
 #import <Foundation/Foundation.h>
 
 extern NSString * const kMRNotificationPermissionsRequestedKey;
-extern NSString * const kMRSiriPermissionsRequestedKey;
 
 @interface MRNotificationPermissionsProvider : NSObject
 
 + (instancetype)sharedInstance;
-//- (BOOL)shouldRequestPermissions;
-//- (BOOL)userNotificationsEnabled;
+
 - (BOOL)notificationPermissionsAlreadyRequested;
 - (void)setPermissionsRequested:(BOOL)requested;
 - (void)registerNotificationPermissions;
@@ -23,12 +21,5 @@ extern NSString * const kMRSiriPermissionsRequestedKey;
 - (void)checkUserNotificationsEnabled:(void (^)(BOOL enabled))completionHandler;
 - (void)shouldRequestPermissionsWithCompletion:(void (^)(BOOL requestPermissions))completionHandler;
 - (void)setupCategories;
-
-- (BOOL)siriPermissionsAlreadyRequested;
-- (void)setSiriPermissionsRequested:(BOOL)requested;
-- (void)registerSiriPermissions;
-- (BOOL)shouldRequestSiriPermissions;
-
-
 
 @end

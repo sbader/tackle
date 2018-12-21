@@ -34,11 +34,9 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>73</string>
+	<string>74</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSSiriUsageDescription</key>
-	<string>Task information will be sent to Siri.</string>
 	<key>UIAppFonts</key>
 	<array/>
 	<key>UILaunchStoryboardName</key>

@@ -39,11 +39,6 @@
 }
 
 - (void)checkPermissions {
-    [self requestSiriPermissions];
-//    if ([[MRNotificationPermissionsProvider sharedInstance] shouldRequestSiriPermissions]) {
-//        [self requestSiriPermissions];
-//    }
-
     [[MRNotificationPermissionsProvider sharedInstance] shouldRequestPermissionsWithCompletion:^(BOOL shouldRequestPermissions) {
         if (shouldRequestPermissions) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -52,12 +47,6 @@
         }
     }];
 }
-
-- (void)requestSiriPermissions {
-    [[MRNotificationPermissionsProvider sharedInstance] setSiriPermissionsRequested:YES];
-    [[MRNotificationPermissionsProvider sharedInstance] registerSiriPermissions];
-}
-
 
 - (void)displayNotificationPermissionsRequestPriming {
     [[MRNotificationPermissionsProvider sharedInstance] setPermissionsRequested:YES];

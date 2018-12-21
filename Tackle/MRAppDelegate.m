@@ -39,8 +39,7 @@
 
 - (void)completeUserInterfaceWithApplication:(UIApplication *)application launchOptions:(NSDictionary *)launchOptions {
     [[NSUserDefaults standardUserDefaults] registerDefaults:@{
-                                                              kMRNotificationPermissionsRequestedKey: @NO,
-                                                              kMRSiriPermissionsRequestedKey: @NO
+                                                              kMRNotificationPermissionsRequestedKey: @NO
                                                               }];
 
     [self setupAppearance];
